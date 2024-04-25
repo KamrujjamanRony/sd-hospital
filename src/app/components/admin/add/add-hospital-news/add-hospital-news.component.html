@@ -1,0 +1,90 @@
+<app-cover [title]="yourTitle" [sub1]="yourSub1" [sub2]="yourSub2"></app-cover>
+
+<div class="w-full max-w-7xl mx-auto">
+  <form
+    #form="ngForm"
+    (ngSubmit)="onFormSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="newsSerial"
+      >
+        Serial <span class="text-red-600">*</span>
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="newsSerial"
+        name="newsSerial"
+        type="number"
+        placeholder="Enter Serial here"
+        [(ngModel)]="model.newsSerial"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="title"
+      >
+        Title
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="title"
+        name="title"
+        type="text"
+        placeholder="Enter Title here"
+        [(ngModel)]="model.title"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="subTitle"
+      >
+        SubTitle
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="subTitle"
+        name="subTitle"
+        type="text"
+        placeholder="Enter SubTitle here"
+        [(ngModel)]="model.subTitle"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="description"
+      >
+        Description
+      </label>
+      <textarea
+        name="description"
+        id="description"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        cols="30"
+        rows="10"
+        placeholder="Enter product description here"
+        [(ngModel)]="model.description"
+      ></textarea>
+    </div>
+    <input
+      type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      value="Add"
+    />
+  </form>
+</div>
+
+@if(confirmModal){
+  <confirm-modal title="Hospital News is successfully added!" url="admin/hospitalNews-list" (closeModal)="closeModal()" />
+}
+

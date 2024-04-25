@@ -1,0 +1,104 @@
+<app-cover [title]="yourTitle" [sub1]="yourSub1" [sub2]="yourSub2"></app-cover>
+
+<div class="w-full max-w-7xl mx-auto">
+  <form
+    #form="ngForm"
+    (ngSubmit)="onFormSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="productSerial"
+      >
+        Product Serial <span class="text-red-600">*</span>
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="productSerial"
+        name="productSerial"
+        type="number"
+        placeholder="Enter Product Serial here"
+        [(ngModel)]="model.productSerial"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="productName"
+      >
+        Product Name
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="productName"
+        name="productName"
+        type="text"
+        placeholder="Enter Product Name here"
+        [(ngModel)]="model.productName"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="orgin"
+      >
+        Product Origin
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="orgin"
+        name="orgin"
+        type="text"
+        placeholder="Enter Product Origin here"
+        [(ngModel)]="model.orgin"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label for="imageFile" class="block text-gray-700 text-sm font-bold mb-2"
+        >Instrument Image</label
+      >
+      <input
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      id="pUrl"
+      name="pUrl"
+      type="text"
+      placeholder="Type here"
+      [(ngModel)]="model.pUrl"
+      required
+    />
+    </div>
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="description"
+      >
+        Description
+      </label>
+      <textarea
+        name="description"
+        id="description"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        cols="30"
+        rows="10"
+        placeholder="Enter product description here"
+        [(ngModel)]="model.description"
+      ></textarea>
+    </div>
+    <input
+      type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      value="Add"
+    />
+  </form>
+</div>
+
+@if(confirmModal){
+  <confirm-modal title="Instrument is successfully added!" url="admin/instrument-list" (closeModal)="closeModal()" />
+}
+
