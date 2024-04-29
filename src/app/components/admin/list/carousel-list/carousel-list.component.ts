@@ -5,8 +5,8 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CoverComponent } from '../../../shared/cover/cover.component';
 import { environment } from '../../../../../environments/environments';
-import { CarouselService } from '../../../../features/services/carousel.service';
-import { DeleteConfirmationModalComponent } from '../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { CarouselService } from '../../../../features/services/main/carousel.service';
+import { DeleteConfirmationModalComponent } from '../../../shared/modals/delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
   selector: 'app-carousel-list',

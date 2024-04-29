@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CoverComponent } from '../../../shared/cover/cover.component';
-import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
-import { InstrumentService } from '../../../../features/services/instrument.service';
-import { ImgbbService } from '../../../../features/services/imgbb.service';
+import { ConfirmModalComponent } from '../../../shared/modals/confirm-modal/confirm-modal.component';
+import { InstrumentService } from '../../../../features/services/main/instrument.service';
+import { ImgbbService } from '../../../../features/services/main/imgbb.service';
 import { environment } from '../../../../../environments/environments';
 
 @Component({

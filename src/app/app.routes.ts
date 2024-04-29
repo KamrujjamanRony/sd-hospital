@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
 import { MainComponent } from './layouts/main/main.component';
-import { HomeComponent } from './pages/home/home.component';
-import { AllDoctorsComponent } from './pages/all-doctors/all-doctors.component';
-import { DoctorComponent } from './pages/doctor/doctor.component';
+import { HomeComponent } from './pages/main/home/home.component';
+import { AllDoctorsComponent } from './pages/main/all-doctors/all-doctors.component';
+import { DoctorComponent } from './pages/main/doctor/doctor.component';
 import { AdminComponent } from './layouts/admin/admin.component';
-import { AboutComponent } from './pages/about/about.component';
-import { ContactComponent } from './pages/contact/contact.component';
-import { InstrumentGalleryComponent } from './pages/gallery/instrument-gallery/instrument-gallery.component';
-import { HospitalGalleryComponent } from './pages/gallery/hospital-gallery/hospital-gallery.component';
+import { AboutComponent } from './pages/main/about/about.component';
+import { ContactComponent } from './pages/main/contact/contact.component';
+import { InstrumentGalleryComponent } from './pages/main/gallery/instrument-gallery/instrument-gallery.component';
+import { HospitalGalleryComponent } from './pages/main/gallery/hospital-gallery/hospital-gallery.component';
 import { DoctorsListComponent } from './components/admin/list/doctors-list/doctors-list.component';
 import { AddDoctorComponent } from './components/admin/add/add-doctor/add-doctor.component';
 import { EditDoctorComponent } from './components/admin/edit/edit-doctor/edit-doctor.component';
@@ -28,8 +28,23 @@ import { EditHealthNewsComponent } from './components/admin/edit/edit-health-new
 import { HospitalNewsListComponent } from './components/admin/list/hospital-news-list/hospital-news-list.component';
 import { AddHospitalNewsComponent } from './components/admin/add/add-hospital-news/add-hospital-news.component';
 import { EditHospitalNewsComponent } from './components/admin/edit/edit-hospital-news/edit-hospital-news.component';
-import { HospitalNewsComponent } from './pages/news/hospital-news/hospital-news.component';
-import { HealthNewsComponent } from './pages/news/health-news/health-news.component';
+import { HospitalNewsComponent } from './pages/main/news/hospital-news/hospital-news.component';
+import { HealthNewsComponent } from './pages/main/news/health-news/health-news.component';
+import { SerialMainComponent } from './layouts/serial-main/serial-main.component';
+import { SerialAdminComponent } from './layouts/serial-admin/serial-admin.component';
+import { DepartmentsComponent } from './pages/serial/departments/departments.component';
+import { AppointmentFormComponent } from './pages/serial/appointment-form/appointment-form.component';
+import { MyAppointmentsComponent } from './pages/serial/my-appointments/my-appointments.component';
+import { DoctorListComponent } from './components/serial/doctors-list/doctors-list.component';
+import { SerialDoctorComponent } from './pages/serial/doctor/doctor.component';
+import { AllDepartmentComponent } from './pages/serial/all-department/all-department.component';
+import { SerialAllDoctorsComponent } from './pages/serial/all-doctors/all-doctors.component';
+import { RedirectComponent } from './pages/serial/redirect.component';
+import { AllUsersComponent } from './pages/serial/all-users/all-users.component';
+import { AllAppointmentComponent } from './pages/serial/all-appointment/all-appointment.component';
+import { PrintAppointmentComponent } from './pages/serial/print-appointment/print-appointment.component';
+import { DepartmentComponent } from './pages/main/department/department.component';
+import { MainDoctorListComponent } from './pages/main/doctors-list/doctors-list.component';
 
 export const routes: Routes = [
   {
@@ -73,6 +88,11 @@ export const routes: Routes = [
         path: 'health-news',
         component: HealthNewsComponent
       },
+      { path: 'departments', component: DepartmentComponent },
+      {
+        path: 'department/:department',
+        component: MainDoctorListComponent
+      },
     ],
   },
   {
@@ -103,5 +123,50 @@ export const routes: Routes = [
       { path: 'hospitalNews-list/add', component: AddHospitalNewsComponent },
       { path: 'hospitalNews-list/edit/:id', component: EditHospitalNewsComponent },
     ],
+  },
+  {
+    path: 'serial',
+    component: SerialMainComponent,
+    children: [
+      {
+        path: '',
+        component: DepartmentsComponent
+      },
+      {
+        path: 'appointment-form',
+        component: AppointmentFormComponent
+      },
+      {
+        path: 'my-appointments',
+        component: MyAppointmentsComponent
+      },
+      {
+        path: 'department/:department',
+        component: DoctorListComponent
+      },
+      {
+        path: 'doctor/:id',
+        component: SerialDoctorComponent
+      },
+    ],
+  },
+  {
+    path: 'serial/admin',
+    component: SerialAdminComponent,
+    children: [
+      { path: '', component: AllDepartmentComponent },
+      { path: 'department-list', component: AllDepartmentComponent },
+      { path: 'doctors', component: SerialAllDoctorsComponent },
+      { path: 'all-appointment', component: RedirectComponent  },
+      { path: 'all-user', component: AllUsersComponent },
+    ],
+  },
+  {
+    path: 'all-appointment',
+    component: AllAppointmentComponent,
+  },
+  {
+    path: 'print',
+    component: PrintAppointmentComponent,
   },
 ];

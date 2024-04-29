@@ -3,7 +3,7 @@ import { Observable, Subscription, map } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CoverComponent } from '../../../shared/cover/cover.component';
-import { DoctorsService } from '../../../../features/services/doctors.service';
+import { DoctorsService } from '../../../../features/services/main/doctors.service';
 
 @Component({
     selector: 'app-doctors-list',

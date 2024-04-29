@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { ContactService } from '../../../features/services/contact.service';
+import { ContactService } from '../../../features/services/main/contact.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 

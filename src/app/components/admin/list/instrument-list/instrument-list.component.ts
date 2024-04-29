@@ -5,8 +5,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { CoverComponent } from '../../../shared/cover/cover.component';
 import { environment } from '../../../../../environments/environments';
-import { InstrumentService } from '../../../../features/services/instrument.service';
-import { DeleteConfirmationModalComponent } from '../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { InstrumentService } from '../../../../features/services/main/instrument.service';
+import { DeleteConfirmationModalComponent } from '../../../shared/modals/delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
   selector: 'app-instrument-list',

@@ -5,8 +5,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Subscription, map } from 'rxjs';
 import { CoverComponent } from '../../../shared/cover/cover.component';
 import { environment } from '../../../../../environments/environments';
-import { HealthNewsService } from '../../../../features/services/healthNews.service';
-import { DeleteConfirmationModalComponent } from '../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { HealthNewsService } from '../../../../features/services/main/healthNews.service';
+import { DeleteConfirmationModalComponent } from '../../../shared/modals/delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
   selector: 'app-health-news-list',

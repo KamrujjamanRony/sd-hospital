@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CoverComponent } from '../../../shared/cover/cover.component';
-import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
-import { HospitalNewsService } from '../../../../features/services/hospitalNews.service';
+import { ConfirmModalComponent } from '../../../shared/modals/confirm-modal/confirm-modal.component';
+import { HospitalNewsService } from '../../../../features/services/main/hospitalNews.service';
 import { environment } from '../../../../../environments/environments';
 
 @Component({

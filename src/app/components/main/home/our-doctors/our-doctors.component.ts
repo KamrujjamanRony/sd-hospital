@@ -1,10 +1,10 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { DoctorsService } from '../../../../features/services/doctors.service';
+import { DoctorsService } from '../../../../features/services/main/doctors.service';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../../../environments/environments';
 import { CommonModule } from '@angular/common';
-import { DoctorCardComponent } from "../../../shared/doctor-card/doctor-card.component";
+import { DoctorCardComponent } from "../../../shared/cards/doctor-card/doctor-card.component";
 
 @Component({
     selector: 'app-our-doctors',

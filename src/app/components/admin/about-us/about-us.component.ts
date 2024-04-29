@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CoverComponent } from '../../shared/cover/cover.component';
-import { AboutService } from '../../../features/services/about.service';
+import { AboutService } from '../../../features/services/main/about.service';
 import { environment } from '../../../../environments/environments';
 
 @Component({

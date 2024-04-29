@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import * as AOS from 'aos';
-import { VisitorCountService } from './features/services/visitor-count.service';
+import { VisitorCountService } from './features/services/main/visitor-count.service';
 
 @Component({
   selector: 'app-root',

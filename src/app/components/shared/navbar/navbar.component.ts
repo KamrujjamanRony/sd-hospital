@@ -52,7 +52,11 @@ export class NavbarComponent {
     {
       label: 'Contact',
       link: '/contact'
-    }
+    },
+    {
+      label: 'Portal',
+      link: '/serial'
+    },
   ];
   isOpen: boolean = false;
 

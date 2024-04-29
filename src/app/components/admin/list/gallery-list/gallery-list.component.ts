@@ -5,8 +5,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Subscription, map } from 'rxjs';
 import { CoverComponent } from '../../../shared/cover/cover.component';
 import { environment } from '../../../../../environments/environments';
-import { GalleryService } from '../../../../features/services/gallery.service';
-import { DeleteConfirmationModalComponent } from '../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { GalleryService } from '../../../../features/services/main/gallery.service';
+import { DeleteConfirmationModalComponent } from '../../../shared/modals/delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
   selector: 'app-gallery-list',

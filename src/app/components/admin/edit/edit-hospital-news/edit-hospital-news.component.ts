@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CoverComponent } from '../../../shared/cover/cover.component';
-import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
-import { HospitalNewsService } from '../../../../features/services/hospitalNews.service';
+import { ConfirmModalComponent } from '../../../shared/modals/confirm-modal/confirm-modal.component';
+import { HospitalNewsService } from '../../../../features/services/main/hospitalNews.service';
 
 @Component({
   selector: 'app-edit-hospital-news',

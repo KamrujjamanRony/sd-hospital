@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { NewsModalComponent } from "../news-modal/news-modal.component";
+import { NewsModalComponent } from "../modals/news-modal/news-modal.component";
 
 @Component({
     selector: 'app-news-card',

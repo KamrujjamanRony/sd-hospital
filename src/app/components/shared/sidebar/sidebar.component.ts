@@ -2,8 +2,8 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../../../environments/environments';
-import { AboutService } from '../../../features/services/about.service';
-import { ContactService } from '../../../features/services/contact.service';
+import { AboutService } from '../../../features/services/main/about.service';
+import { ContactService } from '../../../features/services/main/contact.service';
 
 @Component({
   selector: 'app-sidebar',
