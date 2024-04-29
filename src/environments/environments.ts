@@ -4,7 +4,7 @@ export const environment = {
     hospitalCode: 1,
     imgbbApi: 'b07dfc46f0f90cce9b2993d3b4896e80',
     location: 'পলাশপোল, সাতক্ষীরা।, শহীদ কাজল সরণী',
-    baseApi: 'http://digital.supersoftbd.com/HWS',
+    baseApi: 'https://digital.supersoftbd.com/HWS',
     doctorApi: 'https://digital.supersoftbd.com/HWS/Doctor',
     userCode: 'DAa1*',
     rootApi: 'http://localhost:3000',
