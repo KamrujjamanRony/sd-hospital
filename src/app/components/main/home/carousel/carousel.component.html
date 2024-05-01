@@ -1,5 +1,5 @@
 @if (slideImages) {
-  <swiper-container
+<swiper-container
   class="-z-10"
   navigation="true"
   pagination="true"
@@ -8,29 +8,45 @@
   autoplay-disable-on-interaction="false"
 >
   @for(slide of slideImages; track slide){
-    <swiper-slide>
-      <div class="bg-gray-100">
-        <section class="cover bg-gradient-to-l from-cyan-500 to-blue-500 relative px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 overflow-hidden py-48 flex
-      items-center min-h-[100vh]">
+  <swiper-slide>
+    <div class="bg-gray-100">
+      <section
+        class="relative px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 overflow-hidden py-48 flex items-center min-h-[100vh]"
+      >
         <div class="h-full absolute top-0 left-0 z-0">
-          <img [src]="slide?.imageUrl" alt="" class="w-full min-h-screen object-cover opacity-50">
+          <img
+            [src]="slide?.imageUrl"
+            alt=""
+            class="w-full min-h-screen object-cover"
+          />
         </div>
 
         <div class="lg:w-3/4 xl:w-2/4 relative z-10 h-100 lg:mt-16">
-          <div>
-            <h1 class="text-white text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">{{slide?.title}}</h1>
-            <p class="text-blue-100 text-xl md:text-2xl leading-snug mt-4">{{slide?.description}}</p>
-            <a href="#" class="px-8 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold">Book
-              Appointment</a>
+          <div class="relative">
+            <!-- Background glass effect -->
+            <div
+              class="absolute inset-0 bg-gradient-to-l from-cyan-500 to-blue-500 opacity-25"
+            ></div>
+            <!-- Content -->
+            <div
+              class="relative z-10 p-2 rounded-lg text-white bg-black bg-opacity-25 backdrop-filter backdrop-blur-md"
+            >
+              <h1
+                class="text-4xl md:text-5xl xl:text-6xl font-bold leading-tight"
+              >
+                {{ slide?.title }}
+              </h1>
+              <p class="text-xl md:text-2xl leading-snug mt-4">
+                {{ slide?.description }}
+              </p>
+              <!-- Your other content here -->
+            </div>
           </div>
         </div>
       </section>
-      </div>
-      
+    </div>
 
-
-
-      <!-- <div [style.backgroundImage]="'url(' + slide + ')'" class="hero min-h-[95vh] bg-cover">
+    <!-- <div [style.backgroundImage]="'url(' + slide + ')'" class="hero min-h-[95vh] bg-cover">
         <div class="hero-overlay bg-opacity-20"></div>
         <div class="hero-content text-center text-neutral-content">
           <div data-aos="zoom-in" class="max-w-lg">
@@ -44,13 +60,11 @@
           </div>
         </div>
       </div> -->
-    </swiper-slide>
+  </swiper-slide>
   }
-  
 </swiper-container>
 } @else {
-  <section class="flex justify-center items-center h-[80vh]">
-    <span class="loading loading-bars text-rose-700 inline-block w-60"></span>
-  </section>
+<section class="flex justify-center items-center h-[80vh]">
+  <span class="loading loading-bars text-rose-700 inline-block w-60"></span>
+</section>
 }
-
