@@ -35,13 +35,13 @@
       @if (contact?.address1) {<p>{{contact?.address1}}</p>}
       @if (contact?.address2) {<p>{{contact?.address2}}</p>}
       <span class="footer-title mt-2">Customer Care Hours</span>
-      <p>Saturday to Friday: Open 24 hours</p>
+      <p>Every Day: 7:30 AM - 10:00 PM</p>
       <span class="footer-title mt-2">Social Media</span>
       <div>
         <ul class="flex">
           @if (contact?.facebookLink) {
             <li class="bg-primary text-white hover:bg-base-200 hover:font w-10 h-10 rounded-full flex justify-center items-center hover:text-primary mx-1">
-              <a target="_blank" [href]="'http://' + contact.facebookLink" class="link link-hover">
+              <a target="_blank" [href]="contact.facebookLink" class="link link-hover">
                 <fa-icon [icon]="faFacebook"></fa-icon>
               </a>
             </li>
