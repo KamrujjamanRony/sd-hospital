@@ -45,6 +45,9 @@ import { AllAppointmentComponent } from './pages/serial/all-appointment/all-appo
 import { PrintAppointmentComponent } from './pages/serial/print-appointment/print-appointment.component';
 import { DepartmentComponent } from './pages/main/department/department.component';
 import { MainDoctorListComponent } from './pages/main/doctors-list/doctors-list.component';
+import { ServicesListComponent } from './components/admin/list/services-list/services-list.component';
+import { AddServicesComponent } from './components/admin/add/add-services/add-services.component';
+import { EditServicesComponent } from './components/admin/edit/edit-services/edit-services.component';
 
 export const routes: Routes = [
   {
@@ -81,11 +84,11 @@ export const routes: Routes = [
         component: ContactComponent
       },
       {
-        path: 'hospital-news',
+        path: 'sd-hospital-news',
         component: HospitalNewsComponent
       },
       {
-        path: 'health-news',
+        path: 'digital-diagnostic-news',
         component: HealthNewsComponent
       },
       { path: 'departments', component: DepartmentComponent },
@@ -113,6 +116,9 @@ export const routes: Routes = [
       { path: 'instrument-list', component: InstrumentListComponent },
       { path: 'instrument-list/add', component: AddInstrumentComponent },
       { path: 'instrument-list/edit/:id', component: EditInstrumentComponent },
+      { path: 'service-list', component: ServicesListComponent },
+      { path: 'service-list/add', component: AddServicesComponent },
+      { path: 'service-list/edit/:id', component: EditServicesComponent },
       { path: 'gallery-list', component: GalleryListComponent },
       { path: 'gallery-list/add', component: AddGalleryComponent },
       { path: 'gallery-list/edit/:id', component: EditGalleryComponent },

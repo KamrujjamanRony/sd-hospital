@@ -17,8 +17,8 @@
           [alt]="doctor?.drName"
         />
         }
-        <div>
-          <h1 class="text-5xl font-bold">{{ doctor?.drName }}</h1>
+        <div class="text-sm md:text-md lg:text-lg">
+          <h1 class="text-xl md:text-2xl lg:text-5xl font-bold">{{ doctor?.drName }}</h1>
           @if (doctor?.degree) {<p style="white-space: pre-line"><span class="font-bold">Degree:</span> {{ doctor?.degree }}</p>}
           @if (doctor?.designation) {<p><span class="font-bold">Designation:</span> {{ doctor?.designation }}</p>}
           @if (doctor?.specialty) {<p><span class="font-bold">Specialty:</span> {{ doctor?.specialty }}</p>}

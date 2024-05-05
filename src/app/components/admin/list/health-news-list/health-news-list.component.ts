@@ -16,9 +16,9 @@ import { DeleteConfirmationModalComponent } from '../../../shared/modals/delete-
   styleUrl: './health-news-list.component.css'
 })
 export class HealthNewsListComponent {
-  yourTitle: any = 'all HealthNews information';
+  yourTitle: any = 'All Digital Diagnostic Center News';
   yourSub1: any = 'Dashboard';
-  yourSub2: any = 'HealthNews';
+  yourSub2: any = 'Diagnostic News';
   emptyImg: any = environment.emptyImg;
   loading: boolean = true;
   healthNews$?: Observable<any[]>;

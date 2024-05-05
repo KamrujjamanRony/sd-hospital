@@ -36,12 +36,12 @@ export class NavbarComponent {
       label: 'News',
       subItems: [
         {
-          label: 'Latest News',
-          link: '/hospital-news'
+          label: 'SD Hospital News',
+          link: '/sd-hospital-news'
         },
         {
-          label: 'Health Magazines',
-          link: '/health-news'
+          label: 'Digital Diagnostic Center News',
+          link: '/digital-diagnostic-news'
         }
       ]
     },

@@ -185,9 +185,9 @@
             <li class="md:ml-4 relative">
               <a class="py-2 inline-block md:text-white md:px-2 font-semibold" [routerLink]="menuItem.link">{{ menuItem.label }}</a>
               @if (menuItem.subItems) {
-              <ul class="sub-menu top-8">
+              <ul class="sub-menu top-8 rounded-none">
                 @for (subItem of menuItem.subItems; track $index) {
-                <li>
+                <li class="w-full hover:bg-primary hover:text-white">
                   <a [routerLink]="subItem.link">{{ subItem.label }}</a>
                 </li>
                 }
@@ -218,7 +218,7 @@
         {{ menuItem.label }}
         <ul class="sub-menu top-6 left-6" *ngIf="menuItem.subItems">
           @for (subItem of menuItem.subItems; track $index) {
-          <li>
+          <li class="hover:bg-primary hover:text-white">
             <a [routerLink]="subItem.link" (click)="closeMenu()">{{ subItem.label }}</a>
           </li>
           }
@@ -230,7 +230,7 @@
     }
     
     <li>
-      <button class="inline-flex items-center justify-center h-12 gap-2 px-3 text-xs tracking-wide text-white transition duration-300 rounded-full focus-visible:outline-none whitespace-nowrap bg-emerald-500 hover:bg-emerald-600 focus:bg-emerald-700 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none uppercase">
+      <button (click)="closeMenu()" routerLink="/departments" class="inline-flex items-center justify-center h-12 gap-2 px-3 text-xs tracking-wide text-white transition duration-300 rounded-full focus-visible:outline-none whitespace-nowrap bg-emerald-500 hover:bg-emerald-600 focus:bg-emerald-700 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none uppercase">
         <span>make appointment</span>
       </button>
     </li>

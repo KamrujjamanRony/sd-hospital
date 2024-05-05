@@ -2,15 +2,14 @@
 <swiper-container
   class="-z-10"
   navigation="true"
-  pagination="true"
-  pagination-clickable="true"
-  autoplay-delay="5000"
+  pagination="false"
+  autoplay-delay="4000"
   autoplay-disable-on-interaction="false"
 >
   @for(slide of slideImages; track slide){
   <swiper-slide>
     <div class="bg-gray-100">
-      <section class="relative px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 overflow-hidden py-10 flex flex-col justify-end items-center min-h-[100vh]">
+      <section class="relative px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 overflow-hidden py-2 flex flex-col justify-end items-center min-h-[100vh]">
         <div class="h-full absolute top-0 left-0 z-0">
           <img [src]="slide?.imageUrl" alt="" class="w-full min-h-screen object-cover" />
         </div>
@@ -24,7 +23,7 @@
               <h1 class="text-xl md:text-2xl xl:text-3xl font-bold leading-tight">
                 {{ slide?.title }}
               </h1>
-              <p class="text-sm md:text-md leading-snug mt-4">
+              <p class="text-sm md:text-md leading-snug">
                 {{ slide?.description }}
               </p>
             </div>

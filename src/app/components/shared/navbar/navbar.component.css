@@ -2,8 +2,8 @@
 .sub-menu {
     display: none;
     position: absolute;
+    width: fit-content;
     min-width: 200px;
-    border-radius: 10px;
     background-color: inherit;
     /* top: 30px; */
     z-index: 500;

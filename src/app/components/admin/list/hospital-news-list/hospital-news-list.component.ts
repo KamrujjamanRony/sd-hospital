@@ -16,7 +16,7 @@ import { DeleteConfirmationModalComponent } from '../../../shared/modals/delete-
   styleUrl: './hospital-news-list.component.css'
 })
 export class HospitalNewsListComponent {
-  yourTitle: any = 'all Hospital News information';
+  yourTitle: any = 'all SD Hospital News';
   yourSub1: any = 'Dashboard';
   yourSub2: any = 'Hospital News';
   emptyImg: any = environment.emptyImg;
