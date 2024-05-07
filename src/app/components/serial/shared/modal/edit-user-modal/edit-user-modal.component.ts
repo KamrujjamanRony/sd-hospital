@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { ImCross } from "react-icons/im";
 import { DataService } from '../../../../../features/services/serial/data.service';
 import { environment } from '../../../../../../environments/environments';
+import { UsersService } from '../../../../../features/services/serial/users.service';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -17,13 +18,14 @@ import { environment } from '../../../../../../environments/environments';
   styleUrl: './edit-user-modal.component.css'
 })
 export class EditUserModalComponent {
-  @Input() id!: any;
+  @Input() user!: any;
   @Output() closeModal = new EventEmitter<void>();
-//   UsersService = inject(UsersService);
+  UsersService = inject(UsersService);
   dataService = inject(DataService);
   fb = inject(FormBuilder);
   queryClient = injectQueryClient();
   selected!: any;
+  selectedRoles!: any;
   private editUserSubscription?: Subscription;
 
   closeThisModal(): void {
@@ -34,14 +36,19 @@ export class EditUserModalComponent {
   isSubmitted = false;
   userRole: any = [];
 
-  constructor() { }
+  constructor() {
+   }
 
   ngOnInit(): void {
     this.dataService.getJsonData().subscribe(data => {
       this.userRole = data.role;
+      this.updateFormValues();
     });
+    // this.UsersService.getUserRole(this.user).subscribe(roles => {
+    //   this.selectedRoles = roles;
+    //   console.log(this.selectedRoles)
+    // });
     // this.selected = this.UsersService.getUser(this.id)
-    this.updateFormValues();
   }
 
   // selectedUser = injectQuery(() => ({
@@ -59,7 +66,7 @@ export class EditUserModalComponent {
 
 
   mutation = injectMutation((client) => ({
-    // mutationFn: (updateData: any) => this.UsersService.updateUser(this.selected.id, updateData),
+    mutationFn: (updateData: any) => this.UsersService.updateUser(this.user.userId, updateData),
     onSuccess: () => {
       // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['users'] })
@@ -67,28 +74,22 @@ export class EditUserModalComponent {
   }));
 
   addUserForm = this.fb.group({
-    companyID: [environment.hospitalCode, Validators.required],
-    username: ["", Validators.required],
-    password: ["", Validators.required],
     role: new FormControl([] as string[], Validators.required),
   });
 
   updateFormValues(): void {
-    if (this.selected) {
+    if (this.user) {
       this.addUserForm.patchValue({
-        companyID: this.selected.companyID,
-        username: this.selected.username,
-        password: this.selected.password,
-        role: this.selected.role,
+        role: this.user?.roleIds,
       });
     }
   }
 
   onSubmit(): void {
-    const { username, password, role } = this.addUserForm.value;
-    if (username && password && role) {
-      const updateData = { "id": this.selected.id, ...this.addUserForm.value }
-    //   this.mutation.mutate(updateData);
+    const { role } = this.addUserForm.value;
+    // console.log(this.addUserForm.value)
+    if (role) {
+      this.mutation.mutate(role);
       this.closeThisModal();
     }
     this.isSubmitted = true;

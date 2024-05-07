@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { injectQueryClient } from '@tanstack/angular-query-experimental';
+import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
 import { ImCross } from "react-icons/im";
 import { ReactIconComponent } from "../../react-icon/react-icon.component";
@@ -11,11 +11,11 @@ import { DataService } from '../../../../../features/services/serial/data.servic
 import { environment } from '../../../../../../environments/environments';
 
 @Component({
-    selector: 'app-add-user-modal',
-    standalone: true,
-    templateUrl: './add-user-modal.component.html',
-    styleUrl: './add-user-modal.component.css',
-    imports: [CommonModule, ReactiveFormsModule, ReactIconComponent, ConfirmModalComponent]
+  selector: 'app-add-user-modal',
+  standalone: true,
+  templateUrl: './add-user-modal.component.html',
+  styleUrl: './add-user-modal.component.css',
+  imports: [CommonModule, ReactiveFormsModule, ReactIconComponent, ConfirmModalComponent]
 })
 export class AddUserModalComponent {
   @Output() closeModal = new EventEmitter<void>();
@@ -34,7 +34,7 @@ export class AddUserModalComponent {
   confirmModal: boolean = false;
   userRole: any = [];
 
-  constructor(){}
+  constructor() { }
 
   ngOnInit(): void {
     this.dataService.getJsonData().subscribe(data => {
@@ -46,12 +46,16 @@ export class AddUserModalComponent {
     this.confirmModal = false;
   }
 
-  // mutation = injectMutation((client) => ({
-  //   mutationFn: (formData: any) => this.UsersService.addUser(formData),
-  //   onSuccess: () => {
-  //     client.invalidateQueries({ queryKey: ['users'] })
-  //   },
-  // }));
+  mutation = injectMutation((client) => ({
+    mutationFn: (formData: any) => this.UserAuthService.registerUser(formData),
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ['users'] });
+      this.confirmModal = true;
+      setTimeout(() => {
+        this.closeThisModal();
+      }, 3000);
+    },
+  }));
 
   addUsersForm = this.fb.group({
     username: ['', Validators.required],
@@ -60,29 +64,31 @@ export class AddUserModalComponent {
   });
 
   onSubmit(): void {
-    const {username, password, role} = this.addUsersForm.value;
+    const { username, password, role } = this.addUsersForm.value;
     if (username && password && role) {
       console.log('submitted form', this.addUsersForm.value);
-      // const formData = {username: username, password: environment.userCode + password, role: role, id: crypto.randomUUID()}
       const formData = new FormData();
 
-    formData.append('CompanyID', environment.hospitalCode.toString());
-    formData.append('Username', username || '');
-    formData.append('Password', environment.userCode + password);
-    formData.append('Role', role || []);
-      // this.mutation.mutate(formData);
-      this.addUsersSubscription = this.UserAuthService.registerUser(role, formData)
-      .subscribe({
-        next: (response) => {
-          this.confirmModal = true;
-          setTimeout(() => {
-            this.closeThisModal();
-          }, 3000);
-        },
-        error: (error) => {
-          console.error('Error adding user:', error);
-        }
-      });
+      formData.append('CompanyID', environment.hospitalCode.toString());
+      formData.append('Username', username || '');
+      formData.append('Password', environment.userCode + password || '');
+      (role as any[]).map((roles: any) => {
+        console.log(roles)
+        formData.append('Roles', roles || '');
+      })
+      this.mutation.mutate(formData);
+      // this.addUsersSubscription = this.UserAuthService.registerUser(formData)
+      //   .subscribe({
+      //     next: (response) => {
+      //       this.confirmModal = true;
+      //       setTimeout(() => {
+      //         this.closeThisModal();
+      //       }, 3000);
+      //     },
+      //     error: (error) => {
+      //       console.error('Error adding user:', error);
+      //     }
+      //   });
     }
     this.isSubmitted = true;
   }

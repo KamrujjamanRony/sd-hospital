@@ -1,65 +1,65 @@
-{ 
-    "name": "SD Hospital",
-    "role": [
-        {
-            "id": "35809027-6151-4d2b-abd0-cfa02a0f2fff",
-            "name": "Admin"
-        },
-        {
-            "id": "1a7da977-159c-45ec-b0f3-8d83698ada42",
-            "name": "Appointment Form"
-        },
-        {
-            "id": "4238c1dd-53ab-4776-953b-cb7fc65b6c00",
-            "name": "Block Serial Entry"
-        },
-        {
-            "id": "5eb449e7-f2d5-47f2-afb8-19956860c997",
-            "name": "Department All Access"
-        },
-        {
-            "id": "5da7651e-e54e-4a4b-8cc1-83a6b50f978d",
-            "name": "Doctor All Access"
-        },
-        {
-            "id": "bd307355-9fd5-4489-be35-e64a251fc951",
-            "name": "User Create"
-        },
-        {
-            "id": "a5934ed6-8aec-42dc-8be9-02ca99c3d4d9",
-            "name": "Appointment Show"
-        },
-        {
-            "id": "353633fd-4127-4268-9f14-4ef6fcc5351c",
-            "name": "Edit Appointment"
-        },
-        {
-            "id": "e76e2078-56e8-4f95-8025-a8c71d7df608",
-            "name": "Delete Appointment"
-        },
-        {
-            "id": "c4baf711-4ef6-45c4-8f8a-7184676d58eb",
-            "name": "Doctor Leave"
-        },
-        {
-            "id": "2b18dbdc-8611-4931-85bf-abe89a9c3d2a",
-            "name": "MIS"
-        },
-        {
-            "id": "7af311d3-4ffb-472f-8eec-6159a1fb8065",
-            "name": "Others 1"
-        },
-        {
-            "id": "4f1e369d-58c9-41be-ba25-d9f33cfcd616",
-            "name": "Others 2"
-        },
-        {
-            "id": "00236723-1e0a-4ab1-ac4b-98b6e5a217f7",
-            "name": "Others 3"
-        },
-        {
-            "id": "fb5ffe99-9647-40d3-8800-5cdb52940182",
-            "name": "Others 4"
-        }
-    ]
+{
+  "name": "SD Hospital",
+  "role": [
+    {
+      "id": "74b750b7-bd3a-42cb-bf11-e0e3d62056d4",
+      "name": "Admin"
+    },
+    {
+      "id": "0f1a1539-3b29-4f5d-9cf5-7d17dc80e79e",
+      "name": "AppointmentForm"
+    },
+    {
+      "id": "c90aed50-ad56-431b-afa4-c36e8cac039a",
+      "name": "BlockSerialEntry"
+    },
+    {
+      "id": "a0336f52-ac10-4705-8c26-633c6b64a8cd",
+      "name": "DepartmentAllAccess"
+    },
+    {
+      "id": "9ab9cb26-8608-4ffe-a204-a746e70fd259",
+      "name": "DoctorAllAccess"
+    },
+    {
+      "id": "ca28769c-f16d-4a8a-86ba-2bf15552403e",
+      "name": "UserCreate"
+    },
+    {
+      "id": "5d5c4163-18ef-469d-b95e-c8b8367b83a6",
+      "name": "AppointmentShow"
+    },
+    {
+      "id": "2ecc8fdd-114f-444c-8e0e-5c5706675717",
+      "name": "EditAppointment"
+    },
+    {
+      "id": "6224224f-d3d5-429f-96d2-516df6e69374",
+      "name": "DeleteAppointment"
+    },
+    {
+      "id": "1e5990a2-e12a-48ba-9343-5cbd19021f68",
+      "name": "DrLeave"
+    },
+    {
+      "id": "dd6bf328-6ecc-4c45-ba72-c3086482603b",
+      "name": "MIS"
+    },
+    {
+      "id": "ce64e520-3910-4a10-8bdc-8cdb5a865d60",
+      "name": "Others1"
+    },
+    {
+      "id": "1ba4aff0-7a78-4597-8608-cf82c0ab2cd6",
+      "name": "Others2"
+    },
+    {
+      "id": "0e5e5460-4aa4-41d6-a09c-48abd2b22b97",
+      "name": "Others3"
+    },
+    {
+      "id": "704538fe-1952-495c-b695-394b849b46f7",
+      "name": "Others4"
+    }
+  ]
 }

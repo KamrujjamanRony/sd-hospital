@@ -9,6 +9,7 @@ import { AppointmentModalComponent } from '../../../components/serial/shared/mod
 import { AppointmentService } from '../../../features/services/serial/appointment.service';
 import { DepartmentService } from '../../../features/services/serial/department.service';
 import { DoctorsService } from '../../../features/services/serial/doctors.service';
+import { AuthService } from '../../../features/services/serial/auth.service';
 
 @Component({
     selector: 'app-all-appointment',
@@ -23,6 +24,8 @@ export class AllAppointmentComponent {
   doctorsService = inject(DoctorsService);
   router = inject(Router);
   queryClient = injectQueryClient();
+  authService = inject(AuthService);
+  user: any;
   emptyImg: any;
   selectedId: any;
   totalAppointment: any;
@@ -39,7 +42,13 @@ export class AllAppointmentComponent {
   constructor() {}
 
   ngOnInit(): void {
+    this.user = this.authService.getUser();
     this.getDoctorsWithAppointments();
+  }
+
+  checkRoles(roleId: any) {
+    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    return result;
   }
 
   redirectToHome(): void {

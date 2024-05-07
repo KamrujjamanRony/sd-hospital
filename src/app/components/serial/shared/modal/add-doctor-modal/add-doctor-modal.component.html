@@ -316,24 +316,27 @@
             ></textarea>
           </label>
           <!-- serialBlock Input -->
-        <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Serial Block</span>
-            </div>
-            <input
-              type="text"
-              formControlName="serialBlock"
-              [class.invalid]="
-                addDoctorForm.get('serialBlock')?.invalid &&
-                (addDoctorForm.get('serialBlock')?.dirty ||
-                  addDoctorForm.get('serialBlock')?.touched ||
-                  isSubmitted)
-              "
-              placeholder="Type here"
-              class="input input-bordered w-full input-sm outline-none"
-              required
-            />
-          </label>
+          @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a")) {
+            <label class="form-control w-full !mt-0">
+              <div class="label !py-0">
+                <span class="label-text font-bold capitalize">Serial Block</span>
+              </div>
+              <input
+                type="text"
+                formControlName="serialBlock"
+                [class.invalid]="
+                  addDoctorForm.get('serialBlock')?.invalid &&
+                  (addDoctorForm.get('serialBlock')?.dirty ||
+                    addDoctorForm.get('serialBlock')?.touched ||
+                    isSubmitted)
+                "
+                placeholder="Type here"
+                class="input input-bordered w-full input-sm outline-none"
+                required
+              />
+            </label>
+          }
+        
           <!-- newPatientLimit Input -->
         <label class="form-control w-full !mt-0">
             <div class="label !py-0">

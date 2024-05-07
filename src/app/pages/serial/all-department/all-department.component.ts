@@ -8,6 +8,7 @@ import { AddDepartmentModalComponent } from '../../../components/serial/shared/m
 import { EditDepartmentModalComponent } from '../../../components/serial/shared/modal/edit-department-modal/edit-department-modal.component';
 import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
 import { DepartmentService } from '../../../features/services/serial/department.service';
+import { AuthService } from '../../../features/services/serial/auth.service';
 
 @Component({
     selector: 'app-all-department',
@@ -19,6 +20,8 @@ import { DepartmentService } from '../../../features/services/serial/department.
 export class AllDepartmentComponent {
   departmentService = inject(DepartmentService)
   queryClient = injectQueryClient()
+  authService = inject(AuthService);
+  user: any;
   emptyImg: any;
   departments: any;
   selectedId: any;
@@ -29,15 +32,19 @@ export class AllDepartmentComponent {
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.user = this.authService.getUser();
+  }
+
+  checkRoles(roleId: any) {
+    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    return result;
+  }
 
   query = injectQuery(() => ({
     queryKey: ['departments'],
     queryFn: () => this.departmentService.getDepartments(),
   }));
-
-  
-
 
   mutation = injectMutation((client) => ({
     mutationFn: (id: any) => this.departmentService.deleteDepartment(id),

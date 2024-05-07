@@ -5,6 +5,7 @@ export const environment = {
     imgbbApi: 'b07dfc46f0f90cce9b2993d3b4896e80',
     location: 'পলাশপোল, সাতক্ষীরা।, শহীদ কাজল সরণী',
     baseApi: 'https://digital.supersoftbd.com/HWS',
+    userApi: 'https://digital.supersoftbd.com/HWS/AspNetUserRoles/api',
     doctorApi: 'https://digital.supersoftbd.com/HWS/Doctor',
     userCode: 'DAa1*',
     rootApi: 'http://localhost:3000',

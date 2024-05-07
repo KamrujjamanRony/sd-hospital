@@ -9,6 +9,7 @@ import { DoctorsService } from '../../../../../features/services/serial/doctors.
 import { DepartmentService } from '../../../../../features/services/serial/department.service';
 import { ImgbbService } from '../../../../../features/services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
+import { AuthService } from '../../../../../features/services/serial/auth.service';
 
 @Component({
     selector: 'app-add-doctor-modal',
@@ -21,7 +22,8 @@ export class AddDoctorModalComponent {
   @Output() closeModal = new EventEmitter<void>();
   doctorsService = inject(DoctorsService);
   departmentService = inject(DepartmentService)
-  imgbbService = inject(ImgbbService);
+  authService = inject(AuthService);
+  user: any;
   fb = inject(FormBuilder);
   queryClient = injectQueryClient();
   private addDoctorSubscription?: Subscription;
@@ -33,7 +35,14 @@ export class AddDoctorModalComponent {
   ImCross = ImCross;
   isSubmitted = false;
 
-  constructor(){}
+  ngOnInit(): void {
+    this.user = this.authService.getUser();
+  }
+
+  checkRoles(roleId: any) {
+    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    return result;
+  }
 
   query = injectQuery(() => ({
     queryKey: ['departments'],

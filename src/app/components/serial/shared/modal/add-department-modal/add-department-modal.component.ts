@@ -50,7 +50,6 @@ export class AddDepartmentModalComponent {
   onSubmit(): void {
     const {departmentName, description, imgUrl} = this.addDepartmentForm.value;
     if (departmentName) {
-      // console.log('submitted form', this.addDepartmentForm.value);
       
     const formData = new FormData();
 
@@ -58,7 +57,6 @@ export class AddDepartmentModalComponent {
     formData.append('DepartmentName', departmentName);
     formData.append('Description',  description != null ? description.toString() : '');
     formData.append('ImgUrl', imgUrl || '');
-      // const formData = {...this.addDepartmentForm.value, "imgUrl":this.imgUrl, id: crypto.randomUUID()}
       this.mutation.mutate(formData);
       this.closeThisModal();
     }

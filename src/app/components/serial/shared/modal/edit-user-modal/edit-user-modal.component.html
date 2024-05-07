@@ -21,18 +21,9 @@
       <div class="grid grid-cols-1 w-full gap-x-5">
         
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Username</span>
-          </div>
           <input
             type="text"
-            formControlName="username"
-            [class.invalid]="
-              addUserForm.get('username')?.invalid &&
-              (addUserForm.get('username')?.dirty ||
-                addUserForm.get('username')?.touched ||
-                isSubmitted)
-            "
+            [value]="user?.userName"
             placeholder="Type here"
             class="input input-bordered w-full input-sm outline-none"
             required
@@ -43,34 +34,6 @@
           <div class="label !py-0">
             <span class="label-text-alt text-rose-600 capitalize"
               >Username is required</span
-            >
-          </div>
-          }
-        </label>
-        
-        <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Password</span>
-          </div>
-          <input
-            type="text"
-            formControlName="password"
-            [class.invalid]="
-              addUserForm.get('password')?.invalid &&
-              (addUserForm.get('password')?.dirty ||
-                addUserForm.get('password')?.touched ||
-                isSubmitted)
-            "
-            placeholder="Type here"
-            class="input input-bordered w-full input-sm outline-none"
-            required
-          />
-          @if(addUserForm.get('password')?.hasError('required') &&
-          (addUserForm.get('password')?.dirty ||
-          addUserForm.get('password')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Password is required</span
             >
           </div>
           }

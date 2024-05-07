@@ -47,11 +47,11 @@ export class SerialMainComponent {
     let { username, password } = this.userForm.value;
     if (username && password) {
       password = environment.userCode + password;
-      const formData = {username, password}
-      this.loginSubscription = this.UserAuthService.loginUser(formData)
+      // const formData = {username, password}
+      this.loginSubscription = this.UserAuthService.loginUser({username, password})
       .subscribe({
         next: (response: any) => {
-          const userModel = {token: response.token, username: response.userName, role: response.userRoles[0]};
+          const userModel = {token: response.token, username: response.username, roleIds: response.roleIds};
           this.authService.setUser(userModel);
           this.setUser();
         },

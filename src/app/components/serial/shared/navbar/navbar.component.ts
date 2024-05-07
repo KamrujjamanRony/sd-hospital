@@ -20,28 +20,15 @@ export class NavbarComponent {
   user: any;
   fullUrl!: string;
   jsonData: any;
-  menuItems = [
-    {
-      label: 'Home',
-      link: '/serial'
-    },
-    {
-      label: 'Appointment Form',
-      link: 'appointment-form'
-    },
-    {
-      label: 'My Appointments',
-      link: 'my-appointments'
-    },
-    {
-      label: 'Admin',
-      link: 'admin'
-    }
-  ];
   isMenuOpen = false;
 
   constructor(){
     this.user = this.authService.getUser();
+  }
+
+  checkRoles(roleId: any) {
+    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    return result;
   }
 
   ngOnInit(): void {
@@ -80,4 +67,5 @@ export class NavbarComponent {
   redirectToHome(): void {
     this.router.navigateByUrl('/');
   }
+
 }

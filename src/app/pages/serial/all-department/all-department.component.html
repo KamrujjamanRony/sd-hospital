@@ -1,4 +1,6 @@
-<app-cover
+@if (checkRoles("a0336f52-ac10-4705-8c26-633c6b64a8cd")) {
+<section>
+  <app-cover
   title="All Department List"
   sub1="Dashboard"
   sub2="Department"
@@ -70,6 +72,11 @@
     ></div>
   </div>
 </div>
+</section>
+} @else {
+  <h1 class="text-2xl text-center font-bold text-rose-500">You haven't any permission!</h1>
+}
+
 <!-- add modal start -->
 @if(addDepartmentModal) {
 <app-add-department-modal
