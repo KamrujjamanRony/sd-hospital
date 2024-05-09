@@ -37,9 +37,15 @@ export class AppointmentFormComponent implements OnInit {
   confirmModal!: boolean;
 
   ngOnInit(): void {
+    this.user = this.authService.getUser();
     this.getConfirm()
     // Update the form group after this.confirm is set
     this.updateFormGroup();
+  }
+
+  checkRoles(roleId: any) {
+    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    return result;
   }
 
   // Method to update the form group
@@ -54,12 +60,12 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   getConfirm() {
-    this.user = this.authService.getUser();
-    if (this.user.role == "Admin" || this.user.role == "SuperAdmin") {
-      this.confirm = true
-    } else {
-      this.confirm = false
-    }
+    // if (this.user?.roleIds?.find((role: any) => role == "c90aed50-ad56-431b-afa4-c36e8cac039a")) {
+    //   this.confirm = true
+    // } else {
+    //   this.confirm = false
+    // }
+    this.confirm = false;
   }
 
   departmentQuery = injectQuery(() => ({

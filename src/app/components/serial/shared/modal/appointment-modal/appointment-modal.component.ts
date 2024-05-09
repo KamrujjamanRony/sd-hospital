@@ -72,7 +72,12 @@ export class AppointmentModalComponent {
     mutationFn: (formData: any) => this.appointmentService.addAppointment(formData),
     onSuccess: () => {
       // Invalidate and refetch by using the client directly
-      client.invalidateQueries({ queryKey: ['appointments'] })
+      client.invalidateQueries({ queryKey: ['appointments'] });
+      // toast
+      this.confirmModal = true;
+      setTimeout(() => {
+        this.closeAppointmentModal();
+      }, 3000);
     },
   }));
 
@@ -100,7 +105,7 @@ export class AppointmentModalComponent {
     sex: [''],
     type: [true],
     date: ['', Validators.required],
-    sL: [0],
+    sL: [''],
     departmentId: [''],
     drCode: [''],
     fee: [''],
@@ -149,27 +154,22 @@ export class AppointmentModalComponent {
         // const formData = { ...this.appointmentForm.value, departmentId: this.doctor.departmentId, sL: 5, drCode: this.doctor.id, fee: this.doctor.fee, id: crypto.randomUUID() }
         const formData = new FormData();
 
-        formData.append('CompanyID', environment.hospitalCode.toString());
-        formData.append('Date', date);
-        formData.append('DepartmentId', this.doctor.departmentId);
-        formData.append('SL', sL != null ? sL.toString() : '');
+        formData.append('CompanyID', environment.hospitalCode.toString() || '');
+        formData.append('Date', date || '');
+        formData.append('DepartmentId', this.doctor.departmentId || '');
+        formData.append('SL', sL || '');
         formData.append('Type', type != null ? type.toString() : '');
-        formData.append('DrCode', this.doctor.id);
-        formData.append('PName', pName);
+        formData.append('DrCode', this.doctor.id || '');
+        formData.append('PName', pName || '');
         formData.append('Age', age || '');
         formData.append('Sex', sex || '');
-        formData.append('Fee', this.doctor.fee);
+        formData.append('Fee', this.doctor.fee || '');
         formData.append('Remarks', remarks || '');
-        formData.append('Username', this.user.username);
+        formData.append('Username', this.user.username || '');
         formData.append('PaymentStatus', paymentStatus != null ? paymentStatus.toString() : '');
         formData.append('Confirmed', confirmed != null ? confirmed.toString() : '');
 
         this.appointmentMutation.mutate(formData);
-        // toast
-        this.confirmModal = true;
-        setTimeout(() => {
-          this.closeAppointmentModal();
-        }, 3000);
         // this.toastService.showToast('Appointment is successfully added!');
         this.isSubmitted = true;
       } else {

@@ -98,7 +98,7 @@ export class EditDoctorModalComponent {
         specialty: this.selected.specialty,
         departmentId: this.selected.departmentId,
         phone: this.selected.phone,
-        fee: this.selected.fee,
+        fee: this.selected.fee || 0,
         visitTime: this.selected.visitTime,
         room: this.selected.room,
         description: this.selected.description,
