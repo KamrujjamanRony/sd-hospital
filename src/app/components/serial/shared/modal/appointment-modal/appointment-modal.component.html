@@ -289,45 +289,65 @@
           </select>
         </label> -->
         }
-      </div>
-      <!-- Date Input -->
+        
+      <!-- mobile Input -->
       <label class="form-control w-full !mt-0">
         <div class="label !py-0">
-          <span class="label-text font-bold capitalize"
-            >Appointment Date:</span
-          >
+          <span class="label-text font-bold capitalize">Patient Mobile</span>
         </div>
-        <!-- <input type="date" formControlName="date"
-        class="input input-bordered w-full input-sm"
-        [class.invalid]="
-          appointmentForm.get('date')?.invalid && (appointmentForm.get('date')?.dirty || appointmentForm.get('date')?.touched || isSubmitted)
-        "
-        required> -->
-        <select
-          class="select select-bordered select-sm w-full"
-          formControlName="date"
+        <input
+          type="text"
+          formControlName="mobile"
+          [class.invalid]="
+            appointmentForm.get('mobile')?.invalid &&
+            (appointmentForm.get('mobile')?.dirty ||
+              appointmentForm.get('mobile')?.touched ||
+              isSubmitted)
+          "
+          placeholder="Type here"
+          class="input input-bordered w-full input-sm"
+          required
+        />
+      </label>
+        <!-- Date Input -->
+        <label class="form-control w-full !mt-0">
+          <div class="label !py-0">
+            <span class="label-text font-bold capitalize"
+              >Appointment Date:</span
+            >
+          </div>
+          <!-- <input type="date" formControlName="date"
+          class="input input-bordered w-full input-sm"
           [class.invalid]="
             appointmentForm.get('date')?.invalid && (appointmentForm.get('date')?.dirty || appointmentForm.get('date')?.touched || isSubmitted)
           "
-          required
-        >
-          <option value="" disabled>Select Appointment Date</option>
-          <option
-            *ngFor="let date of dates"
-            [value]="date | date : 'yyyy-MM-dd'"
-            [disabled]="isPastDate(date)"
+          required> -->
+          <select
+            class="select select-bordered select-sm w-full"
+            formControlName="date"
+            [class.invalid]="
+              appointmentForm.get('date')?.invalid && (appointmentForm.get('date')?.dirty || appointmentForm.get('date')?.touched || isSubmitted)
+            "
+            required
           >
-            {{ date | date : "d MMMM, yyyy" }}
-          </option>
-        </select>
-        @if(appointmentForm.get('date')?.hasError('required') && (appointmentForm.get('date')?.dirty || appointmentForm.get('date')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Appointment Date is required</span
+            <option value="" disabled>Select Appointment Date</option>
+            <option
+              *ngFor="let date of dates"
+              [value]="date | date : 'yyyy-MM-dd'"
+              [disabled]="isPastDate(date)"
             >
-          </div>
-        }
-      </label>
+              {{ date | date : "d MMMM, yyyy" }}
+            </option>
+          </select>
+          @if(appointmentForm.get('date')?.hasError('required') && (appointmentForm.get('date')?.dirty || appointmentForm.get('date')?.touched || isSubmitted)){
+            <div class="label !py-0">
+              <span class="label-text-alt text-rose-600 capitalize"
+                >Appointment Date is required</span
+              >
+            </div>
+          }
+        </label>
+      </div>
       <!-- remarks Input -->
       <label class="form-control w-full !mt-0">
         <div class="label !py-0">

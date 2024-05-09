@@ -102,6 +102,7 @@ export class AppointmentModalComponent {
     companyID: [environment.hospitalCode],
     pName: ['', Validators.required],
     age: [''],
+    mobile: [''],
     sex: [''],
     type: [true],
     date: ['', Validators.required],
@@ -147,7 +148,7 @@ export class AppointmentModalComponent {
   }
 
   onSubmit(): void {
-    const { pName, age, sex, date, sL, type, departmentId, drCode, fee, remarks, paymentStatus, confirmed } = this.appointmentForm.value;
+    const { pName, age, sex, date, sL, type, departmentId, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
     if (pName && date) {
       if (!this.selected) {
         // console.log('submitted form', this.appointmentForm.value);

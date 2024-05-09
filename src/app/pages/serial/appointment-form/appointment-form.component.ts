@@ -100,6 +100,7 @@ export class AppointmentFormComponent implements OnInit {
     pName: ['', Validators.required],
     age: [''],
     sex: [''],
+    mobile: [''],
     type: true,
     date: ['', Validators.required],
     sL: "",
@@ -121,7 +122,7 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const { pName, age, sex, date, type, departmentId, sL, drCode, fee, remarks, paymentStatus, confirmed } = this.appointmentForm.value;
+    const { pName, age, sex, date, type, departmentId, sL, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
     if (drCode && pName && type && date) {
       // console.log('submitted form', this.appointmentForm.value);
       // const formData = { ...this.appointmentForm.value, id: crypto.randomUUID() }

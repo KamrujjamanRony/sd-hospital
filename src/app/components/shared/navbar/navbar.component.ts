@@ -46,6 +46,10 @@ export class NavbarComponent {
       ]
     },
     {
+      label: 'Pathology Report',
+      link: '/report'
+    },
+    {
       label: 'About',
       link: '/about'
     },

@@ -49,6 +49,7 @@ import { ServicesListComponent } from './components/admin/list/services-list/ser
 import { AddServicesComponent } from './components/admin/add/add-services/add-services.component';
 import { EditServicesComponent } from './components/admin/edit/edit-services/edit-services.component';
 import { OurServicesComponent } from './pages/main/our-services/our-services.component';
+import { ReportLayoutComponent } from './layouts/report-layout/report-layout.component';
 
 export const routes: Routes = [
   {
@@ -175,5 +176,9 @@ export const routes: Routes = [
   {
     path: 'print',
     component: PrintAppointmentComponent,
+  },
+  {
+    path: 'report',
+    component: ReportLayoutComponent,
   },
 ];
