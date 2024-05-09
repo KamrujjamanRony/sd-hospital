@@ -1,18 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-theme="mytheme">
-<head>
-  <meta charset="utf-8">
-  <title>SD Hospital</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>SD Hospital</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  </head>
+  <body disable-devtool-auto src='cdn.jsdelivr.net/npm/disable-devtool' >
+    <!-- Your Angular app content -->
+    <app-root></app-root>
+
+    <script type="text/javascript">
+      // Disable right-click
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+      function ctrlShiftKey(e, keyCode) {
+        return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
+      }
+
+      document.onkeydown = (e) => {
+        // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
+        if (
+          event.keyCode === 123 ||
+          ctrlShiftKey(e, "I") ||
+          ctrlShiftKey(e, "J") ||
+          ctrlShiftKey(e, "C") ||
+          (e.ctrlKey && e.keyCode === "U".charCodeAt(0))
+        )
+          return false;
+      };
+    </script>
+  </body>
 </html>

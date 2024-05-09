@@ -1,4 +1,7 @@
-<app-cover [title]="yourTitle" [sub1]="yourSub1" [sub2]="yourSub2"></app-cover>
+@if (checkRoles("dd6bf328-6ecc-4c45-ba72-c3086482603b")) {
+
+<section>
+  <app-cover [title]="yourTitle" [sub1]="yourSub1" [sub2]="yourSub2"></app-cover>
 
 @if (loading) {
   <div
@@ -83,7 +86,10 @@
     </div>
   </div>
 }
+</section>
 
-
+} @else {
+  <h1 class="text-2xl text-center font-bold text-rose-500">You haven't any permission!</h1>
+}
 
 

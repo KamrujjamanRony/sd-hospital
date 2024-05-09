@@ -1,89 +1,102 @@
-<app-cover [title]="yourTitle" [sub1]="yourSub1" [sub2]="yourSub2"></app-cover>
+@if (checkRoles("9ab9cb26-8608-4ffe-a204-a746e70fd259")) {
 
-<div class="container mx-auto flex justify-end">
-  <a
-    routerLink="add"
-    class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded uppercase"
-  >
-    add doctor
-  </a>
-</div>
+<section>
+  <app-cover
+    [title]="yourTitle"
+    [sub1]="yourSub1"
+    [sub2]="yourSub2"
+  ></app-cover>
 
-<div class="mt-4 mx-4">
-  <div class="w-full overflow-hidden rounded-lg shadow-xs">
-    <div class="w-full overflow-x-auto">
-      @if (doctors$ | async) {
-      <table class="w-full">
-        <thead>
-          <tr
-            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-          >
-            <th class="px-4 py-3">Serial</th>
-            <th class="px-4 py-3">Image</th>
-            <th class="px-4 py-3">Name</th>
-            <th class="px-4 py-3">Department</th>
-            <th class="px-4 py-3">Degree</th>
-            <th class="px-4 py-3">Designation</th>
-            <th class="px-4 py-3">Specialty</th>
-            <th class="px-4 py-3">Phone</th>
-            <th class="px-4 py-3">Visit Time</th>
-            <th class="px-4 py-3">Room No</th>
-            <th class="px-4 py-3">Description</th>
-            <th class="px-4 py-3">Additional</th>
-            <th class="px-4 py-3">Notice</th>
-            <th class="px-4 py-3">Serial Block</th>
-            <th class="px-4 py-3">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-          @for (doctor of doctors$ | async; track doctor.id) {
-          <tr
-            class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
-          >
-            <td class="px-4 py-3 text-sm">{{ doctor.drSerial }}</td>
-            <td class="px-4 py-3">
-              <img
-                [src]="[doctor.imageUrl ? doctor.imageUrl : doctorMale]"
-                alt="Doctor Image"
-                class="w-8 md:w-16 rounded"
-              />
-            </td>
-            <td class="px-4 py-3 text-sm">{{ doctor.drName }}</td>
-            <td class="px-4 py-3 text-xs">{{ doctor.department }}</td>
-            <td class="px-4 py-3 text-sm">{{ doctor.degree }}</td>
-            <td class="px-4 py-3 text-sm">{{ doctor.designation }}</td>
-            <td class="px-4 py-3 text-sm">{{ doctor.specialty }}</td>
-            <td class="px-4 py-3 text-sm">{{ doctor.phone }}</td>
-            <td class="px-4 py-3 text-sm">{{ doctor.visitTime }}</td>
-            <td class="px-4 py-3 text-sm">{{ doctor.room }}</td>
-            <td class="px-4 py-3 text-sm">{{ doctor.description }}</td>
-            <td class="px-4 py-3 text-sm">{{ doctor.additional }}</td>
-            <td class="px-4 py-3 text-sm">{{ doctor.notice }}</td>
-            <td class="px-4 py-3 text-sm">{{ doctor.serialBlock }}</td>
-            <td class="px-4 py-3 text-sm">
-              <a
-                [routerLink]="['edit', doctor.id]"
-                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded dark:bg-green-700 dark:text-green-100 mr-2 inline-block my-2"
-              >
-                Edit
-              </a>
-              <button
-                (click)="onDelete(doctor.id)"
-                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded dark:bg-red-700 dark:text-green-100 inline-block"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
-      } @else {
-      <p>No Doctor Found. Please add Doctor!</p>
-      }
-    </div>
-    <div
-      class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-    ></div>
+  <div class="container mx-auto flex justify-end">
+    <a
+      routerLink="add"
+      class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded uppercase"
+    >
+      add doctor
+    </a>
   </div>
-</div>
+
+  <div class="mt-4 mx-4">
+    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+      <div class="w-full overflow-x-auto">
+        @if (doctors$ | async) {
+        <table class="w-full">
+          <thead>
+            <tr
+              class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+            >
+              <th class="px-4 py-3">Serial</th>
+              <th class="px-4 py-3">Image</th>
+              <th class="px-4 py-3">Name</th>
+              <th class="px-4 py-3">Department</th>
+              <th class="px-4 py-3">Degree</th>
+              <th class="px-4 py-3">Designation</th>
+              <th class="px-4 py-3">Specialty</th>
+              <th class="px-4 py-3">Phone</th>
+              <th class="px-4 py-3">Visit Time</th>
+              <th class="px-4 py-3">Room No</th>
+              <th class="px-4 py-3">Description</th>
+              <th class="px-4 py-3">Additional</th>
+              <th class="px-4 py-3">Notice</th>
+              <th class="px-4 py-3">Serial Block</th>
+              <th class="px-4 py-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody
+            class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+          >
+            @for (doctor of doctors$ | async; track doctor.id) {
+            <tr
+              class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
+            >
+              <td class="px-4 py-3 text-sm">{{ doctor.drSerial }}</td>
+              <td class="px-4 py-3">
+                <img
+                  [src]="[doctor.imageUrl ? doctor.imageUrl : doctorMale]"
+                  alt="Doctor Image"
+                  class="w-8 md:w-16 rounded"
+                />
+              </td>
+              <td class="px-4 py-3 text-sm">{{ doctor.drName }}</td>
+              <td class="px-4 py-3 text-xs">{{ doctor.department }}</td>
+              <td class="px-4 py-3 text-sm">{{ doctor.degree }}</td>
+              <td class="px-4 py-3 text-sm">{{ doctor.designation }}</td>
+              <td class="px-4 py-3 text-sm">{{ doctor.specialty }}</td>
+              <td class="px-4 py-3 text-sm">{{ doctor.phone }}</td>
+              <td class="px-4 py-3 text-sm">{{ doctor.visitTime }}</td>
+              <td class="px-4 py-3 text-sm">{{ doctor.room }}</td>
+              <td class="px-4 py-3 text-sm">{{ doctor.description }}</td>
+              <td class="px-4 py-3 text-sm">{{ doctor.additional }}</td>
+              <td class="px-4 py-3 text-sm">{{ doctor.notice }}</td>
+              <td class="px-4 py-3 text-sm">{{ doctor.serialBlock }}</td>
+              <td class="px-4 py-3 text-sm">
+                <a
+                  [routerLink]="['edit', doctor.id]"
+                  class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded dark:bg-green-700 dark:text-green-100 mr-2 inline-block my-2"
+                >
+                  Edit
+                </a>
+                <button
+                  (click)="onDelete(doctor.id)"
+                  class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded dark:bg-red-700 dark:text-green-100 inline-block"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+        } @else {
+        <p>No Doctor Found. Please add Doctor!</p>
+        }
+      </div>
+      <div
+        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+      ></div>
+    </div>
+  </div>
+</section>
+} @else {
+  <h1 class="text-2xl text-center font-bold text-rose-500">You haven't any permission!</h1>
+}

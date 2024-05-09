@@ -29,6 +29,7 @@ export class AppointmentModalComponent {
   departmentService = inject(DepartmentService);
   doctorsService = inject(DoctorsService);
   authService = inject(AuthService);
+  user: any;
   @Input() doctor: any;
   @Input() id!: any;
   @Output() closeAppointment = new EventEmitter<void>();
@@ -44,10 +45,13 @@ export class AppointmentModalComponent {
   selectedDoctor: any;
   doctorList: any;
   confirmModal: boolean = false;
-  user: any;
 
-  constructor(){
+  constructor(){}
+
+  ngOnInit(): void {
     this.user = this.authService.getUser();
+    this.selected = this.appointmentService.getAppointment(this.id);
+    this.updateFormValues();
   }
 
   closeModal() {
@@ -79,11 +83,6 @@ export class AppointmentModalComponent {
       client.invalidateQueries({ queryKey: ['appointments'] })
     },
   }));
-
-  ngOnInit(): void {
-    this.selected = this.appointmentService.getAppointment(this.id);
-    this.updateFormValues();
-  }
 
   async onDepartmentChange() {
     this.doctorList = await this.doctorsService.filterDoctorsByDepartment(this.appointmentForm.value.departmentId);
@@ -212,7 +211,10 @@ export class AppointmentModalComponent {
 
   // Define the isPastDate method
   isPastDate(date: Date): boolean {
-    return isBefore(date, new Date());
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return isBefore(date, today);
   }
+  
 
 }

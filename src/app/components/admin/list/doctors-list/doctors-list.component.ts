@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable, Subscription, map } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CoverComponent } from '../../../shared/cover/cover.component';
 import { DoctorsService } from '../../../../features/services/main/doctors.service';
+import { AuthService } from '../../../../features/services/serial/auth.service';
 
 @Component({
     selector: 'app-doctors-list',
@@ -12,6 +13,8 @@ import { DoctorsService } from '../../../../features/services/main/doctors.servi
     imports: [CoverComponent, CommonModule, RouterLink]
 })
 export class DoctorsListComponent {
+  authService = inject(AuthService);
+  user: any;
   yourTitle: any = 'all doctors list';
   yourSub1: any = 'Dashboard';
   yourSub2: any = 'Doctors';
@@ -36,9 +39,15 @@ export class DoctorsListComponent {
 
 
   ngOnInit(): void {
+    this.user = this.authService.getUser();
     this.doctors$ = this.doctorsService.getCompanyDoctor().pipe(
       map(doctors => doctors.sort((a, b) => a.drSerial - b.drSerial))
     );
+  }
+
+  checkRoles(roleId: any) {
+    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    return result;
   }
 
   ngOnDestroy(): void {

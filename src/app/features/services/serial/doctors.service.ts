@@ -15,11 +15,11 @@ export class DoctorsService {
 
   apiClient = axios.create({
     baseURL: environment.DoctorApi,
-    headers: {
-      'Content-Type' : 'application/json',
-      'Accept' : 'application/json',
-      "Authorization" : 'Bearer ' + this.user.token
-    }
+    // headers: {
+    //   'Content-Type' : 'application/json',
+    //   'Accept' : 'application/json',
+    //   "Authorization" : 'Bearer ' + this.user.token
+    // }
   });
 
   doctorsQuery = injectQuery(() => ({
@@ -44,7 +44,7 @@ export class DoctorsService {
   async addDoctor(model: any | FormData): Promise<any>{
     try {
       const response = await this.apiClient.post('/', model);
-      return response.data;
+      console.log(response.data);
     } catch (error) {
       console.error('Error fetching doctors:', error);
       // Optionally rethrow the error or return a default value

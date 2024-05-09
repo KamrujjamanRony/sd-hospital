@@ -150,7 +150,9 @@ export class AppointmentFormComponent implements OnInit {
 
   // Define the isPastDate method
   isPastDate(date: Date): boolean {
-    return isBefore(date, new Date());
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return isBefore(date, today);
   }
 
 }

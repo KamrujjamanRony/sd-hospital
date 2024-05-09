@@ -48,6 +48,7 @@ import { MainDoctorListComponent } from './pages/main/doctors-list/doctors-list.
 import { ServicesListComponent } from './components/admin/list/services-list/services-list.component';
 import { AddServicesComponent } from './components/admin/add/add-services/add-services.component';
 import { EditServicesComponent } from './components/admin/edit/edit-services/edit-services.component';
+import { OurServicesComponent } from './pages/main/our-services/our-services.component';
 
 export const routes: Routes = [
   {
@@ -99,38 +100,6 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'admin',
-    component: AdminComponent,
-    children: [
-      { path: '', component: DoctorsListComponent },
-      { path: 'add', component: AddDoctorComponent },
-      { path: 'edit/:id', component: EditDoctorComponent },
-      { path: 'doctors', component: DoctorsListComponent },
-      { path: 'doctors/add', component: AddDoctorComponent },
-      { path: 'doctors/edit/:id', component: EditDoctorComponent },
-      { path: 'about-us/:id', component: AboutUsComponent },
-      { path: 'contact-us/:id', component: ContactUsComponent },
-      { path: 'carousel', component: CarouselListComponent },
-      { path: 'carousel/add', component: AddCarouselComponent },
-      { path: 'carousel/edit/:id', component: EditCarouselComponent },
-      { path: 'instrument-list', component: InstrumentListComponent },
-      { path: 'instrument-list/add', component: AddInstrumentComponent },
-      { path: 'instrument-list/edit/:id', component: EditInstrumentComponent },
-      { path: 'service-list', component: ServicesListComponent },
-      { path: 'service-list/add', component: AddServicesComponent },
-      { path: 'service-list/edit/:id', component: EditServicesComponent },
-      { path: 'gallery-list', component: GalleryListComponent },
-      { path: 'gallery-list/add', component: AddGalleryComponent },
-      { path: 'gallery-list/edit/:id', component: EditGalleryComponent },
-      { path: 'healthNews-list', component: HealthNewsListComponent },
-      { path: 'healthNews-list/add', component: AddHealthNewsComponent },
-      { path: 'healthNews-list/edit/:id', component: EditHealthNewsComponent },
-      { path: 'hospitalNews-list', component: HospitalNewsListComponent },
-      { path: 'hospitalNews-list/add', component: AddHospitalNewsComponent },
-      { path: 'hospitalNews-list/edit/:id', component: EditHospitalNewsComponent },
-    ],
-  },
-  {
     path: 'serial',
     component: SerialMainComponent,
     children: [
@@ -163,8 +132,40 @@ export const routes: Routes = [
       { path: '', component: AllDepartmentComponent },
       { path: 'department-list', component: AllDepartmentComponent },
       { path: 'doctors', component: SerialAllDoctorsComponent },
-      { path: 'all-appointment', component: RedirectComponent  },
+      { path: 'all-appointment', component: RedirectComponent },
       { path: 'all-user', component: AllUsersComponent },
+      {
+        path: 'all-mis',
+        component: AdminComponent,
+        children: [
+          { path: '', component: CarouselListComponent },
+          { path: 'add', component: AddCarouselComponent },
+          { path: 'edit/:id', component: EditCarouselComponent },
+          { path: 'doctors', component: DoctorsListComponent },
+          { path: 'doctors/add', component: AddDoctorComponent },
+          { path: 'doctors/edit/:id', component: EditDoctorComponent },
+          { path: 'about-us/:id', component: AboutUsComponent },
+          { path: 'contact-us/:id', component: ContactUsComponent },
+          { path: 'carousel', component: CarouselListComponent },
+          { path: 'carousel/add', component: AddCarouselComponent },
+          { path: 'carousel/edit/:id', component: EditCarouselComponent },
+          { path: 'instrument-list', component: InstrumentListComponent },
+          { path: 'instrument-list/add', component: AddInstrumentComponent },
+          { path: 'instrument-list/edit/:id', component: EditInstrumentComponent },
+          { path: 'service-list', component: ServicesListComponent },
+          { path: 'service-list/add', component: AddServicesComponent },
+          { path: 'service-list/edit/:id', component: EditServicesComponent },
+          { path: 'gallery-list', component: GalleryListComponent },
+          { path: 'gallery-list/add', component: AddGalleryComponent },
+          { path: 'gallery-list/edit/:id', component: EditGalleryComponent },
+          { path: 'healthNews-list', component: HealthNewsListComponent },
+          { path: 'healthNews-list/add', component: AddHealthNewsComponent },
+          { path: 'healthNews-list/edit/:id', component: EditHealthNewsComponent },
+          { path: 'hospitalNews-list', component: HospitalNewsListComponent },
+          { path: 'hospitalNews-list/add', component: AddHospitalNewsComponent },
+          { path: 'hospitalNews-list/edit/:id', component: EditHospitalNewsComponent },
+        ],
+      },
     ],
   },
   {

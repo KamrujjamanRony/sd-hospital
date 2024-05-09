@@ -33,14 +33,14 @@ export class NavbarComponent {
       ]
     },
     {
-      label: 'News',
+      label: 'Our Services',
       subItems: [
         {
-          label: 'SD Hospital News',
+          label: 'SD Hospital',
           link: '/sd-hospital-news'
         },
         {
-          label: 'Digital Diagnostic Center News',
+          label: 'Digital Diagnostic Center',
           link: '/digital-diagnostic-news'
         }
       ]

@@ -68,7 +68,10 @@
             <th class="px-4 py-3">Age</th>
             <th class="px-4 py-3">Sex</th>
             <th class="px-4 py-3">Type</th>
+            <th class="px-4 py-3">Remarks</th>
+            @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
             <th class="px-4 py-3" [class.hidden-when-printing]="isPrinting">Actions</th>
+            }
           </tr>
         </thead>
         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -88,6 +91,8 @@
             <td class="px-4 py-3 text-xs">{{ appointment?.age }}</td>
             <td class="px-4 py-3 text-xs">{{ appointment?.sex }}</td>
             <td class="px-4 py-3 text-xs">@if (appointment?.type) {New} @else {Old}</td>
+            <td class="px-4 py-3 text-xs">{{appointment?.remarks}}</td>
+            @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
             <td class="px-4 py-3 text-sm" [class.hidden-when-printing]="isPrinting">
               <button
                 (click)="openEditAppointmentModal(appointment?.id)"
@@ -102,6 +107,7 @@
                 Delete
               </button> -->
             </td>
+          }
           </tr>
           } @empty {
           <li>No appointment found</li>

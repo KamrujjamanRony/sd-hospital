@@ -41,12 +41,16 @@ export class MyAppointmentsComponent implements OnInit {
   doctorsWithAppointments: any = [];
   user: any;
 
-  constructor(){
-    this.user = this.authService.getUser();
-  }
+  constructor(){}
 
   ngOnInit(): void {
+    this.user = this.authService.getUser();
     this.getDoctorsWithAppointments();
+  }
+
+  checkRoles(roleId: any) {
+    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    return result;
   }
 
   redirectToHome(): void {

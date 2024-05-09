@@ -41,24 +41,29 @@
             children="Home"
           ></app-active-link>
         </li>
-        <li>
-          <app-active-link
-            to="appointment-form"
-            children="Appointment Form"
-          ></app-active-link>
-        </li>
+        @if (checkRoles("0f1a1539-3b29-4f5d-9cf5-7d17dc80e79e")) {
+          <li>
+            <app-active-link
+              to="appointment-form"
+              children="Appointment Form"
+            ></app-active-link>
+          </li>
+        }
+        
         <li>
           <app-active-link
             to="my-appointments"
             children="My Appointments"
           ></app-active-link>
         </li>
-        <li>
-          <app-active-link
-            to="admin"
-            children="Admin"
-          ></app-active-link>
-        </li>
+        @if (checkRoles("74b750b7-bd3a-42cb-bf11-e0e3d62056d4")) {
+          <li>
+            <app-active-link
+              to="admin"
+              children="Admin"
+            ></app-active-link>
+          </li>
+        }
       </ul>
       }
     </div>
