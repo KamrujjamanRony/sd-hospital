@@ -14,6 +14,7 @@ register();
   templateUrl: './carousel.component.html'
 })
 export class CarouselComponent {
+[x: string]: any;
   slideImages: any[] = [];
   loading: boolean = true;
 
