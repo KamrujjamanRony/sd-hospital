@@ -13,11 +13,11 @@ import { DoctorsService } from '../../../features/services/serial/doctors.servic
 import { AuthService } from '../../../features/services/serial/auth.service';
 
 @Component({
-    selector: 'app-my-appointments',
-    standalone: true,
-    templateUrl: './my-appointments.component.html',
-    styleUrl: './my-appointments.component.css',
-    imports: [CoverComponent, AppointmentModalComponent, FormsModule, NavbarComponent]
+  selector: 'app-my-appointments',
+  standalone: true,
+  templateUrl: './my-appointments.component.html',
+  styleUrl: './my-appointments.component.css',
+  imports: [CoverComponent, AppointmentModalComponent, FormsModule, NavbarComponent]
 })
 export class MyAppointmentsComponent implements OnInit {
   appointmentService = inject(AppointmentService);
@@ -34,14 +34,15 @@ export class MyAppointmentsComponent implements OnInit {
   editAppointmentModal: boolean = false;
   private appointmentSubscription?: Subscription;
   searchQuery: string = '';
-  
-  selectedDate: string = '';
+
+  fromDate: string = '';
+  toDate: string = '';
   selectedDoctor: string = '';
   selectedDepartment: string = '';
   doctorsWithAppointments: any = [];
   user: any;
 
-  constructor(){}
+  constructor() { }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
@@ -106,16 +107,32 @@ export class MyAppointmentsComponent implements OnInit {
     this.totalAppointment = selectedAppointment.length;
     return selectedAppointment;
   }
-
+  
   filterAppointmentsByDate(appointments: any): any {
-    this.totalAppointment = appointments.length
-    if (this.selectedDate == "") {
-      return appointments; // If search query is empty, return all appointments
-    }
+    this.totalAppointment = appointments.length;
+    if (!this.fromDate && !this.toDate) {
+      return appointments;
+    } else if (this.fromDate && !this.toDate) {
+      const selectedAppointment = appointments.filter((appointment: any) => appointment && appointment?.date?.includes(this.fromDate));
+      this.totalAppointment = selectedAppointment.length;
+      return selectedAppointment;
+    } else if (!this.fromDate && this.toDate) {
+      const selectedAppointment = appointments.filter((appointment: any) => appointment && appointment?.date?.includes(this.toDate));
+      this.totalAppointment = selectedAppointment.length;
+      return selectedAppointment;
+    } else {
+      // Calculate the day after toDate
+      const toDatePlusOneDay = new Date(this.toDate);
+      toDatePlusOneDay.setDate(toDatePlusOneDay.getDate() + 1);
+      const toDatePlusOneDayString = toDatePlusOneDay.toISOString().split('T')[0];
 
-    const selectedAppointment = appointments.filter((appointment: any) => appointment && appointment?.date?.includes(this.selectedDate));
-    this.totalAppointment = selectedAppointment.length;
-    return selectedAppointment;
+      const selectedAppointments = appointments.filter((appointment: any) => {
+        const appointmentDate = appointment?.date;
+        return appointmentDate >= this.fromDate && appointmentDate <= toDatePlusOneDayString;
+      });
+      this.totalAppointment = selectedAppointments.length;
+      return selectedAppointments;
+    }
   }
 
   filterAppointmentsByDoctor(appointments: any): any {
@@ -138,10 +155,10 @@ export class MyAppointmentsComponent implements OnInit {
 
     return appointments.sort((a: any, b: any) => a.sl - b.sl);
   }
-  
-  
-  
-  
+
+
+
+
 
   onDelete(id: any) {
     const result = confirm("Are you sure you want to delete this item?");

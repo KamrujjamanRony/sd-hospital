@@ -34,7 +34,8 @@ export class AllAppointmentComponent {
   private appointmentSubscription?: Subscription;
   searchQuery: string = '';
   
-  selectedDate: string = '';
+  fromDate: string = '';
+  toDate: string = '';
   selectedDoctor: string = '';
   selectedDepartment: string = '';
   doctorsWithAppointments: any = [];
@@ -92,14 +93,30 @@ export class AllAppointmentComponent {
   }
 
   filterAppointmentsByDate(appointments: any): any {
-    this.totalAppointment = appointments.length
-    if (this.selectedDate == "") {
-      return appointments; // If search query is empty, return all appointments
-    }
+    this.totalAppointment = appointments.length;
+    if (!this.fromDate && !this.toDate) {
+      return appointments;
+    } else if (this.fromDate && !this.toDate) {
+      const selectedAppointment = appointments.filter((appointment: any) => appointment && appointment?.date?.includes(this.fromDate));
+      this.totalAppointment = selectedAppointment.length;
+      return selectedAppointment;
+    } else if (!this.fromDate && this.toDate) {
+      const selectedAppointment = appointments.filter((appointment: any) => appointment && appointment?.date?.includes(this.toDate));
+      this.totalAppointment = selectedAppointment.length;
+      return selectedAppointment;
+    } else {
+      // Calculate the day after toDate
+      const toDatePlusOneDay = new Date(this.toDate);
+      toDatePlusOneDay.setDate(toDatePlusOneDay.getDate() + 1);
+      const toDatePlusOneDayString = toDatePlusOneDay.toISOString().split('T')[0];
 
-    const selectedAppointment = appointments.filter((appointment: any) => appointment && appointment?.date?.includes(this.selectedDate));
-    this.totalAppointment = selectedAppointment.length;
-    return selectedAppointment;
+      const selectedAppointments = appointments.filter((appointment: any) => {
+        const appointmentDate = appointment?.date;
+        return appointmentDate >= this.fromDate && appointmentDate <= toDatePlusOneDayString;
+      });
+      this.totalAppointment = selectedAppointments.length;
+      return selectedAppointments;
+    }
   }
 
   filterAppointmentsByDoctor(appointments: any): any {

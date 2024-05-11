@@ -6,7 +6,8 @@
 
 <div class="container mx-auto flex justify-end gap-2" [class.hide-when-printing]="isPrinting">
   <div class="flex gap-2 flex-col md:flex-row">
-    <input type="date" [(ngModel)]="selectedDate" class="border border-gray-300 rounded-md px-5 py-2">
+    <input type="date" [(ngModel)]="fromDate" class="border border-gray-300 rounded-md px-5 py-2">
+    <input type="date" [(ngModel)]="toDate" class="border border-gray-300 rounded-md px-5 py-2">
   <select class="select select-bordered w-48" [(ngModel)]="selectedDoctor">
     <option value="">All Doctors</option>
     @for (doctor of doctorsWithAppointments; track $index) {
@@ -45,8 +46,14 @@
 <div class="mt-4 mx-4" [class.black-when-printing]="isPrinting">
   <div class="w-full overflow-hidden rounded-lg shadow-xs">
     <div class="w-full overflow-x-auto">
-      @if (selectedDate) {
-        <h1 class="text-2xl font-bold p-2">Date: {{transform(selectedDate)}}</h1>
+      @if (fromDate && !toDate) {
+        <h1 class="text-2xl font-bold p-2">Date: {{transform(fromDate)}}</h1>
+      }
+      @if (!fromDate && toDate) {
+        <h1 class="text-2xl font-bold p-2">Date: {{transform(toDate)}}</h1>
+      }
+      @if (fromDate && toDate) {
+        <h1 class="text-2xl font-bold p-2">Date: <span class="text-2xl font-bold p-2">From: {{transform(fromDate)}} To: {{transform(toDate)}}</span></h1>
       }
       @if (selectedDoctor) {
         <h1 class="text-2xl font-bold px-2">Doctor: {{this.doctorsService.getDoctorById(selectedDoctor)?.drName}}</h1>
