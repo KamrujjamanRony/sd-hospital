@@ -316,12 +316,6 @@
               >Appointment Date:</span
             >
           </div>
-          <!-- <input type="date" formControlName="date"
-          class="input input-bordered w-full input-sm"
-          [class.invalid]="
-            appointmentForm.get('date')?.invalid && (appointmentForm.get('date')?.dirty || appointmentForm.get('date')?.touched || isSubmitted)
-          "
-          required> -->
           <select
             class="select select-bordered select-sm w-full"
             formControlName="date"
@@ -348,6 +342,27 @@
           }
         </label>
       </div>
+      <!-- sL Input -->
+    @if (checkRoles("a0336f52-ac10-4705-8c26-633c6b64a8cd")) {
+      <label class="form-control w-full !mt-0">
+        <div class="label !py-0">
+          <span class="label-text font-bold capitalize">Serial</span>
+        </div>
+        <input
+          type="text"
+          formControlName="sL"
+          [class.invalid]="
+            appointmentForm.get('sL')?.invalid &&
+            (appointmentForm.get('sL')?.dirty ||
+              appointmentForm.get('sL')?.touched ||
+              isSubmitted)
+          "
+          placeholder="Type here"
+          class="input input-bordered w-full input-sm outline-none"
+          required
+        />
+      </label>
+      }
       <!-- remarks Input -->
       <label class="form-control w-full !mt-0">
         <div class="label !py-0">

@@ -54,6 +54,11 @@ export class AppointmentModalComponent {
     this.updateFormValues();
   }
 
+  checkRoles(roleId: any) {
+    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    return result;
+  }
+
   closeModal() {
     this.confirmModal = false;
   }
@@ -151,8 +156,6 @@ export class AppointmentModalComponent {
     const { pName, age, sex, date, sL, type, departmentId, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
     if (pName && date) {
       if (!this.selected) {
-        // console.log('submitted form', this.appointmentForm.value);
-        // const formData = { ...this.appointmentForm.value, departmentId: this.doctor.departmentId, sL: 5, drCode: this.doctor.id, fee: this.doctor.fee, id: crypto.randomUUID() }
         const formData = new FormData();
 
         formData.append('CompanyID', environment.hospitalCode.toString() || '');
@@ -164,6 +167,7 @@ export class AppointmentModalComponent {
         formData.append('PName', pName || '');
         formData.append('Age', age || '');
         formData.append('Sex', sex || '');
+        formData.append('Mobile', mobile || '');
         formData.append('Fee', this.doctor.fee || '');
         formData.append('Remarks', remarks || '');
         formData.append('Username', this.user.username || '');
@@ -174,7 +178,6 @@ export class AppointmentModalComponent {
         // this.toastService.showToast('Appointment is successfully added!');
         this.isSubmitted = true;
       } else {
-        // const formData = { ...this.appointmentForm.value, id: this.selected.id };
         const formData = new FormData();
 
         formData.append('CompanyID', environment.hospitalCode.toString());
@@ -186,6 +189,7 @@ export class AppointmentModalComponent {
         formData.append('PName', pName);
         formData.append('Age', age || '');
         formData.append('Sex', sex || '');
+        formData.append('Mobile', mobile || '');
         formData.append('Fee', fee != null ? fee.toString() : '');
         formData.append('Remarks', remarks || '');
         formData.append('Username', this.user.username);

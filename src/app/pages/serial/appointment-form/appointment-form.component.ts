@@ -137,6 +137,7 @@ export class AppointmentFormComponent implements OnInit {
       formData.append('PName', pName);
       formData.append('Age', age || '');
       formData.append('Sex', sex || '');
+      formData.append('Mobile', mobile || '');
       formData.append('Fee', fee != null ? fee.toString() : '');
       formData.append('Username', this.user.username);
       formData.append('Remarks', remarks || '');
