@@ -231,65 +231,6 @@
           } -->
         </label>
         
-        @if(selected){
-            <!-- sL Input -->
-        <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Serial</span>
-          </div>
-          <input
-            type="text"
-            formControlName="sL"
-            [class.invalid]="
-              appointmentForm.get('sL')?.invalid && (appointmentForm.get('sL')?.dirty || appointmentForm.get('sL')?.touched || isSubmitted)
-            "
-            placeholder="Type here"
-            class="input input-bordered w-full input-sm outline-none"
-            required
-          />
-          <!-- @if(appointmentForm.get('sL')?.hasError('required') && (appointmentForm.get('sL')?.dirty || appointmentForm.get('sL')?.touched || isSubmitted)){
-            <div class="label !py-0">
-              <span class="label-text-alt text-rose-600 capitalize"
-                >Serial is required</span
-              >
-            </div>
-          } -->
-        </label>
-        
-        <!-- paymentStatus Input -->
-        <!-- <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">
-              Payment Status:
-            </span>
-          </div>
-          <select
-            class="select select-bordered select-sm w-full"
-            formControlName="paymentStatus"
-          >
-            <option value="" disabled>Select Status</option>
-            <option value=false>Incomplete</option>
-            <option value=true>Complete</option>
-          </select>
-        </label> -->
-        <!-- confirmed Input -->
-        <!-- <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">
-              Confirmed:
-            </span>
-          </div>
-          <select
-            class="select select-bordered select-sm w-full"
-            formControlName="confirmed"
-          >
-            <option value="" disabled>Select Status</option>
-            <option value=false>No</option>
-            <option value=true>Yes</option>
-          </select>
-        </label> -->
-        }
-        
       <!-- mobile Input -->
       <label class="form-control w-full !mt-0">
         <div class="label !py-0">
@@ -343,7 +284,7 @@
         </label>
       </div>
       <!-- sL Input -->
-    @if (checkRoles("a0336f52-ac10-4705-8c26-633c6b64a8cd")) {
+    @if (checkRoles("a0336f52-ac10-4705-8c26-633c6b64a8cd") && !selected) {
       <label class="form-control w-full !mt-0">
         <div class="label !py-0">
           <span class="label-text font-bold capitalize">Serial</span>

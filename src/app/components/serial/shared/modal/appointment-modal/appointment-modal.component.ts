@@ -125,14 +125,16 @@ export class AppointmentModalComponent {
   
       // Format the date to yyyy-mm-dd
       const formattedDate = this.datePipe.transform(this.selected.date, 'yyyy-MM-dd');
+      console.log(this.selected)
   
       this.appointmentForm.patchValue({
         pName: this.selected.pName,
         age: this.selected.age,
         sex: this.selected.sex,
+        mobile: this.selected.mobile,
         type: this.selected.type,
         date: formattedDate, // Assign the formatted date
-        sL: this.selected.sL,
+        sL: this.selected.sl,
         departmentId: this.selected.departmentId,
         drCode: this.selected.drCode,
         fee: this.selected.fee,
