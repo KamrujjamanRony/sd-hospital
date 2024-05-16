@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HealthNewsService } from '../../../../features/services/main/healthNews.service';
-import { NewsCardComponent } from "../../../../components/shared/news-card/news-card.component";
-import { CoverComponent } from '../../../../components/shared/cover/cover.component';
+import { HealthNewsService } from '../../../../services/main/healthNews.service';
+import { NewsCardComponent } from "../../../../components/main/shared/all-cards/news-card/news-card.component";
+import { CoverComponent } from '../../../../components/main/shared/cover/cover.component';
 
 @Component({
     selector: 'app-health-news',

@@ -1,37 +1,37 @@
 import { Routes } from '@angular/router';
-import { MainComponent } from './layouts/main/main.component';
+import { MainComponent } from './pages/layouts/main/main.component';
 import { HomeComponent } from './pages/main/home/home.component';
 import { AllDoctorsComponent } from './pages/main/all-doctors/all-doctors.component';
 import { DoctorComponent } from './pages/main/doctor/doctor.component';
-import { AdminComponent } from './layouts/admin/admin.component';
+import { AdminComponent } from './pages/layouts/admin/admin.component';
 import { AboutComponent } from './pages/main/about/about.component';
 import { ContactComponent } from './pages/main/contact/contact.component';
 import { InstrumentGalleryComponent } from './pages/main/gallery/instrument-gallery/instrument-gallery.component';
 import { HospitalGalleryComponent } from './pages/main/gallery/hospital-gallery/hospital-gallery.component';
-import { DoctorsListComponent } from './components/admin/list/doctors-list/doctors-list.component';
-import { AddDoctorComponent } from './components/admin/add/add-doctor/add-doctor.component';
-import { EditDoctorComponent } from './components/admin/edit/edit-doctor/edit-doctor.component';
-import { AboutUsComponent } from './components/admin/about-us/about-us.component';
-import { ContactUsComponent } from './components/admin/contact-us/contact-us.component';
-import { CarouselListComponent } from './components/admin/list/carousel-list/carousel-list.component';
-import { AddCarouselComponent } from './components/admin/add/add-carousel/add-carousel.component';
-import { EditCarouselComponent } from './components/admin/edit/edit-carousel/edit-carousel.component';
-import { InstrumentListComponent } from './components/admin/list/instrument-list/instrument-list.component';
-import { AddInstrumentComponent } from './components/admin/add/add-instrument/add-instrument.component';
-import { EditInstrumentComponent } from './components/admin/edit/edit-instrument/edit-instrument.component';
-import { GalleryListComponent } from './components/admin/list/gallery-list/gallery-list.component';
-import { AddGalleryComponent } from './components/admin/add/add-gallery/add-gallery.component';
-import { EditGalleryComponent } from './components/admin/edit/edit-gallery/edit-gallery.component';
-import { HealthNewsListComponent } from './components/admin/list/health-news-list/health-news-list.component';
-import { AddHealthNewsComponent } from './components/admin/add/add-health-news/add-health-news.component';
-import { EditHealthNewsComponent } from './components/admin/edit/edit-health-news/edit-health-news.component';
-import { HospitalNewsListComponent } from './components/admin/list/hospital-news-list/hospital-news-list.component';
-import { AddHospitalNewsComponent } from './components/admin/add/add-hospital-news/add-hospital-news.component';
-import { EditHospitalNewsComponent } from './components/admin/edit/edit-hospital-news/edit-hospital-news.component';
+import { DoctorsListComponent } from './pages/serial/MIS/list/doctors-list/doctors-list.component';
+import { AddDoctorComponent } from './pages/serial/MIS/add/add-doctor/add-doctor.component';
+import { EditDoctorComponent } from './pages/serial/MIS/all-edit/edit-doctor/edit-doctor.component';
+import { AboutUsComponent } from './pages/serial/MIS/about-us/about-us.component';
+import { ContactUsComponent } from './pages/serial/MIS/contact-us/contact-us.component';
+import { CarouselListComponent } from './pages/serial/MIS/list/carousel-list/carousel-list.component';
+import { AddCarouselComponent } from './pages/serial/MIS/add/add-carousel/add-carousel.component';
+import { EditCarouselComponent } from './pages/serial/MIS/all-edit/edit-carousel/edit-carousel.component';
+import { InstrumentListComponent } from './pages/serial/MIS/list/instrument-list/instrument-list.component';
+import { AddInstrumentComponent } from './pages/serial/MIS/add/add-instrument/add-instrument.component';
+import { EditInstrumentComponent } from './pages/serial/MIS/all-edit/edit-instrument/edit-instrument.component';
+import { GalleryListComponent } from './pages/serial/MIS/list/gallery-list/gallery-list.component';
+import { AddGalleryComponent } from './pages/serial/MIS/add/add-gallery/add-gallery.component';
+import { EditGalleryComponent } from './pages/serial/MIS/all-edit/edit-gallery/edit-gallery.component';
+import { HealthNewsListComponent } from './pages/serial/MIS/list/health-news-list/health-news-list.component';
+import { AddHealthNewsComponent } from './pages/serial/MIS/add/add-health-news/add-health-news.component';
+import { EditHealthNewsComponent } from './pages/serial/MIS/all-edit/edit-health-news/edit-health-news.component';
+import { HospitalNewsListComponent } from './pages/serial/MIS/list/hospital-news-list/hospital-news-list.component';
+import { AddHospitalNewsComponent } from './pages/serial/MIS/add/add-hospital-news/add-hospital-news.component';
+import { EditHospitalNewsComponent } from './pages/serial/MIS/all-edit/edit-hospital-news/edit-hospital-news.component';
 import { HospitalNewsComponent } from './pages/main/news/hospital-news/hospital-news.component';
 import { HealthNewsComponent } from './pages/main/news/health-news/health-news.component';
-import { SerialMainComponent } from './layouts/serial-main/serial-main.component';
-import { SerialAdminComponent } from './layouts/serial-admin/serial-admin.component';
+import { SerialMainComponent } from './pages/layouts/serial-main/serial-main.component';
+import { SerialAdminComponent } from './pages/layouts/serial-admin/serial-admin.component';
 import { DepartmentsComponent } from './pages/serial/departments/departments.component';
 import { AppointmentFormComponent } from './pages/serial/appointment-form/appointment-form.component';
 import { MyAppointmentsComponent } from './pages/serial/my-appointments/my-appointments.component';
@@ -45,11 +45,12 @@ import { AllAppointmentComponent } from './pages/serial/all-appointment/all-appo
 import { PrintAppointmentComponent } from './pages/serial/print-appointment/print-appointment.component';
 import { DepartmentComponent } from './pages/main/department/department.component';
 import { MainDoctorListComponent } from './pages/main/doctors-list/doctors-list.component';
-import { ServicesListComponent } from './components/admin/list/services-list/services-list.component';
-import { AddServicesComponent } from './components/admin/add/add-services/add-services.component';
-import { EditServicesComponent } from './components/admin/edit/edit-services/edit-services.component';
+import { ServicesListComponent } from './pages/serial/MIS/list/services-list/services-list.component';
+import { AddServicesComponent } from './pages/serial/MIS/add/add-services/add-services.component';
+import { EditServicesComponent } from './pages/serial/MIS/all-edit/edit-services/edit-services.component';
 import { OurServicesComponent } from './pages/main/our-services/our-services.component';
-import { ReportLayoutComponent } from './layouts/report-layout/report-layout.component';
+import { ReportLayoutComponent } from './pages/layouts/report-layout/report-layout.component';
+import { CareerComponent } from './pages/main/career/career.component';
 
 export const routes: Routes = [
   {
@@ -76,6 +77,10 @@ export const routes: Routes = [
       {
         path: 'gallery/hospital',
         component: HospitalGalleryComponent
+      },
+      {
+        path: 'career',
+        component: CareerComponent
       },
       {
         path: 'about',

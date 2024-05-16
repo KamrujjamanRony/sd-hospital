@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
-import { DoctorsService } from '../../../features/services/serial/doctors.service';
+import { DoctorsService } from '../../../services/serial/doctors.service';
 
 @Component({
     selector: 'app-doctor',

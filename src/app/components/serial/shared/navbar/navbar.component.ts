@@ -3,9 +3,8 @@ import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { ActiveLinkComponent } from "../active-link/active-link.component";
 import { filter } from 'rxjs';
-import { AuthService } from '../../../../features/services/serial/auth.service';
-import { DataService } from '../../../../features/services/serial/data.service';
-
+import { AuthService } from '../../../../services/serial/auth.service';
+import { DataService } from '../../../../services/serial/data.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,

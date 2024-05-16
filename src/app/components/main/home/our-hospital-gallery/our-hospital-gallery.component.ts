@@ -1,8 +1,8 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GalleryService } from '../../../../features/services/main/gallery.service';
-import { InstrumentCardComponent } from "../../../shared/cards/instrument-card/instrument-card.component";
-import { GalleryCardComponent } from "../../../shared/cards/gallery-card/gallery-card.component";
+import { GalleryService } from '../../../../services/main/gallery.service';
+import { InstrumentCardComponent } from "../../shared/all-cards/instrument-card/instrument-card.component";
+import { GalleryCardComponent } from "../../shared/all-cards/gallery-card/gallery-card.component";
 import { RouterLink } from '@angular/router';
 
 @Component({

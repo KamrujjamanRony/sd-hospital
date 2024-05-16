@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../../../features/services/serial/auth.service';
+import { AuthService } from '../../../../services/serial/auth.service';
 
 @Component({
   selector: 'app-sidebar',

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DoctorDetailsComponent } from '../shared/doctor-details/doctor-details.component';
+import { DoctorDetailsComponent } from '../shared/modal/doctor-details/doctor-details.component';
 import { AppointmentModalComponent } from '../shared/modal/appointment-modal/appointment-modal.component';
 
 @Component({

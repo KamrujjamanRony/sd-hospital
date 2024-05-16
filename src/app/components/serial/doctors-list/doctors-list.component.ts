@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PageHeaderComponent } from "../shared/page-header/page-header.component";
 import { DoctorCardComponent } from '../doctor-card/doctor-card.component';
-import { DoctorsService } from '../../../features/services/serial/doctors.service';
+import { DoctorsService } from '../../../services/serial/doctors.service';
 
 @Component({
     selector: 'app-doctors-list',

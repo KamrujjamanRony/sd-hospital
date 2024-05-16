@@ -1,7 +1,7 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { InstrumentCardComponent } from '../../../shared/cards/instrument-card/instrument-card.component';
-import { InstrumentService } from '../../../../features/services/main/instrument.service';
+import { InstrumentCardComponent } from '../../shared/all-cards/instrument-card/instrument-card.component';
+import { InstrumentService } from '../../../../services/main/instrument.service';
 import { Observable } from 'rxjs';
 
 @Component({

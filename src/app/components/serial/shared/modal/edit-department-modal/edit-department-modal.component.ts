@@ -5,9 +5,9 @@ import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angula
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ReactIconComponent } from '../../react-icon/react-icon.component';
-import { DepartmentService } from '../../../../../features/services/serial/department.service';
-import { ImgbbService } from '../../../../../features/services/serial/imgbb.service';
+import { ImgbbService } from '../../../../../services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
+import { DepartmentService } from '../../../../../services/serial/department.service';
 
 @Component({
   selector: 'app-edit-department-modal',

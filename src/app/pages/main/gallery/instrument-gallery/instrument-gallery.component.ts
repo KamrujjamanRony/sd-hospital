@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CoverComponent } from "../../../../components/shared/cover/cover.component";
-import { InstrumentCardComponent } from "../../../../components/shared/cards/instrument-card/instrument-card.component";
+import { CoverComponent } from "../../../../components/main/shared/cover/cover.component";
+import { InstrumentCardComponent } from "../../../../components/main/shared/all-cards/instrument-card/instrument-card.component";
 import { Observable } from 'rxjs';
-import { InstrumentService } from '../../../../features/services/main/instrument.service';
+import { InstrumentService } from '../../../../services/main/instrument.service';
 
 @Component({
     selector: 'app-instrument-gallery',

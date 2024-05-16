@@ -76,7 +76,7 @@
             <th class="mr-1">Sex</th>
             <th class="mr-1">Mobile</th>
             <th class="mr-1">Type</th>
-            <th class="mr-1">Username</th>
+            <th class="mr-1" [class.hidden-when-printing]="isPrinting">Username</th>
             <th class="mr-1 min-w-[250px]">Remarks</th>
             @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
             <th class="w-32" [class.hidden-when-printing]="isPrinting">Actions</th>
@@ -101,7 +101,7 @@
             <td class="mr-1 text-xs">{{ appointment?.sex }}</td>
             <td class="mr-1 text-xs">{{ appointment?.mobile }}</td>
             <td class="mr-1 text-xs">@if (appointment?.type) {New} @else {Old}</td>
-            <td class="mr-1 text-xs">{{appointment?.username}}</td>
+            <td class="mr-1 text-xs" [class.hidden-when-printing]="isPrinting">{{appointment?.username}}</td>
             <td class="mr-1 text-xs">{{appointment?.remarks}}</td>
             @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
             <td class="mr-1 text-sm" [class.hidden-when-printing]="isPrinting">

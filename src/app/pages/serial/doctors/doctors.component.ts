@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { environment } from '../../../../environments/environments';
-import { DoctorsService } from '../../../features/services/serial/doctors.service';
+import { DoctorsService } from '../../../services/serial/doctors.service';
 
 @Component({
     selector: 'app-doctors',

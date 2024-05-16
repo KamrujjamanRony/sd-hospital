@@ -7,8 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { EditDoctorModalComponent } from '../../../components/serial/shared/modal/edit-doctor-modal/edit-doctor-modal.component';
 import { AddDoctorModalComponent } from '../../../components/serial/shared/modal/add-doctor-modal/add-doctor-modal.component';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
-import { DoctorsService } from '../../../features/services/serial/doctors.service';
-import { DepartmentService } from '../../../features/services/serial/department.service';
+import { DoctorsService } from '../../../services/serial/doctors.service';
+import { DepartmentService } from '../../../services/serial/department.service';
 @Component({
     selector: 'app-all-doctors',
     standalone: true,

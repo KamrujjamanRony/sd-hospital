@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { DoctorsService } from '../../../features/services/serial/doctors.service';
+import { DoctorsService } from '../../../services/serial/doctors.service';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { PageHeaderComponent } from '../../../components/serial/shared/page-header/page-header.component';
-import { MainDoctorsCardComponent } from '../../../components/shared/cards/doctors-card/doctors-card.component';
+import { MainDoctorsCardComponent } from '../../../components/main/shared/all-cards/doctors-card/doctors-card.component';
 
 @Component({
     selector: 'app-doctors-list',

@@ -4,9 +4,9 @@ import { Subscription } from 'rxjs';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { AddUserModalComponent } from '../../../components/serial/shared/modal/add-user-modal/add-user-modal.component';
 import { EditUserModalComponent } from '../../../components/serial/shared/modal/edit-user-modal/edit-user-modal.component';
-import { UsersService } from '../../../features/services/serial/users.service';
-import { DataService } from '../../../features/services/serial/data.service';
-import { AuthService } from '../../../features/services/serial/auth.service';
+import { UsersService } from '../../../services/serial/users.service';
+import { AuthService } from '../../../services/serial/auth.service';
+import { DataService } from '../../../services/serial/data.service';
 
 @Component({
     selector: 'app-all-users',

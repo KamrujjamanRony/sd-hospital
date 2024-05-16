@@ -5,9 +5,9 @@ import { ImCross } from "react-icons/im";
 import { Subscription } from 'rxjs';
 import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { ReactIconComponent } from '../../react-icon/react-icon.component';
-import { DepartmentService } from '../../../../../features/services/serial/department.service';
-import { ImgbbService } from '../../../../../features/services/serial/imgbb.service';
+import { ImgbbService } from '../../../../../services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
+import { DepartmentService } from '../../../../../services/serial/department.service';
 
 @Component({
   selector: 'app-add-department-modal',

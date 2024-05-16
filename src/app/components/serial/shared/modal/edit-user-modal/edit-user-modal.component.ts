@@ -6,9 +6,9 @@ import { injectMutation, injectQueryClient } from '@tanstack/angular-query-exper
 import { Subscription } from 'rxjs';
 // import { UsersService } from '../../../../features/services/users.service';
 import { ImCross } from "react-icons/im";
-import { DataService } from '../../../../../features/services/serial/data.service';
 import { environment } from '../../../../../../environments/environments';
-import { UsersService } from '../../../../../features/services/serial/users.service';
+import { UsersService } from '../../../../../services/serial/users.service';
+import { DataService } from '../../../../../services/serial/data.service';
 
 @Component({
   selector: 'app-edit-user-modal',

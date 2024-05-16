@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { AppointmentModalComponent } from '../../../components/serial/shared/modal/appointment-modal/appointment-modal.component';
 import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
-import { AppointmentService } from '../../../features/services/serial/appointment.service';
-import { DepartmentService } from '../../../features/services/serial/department.service';
-import { DoctorsService } from '../../../features/services/serial/doctors.service';
-import { AuthService } from '../../../features/services/serial/auth.service';
+import { AppointmentService } from '../../../services/serial/appointment.service';
+import { DoctorsService } from '../../../services/serial/doctors.service';
+import { AuthService } from '../../../services/serial/auth.service';
+import { DepartmentService } from '../../../services/serial/department.service';
 
 @Component({
   selector: 'app-my-appointments',

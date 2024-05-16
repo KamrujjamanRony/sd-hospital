@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Carousel, Dropdown, initTE } from 'tw-elements';
 import { environment } from '../../../../environments/environments';
-import { CoverComponent } from '../../../components/shared/cover/cover.component';
-import { ContactService } from '../../../features/services/main/contact.service';
+import { CoverComponent } from '../../../components/main/shared/cover/cover.component';
+import { ContactService } from '../../../services/main/contact.service';
 
 @Component({
   selector: 'app-contact',

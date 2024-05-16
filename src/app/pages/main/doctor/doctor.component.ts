@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DoctorsService } from '../../../features/services/main/doctors.service';
+import { DoctorsService } from '../../../services/main/doctors.service';
 import { ActivatedRoute } from '@angular/router';
-import { CoverComponent } from "../../../components/shared/cover/cover.component";
+import { CoverComponent } from "../../../components/main/shared/cover/cover.component";
 
 @Component({
     selector: 'app-doctor',

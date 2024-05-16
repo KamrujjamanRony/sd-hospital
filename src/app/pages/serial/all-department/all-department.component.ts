@@ -7,8 +7,8 @@ import { CoverComponent } from '../../../components/serial/shared/cover/cover.co
 import { AddDepartmentModalComponent } from '../../../components/serial/shared/modal/add-department-modal/add-department-modal.component';
 import { EditDepartmentModalComponent } from '../../../components/serial/shared/modal/edit-department-modal/edit-department-modal.component';
 import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
-import { DepartmentService } from '../../../features/services/serial/department.service';
-import { AuthService } from '../../../features/services/serial/auth.service';
+import { AuthService } from '../../../services/serial/auth.service';
+import { DepartmentService } from '../../../services/serial/department.service';
 
 @Component({
     selector: 'app-all-department',

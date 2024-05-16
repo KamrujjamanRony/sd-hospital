@@ -1,11 +1,11 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { DoctorsService } from '../../../features/services/main/doctors.service';
+import { DoctorsService } from '../../../services/main/doctors.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { CoverComponent } from "../../../components/shared/cover/cover.component";
+import { CoverComponent } from "../../../components/main/shared/cover/cover.component";
 import { environment } from '../../../../environments/environments';
-import { DoctorCardComponent } from "../../../components/shared/cards/doctor-card/doctor-card.component";
+import { DoctorCardComponent } from "../../../components/main/shared/all-cards/doctor-card/doctor-card.component";
 
 @Component({
     selector: 'app-all-doctors',

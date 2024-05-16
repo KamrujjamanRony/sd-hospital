@@ -5,11 +5,11 @@ import { Subscription } from 'rxjs';
 import { ImCross } from 'react-icons/im';
 import { CommonModule } from '@angular/common';
 import { ReactIconComponent } from '../../react-icon/react-icon.component';
-import { DoctorsService } from '../../../../../features/services/serial/doctors.service';
-import { DepartmentService } from '../../../../../features/services/serial/department.service';
-import { ImgbbService } from '../../../../../features/services/serial/imgbb.service';
+import { DoctorsService } from '../../../../../services/serial/doctors.service';
+import { ImgbbService } from '../../../../../services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
-import { AuthService } from '../../../../../features/services/serial/auth.service';
+import { AuthService } from '../../../../../services/serial/auth.service';
+import { DepartmentService } from '../../../../../services/serial/department.service';
 
 @Component({
     selector: 'app-add-doctor-modal',

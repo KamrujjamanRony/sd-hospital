@@ -10,7 +10,7 @@ import { PageHeaderComponent } from '../../../components/serial/shared/page-head
 import { CategoryComponent } from '../../../components/serial/category/category.component';
 import { ReactIconComponent } from '../../../components/serial/shared/react-icon/react-icon.component';
 import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
-import { DepartmentService } from '../../../features/services/serial/department.service';
+import { DepartmentService } from '../../../services/serial/department.service';
 
 @Component({
     selector: 'app-departments',

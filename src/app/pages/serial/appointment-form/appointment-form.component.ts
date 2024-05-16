@@ -6,12 +6,12 @@ import { CommonModule } from '@angular/common';
 import { ReactIconComponent } from '../../../components/serial/shared/react-icon/react-icon.component';
 import { ConfirmModalComponent } from '../../../components/serial/shared/modal/confirm-modal/confirm-modal.component';
 import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
-import { ToastService } from '../../../features/services/serial/toast.service';
-import { AppointmentService } from '../../../features/services/serial/appointment.service';
-import { DepartmentService } from '../../../features/services/serial/department.service';
-import { DoctorsService } from '../../../features/services/serial/doctors.service';
-import { AuthService } from '../../../features/services/serial/auth.service';
+import { ToastService } from '../../../services/serial/toast.service';
+import { AppointmentService } from '../../../services/serial/appointment.service';
+import { DoctorsService } from '../../../services/serial/doctors.service';
+import { AuthService } from '../../../services/serial/auth.service';
 import { environment } from '../../../../environments/environments';
+import { DepartmentService } from '../../../services/serial/department.service';
 
 @Component({
     selector: 'app-appointment-form',

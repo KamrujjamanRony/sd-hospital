@@ -6,9 +6,9 @@ import { ImCross } from "react-icons/im";
 import { ReactIconComponent } from "../../react-icon/react-icon.component";
 import { CommonModule } from '@angular/common';
 import { ConfirmModalComponent } from "../confirm-modal/confirm-modal.component";
-import { UserAuthService } from '../../../../../features/services/serial/userAuth.service';
-import { DataService } from '../../../../../features/services/serial/data.service';
+import { UserAuthService } from '../../../../../services/serial/userAuth.service';
 import { environment } from '../../../../../../environments/environments';
+import { DataService } from '../../../../../services/serial/data.service';
 
 @Component({
   selector: 'app-add-user-modal',

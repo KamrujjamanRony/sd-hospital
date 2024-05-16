@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CoverComponent } from '../../../components/shared/cover/cover.component';
-import { AboutService } from '../../../features/services/main/about.service';
+import { CoverComponent } from '../../../components/main/shared/cover/cover.component';
+import { AboutService } from '../../../services/main/about.service';
 import { environment } from '../../../../environments/environments';
 
 @Component({

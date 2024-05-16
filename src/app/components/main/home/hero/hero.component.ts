@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppointmentModalComponent } from "../../../shared/modals/appointment-modal/appointment-modal.component";
+import { AppointmentModalComponent } from "../../shared/all-modals/appointment-modal/appointment-modal.component";
 
 @Component({
     selector: 'app-hero',
