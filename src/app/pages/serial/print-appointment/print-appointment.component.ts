@@ -23,13 +23,13 @@ export class PrintAppointmentComponent {
   doctorsService = inject(DoctorsService);
   router = inject(Router);
   queryClient = injectQueryClient();
+
   emptyImg: any;
   selectedId: any;
   addAppointmentModal: boolean = false;
   editAppointmentModal: boolean = false;
   private appointmentSubscription?: Subscription;
   searchQuery: string = '';
-  
   selectedDoctor: string = '';
   doctorsWithAppointments: any = [];
 

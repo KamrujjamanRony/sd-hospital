@@ -27,6 +27,7 @@ export class MyAppointmentsComponent implements OnInit {
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
   queryClient = injectQueryClient();
+
   emptyImg: any;
   selectedId: any;
   totalAppointment: any = 0;
@@ -34,7 +35,6 @@ export class MyAppointmentsComponent implements OnInit {
   editAppointmentModal: boolean = false;
   private appointmentSubscription?: Subscription;
   searchQuery: string = '';
-
   fromDate: string = '';
   toDate: string = '';
   selectedDoctor: string = '';

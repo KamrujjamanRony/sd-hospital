@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
@@ -12,16 +12,15 @@ import { DoctorsService } from '../../../services/serial/doctors.service';
     imports: [CoverComponent]
 })
 export class SerialDoctorComponent {
-  // Define your properties here
-  yourTitle: any = 'doctor information';
-  yourSub1: any = 'Home';
-  yourSub2: any = 'Doctor';
+  doctorsService = inject(DoctorsService);
+  route = inject(ActivatedRoute);
+
   emptyImg: any = '../../../../assets/images/doctor.png';
   id: any | null = null;
   paramsSubscription?: Subscription;
   doctor?: any;
 
-  constructor(private doctorsService: DoctorsService, private route: ActivatedRoute) { };
+  constructor() { };
 
  ngOnInit(): void {
    this.paramsSubscription = this.route.paramMap.subscribe(params => {

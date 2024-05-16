@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,9 +15,8 @@ import { environment } from '../../../../../../environments/environments';
     imports: [CommonModule, FormsModule, CoverComponent, ConfirmModalComponent]
 })
 export class AddDoctorComponent {
-  yourTitle: any = 'add a doctor';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Add Doctor';
+  doctorsService = inject(DoctorsService);
+  imgbbService = inject(ImgbbService);
 
   model: any;
   private addDoctorSubscription?: Subscription;
@@ -27,7 +26,7 @@ export class AddDoctorComponent {
     this.confirmModal = false;
   }
 
-  constructor(private doctorsService: DoctorsService, private imgbbService: ImgbbService) {
+  constructor() {
     this.model = {
       companyID: environment.hospitalCode,
       drSerial: null,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CoverComponent } from '../../../components/main/shared/cover/cover.component';
 import { AboutService } from '../../../services/main/about.service';
@@ -11,14 +11,12 @@ import { environment } from '../../../../environments/environments';
   imports: [CoverComponent]
 })
 export class AboutComponent implements OnInit {
-  yourTitle: any = "";
-  yourSub1: any = 'Home';
-  yourSub2: any = 'About Us';
+  aboutService = inject(AboutService);
   
   allAbout$?: Observable<any[]>;
   about!: any;
 
-  constructor(private aboutService: AboutService) { }
+  constructor() { }
   
   ngOnInit(): void {
     this.allAbout$ = this.aboutService.getAllAbout();

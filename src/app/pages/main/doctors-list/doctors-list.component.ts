@@ -13,13 +13,12 @@ import { MainDoctorsCardComponent } from '../../../components/main/shared/all-ca
     imports: [CoverComponent, CommonModule, RouterLink, PageHeaderComponent, MainDoctorsCardComponent]
 })
 export class MainDoctorListComponent {
-  department: any;
-  doctorList: any[] = [];
-  emptyImg: any = '../../../../assets/images/doctor.png';
-
   route = inject(ActivatedRoute);
   doctorService = inject(DoctorsService);
 
+  department: any;
+  doctorList: any[] = [];
+  emptyImg: any = '../../../../assets/images/doctor.png';
   
   constructor() { }
 

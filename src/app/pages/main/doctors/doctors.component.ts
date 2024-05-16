@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DoctorsService } from '../../../services/main/doctors.service';
 import { CommonModule } from '@angular/common';
@@ -14,16 +14,16 @@ import { DoctorCardComponent } from "../../../components/main/shared/all-cards/d
     imports: [CommonModule, RouterLink, CoverComponent, DoctorCardComponent]
 })
 export class DoctorsComponent {
-  yourTitle: any = 'all doctors list';
-  yourSub1: any = 'Home';
-  yourSub2: any = 'Doctors';
+  doctorsService = inject(DoctorsService);
+  
   emptyImg: any = '../../../../assets/images/doctor.png';
   
   doctors$?: Observable<any[]>;
 
-  constructor(private doctorsService: DoctorsService) {}
+  constructor() {}
+
   ngOnInit(): void {
-    this.doctors$ = this.doctorsService.getAllDoctors();
+    this.doctors$ = this.doctorsService.getAllDoctor();
   }
 
 }

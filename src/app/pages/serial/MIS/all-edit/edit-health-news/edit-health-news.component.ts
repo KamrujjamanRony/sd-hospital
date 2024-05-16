@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +15,9 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
   styleUrl: './edit-health-news.component.css'
 })
 export class EditHealthNewsComponent {
+  imgbbService = inject(ImgbbService);
+  healthNewsService = inject(HealthNewsService);
+  route = inject(ActivatedRoute);
   yourTitle: any = 'Update Health News';
   yourSub1: any = 'Dashboard';
   yourSub2: any = 'Edit Health News';
@@ -28,13 +31,14 @@ export class EditHealthNewsComponent {
     this.confirmModal = false;
   }
 
-  constructor(private route: ActivatedRoute, private HealthNewsService: HealthNewsService, private imgbbService: ImgbbService) { }
+  constructor() { }
+
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {
         this.id = params.get('id');
         if (this.id) {
-          this.HealthNewsService.getHealthNews(this.id)
+          this.healthNewsService.getHealthNews(this.id)
             .subscribe({
               next: (response) => {
                 this.model = response;
@@ -57,7 +61,7 @@ export class EditHealthNewsComponent {
     formData.append('HNUrl', this.model.hnUrl);
 
     if (this.id) {
-      this.editHealthNewsSubscription = this.HealthNewsService.updateHealthNews(this.id, formData)
+      this.editHealthNewsSubscription = this.healthNewsService.updateHealthNews(this.id, formData)
         .subscribe({
           next: (response) => {
             // toast

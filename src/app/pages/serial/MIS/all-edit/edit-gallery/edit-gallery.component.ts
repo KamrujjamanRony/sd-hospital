@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,9 +15,10 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
   styleUrl: './edit-gallery.component.css'
 })
 export class EditGalleryComponent {
-  yourTitle: any = 'Update Gallery information';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Edit Gallery';
+  imgbbService = inject(ImgbbService);
+  galleryService = inject(GalleryService);
+  route = inject(ActivatedRoute);
+  
   id: any = null;
   model?: any;
   paramsSubscription?: Subscription;
@@ -28,7 +29,7 @@ export class EditGalleryComponent {
     this.confirmModal = false;
   }
 
-  constructor(private route: ActivatedRoute, private galleryService: GalleryService, private imgbbService: ImgbbService) { }
+  constructor() { }
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {

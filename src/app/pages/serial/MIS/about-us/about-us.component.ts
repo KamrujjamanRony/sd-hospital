@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -13,13 +13,15 @@ import { environment } from '../../../../../environments/environments';
   imports: [CoverComponent, FormsModule]
 })
 export class AboutUsComponent implements OnInit, OnDestroy {
-  yourTitle: any = 'Update About Us';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'About Us';
+  aboutService = inject(AboutService);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+
   aboutInfo?: any;
   paramsSubscription?: Subscription;
   editAboutUsSubscription?: Subscription;
-  constructor(private route: ActivatedRoute, private router: Router, private aboutService: AboutService) { }
+
+  constructor() { }
 
   ngOnInit(): void {
     this.aboutService.getCompanyAbout()

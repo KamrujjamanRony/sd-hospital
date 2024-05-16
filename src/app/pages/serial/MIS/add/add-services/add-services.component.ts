@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
 import { FormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from '../../../../../components/main/shared/all-modals/confirm-modal/confirm-modal.component';
@@ -14,10 +14,8 @@ import { ServicesService } from '../../../../../services/main/services.service';
   styleUrl: './add-services.component.css'
 })
 export class AddServicesComponent {
-  // Component properties
-  yourTitle: any = 'Add a Service';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Services';
+  servicesService = inject(ServicesService);
+  
   model: any;
   services: any;
   private addInstrumentSubscription?: Subscription;
@@ -27,9 +25,9 @@ export class AddServicesComponent {
     this.confirmModal = false;
   }
 
-  constructor(private ServicesService: ServicesService) {
+  constructor() {
     if (!this.services) {
-      ServicesService.getCompanyServices().subscribe(data => {
+      this.servicesService.getCompanyServices().subscribe(data => {
         this.services = data;
       });
     }
@@ -51,7 +49,7 @@ export class AddServicesComponent {
     formData.append('Description', this.model.description);
     formData.append('ImageUrl', this.model.imageUrl);
 
-    this.addInstrumentSubscription = this.ServicesService.addServices(formData)
+    this.addInstrumentSubscription = this.servicesService.addServices(formData)
       .subscribe({
         next: (response) => {
           // toast

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -15,9 +15,10 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
   styleUrl: './edit-instrument.component.css'
 })
 export class EditInstrumentComponent {
-  yourTitle: any = 'Update Instrument information';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Edit Instrument';
+  imgbbService = inject(ImgbbService);
+  instrumentService = inject(InstrumentService);
+  route = inject(ActivatedRoute);
+  
   id: any = null;
   model?: any;
   paramsSubscription?: Subscription;
@@ -28,7 +29,8 @@ export class EditInstrumentComponent {
     this.confirmModal = false;
   }
 
-  constructor(private route: ActivatedRoute, private instrumentService: InstrumentService, private imgbbService: ImgbbService) { }
+  constructor() { }
+
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {

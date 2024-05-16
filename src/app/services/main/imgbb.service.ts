@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environments';
 
@@ -7,8 +7,9 @@ import { environment } from '../../../environments/environments';
   providedIn: 'root'
 })
 export class ImgbbService {
+  http = inject(HttpClient);
 
-  constructor(private readonly http: HttpClient) { }
+  constructor() {}
 
   upload(file: File): Observable<string> {
     const formData = new FormData();

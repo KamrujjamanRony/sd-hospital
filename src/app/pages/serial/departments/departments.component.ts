@@ -22,38 +22,6 @@ import { DepartmentService } from '../../../services/serial/department.service';
 export class DepartmentsComponent {
   departmentService = inject(DepartmentService)
   icons = { TbDental, MdMonitorHeart, FaHouseChimneyMedical, FaBriefcaseMedical, FaHandHoldingMedical, FaMicroscope };
-  // categories = [
-  //   {
-  //     id: crypto.randomUUID(),
-  //     name: "dental",
-  //     img: this.icons.TbDental,
-  //   },
-  //   {
-  //     id: crypto.randomUUID(),
-  //     name: "cardiology",
-  //     img: this.icons.MdMonitorHeart,
-  //   },
-  //   {
-  //     id: crypto.randomUUID(),
-  //     name: "surgery",
-  //     img: this.icons.FaHouseChimneyMedical,
-  //   },
-  //   {
-  //     id: crypto.randomUUID(),
-  //     name: "microbiology",
-  //     img: this.icons.FaMicroscope,
-  //   },
-  //   {
-  //     id: crypto.randomUUID(),
-  //     name: "neuromedicine",
-  //     img: this.icons.FaHandHoldingMedical,
-  //   },
-  //   {
-  //     id: crypto.randomUUID(),
-  //     name: "medicine",
-  //     img: this.icons.FaBriefcaseMedical,
-  //   },
-  // ];
 
   constructor() { }
 

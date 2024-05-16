@@ -20,6 +20,7 @@ export class CarouselListComponent implements OnInit, OnDestroy {
   carouselService = inject(CarouselService);
   dialog = inject(MatDialog);
   router = inject(Router);
+  
   user: any;
   emptyImg: any = environment.emptyImg;
   loading: boolean = true;
@@ -27,6 +28,7 @@ export class CarouselListComponent implements OnInit, OnDestroy {
   deleteCarouselSubscription?: Subscription;
   companyID: any = environment.hospitalCode;
   isModalOpen = false;
+
   constructor() { }
 
   ngOnInit(): void {

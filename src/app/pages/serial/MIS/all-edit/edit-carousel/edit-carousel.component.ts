@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -14,9 +14,10 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
   imports: [CoverComponent, FormsModule, ConfirmModalComponent]
 })
 export class EditCarouselComponent implements OnInit, OnDestroy {
-  yourTitle: any = 'Update Carousel information';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Edit Carousel';
+  carouselService = inject(CarouselService);
+  route = inject(ActivatedRoute);
+  imgbbService = inject(ImgbbService);
+  
   id: any = null;
   carouselInfo?: any;
   paramsSubscription?: Subscription;
@@ -27,7 +28,8 @@ export class EditCarouselComponent implements OnInit, OnDestroy {
     this.confirmModal = false;
   }
 
-  constructor(private route: ActivatedRoute, private carouselService: CarouselService, private imgbbService: ImgbbService) { }
+  constructor() { }
+
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {
@@ -56,7 +58,7 @@ export class EditCarouselComponent implements OnInit, OnDestroy {
     if (this.id) {
       this.editCarouselSubscription = this.carouselService.updateCarousel(this.id, formData)
         .subscribe({
-          next: (response) => {
+          next: () => {
             // toast
             this.confirmModal = true;
           }

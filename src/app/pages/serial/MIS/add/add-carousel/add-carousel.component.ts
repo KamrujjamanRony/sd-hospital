@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
@@ -14,10 +14,9 @@ import { environment } from '../../../../../../environments/environments';
   imports: [CoverComponent, FormsModule, ConfirmModalComponent]
 })
 export class AddCarouselComponent implements OnDestroy {
-  // Component properties
-  yourTitle: any = 'add a carousel';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Add Carousel';
+  carouselService = inject(CarouselService);
+  imgbbService = inject(ImgbbService);
+  
   model: any;
   private addCarouselSubscription?: Subscription;
   confirmModal: boolean = false;
@@ -26,7 +25,7 @@ export class AddCarouselComponent implements OnDestroy {
     this.confirmModal = false;
   }
 
-  constructor(private carouselService: CarouselService, private imgbbService: ImgbbService) {
+  constructor() {
     // Initialize model properties
     this.model = {
       companyID: environment.hospitalCode,

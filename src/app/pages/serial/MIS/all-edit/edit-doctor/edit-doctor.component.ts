@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -15,9 +15,10 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
     imports: [CoverComponent, CommonModule, FormsModule, ConfirmModalComponent]
 })
 export class EditDoctorComponent {
-  yourTitle: any = 'Update Doctor information';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Edit Doctor';
+  imgbbService = inject(ImgbbService);
+  doctorsService = inject(DoctorsService);
+  route = inject(ActivatedRoute);
+  
   id: any | null = null;
   doctorInfo?: any;
   paramsSubscription?: Subscription;
@@ -28,7 +29,7 @@ export class EditDoctorComponent {
     this.confirmModal = false;
   }
 
-  constructor(private route: ActivatedRoute, private doctorsService: DoctorsService, private imgbbService: ImgbbService) { }
+  constructor() { }
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {

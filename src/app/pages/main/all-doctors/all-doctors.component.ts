@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, Renderer2, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { DoctorsService } from '../../../services/main/doctors.service';
 import { CommonModule } from '@angular/common';
@@ -15,15 +15,14 @@ import { DoctorCardComponent } from "../../../components/main/shared/all-cards/d
     imports: [CommonModule, RouterLink, CoverComponent, DoctorCardComponent]
 })
 export class AllDoctorsComponent {
-  yourTitle: any = 'all doctors list';
-  yourSub1: any = 'Home';
-  yourSub2: any = 'Doctors';
-  emptyImg: any = '../../../../assets/images/doctor.png';
+  doctorsService = inject(DoctorsService);
+  renderer = inject(Renderer2);
   
+  emptyImg: any = '../../../../assets/images/doctor.png';
   hospitalDoctors$?: Observable<any[]>;
   hospitalCode: any = environment.hospitalCode;
 
-  constructor(private doctorsService: DoctorsService, private renderer: Renderer2) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.hospitalDoctors$ = this.doctorsService.getCompanyDoctor();

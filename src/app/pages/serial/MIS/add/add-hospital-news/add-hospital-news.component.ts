@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
@@ -14,6 +14,7 @@ import { environment } from '../../../../../../environments/environments';
   styleUrl: './add-hospital-news.component.css'
 })
 export class AddHospitalNewsComponent {
+  hospitalNewsService = inject(HospitalNewsService);
   // Component properties
   yourTitle: any = 'add a Hospital News';
   yourSub1: any = 'Dashboard';
@@ -27,7 +28,7 @@ export class AddHospitalNewsComponent {
     this.confirmModal = false;
   }
 
-  constructor(private HospitalNewsService: HospitalNewsService) {
+  constructor() {
     // Initialize model properties
     this.model = {
       companyID: environment.hospitalCode,
@@ -48,7 +49,7 @@ export class AddHospitalNewsComponent {
     formData.append('SubTitle', this.model.subTitle);
     formData.append('Description', this.model.description);
 
-    this.addHospitalNewsSubscription = this.HospitalNewsService.addHospitalNews(formData)
+    this.addHospitalNewsSubscription = this.hospitalNewsService.addHospitalNews(formData)
       .subscribe({
         next: (response) => {
           // toast

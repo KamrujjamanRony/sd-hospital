@@ -18,10 +18,12 @@ import { DeleteConfirmationModalComponent } from '../../../../../components/main
 export class InstrumentListComponent {
   instrumentService = inject(InstrumentService);
   dialog = inject(MatDialog);
+
   emptyImg: any = environment.emptyImg;
   instruments$?: Observable<any[]>;
   deleteInstrumentSubscription?: Subscription;
   isModalOpen = false;
+  
   constructor() { }
 
   ngOnInit(): void { 

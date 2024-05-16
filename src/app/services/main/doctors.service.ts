@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environments';
 
@@ -7,8 +7,9 @@ import { environment } from '../../../environments/environments';
   providedIn: 'root'
 })
 export class DoctorsService {
+  http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
+  constructor() {}
 
   addDoctor(model: any | FormData): Observable<void>{
     return this.http.post<void>(`${environment.doctorApi}`, model)

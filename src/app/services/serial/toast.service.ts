@@ -1,15 +1,15 @@
-import { Injectable, ComponentFactoryResolver, ApplicationRef, Injector } from '@angular/core';
+import { Injectable, ComponentFactoryResolver, ApplicationRef, Injector, inject } from '@angular/core';
 import { ToastComponent } from '../../components/serial/shared/toast/toast.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastService {
-  constructor(
-    private resolver: ComponentFactoryResolver,
-    private applicationRef: ApplicationRef,
-    private injector: Injector
-  ) {}
+  resolver = inject(ComponentFactoryResolver);
+  applicationRef = inject(ApplicationRef);
+  injector = inject(Injector);
+
+  constructor() {}
 
   showToast(message: string) {
     const toastFactory = this.resolver.resolveComponentFactory(ToastComponent);

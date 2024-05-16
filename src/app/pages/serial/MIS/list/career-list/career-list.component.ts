@@ -30,6 +30,7 @@ export class CareerListComponent {
   deleteCarouselSubscription?: Subscription;
   companyID: any = environment.hospitalCode;
   isModalOpen = false;
+  
   constructor() { }
 
   ngOnInit(): void {

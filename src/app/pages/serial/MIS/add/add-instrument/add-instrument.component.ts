@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
@@ -15,10 +15,9 @@ import { environment } from '../../../../../../environments/environments';
   styleUrl: './add-instrument.component.css'
 })
 export class AddInstrumentComponent {
-  // Component properties
-  yourTitle: any = 'add a Instrument';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Add Instrument';
+  instrumentService = inject(InstrumentService);
+  imgbbService = inject(ImgbbService);
+  
   model: any;
   private addInstrumentSubscription?: Subscription;
   confirmModal: boolean = false;
@@ -27,7 +26,7 @@ export class AddInstrumentComponent {
     this.confirmModal = false;
   }
 
-  constructor(private instrumentService: InstrumentService, private imgbbService: ImgbbService) {
+  constructor() {
     // Initialize model properties
     this.model = {
       companyID: environment.hospitalCode,

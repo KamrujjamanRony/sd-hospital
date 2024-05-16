@@ -60,11 +60,6 @@ export class AllDepartmentComponent {
     }
   }
 
-  // handleClick() {
-  //   this.addDepartmentModal = true;
-  //   this.showModal = false;
-  // }
-
   openDoctorDetails() {
     this.showModal = true;
   }

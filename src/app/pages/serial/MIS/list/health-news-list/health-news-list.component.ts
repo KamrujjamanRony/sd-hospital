@@ -18,11 +18,13 @@ import { DeleteConfirmationModalComponent } from '../../../../../components/main
 export class HealthNewsListComponent {
   healthNewsService = inject(HealthNewsService);
   dialog = inject(MatDialog);
+
   emptyImg: any = environment.emptyImg;
   loading: boolean = true;
   healthNews$?: Observable<any[]>;
   deleteHealthNewsSubscription?: Subscription;
   isModalOpen = false;
+  
   constructor() { }
 
   ngOnInit(): void {

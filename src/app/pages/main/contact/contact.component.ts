@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -14,14 +14,15 @@ import { ContactService } from '../../../services/main/contact.service';
   imports: [CoverComponent]
 })
 export class ContactComponent implements OnInit {
-  yourTitle: any = 'Contact Us';
-  yourSub1: any = 'Home';
-  yourSub2: any = 'Contact Us';
+  contactService = inject(ContactService);
+  router = inject(Router);
+  sanitizer = inject(DomSanitizer);
+  
   allContact$?: Observable<any[]>;
   mapUrl: SafeResourceUrl;
   contact!: any;
 
-  constructor(private contactService: ContactService, private router: Router, private sanitizer: DomSanitizer) {
+  constructor() {
     this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${environment.location}&t=&z=13&ie=UTF8&iwloc=&output=embed`);
    }
   

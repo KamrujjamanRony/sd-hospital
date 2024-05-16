@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
 import { ConfirmModalComponent } from '../../../../../components/main/shared/all-modals/confirm-modal/confirm-modal.component';
 import { FormsModule } from '@angular/forms';
@@ -14,9 +14,9 @@ import { ServicesService } from '../../../../../services/main/services.service';
   styleUrl: './edit-services.component.css'
 })
 export class EditServicesComponent {
-  yourTitle: any = 'Update Service';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Services';
+  servicesService = inject(ServicesService);
+  route = inject(ActivatedRoute);
+  
   id: any = null;
   model?: any;
   services: any;
@@ -28,19 +28,17 @@ export class EditServicesComponent {
     this.confirmModal = false;
   }
 
-  constructor(private route: ActivatedRoute, private ServicesService: ServicesService) {
-    if (!this.services) {
-      ServicesService.getCompanyServices().subscribe(data => {
-        this.services = data;
-      });
-    }
-   }
+  constructor() { }
+
   ngOnInit(): void {
+    this.servicesService.getCompanyServices().subscribe(data => {
+      this.services = data;
+    });
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {
         this.id = params.get('id');
         if (this.id) {
-          this.ServicesService.getServices(this.id)
+          this.servicesService.getServices(this.id)
             .subscribe({
               next: (response) => {
                 this.model = response;
@@ -61,7 +59,7 @@ export class EditServicesComponent {
     formData.append('ImageUrl', this.model.imageUrl);
 
     if (this.id) {
-      this.editServicesSubscription = this.ServicesService.updateServices(this.id, formData)
+      this.editServicesSubscription = this.servicesService.updateServices(this.id, formData)
         .subscribe({
           next: (response) => {
             // toast

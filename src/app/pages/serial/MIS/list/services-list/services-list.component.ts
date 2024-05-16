@@ -18,10 +18,12 @@ import { RouterLink } from '@angular/router';
 export class ServicesListComponent {
   servicesService = inject(ServicesService);
   dialog = inject(MatDialog);
+
   emptyImg: any = environment.emptyImg;
   services$?: Observable<any[]>;
   deleteServicesSubscription?: Subscription;
   isModalOpen = false;
+  
   constructor() { }
 
   ngOnInit(): void {

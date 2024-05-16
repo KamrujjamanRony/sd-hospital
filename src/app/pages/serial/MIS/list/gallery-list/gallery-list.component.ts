@@ -18,12 +18,14 @@ import { DeleteConfirmationModalComponent } from '../../../../../components/main
 export class GalleryListComponent {
   galleryService = inject(GalleryService);
   dialog = inject(MatDialog);
+
   emptyImg: any = environment.emptyImg;
   loading: boolean = true;
   gallery$?: Observable<any[]>;
   deleteGallerySubscription?: Subscription;
   companyID: any = environment.hospitalCode;
   isModalOpen = false;
+  
   constructor() { }
 
   ngOnInit(): void {

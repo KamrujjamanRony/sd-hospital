@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,8 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
   private jsonUrl = '../../../../assets/data/data.json';
+  http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
+  constructor() {}
 
   // Method to fetch JSON data
   getJsonData(): Observable<any> {

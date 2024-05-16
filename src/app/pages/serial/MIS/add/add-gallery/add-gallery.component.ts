@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
@@ -15,10 +15,9 @@ import { environment } from '../../../../../../environments/environments';
   styleUrl: './add-gallery.component.css'
 })
 export class AddGalleryComponent {
-  // Component properties
-  yourTitle: any = 'add a Gallery';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Add Gallery';
+  galleryService = inject(GalleryService);
+  imgbbService = inject(ImgbbService);
+  
   model: any;
   private addGallerySubscription?: Subscription;
   confirmModal: boolean = false;
@@ -27,7 +26,7 @@ export class AddGalleryComponent {
     this.confirmModal = false;
   }
 
-  constructor(private galleryService: GalleryService, private imgbbService: ImgbbService) {
+  constructor() {
     // Initialize model properties
     this.model = {
       companyID: environment.hospitalCode,

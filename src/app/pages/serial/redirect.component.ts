@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,8 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: []
 })
 export class RedirectComponent implements OnInit {
+  router = inject(Router);
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.redirectToAllAppointment();

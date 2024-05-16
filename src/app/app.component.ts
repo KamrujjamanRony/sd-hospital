@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,10 +13,12 @@ import { VisitorCountService } from './services/main/visitor-count.service';
   imports: [CommonModule, RouterOutlet, HttpClientModule],
 })
 export class AppComponent {
+  visitorCountService = inject(VisitorCountService);
+  
   title = 'The sd-hospital';
   visitorCount!: number;
 
-  constructor(private visitorCountService: VisitorCountService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.visitorCountService.incrementVisitorCount();

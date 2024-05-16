@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -14,9 +14,9 @@ import { HospitalNewsService } from '../../../../../services/main/hospitalNews.s
   styleUrl: './edit-hospital-news.component.css'
 })
 export class EditHospitalNewsComponent {
-  yourTitle: any = 'Update HospitalNews information';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Edit HospitalNews';
+  hospitalNewsService = inject(HospitalNewsService);
+  route = inject(ActivatedRoute);
+  
   id: any = null;
   err: any = '';
   model?: any;
@@ -28,13 +28,14 @@ export class EditHospitalNewsComponent {
     this.confirmModal = false;
   }
 
-  constructor(private route: ActivatedRoute, private HospitalNewsService: HospitalNewsService) { }
+  constructor() { }
+  
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {
         this.id = params.get('id');
         if (this.id) {
-          this.HospitalNewsService.getHospitalNews(this.id)
+          this.hospitalNewsService.getHospitalNews(this.id)
             .subscribe({
               next: (response) => {
                 this.model = response;
@@ -56,7 +57,7 @@ export class EditHospitalNewsComponent {
     formData.append('Description', this.model.description);
 
     if (this.id) {
-      this.editHospitalNewsSubscription = this.HospitalNewsService.updateHospitalNews(this.id, formData)
+      this.editHospitalNewsSubscription = this.hospitalNewsService.updateHospitalNews(this.id, formData)
         .subscribe({
           next: (response) => {
             // toast
