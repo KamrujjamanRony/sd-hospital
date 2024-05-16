@@ -50,16 +50,16 @@ export class NavbarComponent {
       link: '/report'
     },
     {
+      label: 'Portal',
+      link: '/serial'
+    },
+    {
       label: 'About',
       link: '/about'
     },
     {
       label: 'Contact',
       link: '/contact'
-    },
-    {
-      label: 'Portal',
-      link: '/serial'
     },
   ];
   isOpen: boolean = false;

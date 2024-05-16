@@ -5,9 +5,12 @@
 <!-- Component: Basic blog card -->
 <div class="overflow-hidden bg-white rounded shadow-md text-slate-500 shadow-slate-200 max-w-xl">
     <!-- Image -->
-    <figure>
-      <img [src]="img" [alt]="title" class="aspect-video w-full" />
-    </figure>
+    @if (img) {
+      <figure>
+        <img [src]="img" [alt]="title" class="aspect-video w-full" />
+      </figure>
+    }
+    
     <!-- Body-->
     <div class="p-6">
       <header class="mb-4">
