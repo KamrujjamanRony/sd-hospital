@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Subscription, map } from 'rxjs';
@@ -16,29 +16,22 @@ import { DeleteConfirmationModalComponent } from '../../../../../components/main
   styleUrl: './health-news-list.component.css'
 })
 export class HealthNewsListComponent {
-  yourTitle: any = 'All Digital Diagnostic Center News';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Diagnostic News';
+  healthNewsService = inject(HealthNewsService);
+  dialog = inject(MatDialog);
   emptyImg: any = environment.emptyImg;
   loading: boolean = true;
   healthNews$?: Observable<any[]>;
   deleteHealthNewsSubscription?: Subscription;
   isModalOpen = false;
-  constructor(private healthNewsService: HealthNewsService, private dialog: MatDialog) { 
+  constructor() { }
+
+  ngOnInit(): void {
     if (!this.healthNews$) {
       this.loading = false;
-      this.healthNews$ = healthNewsService.getCompanyHealthNews().pipe(
+      this.healthNews$ = this.healthNewsService.getCompanyHealthNews().pipe(
         map(doctors => doctors.sort((a, b) => a.healthNewsSerial - b.healthNewsSerial))
       );
     }
-  }
-
-  ngOnInit(): void {
-    // this.healthNews$ = this.healthNewsService.getCompanyHealthNews(this.companyID);
-
-    // this.healthNews$.subscribe(() => {
-    //   this.loading = false;
-    // });
   }
   
   onDelete(id: any): void {

@@ -35,6 +35,8 @@ export class AddDoctorModalComponent {
   ImCross = ImCross;
   isSubmitted = false;
 
+  constructor(){}
+
   ngOnInit(): void {
     this.user = this.authService.getUser();
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { ContactService } from '../../../../services/main/contact.service';
@@ -12,13 +12,16 @@ import { Observable } from 'rxjs';
   templateUrl: './footer.component.html'
 })
 export class FooterComponent {
+  contactService = inject(ContactService);
+  router = inject(Router);
   // Define FontAwesome icons
   faFacebook = faFacebook;
   faInstagram = faInstagram;
   faTwitter = faTwitter;
   allContact$?: Observable<any[]>;
   contact!: any;
-  constructor(private contactService: ContactService, private router: Router) {}
+  
+  constructor() {}
 
   ngOnInit(): void {
     this.contactService.getCompanyAddress()

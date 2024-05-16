@@ -1,4 +1,4 @@
-import { Component, Input, Renderer2 } from '@angular/core';
+import { Component, Input, Renderer2, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -10,10 +10,11 @@ import { RouterLink } from '@angular/router';
 })
 export class DoctorCardComponent {
   @Input() doctor!: any;
+  renderer = inject(Renderer2);
   doctorMale = '../../../../assets/images/doctor.png';
   doctorFemale = '../../../../assets/images/Dr-Famale.jpg';
 
-  constructor(private renderer: Renderer2) {}
+  constructor() {}
 
   scrollToTop() {
     // Scroll to the top of the page

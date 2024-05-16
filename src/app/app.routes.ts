@@ -51,6 +51,9 @@ import { EditServicesComponent } from './pages/serial/MIS/all-edit/edit-services
 import { OurServicesComponent } from './pages/main/our-services/our-services.component';
 import { ReportLayoutComponent } from './pages/layouts/report-layout/report-layout.component';
 import { CareerComponent } from './pages/main/career/career.component';
+import { CareerListComponent } from './pages/serial/MIS/list/career-list/career-list.component';
+import { AddCareerComponent } from './pages/serial/MIS/add/add-career/add-career.component';
+import { EditCareerComponent } from './pages/serial/MIS/all-edit/edit-career/edit-career.component';
 
 export const routes: Routes = [
   {
@@ -170,6 +173,9 @@ export const routes: Routes = [
           { path: 'hospitalNews-list', component: HospitalNewsListComponent },
           { path: 'hospitalNews-list/add', component: AddHospitalNewsComponent },
           { path: 'hospitalNews-list/edit/:id', component: EditHospitalNewsComponent },
+          { path: 'career-list', component: CareerListComponent },
+          { path: 'career-list/add', component: AddCareerComponent },
+          { path: 'career-list/edit/:id', component: EditCareerComponent },
         ],
       },
     ],

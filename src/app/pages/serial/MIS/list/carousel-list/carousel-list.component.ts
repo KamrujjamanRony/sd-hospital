@@ -17,30 +17,24 @@ import { AuthService } from '../../../../../services/serial/auth.service';
 })
 export class CarouselListComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
+  carouselService = inject(CarouselService);
+  dialog = inject(MatDialog);
+  router = inject(Router);
   user: any;
-  yourTitle: any = 'all carousel information';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Carousel';
   emptyImg: any = environment.emptyImg;
   loading: boolean = true;
   carousels$?: Observable<any[]>;
   deleteCarouselSubscription?: Subscription;
   companyID: any = environment.hospitalCode;
   isModalOpen = false;
-  constructor(private carouselService: CarouselService, private router: Router, private dialog: MatDialog) { 
-    if (!this.carousels$) {
-      this.loading = false;
-      this.carousels$ = carouselService.getCompanyCarousel();
-    }
-  }
+  constructor() { }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
-    // this.carousels$ = this.carouselService.getCompanyCarousel(this.companyID);
-
-    // this.carousels$.subscribe(() => {
-    //   this.loading = false;
-    // });
+    if (!this.carousels$) {
+      this.loading = false;
+      this.carousels$ = this.carouselService.getCompanyCarousel();
+    }
   }
 
   checkRoles(roleId: any) {

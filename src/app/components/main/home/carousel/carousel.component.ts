@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
 import { CarouselService } from '../../../../services/main/carousel.service';
@@ -14,12 +14,15 @@ register();
   templateUrl: './carousel.component.html'
 })
 export class CarouselComponent {
+  carouselService = inject(CarouselService);
 [x: string]: any;
   slideImages: any[] = [];
   loading: boolean = true;
 
-  constructor(private carouselService: CarouselService) {
-    carouselService.getCompanyCarousel().subscribe(data => {
+  constructor() {}
+
+  ngOnInit(): void {
+    this.carouselService.getCompanyCarousel().subscribe(data => {
       this.slideImages = data
     });
   }

@@ -14,10 +14,9 @@ import { AuthService } from '../../../../../services/serial/auth.service';
 })
 export class DoctorsListComponent {
   authService = inject(AuthService);
+  doctorsService = inject(DoctorsService);
+  router = inject(Router);
   user: any;
-  yourTitle: any = 'all doctors list';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Doctors';
 
   doctorMale: any = '../../../../../assets/images/doctor.png';
 
@@ -26,7 +25,7 @@ export class DoctorsListComponent {
 
   hospitalCode: any = 10;  // Select the code for different hospital codes
 
-  constructor(private doctorsService: DoctorsService, private router: Router) { }
+  constructor() { }
 
   onDelete(id: any): void {
     console.log(id);

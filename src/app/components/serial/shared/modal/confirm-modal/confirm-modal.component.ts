@@ -11,6 +11,8 @@ export class ConfirmModalComponent {
   @Input() title!: any;
   @Output() closeModal = new EventEmitter<void>();
 
+  constructor(){}
+
   closeThisModal(): void {
     this.closeModal.emit();
   }

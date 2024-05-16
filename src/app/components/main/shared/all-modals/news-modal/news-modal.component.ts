@@ -13,7 +13,6 @@ export class NewsModalComponent {
   @Input() subtitle!: any;
   @Input() description!: any;
   @Output() closeNewsDetails = new EventEmitter<void>();
-  // departmentService = inject(DepartmentService);
 
   closeNewsModal(): void {
     this.closeNewsDetails.emit();

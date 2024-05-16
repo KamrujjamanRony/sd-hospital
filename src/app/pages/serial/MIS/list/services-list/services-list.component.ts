@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { environment } from '../../../../../../environments/environments';
 import { Observable, Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../services/main/services.service';
@@ -16,21 +16,20 @@ import { RouterLink } from '@angular/router';
     imports: [CommonModule, CoverComponent, RouterLink, MatDialogModule]
 })
 export class ServicesListComponent {
-
-  yourTitle: any = 'all Services information';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Services';
+  servicesService = inject(ServicesService);
+  dialog = inject(MatDialog);
   emptyImg: any = environment.emptyImg;
   services$?: Observable<any[]>;
   deleteServicesSubscription?: Subscription;
   isModalOpen = false;
-  constructor(private servicesService: ServicesService, private dialog: MatDialog) { 
-    if (!this.services$) {
-      this.services$ = servicesService.getCompanyServices();
-    }
-  }
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.services$) {
+      this.services$ = this.servicesService.getCompanyServices();
+    }
+
+  }
   
   onDelete(id: any): void {
     const dialogRef = this.dialog.open(DeleteConfirmationModalComponent);

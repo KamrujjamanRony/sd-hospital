@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Subscription, map } from 'rxjs';
@@ -16,27 +16,20 @@ import { DeleteConfirmationModalComponent } from '../../../../../components/main
   styleUrl: './hospital-news-list.component.css'
 })
 export class HospitalNewsListComponent {
-  yourTitle: any = 'all SD Hospital News';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Hospital News';
+  hospitalNewsService = inject(HospitalNewsService);
+  dialog = inject(MatDialog);
   emptyImg: any = environment.emptyImg;
   hospitalNews$?: Observable<any[]>;
   deleteHospitalNewsSubscription?: Subscription;
   isModalOpen = false;
-  constructor(private HospitalNewsService: HospitalNewsService, private dialog: MatDialog) { 
+  constructor() { }
+
+  ngOnInit(): void {
     if (!this.hospitalNews$) {
-      this.hospitalNews$ = HospitalNewsService.getCompanyHospitalNews().pipe(
+      this.hospitalNews$ = this.hospitalNewsService.getCompanyHospitalNews().pipe(
         map(doctors => doctors.sort((a, b) => a.newsSerial - b.newsSerial))
       );
     }
-  }
-
-  ngOnInit(): void {
-    // this.hospitalNews$ = this.HospitalNewsService.getCompanyHospitalNews(this.companyID);
-
-    // this.hospitalNews$.subscribe(() => {
-    //   this.loading = false;
-    // });
   }
   
   onDelete(id: any): void {
@@ -50,9 +43,9 @@ export class HospitalNewsListComponent {
   }
 
   confirmDelete(id: any): void {
-    this.deleteHospitalNewsSubscription = this.HospitalNewsService.deleteHospitalNews(id).subscribe({
+    this.deleteHospitalNewsSubscription = this.hospitalNewsService.deleteHospitalNews(id).subscribe({
       next: () => {
-        this.hospitalNews$ = this.HospitalNewsService.getCompanyHospitalNews();
+        this.hospitalNews$ = this.hospitalNewsService.getCompanyHospitalNews();
         this.closeModal();
       },
     });

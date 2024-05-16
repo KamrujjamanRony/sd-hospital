@@ -21,16 +21,10 @@ export class NavbarComponent {
   jsonData: any;
   isMenuOpen = false;
 
-  constructor(){
-    this.user = this.authService.getUser();
-  }
-
-  checkRoles(roleId: any) {
-    const result = this.user?.roleIds?.find((role: any) => role == roleId)
-    return result;
-  }
+  constructor(){}
 
   ngOnInit(): void {
+    this.user = this.authService.getUser();
     this.dataService.getJsonData().subscribe(data => {
       this.jsonData = data;
     });
@@ -46,6 +40,11 @@ export class NavbarComponent {
 
     // Initialize fullUrl
     this.fullUrl = this.location.prepareExternalUrl(this.location.path());
+  }
+
+  checkRoles(roleId: any) {
+    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    return result;
   }
 
   logOut() {

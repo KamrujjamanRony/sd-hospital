@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, Renderer2, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { InstrumentCardComponent } from '../../shared/all-cards/instrument-card/instrument-card.component';
 import { InstrumentService } from '../../../../services/main/instrument.service';
@@ -11,15 +11,18 @@ import { Observable } from 'rxjs';
   templateUrl: './our-products.component.html'
 })
 export class OurProductsComponent {
+  instrumentService = inject(InstrumentService);
+  router = inject(Router);
+  renderer = inject(Renderer2);
   instruments$?: Observable<any[]>;
   instruments?: any;
-  constructor(private instrumentService: InstrumentService, private router: Router, private renderer: Renderer2) {
-    if (!this.instruments$) {
-      this.instruments$ = instrumentService.getCompanyInstrument();
-      this.instruments$.subscribe(data => {
-        this.instruments = data.slice(0,3);
-      })
-    }
+  constructor() { }
+
+  ngOnInit(): void {
+    this.instruments$ = this.instrumentService.getCompanyInstrument();
+    this.instruments$.subscribe(data => {
+      this.instruments = data.slice(0, 3);
+    })
   }
 
   scrollToTop() {

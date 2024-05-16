@@ -36,8 +36,7 @@ export class EditUserModalComponent {
   isSubmitted = false;
   userRole: any = [];
 
-  constructor() {
-   }
+  constructor() { }
 
   ngOnInit(): void {
     this.dataService.getJsonData().subscribe(data => {

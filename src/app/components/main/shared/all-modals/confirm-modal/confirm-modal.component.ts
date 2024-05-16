@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,8 +12,9 @@ export class ConfirmModalComponent {
   @Input() title!: any;
   @Input() url!: any;
   @Output() closeModal = new EventEmitter<void>();
+  router = inject(Router);
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   closeThisModal(): void {
     this.closeModal.emit();

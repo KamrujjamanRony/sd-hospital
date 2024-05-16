@@ -17,7 +17,6 @@ import { MatIconModule } from '@angular/material/icon';
     </div>
   </div>
 `,
-  styleUrl: './page-header.component.css'
 })
 export class PageHeaderComponent {
   @Input() title!: string;

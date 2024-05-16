@@ -13,6 +13,8 @@ export class DoctorDetailsComponent {
   @Output() handleClick = new EventEmitter<void>();
   departmentService = inject(DepartmentService);
 
+  constructor(){}
+
   closeDoctorModal(): void {
     this.closeDoctorDetails.emit();
   }

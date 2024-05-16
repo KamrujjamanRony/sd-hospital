@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable, Subscription, map } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -16,27 +16,20 @@ import { DeleteConfirmationModalComponent } from '../../../../../components/main
   styleUrl: './instrument-list.component.css'
 })
 export class InstrumentListComponent {
-  yourTitle: any = 'all Instrument information';
-  yourSub1: any = 'Dashboard';
-  yourSub2: any = 'Instrument';
+  instrumentService = inject(InstrumentService);
+  dialog = inject(MatDialog);
   emptyImg: any = environment.emptyImg;
   instruments$?: Observable<any[]>;
   deleteInstrumentSubscription?: Subscription;
   isModalOpen = false;
-  constructor(private instrumentService: InstrumentService, private dialog: MatDialog) { 
+  constructor() { }
+
+  ngOnInit(): void { 
     if (!this.instruments$) {
-      this.instruments$ = instrumentService.getCompanyInstrument().pipe(
+      this.instruments$ = this.instrumentService.getCompanyInstrument().pipe(
         map(doctors => doctors.sort((a, b) => a.productSerial - b.productSerial))
       );
     }
-  }
-
-  ngOnInit(): void {
-    // this.Instruments$ = this.instrumentService.getCompanyInstrument(this.companyID);
-
-    // this.Instruments$.subscribe(() => {
-    //   this.loading = false;
-    // });
   }
   
   onDelete(id: any): void {

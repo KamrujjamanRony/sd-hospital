@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, Renderer2, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DoctorsService } from '../../../../services/main/doctors.service';
 import { Observable, map } from 'rxjs';
@@ -13,9 +13,12 @@ import { DoctorCardComponent } from "../../shared/all-cards/doctor-card/doctor-c
     imports: [RouterLink, CommonModule, DoctorCardComponent]
 })
 export class OurDoctorsComponent {
+  router = inject(Router);
+  renderer = inject(Renderer2);
+  doctorsService = inject(DoctorsService);
   hospitalDoctors$?: Observable<any[]>;
 
-  constructor(private router: Router, private renderer: Renderer2, private doctorsService: DoctorsService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.hospitalDoctors$ = this.doctorsService.getAllDoctor().pipe(
