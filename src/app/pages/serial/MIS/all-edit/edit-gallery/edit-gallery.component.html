@@ -1,4 +1,4 @@
-<app-cover title="Update Gallery information" sub1="Dashboard" sub2="Edit Gallery"></app-cover>
+<app-cover title="Update Gallery information" sub1="MIS" sub2="Edit Gallery"></app-cover>
 
 <div class="w-full max-w-7xl mx-auto">
   @if (model) {
@@ -91,7 +91,7 @@
 </div>
 
 @if(confirmModal){
-  <confirm-modal title="Gallery is successfully updated!" url="admin/gallery-list" (closeModal)="closeModal()" />
+  <confirm-modal title="Gallery is successfully updated!" url="admin/all-mis/gallery-list" (closeModal)="closeModal()" />
 }
 
 

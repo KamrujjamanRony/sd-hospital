@@ -1,4 +1,4 @@
-<app-cover title="Update Service" sub1="Dashboard" sub2="Services"></app-cover>
+<app-cover title="Update Service" sub1="MIS" sub2="Services"></app-cover>
 
 @if (model) {
     <div class="w-full max-w-7xl mx-auto">
@@ -56,7 +56,7 @@
 
 
 @if(confirmModal){
-  <confirm-modal title="Service is successfully updated!" url="admin/service-list" (closeModal)="closeModal()" />
+  <confirm-modal title="Service is successfully updated!" url="admin/all-mis/service-list" (closeModal)="closeModal()" />
 }
 
 

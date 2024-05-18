@@ -19,7 +19,7 @@
         routerLink="add"
         class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded uppercase"
       >
-        add carousel
+        add career
       </a>
     </div>
   
@@ -40,33 +40,33 @@
             <tbody
               class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
             >
-            @if (carousels$) {
-              @for (carousel of carousels$ | async; track $index) {
+            @if (careers$) {
+              @for (career of careers$ | async; track $index) {
                 <tr
                   class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
                 >
                   <td class="px-4 py-3">
                     <img
                       [src]="
-                        carousel?.imageUrl !== ''
-                          ? carousel.imageUrl
+                        career?.imageUrl !== ''
+                          ? career.imageUrl
                           : emptyImg
                       "
-                      alt="carousel Image"
+                      alt="career Image"
                       class="w-8 md:w-16 rounded"
                     />
                   </td>
-                  <td class="px-4 py-3 text-xs">{{ carousel.title }}</td>
-                  <td class="px-4 py-3 text-sm">{{ carousel?.description?.slice(0,100) }}...</td>
+                  <td class="px-4 py-3 text-xs">{{ career.title }}</td>
+                  <td class="px-4 py-3 text-sm">{{ career?.description?.slice(0,100) }}...</td>
                   <td class="px-4 py-3 text-sm">
                     <a
-                      [routerLink]="['edit', carousel.id]"
+                      [routerLink]="['edit', career.id]"
                       class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded dark:bg-green-700 dark:text-green-100 mr-2 inline-block my-2"
                     >
                       Edit
                     </a>
                     <button
-                      (click)="onDelete(carousel.id)"
+                      (click)="onDelete(career.id)"
                       class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded dark:bg-red-700 dark:text-green-100 inline-block"
                     >
                       Delete

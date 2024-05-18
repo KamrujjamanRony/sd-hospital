@@ -1,4 +1,4 @@
-<app-cover title="Update Carousel information" sub1="Dashboard" sub2="Edit Carousel"></app-cover>
+<app-cover title="Update Carousel information" sub1="MIS" sub2="Edit Carousel"></app-cover>
 
 @if (carouselInfo) {
   <div class="w-full max-w-7xl mx-auto">
@@ -73,7 +73,7 @@
   </div>
 
   @if(confirmModal){
-    <confirm-modal title="Carousel is successfully updated!" url="admin/carousel" (closeModal)="closeModal()" />
+    <confirm-modal title="Carousel is successfully updated!" url="admin/all-mis/carousel" (closeModal)="closeModal()" />
   }
 } @else {
   <div

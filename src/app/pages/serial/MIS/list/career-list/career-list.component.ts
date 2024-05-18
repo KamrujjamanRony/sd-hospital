@@ -5,9 +5,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '../../../../../services/serial/auth.service';
 import { environment } from '../../../../../../environments/environments';
 import { Observable, Subscription } from 'rxjs';
-import { CarouselService } from '../../../../../services/main/carousel.service';
 import { DeleteConfirmationModalComponent } from '../../../../../components/main/shared/all-modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
+import { CareerService } from '../../../../../services/main/career.service';
 
 
 
@@ -20,14 +20,14 @@ import { CoverComponent } from '../../../../../components/main/shared/cover/cove
 })
 export class CareerListComponent {
   authService = inject(AuthService);
-  carouselService = inject(CarouselService);
+  careerService = inject(CareerService);
   router = inject(Router);
   dialog = inject(MatDialog);
   user: any;
   emptyImg: any = environment.emptyImg;
   loading: boolean = true;
-  carousels$?: Observable<any[]>;
-  deleteCarouselSubscription?: Subscription;
+  careers$?: Observable<any[]>;
+  deleteCareerSubscription?: Subscription;
   companyID: any = environment.hospitalCode;
   isModalOpen = false;
   
@@ -36,9 +36,9 @@ export class CareerListComponent {
   ngOnInit(): void {
     this.user = this.authService.getUser();
     
-    if (!this.carousels$) {
+    if (!this.careers$) {
       this.loading = false;
-      this.carousels$ = this.carouselService.getCompanyCarousel();
+      this.careers$ = this.careerService.getCompanyCareer();
     }
   }
 
@@ -58,9 +58,9 @@ export class CareerListComponent {
   }
 
   confirmDelete(id: any): void {
-    this.deleteCarouselSubscription = this.carouselService.deleteCarousel(id).subscribe({
+    this.deleteCareerSubscription = this.careerService.deleteCareer(id).subscribe({
       next: () => {
-        this.carousels$ = this.carouselService.getCompanyCarousel();
+        this.careers$ = this.careerService.getCompanyCareer();
         this.closeModal();
       },
     });
@@ -71,7 +71,7 @@ export class CareerListComponent {
   }
 
   ngOnDestroy(): void {
-    this.deleteCarouselSubscription?.unsubscribe();
+    this.deleteCareerSubscription?.unsubscribe();
   }
 
 }

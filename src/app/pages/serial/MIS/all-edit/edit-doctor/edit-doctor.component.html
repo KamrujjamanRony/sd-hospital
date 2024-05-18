@@ -1,4 +1,4 @@
-<app-cover title="Update Doctor information" sub1="Dashboard" sub2="Edit Doctor"></app-cover>
+<app-cover title="Update Doctor information" sub1="MIS" sub2="Edit Doctor"></app-cover>
 
 @if (doctorInfo) {
   <div class="w-full max-w-7xl mx-auto">
@@ -236,6 +236,6 @@
 
 
 @if(confirmModal){
-  <confirm-modal title="Doctor is successfully updated!" url="admin/doctors" (closeModal)="closeModal()" />
+  <confirm-modal title="Doctor is successfully updated!" url="admin/all-mis/doctors" (closeModal)="closeModal()" />
 }
 

@@ -1,4 +1,4 @@
-<app-cover title="Update HospitalNews information" sub1="Dashboard" sub2="Edit HospitalNews"></app-cover>
+<app-cover title="Update HospitalNews information" sub1="MIS" sub2="Edit HospitalNews"></app-cover>
 
 <div class="w-full max-w-7xl mx-auto">
   @if (model) {
@@ -87,6 +87,6 @@
 </div>
 
 @if(confirmModal){
-  <confirm-modal title="Hospital News is successfully updated!" url="admin/hospitalNews-list" (closeModal)="closeModal()" />
+  <confirm-modal title="Hospital News is successfully updated!" url="admin/all-mis/hospitalNews-list" (closeModal)="closeModal()" />
 }
 

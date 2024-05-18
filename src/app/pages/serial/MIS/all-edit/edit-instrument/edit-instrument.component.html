@@ -1,4 +1,4 @@
-<app-cover title="Update Instrument information" sub1="Dashboard" sub2="Edit Instrument"></app-cover>
+<app-cover title="Update Instrument information" sub1="MIS" sub2="Edit Instrument"></app-cover>
 
 <div class="w-full max-w-7xl mx-auto">
   @if (model) {
@@ -108,7 +108,7 @@
 </div>
 
 @if(confirmModal){
-  <confirm-modal title="Instrument is successfully updated!" url="admin/instrument-list" (closeModal)="closeModal()" />
+  <confirm-modal title="Instrument is successfully updated!" url="admin/all-mis/instrument-list" (closeModal)="closeModal()" />
 }
 
 
