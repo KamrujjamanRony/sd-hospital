@@ -34,17 +34,28 @@ export class AllAppointmentComponent {
   private appointmentSubscription?: Subscription;
   searchQuery: string = '';
   
-  fromDate: string = '';
-  toDate: string = '';
+  fromDate: any = '';
+  toDate: any = '';
   selectedDoctor: string = '';
   selectedDepartment: string = '';
   doctorsWithAppointments: any = [];
 
-  constructor() {}
+  constructor() {
+    this.fromDate = this.formatDate(new Date());
+  }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
     this.getDoctorsWithAppointments();
+    console.log(this.transform(new Date()))
+  }
+  
+  // Method to format date as YYYY-MM-DD
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
   }
 
   checkRoles(roleId: any) {
