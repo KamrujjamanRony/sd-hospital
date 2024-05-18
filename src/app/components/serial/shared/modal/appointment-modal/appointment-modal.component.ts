@@ -90,7 +90,12 @@ export class AppointmentModalComponent {
     mutationFn: (formData: any) => this.appointmentService.updateAppointment(this.selected.id, formData),
     onSuccess: () => {
       // Invalidate and refetch by using the client directly
-      client.invalidateQueries({ queryKey: ['appointments'] })
+      client.invalidateQueries({ queryKey: ['appointments'] });
+      // toast
+      this.confirmModal = true;
+      setTimeout(() => {
+        this.closeAppointmentModal();
+      }, 3000);
     },
   }));
 
@@ -125,7 +130,6 @@ export class AppointmentModalComponent {
   
       // Format the date to yyyy-mm-dd
       const formattedDate = this.datePipe.transform(this.selected.date, 'yyyy-MM-dd');
-      console.log(this.selected)
   
       this.appointmentForm.patchValue({
         pName: this.selected.pName,
@@ -185,7 +189,9 @@ export class AppointmentModalComponent {
         formData.append('CompanyID', environment.hospitalCode.toString());
         formData.append('Date', date);
         formData.append('DepartmentId', departmentId != null ? departmentId.toString() : '');
-        formData.append('SL', sL != null ? sL.toString() : '');
+        if (this.selected.sl !== sL) {
+          formData.append('SL', sL != null ? sL.toString() : '');
+        }
         formData.append('Type', type != null ? type.toString() : '');
         formData.append('DrCode', drCode != null ? drCode.toString() : '');
         formData.append('PName', pName);
@@ -199,11 +205,6 @@ export class AppointmentModalComponent {
         formData.append('Confirmed', confirmed != null ? confirmed.toString() : '');
 
         this.UpdateAppointmentMutation.mutate(formData);
-        // toast
-        this.confirmModal = true;
-        setTimeout(() => {
-          this.closeAppointmentModal();
-        }, 3000);
         // this.toastService.showToast('Appointment is successfully updated!');
         this.isSubmitted = true;
       }
