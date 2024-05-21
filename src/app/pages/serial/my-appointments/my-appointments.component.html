@@ -68,15 +68,15 @@
             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
           >
           <th class="mx-1">Sl</th>
-          <th class="mx-1 max-w-[200px]" [class.hidden-when-printing]="isPrinting">Doctor Name</th>
-            <th class="mx-1 max-w-[200px]" [class.hidden-when-printing]="isPrinting">Department</th>
-            <th class="mx-1 max-w-[200px]" [class.hidden-when-printing]="isPrinting">Date</th>
-            <th class="mx-1 max-w-[200px]">Patient Name</th>
-            <th class="mx-1 max-w-[200px]">Age</th>
-            <th class="mx-1 max-w-[200px]">Sex</th>
-            <th class="mx-1 max-w-[200px]">Mobile</th>
-            <th class="mx-1 max-w-[200px]">Type</th>
-            <th class="mx-1 max-w-[200px]" [class.hidden-when-printing]="isPrinting">Username</th>
+          <th class="mx-1" [class.hidden-when-printing]="isPrinting">Doctor Name</th>
+            <th class="mx-1" [class.hidden-when-printing]="isPrinting">Department</th>
+            <th class="mx-1" [class.hidden-when-printing]="isPrinting">Date</th>
+            <th class="mx-1">Patient Name</th>
+            <th class="mx-1">Age</th>
+            <th class="mx-1">Sex</th>
+            <th class="mx-1">Mobile</th>
+            <th class="mx-1">Type</th>
+            <th class="mx-1" [class.hidden-when-printing]="isPrinting">Username</th>
             <th class="mx-1 w-[200px]">Remarks</th>
             @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
             <th class="w-32" [class.hidden-when-printing]="isPrinting">Actions</th>
@@ -93,16 +93,16 @@
             class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
           >
           <td class="mx-1 text-xs">{{ appointment?.sl }}</td>
-            <td class="mx-1 text-xs" [class.hidden-when-printing]="isPrinting">{{ this.doctorsService.getDoctorById(appointment?.drCode)?.drName }}</td>
-            <td class="mx-1 text-xs" [class.hidden-when-printing]="isPrinting">{{ departmentService.getDepartmentById(appointment?.departmentId) }}</td>
+            <td class="mx-1 text-xs max-w-[150px]" [class.hidden-when-printing]="isPrinting">{{ this.doctorsService.getDoctorById(appointment?.drCode)?.drName }}</td>
+            <td class="mx-1 text-xs max-w-[100px]" [class.hidden-when-printing]="isPrinting">{{ departmentService.getDepartmentById(appointment?.departmentId) }}</td>
             <td class="mx-1 text-xs" [class.hidden-when-printing]="isPrinting">{{ transform(appointment?.date) }}</td>
             <td class="mx-1 text-xs">{{ appointment?.pName }}</td>
-            <td class="mx-1 text-xs">{{ appointment?.age }}</td>
-            <td class="mx-1 text-xs">{{ appointment?.sex }}</td>
-            <td class="mx-1 text-xs">{{ appointment?.mobile }}</td>
-            <td class="mx-1 text-xs">@if (appointment?.type) {New} @else {Old}</td>
-            <td class="mx-1 text-xs" [class.hidden-when-printing]="isPrinting">{{appointment?.username}}</td>
-            <td class="mx-1 text-xs">{{appointment?.remarks}}</td>
+            <td class="mx-2 text-xs">{{ appointment?.age }}</td>
+            <td class="mx-2 text-xs">{{ appointment?.sex }}</td>
+            <td class="mx-2 text-xs">{{ appointment?.mobile }}</td>
+            <td class="mx-2 text-xs">@if (appointment?.type) {New} @else {Old}</td>
+            <td class="mx-2 text-xs" [class.hidden-when-printing]="isPrinting">{{appointment?.username}}</td>
+            <td class="mx-1 text-xs max-w-[180px]">{{appointment?.remarks}}</td>
             @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
             <td class="mx-1 text-sm" [class.hidden-when-printing]="isPrinting">
               <button

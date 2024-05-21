@@ -92,23 +92,23 @@
           <tr
             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
           >
-            <th class="mx-1 max-w-[200px]">Sl</th>
-            <th class="mx-1 max-w-[200px]" [class.hidden-when-printing]="isPrinting">
+            <th class="mx-1">Sl</th>
+            <th class="mx-1" [class.hidden-when-printing]="isPrinting">
               Doctor Name
             </th>
-            <th class="mx-1 max-w-[200px]" [class.hidden-when-printing]="isPrinting">
+            <th class="mx-1" [class.hidden-when-printing]="isPrinting">
               Department
             </th>
-            <th class="mx-1 max-w-[200px]" [class.hidden-when-printing]="isPrinting">
+            <th class="mx-1" [class.hidden-when-printing]="isPrinting">
               Date
             </th>
-            <th class="mx-1 max-w-[200px]">Patient Name</th>
-            <th class="mx-1 max-w-[200px]">Age</th>
-            <th class="mx-1 max-w-[200px]">Sex</th>
-            <th class="mx-1 max-w-[200px]">Mobile</th>
-            <th class="mx-1 max-w-[200px]">Type</th>
-            <th class="mx-1 max-w-[200px]" [class.hidden-when-printing]="isPrinting">Username</th>
-            <th class="mx-1 w-[200px]">Remarks</th>
+            <th class="mx-1">Patient Name</th>
+            <th class="mx-1">Age</th>
+            <th class="mx-1">Sex</th>
+            <th class="mx-1">Mobile</th>
+            <th class="mx-1">Type</th>
+            <th class="mx-1" [class.hidden-when-printing]="isPrinting">Username</th>
+            <th class="mx-1">Remarks</th>
             @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717") || checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
             <th class="w-32" [class.hidden-when-printing]="isPrinting">
               Actions
@@ -129,7 +129,7 @@
           >
             <td class="mx-1 text-xs">{{ appointment?.sl }}</td>
             <td
-              class="mx-1 text-xs"
+              class="mx-1 text-xs max-w-[150px]"
               [class.hidden-when-printing]="isPrinting"
             >
               {{
@@ -137,7 +137,7 @@
               }}
             </td>
             <td
-              class="mx-1 text-xs"
+              class="mx-1 text-xs max-w-[100px]"
               [class.hidden-when-printing]="isPrinting"
             >
               {{
@@ -151,14 +151,14 @@
               {{ transform(appointment?.date) }}
             </td>
             <td class="mx-1 text-xs">{{ appointment?.pName }}</td>
-            <td class="mx-1 text-xs">{{ appointment?.age }}</td>
-            <td class="mx-1 text-xs">{{ appointment?.sex }}</td>
-            <td class="mx-1 text-xs">{{ appointment?.mobile }}</td>
-            <td class="mx-1 text-xs">
+            <td class="mx-2 text-xs">{{ appointment?.age }}</td>
+            <td class="mx-2 text-xs">{{ appointment?.sex }}</td>
+            <td class="mx-2 text-xs">{{ appointment?.mobile }}</td>
+            <td class="mx-2 text-xs">
               @if (appointment?.type) {New} @else {Old}
             </td>
-            <td class="mx-1 text-xs" [class.hidden-when-printing]="isPrinting">{{appointment?.username}}</td>
-            <td class="mx-1 text-xs">{{appointment?.remarks}}</td>
+            <td class="mx-2 text-xs" [class.hidden-when-printing]="isPrinting">{{appointment?.username}}</td>
+            <td class="mx-1 text-xs max-w-[180px]">{{appointment?.remarks}}</td>
             <td
               class="mx-1 text-sm"
               [class.hidden-when-printing]="isPrinting"
