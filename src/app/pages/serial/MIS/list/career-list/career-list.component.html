@@ -24,6 +24,8 @@
     </div>
   
     <div class="mt-4 mx-4">
+      
+      @if (careers$) {
       <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
           <table class="w-full">
@@ -40,7 +42,6 @@
             <tbody
               class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
             >
-            @if (careers$) {
               @for (career of careers$ | async; track $index) {
                 <tr
                   class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
@@ -73,8 +74,16 @@
                     </button>
                   </td>
                 </tr>
+              } @empty {<tr
+                class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
+              >
+                <td class="px-4 py-3"></td>
+                <td class="px-4 py-3">
+                <h1 class="text-center text-2xl text-rose-600">No Career Found!</h1>
+                </td>
+                <td class="px-4 py-3"></td>
+                <td class="px-4 py-3"></td>
               }
-            }
             </tbody>
           </table>
         </div>
@@ -82,6 +91,7 @@
           class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
         ></div>
       </div>
+    }
     </div>
   }
   </section>

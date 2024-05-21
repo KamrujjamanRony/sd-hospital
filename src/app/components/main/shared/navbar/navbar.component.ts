@@ -53,10 +53,10 @@ export class NavbarComponent {
       label: 'Portal',
       link: '/serial'
     },
-    // {
-    //   label: 'Career',
-    //   link: '/career'
-    // },
+    {
+      label: 'Career',
+      link: '/career'
+    },
     {
       label: 'About',
       link: '/about'

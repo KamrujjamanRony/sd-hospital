@@ -21,7 +21,7 @@ export class CareerService {
 
   getCompanyCareer(): Observable<any[]> {
     return this.getAllCareer().pipe(
-      map(Career => Career.filter(a => a.companyID === environment.hospitalCode))
+      map(Career => Career.filter(a => a.companyID === 20))   // TODO: environment.hospitalCode
     );
   }
 

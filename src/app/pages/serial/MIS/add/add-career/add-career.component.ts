@@ -29,7 +29,7 @@ export class AddCareerComponent {
   constructor() {
     // Initialize model properties
     this.model = {
-      companyID: environment.hospitalCode,
+      companyID: 20,   // TODO: environment.hospitalCode
       title: '',
       description: '',
       imageUrl: '',
