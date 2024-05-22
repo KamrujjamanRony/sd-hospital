@@ -160,6 +160,8 @@ export class AppointmentModalComponent {
 
   onSubmit(): void {
     const { pName, age, sex, date, sL, type, departmentId, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
+    // console.log(this.appointmentForm.value)
+    console.log(this.doctor);
     if (pName && date) {
       if (!this.selected) {
         const formData = new FormData();
@@ -188,12 +190,12 @@ export class AppointmentModalComponent {
 
         formData.append('CompanyID', environment.hospitalCode.toString());
         formData.append('Date', date);
-        formData.append('DepartmentId', departmentId != null ? departmentId.toString() : '');
+        formData.append('DepartmentId', this.doctor.departmentId != null ? this.doctor.departmentId.toString() : '');
         if (this.selected.sl !== sL) {
           formData.append('SL', sL != null ? sL.toString() : '');
         }
         formData.append('Type', type != null ? type.toString() : '');
-        formData.append('DrCode', drCode != null ? drCode.toString() : '');
+        formData.append('DrCode', this.doctor.id != null ? this.doctor.id.toString() : '');
         formData.append('PName', pName);
         formData.append('Age', age || '');
         formData.append('Sex', sex || '');
