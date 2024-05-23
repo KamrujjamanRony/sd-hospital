@@ -97,6 +97,7 @@ export class AllAppointmentComponent {
       appointment?.age?.includes(this.searchQuery) ||
       appointment?.sex?.toLowerCase()?.includes(this.searchQuery.toLowerCase()) ||
       appointment?.username?.toLowerCase()?.includes(this.searchQuery.toLowerCase()) ||
+      appointment?.mobile?.toLowerCase()?.includes(this.searchQuery.toLowerCase()) ||
       appointment?.remarks?.toLowerCase()?.includes(this.searchQuery.toLowerCase())
     );
     this.totalAppointment = selectedAppointment.length;
