@@ -30,6 +30,7 @@ export class AppointmentModalComponent {
   doctorsService = inject(DoctorsService);
   authService = inject(AuthService);
   user: any;
+  msg: any;
   @Input() doctor: any;
   @Input() id!: any;
   @Output() closeAppointment = new EventEmitter<void>();
@@ -78,11 +79,15 @@ export class AppointmentModalComponent {
     onSuccess: () => {
       // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['appointments'] });
+      this.msg = "Appointment is successfully added!"
       // toast
       this.confirmModal = true;
       setTimeout(() => {
         this.closeAppointmentModal();
       }, 3000);
+    },
+    onError: () => {
+      this.msg = "Error: Something went wrong!"
     },
   }));
 
@@ -91,6 +96,7 @@ export class AppointmentModalComponent {
     onSuccess: () => {
       // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['appointments'] });
+      this.msg = "Appointment is successfully updated!"
       // toast
       this.confirmModal = true;
       setTimeout(() => {

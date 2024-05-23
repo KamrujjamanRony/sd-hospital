@@ -336,5 +336,5 @@
 </div>
 
 @if(confirmModal){
-  <confirm-modal [title]="selected ? 'Appointment is successfully updated!' : 'Appointment is successfully added!'" (closeModal)="closeModal()" />
+  <confirm-modal [title]="msg" (closeModal)="closeModal()" />
 }
