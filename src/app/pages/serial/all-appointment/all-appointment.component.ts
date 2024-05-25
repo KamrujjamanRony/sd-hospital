@@ -37,8 +37,10 @@ export class AllAppointmentComponent {
   fromDate: any = '';
   toDate: any = '';
   selectedDoctor: string = '';
+  selectedType: any = '';
   selectedDepartment: string = '';
   doctorsWithAppointments: any = [];
+  typesWithAppointments: any = [];
 
   constructor() {
     this.fromDate = this.formatDate(new Date());
@@ -139,6 +141,17 @@ export class AllAppointmentComponent {
 
     const selectedAppointment = appointments.filter((appointment: any) => appointment && appointment.drCode == this.selectedDoctor);
     this.selectedDepartment = selectedAppointment[0]?.departmentId;
+    this.totalAppointment = selectedAppointment.length;
+    return selectedAppointment;
+  }
+
+  filterAppointmentsByType(appointments: any): any {
+    this.totalAppointment = appointments.length
+    if (this.selectedType == "") {
+      return appointments; // If search query is empty, return all appointments
+    }
+
+    const selectedAppointment = appointments.filter((appointment: any) => appointment && appointment.type.toString() == this.selectedType);
     this.totalAppointment = selectedAppointment.length;
     return selectedAppointment;
   }
