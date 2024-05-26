@@ -196,12 +196,12 @@ export class AppointmentModalComponent {
 
         formData.append('CompanyID', environment.hospitalCode.toString());
         formData.append('Date', date);
-        formData.append('DepartmentId', this.doctor.departmentId != null ? this.doctor.departmentId.toString() : '');
+        formData.append('DepartmentId', departmentId != null ? departmentId.toString() : '');
         if (this.selected.sl !== sL) {
           formData.append('SL', sL != null ? sL.toString() : '');
         }
         formData.append('Type', type != null ? type.toString() : '');
-        formData.append('DrCode', this.doctor.id != null ? this.doctor.id.toString() : '');
+        formData.append('DrCode', drCode != null ? drCode.toString() : '');
         formData.append('PName', pName);
         formData.append('Age', age || '');
         formData.append('Sex', sex || '');
