@@ -133,15 +133,28 @@
         <div class="label !py-0">
           <span class="label-text font-bold capitalize"> Patient Type: </span>
         </div>
+        <div>
+          <label class="radio border-none">
+            <input type="radio" formControlName="type" value="false" [attr.checked]="appointmentForm.get('type')?.value == 'false' ? true : null"
+            (click)="toggleSelection()" />
+            Thursday
+          </label>
+        </div>
+      </label>
+      
+      <!-- <label class="form-control w-full !mt-0">
+        <div class="label !py-0">
+          <span class="label-text font-bold capitalize"> Patient Type: </span>
+        </div>
         <select
           class="select select-bordered select-sm w-full"
           formControlName="type"
         >
           <option value="" disabled>Select type</option>
           <option value="true">New</option>
-          <option value="false">Old</option>
+          <option value="false">Thursday</option>
         </select>
-      </label>
+      </label> -->
       <!-- pName Input -->
       <label class="form-control w-full !mt-0">
         <div class="label !py-0">

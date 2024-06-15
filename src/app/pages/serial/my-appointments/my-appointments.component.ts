@@ -19,34 +19,46 @@ import { DepartmentService } from '../../../services/serial/department.service';
   styleUrl: './my-appointments.component.css',
   imports: [CoverComponent, AppointmentModalComponent, FormsModule, NavbarComponent]
 })
-export class MyAppointmentsComponent implements OnInit {
+export class MyAppointmentsComponent {
   appointmentService = inject(AppointmentService);
   departmentService = inject(DepartmentService);
   doctorsService = inject(DoctorsService);
-  authService = inject(AuthService);
   router = inject(Router);
-  cdr = inject(ChangeDetectorRef);
   queryClient = injectQueryClient();
-
+  authService = inject(AuthService);
+  user: any;
   emptyImg: any;
   selectedId: any;
-  totalAppointment: any = 0;
+  totalAppointment: any;
   addAppointmentModal: boolean = false;
   editAppointmentModal: boolean = false;
   private appointmentSubscription?: Subscription;
   searchQuery: string = '';
-  fromDate: string = '';
-  toDate: string = '';
+  
+  fromDate: any = '';
+  toDate: any = '';
   selectedDoctor: string = '';
+  selectedType: any = '';
   selectedDepartment: string = '';
   doctorsWithAppointments: any = [];
-  user: any;
+  typesWithAppointments: any = [];
 
-  constructor() { }
+  constructor() {
+    this.fromDate = this.formatDate(new Date());
+  }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
     this.getDoctorsWithAppointments();
+    console.log(this.transform(new Date()))
+  }
+  
+  // Method to format date as YYYY-MM-DD
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
   }
 
   checkRoles(roleId: any) {
@@ -55,15 +67,13 @@ export class MyAppointmentsComponent implements OnInit {
   }
 
   redirectToHome(): void {
-    this.router.navigateByUrl('/serial');
+    this.router.navigateByUrl('/serial/admin');
   }
 
   async getDoctorsWithAppointments(): Promise<void> {
     const appointments = await this.appointmentService.getAppointments();
     const doctorIds = appointments.map(appointment => appointment.drCode);
     this.doctorsWithAppointments = (await this.doctorsService.getDoctors()).filter(doctor => doctorIds.includes(doctor.id));
-    this.totalAppointment = this.doctorsWithAppointments.length;
-    this.cdr.detectChanges(); // Trigger change detection
   }
 
   appointmentQuery = injectQuery(() => ({
@@ -102,12 +112,13 @@ export class MyAppointmentsComponent implements OnInit {
       appointment?.age?.includes(this.searchQuery) ||
       appointment?.sex?.toLowerCase()?.includes(this.searchQuery.toLowerCase()) ||
       appointment?.username?.toLowerCase()?.includes(this.searchQuery.toLowerCase()) ||
+      appointment?.mobile?.toLowerCase()?.includes(this.searchQuery.toLowerCase()) ||
       appointment?.remarks?.toLowerCase()?.includes(this.searchQuery.toLowerCase())
     );
     this.totalAppointment = selectedAppointment.length;
     return selectedAppointment;
   }
-  
+
   filterAppointmentsByDate(appointments: any): any {
     this.totalAppointment = appointments.length;
     if (!this.fromDate && !this.toDate) {
@@ -147,6 +158,17 @@ export class MyAppointmentsComponent implements OnInit {
     return selectedAppointment;
   }
 
+  filterAppointmentsByType(appointments: any): any {
+    this.totalAppointment = appointments.length
+    if (this.selectedType == "") {
+      return appointments; // If search query is empty, return all appointments
+    }
+
+    const selectedAppointment = appointments.filter((appointment: any) => appointment && appointment.type.toString() == this.selectedType);
+    this.totalAppointment = selectedAppointment.length;
+    return selectedAppointment;
+  }
+
   sortAppointments(appointments: any): any {
     this.totalAppointment = appointments.length
     if (appointments.length === 0) {
@@ -155,10 +177,6 @@ export class MyAppointmentsComponent implements OnInit {
 
     return appointments.sort((a: any, b: any) => a.sl - b.sl);
   }
-
-
-
-
 
   onDelete(id: any) {
     const result = confirm("Are you sure you want to delete this item?");

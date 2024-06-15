@@ -101,7 +101,7 @@ export class AppointmentFormComponent implements OnInit {
     age: [''],
     sex: [''],
     mobile: [''],
-    type: true,
+    type: ["true"],
     date: ['', Validators.required],
     sL: "",
     departmentId: "",
@@ -132,7 +132,7 @@ export class AppointmentFormComponent implements OnInit {
       formData.append('Date', date);
       formData.append('DepartmentId', departmentId != null ? departmentId.toString() : '');
       formData.append('SL', sL != null ? sL.toString() : '');
-      formData.append('Type', type != null ? type.toString() : '');
+      formData.append('Type', type || '');
       formData.append('DrCode', drCode != null ? drCode.toString() : '');
       formData.append('PName', pName);
       formData.append('Age', age || '');
@@ -148,6 +148,13 @@ export class AppointmentFormComponent implements OnInit {
       this.confirmModal = true;
       this.isSubmitted = true;
     }
+  }
+
+  toggleSelection(): void {
+    const currentValue = this.appointmentForm.get('type')?.value;
+    const newValue = currentValue === 'false' ? 'true' : 'false';
+    this.appointmentForm.get('type')?.setValue(newValue);
+    console.log(this.appointmentForm.get('type')?.value)
   }
 
   dates: Date[] = Array.from({ length: 15 }, (_, i) => {

@@ -120,7 +120,7 @@ export class AppointmentModalComponent {
     age: [''],
     mobile: [''],
     sex: [''],
-    type: [true],
+    type: ['true'],
     date: ['', Validators.required],
     sL: [''],
     departmentId: [''],
@@ -142,7 +142,7 @@ export class AppointmentModalComponent {
         age: this.selected.age,
         sex: this.selected.sex,
         mobile: this.selected.mobile,
-        type: this.selected.type,
+        type: this.selected.type.toString(),
         date: formattedDate, // Assign the formatted date
         sL: this.selected.sl,
         departmentId: this.selected.departmentId,
@@ -152,6 +152,7 @@ export class AppointmentModalComponent {
         paymentStatus: this.selected.paymentStatus,
         confirmed: this.selected.confirmed,
       });
+      console.log(this.appointmentForm.value)
     }
   }
 
@@ -217,6 +218,13 @@ export class AppointmentModalComponent {
         this.isSubmitted = true;
       }
     }
+  }
+
+  toggleSelection(): void {
+    const currentValue = this.appointmentForm.get('type')?.value;
+    const newValue = currentValue === 'false' ? 'true' : 'false';
+    this.appointmentForm.get('type')?.setValue(newValue);
+    console.log(this.appointmentForm.get('type')?.value)
   }
 
   dates: Date[] = Array.from({ length: 15 }, (_, i) => {
