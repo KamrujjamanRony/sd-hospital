@@ -348,6 +348,9 @@
   </div>
 </div>
 
-@if(confirmModal){
+@if(msg){
   <confirm-modal [title]="msg" (closeModal)="closeModal()" />
+}
+@if(err){
+  <confirm-modal [title]="err" (closeModal)="closeModal()" />
 }

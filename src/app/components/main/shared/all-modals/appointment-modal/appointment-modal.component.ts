@@ -43,6 +43,7 @@ export class AppointmentModalComponent {
   doctorList: any;
   confirmModal: boolean = false;
   user: any;
+  errorMessage: string | null = null;
 
   constructor(){}
 
@@ -72,6 +73,10 @@ export class AppointmentModalComponent {
       // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['appointments'] })
     },
+    onError: (error: any) => {
+      console.log("clicked on Appointment");
+      this.handleError(error); // Handle the error
+    }
   }));
 
   UpdateAppointmentMutation = injectMutation((client) => ({
@@ -80,6 +85,15 @@ export class AppointmentModalComponent {
       // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['appointments'] })
     },
+    onError: (error: any) => {
+      console.log("clicked on Appointment");
+      this.handleError(error); // Handle the error
+    }
   }));
+
+  private handleError(error: any) {
+    this.errorMessage = error.message || 'An error occurred. Please try again.';
+    console.error(error);
+  }
 
 }

@@ -31,6 +31,7 @@ export class AppointmentModalComponent {
   authService = inject(AuthService);
   user: any;
   msg: any;
+  err: any;
   @Input() doctor: any;
   @Input() id!: any;
   @Output() closeAppointment = new EventEmitter<void>();
@@ -62,6 +63,7 @@ export class AppointmentModalComponent {
 
   closeModal() {
     this.confirmModal = false;
+    this.err = null;
   }
 
   departmentQuery = injectQuery(() => ({
@@ -84,11 +86,14 @@ export class AppointmentModalComponent {
       this.confirmModal = true;
       setTimeout(() => {
         this.closeAppointmentModal();
-      }, 3000);
+      }, 2000);
     },
-    onError: () => {
-      this.msg = "Error: Something went wrong!"
-    },
+    onError: (error: any) => {
+      this.handleError(error); // Handle the error
+      setTimeout(() => {
+        this.closeAppointmentModal();
+      }, 2000);
+    }
   }));
 
   UpdateAppointmentMutation = injectMutation((client) => ({
@@ -101,9 +106,21 @@ export class AppointmentModalComponent {
       this.confirmModal = true;
       setTimeout(() => {
         this.closeAppointmentModal();
-      }, 3000);
+      }, 2000);
     },
+    onError: (error: any) => {
+      this.handleError(error); // Handle the error
+      setTimeout(() => {
+        this.closeAppointmentModal();
+      }, 2000);
+    }
   }));
+
+  private handleError(error: any) {
+    // console.log(error?.response?.data?.message);
+    this.err = error?.response?.data?.message;
+    console.error(error);
+  }
 
   async onDepartmentChange() {
     this.doctorList = await this.doctorsService.filterDoctorsByDepartment(this.appointmentForm.value.departmentId);
@@ -152,7 +169,7 @@ export class AppointmentModalComponent {
         paymentStatus: this.selected.paymentStatus,
         confirmed: this.selected.confirmed,
       });
-      console.log(this.appointmentForm.value)
+      // console.log(this.appointmentForm.value)
     }
   }
 
@@ -168,7 +185,6 @@ export class AppointmentModalComponent {
   onSubmit(): void {
     const { pName, age, sex, date, sL, type, departmentId, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
     // console.log(this.appointmentForm.value)
-    console.log(this.doctor);
     if (pName && date) {
       if (!this.selected) {
         const formData = new FormData();
@@ -224,7 +240,7 @@ export class AppointmentModalComponent {
     const currentValue = this.appointmentForm.get('type')?.value;
     const newValue = currentValue === 'false' ? 'true' : 'false';
     this.appointmentForm.get('type')?.setValue(newValue);
-    console.log(this.appointmentForm.get('type')?.value)
+    // console.log(this.appointmentForm.get('type')?.value)
   }
 
   dates: Date[] = Array.from({ length: 15 }, (_, i) => {

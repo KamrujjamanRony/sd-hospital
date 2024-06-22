@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { format, isBefore } from 'date-fns';
@@ -32,9 +32,17 @@ export class AppointmentFormComponent implements OnInit {
   isSubmitted = false;
   selected!: any;
   user: any;
+  msg: any;
   confirm!: any;
 
   confirmModal!: boolean;
+
+  
+  @Output() closeAppointment = new EventEmitter<void>();
+
+  closeAppointmentModal(): void {
+    this.closeAppointment.emit();
+  }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
@@ -57,6 +65,7 @@ export class AppointmentFormComponent implements OnInit {
 
   closeModal() {
     this.confirmModal = false;
+    this.msg = null;
   }
 
   getConfirm() {
@@ -84,7 +93,19 @@ export class AppointmentFormComponent implements OnInit {
       // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['appointments'] })
     },
+    onError: (error: any) => {
+      this.handleError(error); // Handle the error
+      setTimeout(() => {
+        this.closeAppointmentModal();
+      }, 2000);
+    }
   }));
+
+  private handleError(error: any) {
+    // console.log(error?.response?.data?.message);
+    this.msg = error?.response?.data?.message;
+    console.error(error);
+  }
 
   async onDepartmentChange() {
     this.doctorList = await this.doctorsService.filterDoctorsByDepartment(this.appointmentForm.value.departmentId);
@@ -145,7 +166,7 @@ export class AppointmentFormComponent implements OnInit {
       formData.append('Confirmed', confirmed != null ? confirmed.toString() : this.confirm);
       this.appointmentMutation.mutate(formData);
       // toast
-      this.confirmModal = true;
+      this.msg = "Appointment is successfully added!";
       this.isSubmitted = true;
     }
   }

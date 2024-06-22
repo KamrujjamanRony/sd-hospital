@@ -358,11 +358,9 @@
       </button>
     </div>
   </form>
-
-  @if(confirmModal){
-  <confirm-modal
-    title="Appointment is successfully added!"
-    (closeModal)="closeModal()"
-  />
-  }
 </div>
+
+
+@if(msg){
+  <confirm-modal [title]="msg" (closeModal)="closeModal()" />
+}

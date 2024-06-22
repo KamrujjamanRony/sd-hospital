@@ -47,7 +47,7 @@ export class AppointmentService {
       const response = await this.apiClient.post('/', model);
       return response.data;
     } catch (error) {
-      console.error('Error fetching Appointments:', error);
+      // console.error('Error fetching Appointments:', error);
       // Optionally rethrow the error or return a default value
       throw error;
     }
