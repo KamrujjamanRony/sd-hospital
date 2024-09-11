@@ -4,13 +4,14 @@ import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import * as AOS from 'aos';
 import { VisitorCountService } from './services/main/visitor-count.service';
+import { AngularQueryDevtools } from '@tanstack/angular-query-devtools-experimental';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [CommonModule, RouterOutlet, HttpClientModule],
+  imports: [CommonModule, RouterOutlet, HttpClientModule, AngularQueryDevtools],
 })
 export class AppComponent {
   visitorCountService = inject(VisitorCountService);
