@@ -14,11 +14,11 @@ import { environment } from '../../../../environments/environments';
 import { DepartmentService } from '../../../services/serial/department.service';
 
 @Component({
-    selector: 'app-appointment-form',
-    standalone: true,
-    templateUrl: './appointment-form.component.html',
-    styleUrl: './appointment-form.component.css',
-    imports: [CommonModule, ReactiveFormsModule, ReactIconComponent, ConfirmModalComponent, NavbarComponent, FormsModule]
+  selector: 'app-appointment-form',
+  standalone: true,
+  templateUrl: './appointment-form.component.html',
+  styleUrl: './appointment-form.component.css',
+  imports: [CommonModule, ReactiveFormsModule, ReactIconComponent, ConfirmModalComponent, NavbarComponent, FormsModule]
 })
 export class AppointmentFormComponent implements OnInit {
   fb = inject(FormBuilder);
@@ -32,12 +32,13 @@ export class AppointmentFormComponent implements OnInit {
   isSubmitted = false;
   selected!: any;
   user: any;
+  blockSerials: any;
   msg: any;
   confirm!: any;
 
   confirmModal!: boolean;
 
-  
+
   @Output() closeAppointment = new EventEmitter<void>();
 
   closeAppointmentModal(): void {
@@ -113,6 +114,7 @@ export class AppointmentFormComponent implements OnInit {
 
   onDoctorChange() {
     this.selected = this.doctorsService.getDoctorById(this.appointmentForm.value.drCode);
+    this.blockSerials = this.selected?.serialBlock?.split(',');
     this.updateFormValues();
   }
 
@@ -168,6 +170,9 @@ export class AppointmentFormComponent implements OnInit {
       // toast
       this.msg = "Appointment is successfully added!";
       this.isSubmitted = true;
+    } else {
+      this.msg = "Please fill all required fields!";
+      this.isSubmitted = true;
     }
   }
 
@@ -189,6 +194,25 @@ export class AppointmentFormComponent implements OnInit {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return isBefore(date, today);
+  }
+
+  formReset(): void {
+    this.appointmentForm.reset({
+      companyID: environment.hospitalCode,
+      pName: '',
+      age: '',
+      sex: '',
+      mobile: '',
+      type: "true",
+      date: '',
+      sL: "",
+      departmentId: "",
+      drCode: '',
+      fee: '',
+      remarks: '',
+      paymentStatus: false,
+      confirmed: this.confirm
+    });
   }
 
 }

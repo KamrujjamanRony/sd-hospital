@@ -307,8 +307,30 @@
       </label>
     </div>
     <!-- sL Input -->
-    @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a")) {
-    <label class="form-control w-full !mt-0">
+    @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a") && blockSerials) {
+      <label class="form-control w-full !mt-0">
+        <div class="label !py-0">
+          <span class="label-text font-bold capitalize"> Block Serials </span>
+        </div>
+        <select
+          class="select select-bordered select-sm w-full"
+          formControlName="sL"
+        [class.invalid]="
+          appointmentForm.get('sL')?.invalid &&
+          (appointmentForm.get('sL')?.dirty ||
+            appointmentForm.get('sL')?.touched ||
+            isSubmitted)
+        "
+        >
+          <option value="" disabled>Select Block Serial</option>
+          @for(serial of blockSerials; track $index) {
+            <option [value]="serial">{{serial}}</option>
+          }
+        </select>
+      </label>
+
+
+    <!-- <label class="form-control w-full !mt-0">
       <div class="label !py-0">
         <span class="label-text font-bold capitalize">Serial</span>
       </div>
@@ -325,7 +347,7 @@
         class="input input-bordered w-full input-sm outline-none"
         required
       />
-    </label>
+    </label> -->
     }
     <!-- remarks Input -->
     <label class="form-control w-full !mt-0">

@@ -30,6 +30,7 @@ export class AppointmentModalComponent {
   doctorsService = inject(DoctorsService);
   authService = inject(AuthService);
   user: any;
+  blockSerials: any;
   msg: any;
   err: any;
   @Input() doctor: any;
@@ -54,6 +55,7 @@ export class AppointmentModalComponent {
     this.user = this.authService.getUser();
     this.selected = this.appointmentService.getAppointment(this.id);
     this.updateFormValues();
+    this.blockSerials = this.doctor?.serialBlock?.split(',');
   }
 
   checkRoles(roleId: any) {
@@ -128,6 +130,7 @@ export class AppointmentModalComponent {
 
   onDoctorChange() {
     this.selectedDoctor = this.doctorsService.getDoctorById(this.appointmentForm.value.drCode);
+    this.blockSerials = this.selectedDoctor?.serialBlock?.split(',');
     this.updateForm();
   }
 
@@ -179,12 +182,13 @@ export class AppointmentModalComponent {
         departmentId: this.selectedDoctor.departmentId,
         fee: this.selectedDoctor.fee,
       });
+      this.blockSerials = this.selectedDoctor?.serialBlock?.split(',');
     }
   }
 
   onSubmit(): void {
     const { pName, age, sex, date, sL, type, departmentId, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
-    // console.log(this.appointmentForm.value)
+
     if (pName && date) {
       if (!this.selected) {
         const formData = new FormData();
