@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ImCross } from "react-icons/im";
 import { Subscription } from 'rxjs';
 import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
-import { ReactIconComponent } from '../../react-icon/react-icon.component';
 import { ImgbbService } from '../../../../../services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 import { DepartmentService } from '../../../../../services/serial/department.service';
@@ -12,7 +10,7 @@ import { DepartmentService } from '../../../../../services/serial/department.ser
 @Component({
   selector: 'app-add-department-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ReactIconComponent, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './add-department-modal.component.html',
   styleUrl: './add-department-modal.component.css'
 })
@@ -28,7 +26,6 @@ export class AddDepartmentModalComponent {
     this.closeModal.emit();
   }
 
-  ImCross = ImCross;
   isSubmitted = false;
 
   constructor(){}

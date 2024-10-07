@@ -3,7 +3,6 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { format, isBefore } from 'date-fns';
 import { CommonModule } from '@angular/common';
-import { ReactIconComponent } from '../../../components/serial/shared/react-icon/react-icon.component';
 import { ConfirmModalComponent } from '../../../components/serial/shared/modal/confirm-modal/confirm-modal.component';
 import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
 import { ToastService } from '../../../services/serial/toast.service';
@@ -18,7 +17,7 @@ import { DepartmentService } from '../../../services/serial/department.service';
   standalone: true,
   templateUrl: './appointment-form.component.html',
   styleUrl: './appointment-form.component.css',
-  imports: [CommonModule, ReactiveFormsModule, ReactIconComponent, ConfirmModalComponent, NavbarComponent, FormsModule]
+  imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent, NavbarComponent, FormsModule]
 })
 export class AppointmentFormComponent implements OnInit {
   fb = inject(FormBuilder);
@@ -91,8 +90,12 @@ export class AppointmentFormComponent implements OnInit {
   appointmentMutation = injectMutation((client) => ({
     mutationFn: (formData: any) => this.appointmentService.addAppointment(formData),
     onSuccess: () => {
+      // Reset FormData
+      this.formReset();
+      // toast
+      this.msg = "Appointment is successfully added!";
       // Invalidate and refetch by using the client directly
-      client.invalidateQueries({ queryKey: ['appointments'] })
+      client.invalidateQueries({ queryKey: ['appointments'] });
     },
     onError: (error: any) => {
       this.handleError(error); // Handle the error
@@ -167,8 +170,7 @@ export class AppointmentFormComponent implements OnInit {
       formData.append('PaymentStatus', paymentStatus != null ? paymentStatus.toString() : '');
       formData.append('Confirmed', confirmed != null ? confirmed.toString() : this.confirm);
       this.appointmentMutation.mutate(formData);
-      // toast
-      this.msg = "Appointment is successfully added!";
+      
       this.isSubmitted = true;
     } else {
       this.msg = "Please fill all required fields!";

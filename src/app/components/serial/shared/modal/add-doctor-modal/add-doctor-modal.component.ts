@@ -2,9 +2,7 @@ import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
-import { ImCross } from 'react-icons/im';
 import { CommonModule } from '@angular/common';
-import { ReactIconComponent } from '../../react-icon/react-icon.component';
 import { DoctorsService } from '../../../../../services/serial/doctors.service';
 import { ImgbbService } from '../../../../../services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
@@ -16,7 +14,7 @@ import { DepartmentService } from '../../../../../services/serial/department.ser
     standalone: true,
     templateUrl: './add-doctor-modal.component.html',
     styleUrl: './add-doctor-modal.component.css',
-    imports: [CommonModule, ReactiveFormsModule, ReactIconComponent, FormsModule]
+    imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class AddDoctorModalComponent {
   @Output() closeModal = new EventEmitter<void>();
@@ -31,8 +29,6 @@ export class AddDoctorModalComponent {
   closeThisModal(): void {
     this.closeModal.emit();
   }
-
-  ImCross = ImCross;
   isSubmitted = false;
 
   constructor(){}

@@ -2,8 +2,6 @@ import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
-import { ImCross } from "react-icons/im";
-import { ReactIconComponent } from "../../react-icon/react-icon.component";
 import { CommonModule } from '@angular/common';
 import { ConfirmModalComponent } from "../confirm-modal/confirm-modal.component";
 import { UserAuthService } from '../../../../../services/serial/userAuth.service';
@@ -15,7 +13,7 @@ import { DataService } from '../../../../../services/serial/data.service';
   standalone: true,
   templateUrl: './add-user-modal.component.html',
   styleUrl: './add-user-modal.component.css',
-  imports: [CommonModule, ReactiveFormsModule, ReactIconComponent, ConfirmModalComponent]
+  imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent]
 })
 export class AddUserModalComponent {
   @Output() closeModal = new EventEmitter<void>();
@@ -29,7 +27,6 @@ export class AddUserModalComponent {
     this.closeModal.emit();
   }
 
-  ImCross = ImCross;
   isSubmitted = false;
   confirmModal: boolean = false;
   userRole: any = [];

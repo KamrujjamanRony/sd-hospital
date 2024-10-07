@@ -1,11 +1,9 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ImCross } from "react-icons/im";
 import { format, isBefore } from 'date-fns';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
-import { ReactIconComponent } from '../../../../serial/shared/react-icon/react-icon.component';
 import { ToastService } from '../../../../../services/serial/toast.service';
 import { AppointmentService } from '../../../../../services/serial/appointment.service';
 import { DoctorsService } from '../../../../../services/serial/doctors.service';
@@ -18,7 +16,7 @@ import { DepartmentService } from '../../../../../services/serial/department.ser
   templateUrl: './appointment-modal.component.html',
   styleUrl: './appointment-modal.component.css',
   providers: [DatePipe],
-  imports: [CommonModule, ReactiveFormsModule, ReactIconComponent, ConfirmModalComponent]
+  imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent]
 })
 export class AppointmentModalComponent {
   datePipe = inject(DatePipe);
@@ -37,7 +35,6 @@ export class AppointmentModalComponent {
   }
 
   format = format;
-  ImCross = ImCross;
   selected!: any;
   selectedDoctor: any;
   doctorList: any;

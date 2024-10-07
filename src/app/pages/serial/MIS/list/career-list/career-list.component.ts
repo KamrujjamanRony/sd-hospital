@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '../../../../../services/serial/auth.service';
 import { environment } from '../../../../../../environments/environments';
 import { Observable, Subscription } from 'rxjs';
@@ -14,7 +13,7 @@ import { CareerService } from '../../../../../services/main/career.service';
 @Component({
   selector: 'app-career-list',
   standalone: true,
-  imports: [CommonModule, CoverComponent, RouterLink, MatDialogModule],
+  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
   templateUrl: './career-list.component.html',
   styleUrl: './career-list.component.css'
 })
@@ -22,14 +21,14 @@ export class CareerListComponent {
   authService = inject(AuthService);
   careerService = inject(CareerService);
   router = inject(Router);
-  dialog = inject(MatDialog);
   user: any;
   emptyImg: any = environment.emptyImg;
   loading: boolean = true;
   careers$?: Observable<any[]>;
   deleteCareerSubscription?: Subscription;
   companyID: any = environment.hospitalCode;
-  isModalOpen = false;
+  isConfirmOpen = false;
+  idToDelete: any;
   
   constructor() { }
 
@@ -48,17 +47,12 @@ export class CareerListComponent {
   }
   
   onDelete(id: any): void {
-    const dialogRef = this.dialog.open(DeleteConfirmationModalComponent);
-
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result) {
-        this.confirmDelete(id)
-      }
-    });
+    this.idToDelete = id;
+    this.isConfirmOpen = true;
   }
 
-  confirmDelete(id: any): void {
-    this.deleteCareerSubscription = this.careerService.deleteCareer(id).subscribe({
+  confirmDelete(): void {
+    this.deleteCareerSubscription = this.careerService.deleteCareer(this.idToDelete).subscribe({
       next: () => {
         this.careers$ = this.careerService.getCompanyCareer();
         this.closeModal();
@@ -67,7 +61,7 @@ export class CareerListComponent {
   }
 
   closeModal(): void {
-    this.isModalOpen = false;
+    this.isConfirmOpen = false;
   }
 
   ngOnDestroy(): void {

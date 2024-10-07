@@ -3,8 +3,6 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
-import { ImCross } from 'react-icons/im';
-import { ReactIconComponent } from '../../react-icon/react-icon.component';
 import { DoctorsService } from '../../../../../services/serial/doctors.service';
 import { ImgbbService } from '../../../../../services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
@@ -14,7 +12,7 @@ import { DepartmentService } from '../../../../../services/serial/department.ser
 @Component({
   selector: 'app-edit-doctor-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ReactIconComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-doctor-modal.component.html',
   styleUrl: './edit-doctor-modal.component.css'
 })
@@ -35,7 +33,7 @@ export class EditDoctorModalComponent {
     this.closeModal.emit();
   }
 
-  ImCross = ImCross;
+
   isSubmitted = false;
 
   constructor(){}

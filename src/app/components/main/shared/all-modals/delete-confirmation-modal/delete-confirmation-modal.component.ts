@@ -1,5 +1,4 @@
-import { MatDialogRef } from '@angular/material/dialog';
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../../../environments/environments';
 @Component({
@@ -53,17 +52,18 @@ import { environment } from '../../../../../../environments/environments';
   imports: [FormsModule]
 })
 export class DeleteConfirmationModalComponent {
-  dialogRef = inject(MatDialogRef<DeleteConfirmationModalComponent>);
+  confirmDelete = output<void>();
+  closeModal = output<void>();
   err: any = '';
   password: any = '';
   
   constructor() { }
 
   confirm(): void {
-    this.password === environment.authKey ? this.dialogRef.close(true) : this.err = "Please enter correct password";
+    this.password === environment.authKey ? this.confirmDelete.emit() : this.err = "Please enter correct password";
   }
 
   cancel(): void {
-    this.dialogRef.close(false);
+    this.closeModal.emit();
   }
 }

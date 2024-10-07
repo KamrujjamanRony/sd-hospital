@@ -1,19 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ReactIconComponent } from '../../react-icon/react-icon.component';
 import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
-// import { UsersService } from '../../../../features/services/users.service';
-import { ImCross } from "react-icons/im";
-import { environment } from '../../../../../../environments/environments';
 import { UsersService } from '../../../../../services/serial/users.service';
 import { DataService } from '../../../../../services/serial/data.service';
 
 @Component({
   selector: 'app-edit-user-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ReactIconComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-user-modal.component.html',
   styleUrl: './edit-user-modal.component.css'
 })
@@ -32,7 +28,7 @@ export class EditUserModalComponent {
     this.closeModal.emit();
   }
 
-  ImCross = ImCross;
+  
   isSubmitted = false;
   userRole: any = [];
 

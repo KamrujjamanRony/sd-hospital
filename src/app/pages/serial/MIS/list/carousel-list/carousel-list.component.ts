@@ -1,4 +1,3 @@
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
@@ -13,12 +12,11 @@ import { AuthService } from '../../../../../services/serial/auth.service';
   selector: 'app-carousel-list',
   templateUrl: './carousel-list.component.html',
   standalone: true,
-  imports: [CommonModule, CoverComponent, RouterLink, MatDialogModule]
+  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent]
 })
 export class CarouselListComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   carouselService = inject(CarouselService);
-  dialog = inject(MatDialog);
   router = inject(Router);
   
   user: any;
@@ -27,7 +25,8 @@ export class CarouselListComponent implements OnInit, OnDestroy {
   carousels$?: Observable<any[]>;
   deleteCarouselSubscription?: Subscription;
   companyID: any = environment.hospitalCode;
-  isModalOpen = false;
+  isConfirmOpen = false;
+  idToDelete: any;
 
   constructor() { }
 
@@ -45,17 +44,12 @@ export class CarouselListComponent implements OnInit, OnDestroy {
   }
   
   onDelete(id: any): void {
-    const dialogRef = this.dialog.open(DeleteConfirmationModalComponent);
-
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result) {
-        this.confirmDelete(id)
-      }
-    });
+    this.idToDelete = id;
+    this.isConfirmOpen = true;
   }
 
-  confirmDelete(id: any): void {
-    this.deleteCarouselSubscription = this.carouselService.deleteCarousel(id).subscribe({
+  confirmDelete(): void {
+    this.deleteCarouselSubscription = this.carouselService.deleteCarousel(this.idToDelete).subscribe({
       next: () => {
         this.carousels$ = this.carouselService.getCompanyCarousel();
         this.closeModal();
@@ -64,7 +58,7 @@ export class CarouselListComponent implements OnInit, OnDestroy {
   }
 
   closeModal(): void {
-    this.isModalOpen = false;
+    this.isConfirmOpen = false;
   }
 
   ngOnDestroy(): void {
