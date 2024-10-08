@@ -5,19 +5,25 @@ module.exports = {
     "./node_modules/tw-elements/dist/js/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {
+      "primary": "#06B2B6",
+      "secondary": "#424242",
+      "accent": "#606060",
+      "neutral": "#3d4451",
+      "base-100": "#ffffff",
+    },
   },
-  daisyui: {
-    themes: ["light", {
-      mytheme: {
-        "primary": "#06B2B6",
-        "secondary": "#424242",
-        "accent": "#606060",
-        "neutral": "#3d4451",
-        "base-100": "#ffffff",
-      },
-    },],
-  },
+  // daisyui: {
+  //   themes: ["light", {
+  //     mytheme: {
+  //       "primary": "#06B2B6",
+  //       "secondary": "#424242",
+  //       "accent": "#606060",
+  //       "neutral": "#3d4451",
+  //       "base-100": "#ffffff",
+  //     },
+  //   },],
+  // },
   darkMode: "class",
-  plugins: [require("tw-elements/dist/plugin.cjs"), require("daisyui")]
+  plugins: [require("tw-elements/dist/plugin.cjs")]
 }
