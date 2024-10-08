@@ -10,8 +10,8 @@
   [class.hide-when-printing]="isPrinting"
 >
   <div class="flex gap-2 flex-col md:flex-row">
-    <input type="date" [(ngModel)]="fromDate" class="border border-gray-300 rounded-md px-5 py-2">
-    <input type="date" [(ngModel)]="toDate" class="border border-gray-300 rounded-md px-5 py-2">
+    <input type="date" [(ngModel)]="fromDate" class="border-2 border-gray-700 rounded-md px-5 py-2">
+    <input type="date" [(ngModel)]="toDate" class="border-2 border-gray-700 rounded-md px-5 py-2">
     <select class="select select-bordered w-48" [(ngModel)]="selectedDoctor">
       <option value="">All Doctors</option>
       @for (doctor of doctorsWithAppointments; track $index) {

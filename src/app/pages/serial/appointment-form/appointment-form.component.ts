@@ -149,6 +149,7 @@ export class AppointmentFormComponent implements OnInit {
 
   onSubmit(): void {
     const { pName, age, sex, date, type, departmentId, sL, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
+    console.log(type);
     if (drCode && pName && type && date) {
       // console.log('submitted form', this.appointmentForm.value);
       // const formData = { ...this.appointmentForm.value, id: crypto.randomUUID() }
@@ -182,14 +183,50 @@ export class AppointmentFormComponent implements OnInit {
     const currentValue = this.appointmentForm.get('type')?.value;
     const newValue = currentValue === 'false' ? 'true' : 'false';
     this.appointmentForm.get('type')?.setValue(newValue);
-    console.log(this.appointmentForm.get('type')?.value)
+    console.log(this.appointmentForm.get('type')?.value);
+    if (newValue === 'false') {
+      // Filter dates to only include Thursdays
+      const thursdayDates: Date[] = [];
+      let date = new Date();
+      
+      // Continue until we have at least 8 Thursday dates
+      while (thursdayDates.length < 8) {
+        if (date.getDay() === 4) { // 4 represents Thursday
+          thursdayDates.push(new Date(date)); // Clone the date object
+        }
+        date.setDate(date.getDate() + 1); // Move to the next day
+      }
+      
+      this.dates = thursdayDates;
+    } else {
+      // Filter dates to exclude Thursdays
+      this.dates = this.updateDate();;
+    }
   }
 
-  dates: Date[] = Array.from({ length: 15 }, (_, i) => {
-    const date = new Date();
-    date.setDate(date.getDate() + i);
-    return date;
-  });
+  updateDate(){
+    // Filter dates to exclude Thursdays (when type is 'true')
+      const nonThursdayDates: Date[] = [];
+      let date = new Date();
+      
+      // Generate a range and collect dates excluding Thursdays
+      while (nonThursdayDates.length < 15) {
+        if (date.getDay() !== 4) { // Exclude Thursday (4 represents Thursday)
+          nonThursdayDates.push(new Date(date)); // Clone the date object
+        }
+        date.setDate(date.getDate() + 1); // Move to the next day
+      }
+      
+      return nonThursdayDates;
+  }
+
+  dates: Date[] = this.updateDate();
+  
+  // dates: Date[] = Array.from({ length: 15 }, (_, i) => {
+  //   const date = new Date();
+  //   date.setDate(date.getDate() + i);
+  //   return date;
+  // });
 
   // Define the isPastDate method
   isPastDate(date: Date): boolean {

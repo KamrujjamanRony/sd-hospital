@@ -89,9 +89,9 @@ export class AppointmentModalComponent {
     },
     onError: (error: any) => {
       this.handleError(error); // Handle the error
-      setTimeout(() => {
-        this.closeAppointmentModal();
-      }, 2000);
+      // setTimeout(() => {
+      //   this.closeAppointmentModal();
+      // }, 2000);
     }
   }));
 
