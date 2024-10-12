@@ -10,8 +10,16 @@
   [class.hide-when-printing]="isPrinting"
 >
   <div class="flex gap-2 flex-col md:flex-row">
-    <input type="date" [(ngModel)]="fromDate" class="border-2 border-gray-700 rounded-md px-5 py-2">
-    <input type="date" [(ngModel)]="toDate" class="border-2 border-gray-700 rounded-md px-5 py-2">
+    <input
+      type="date"
+      [(ngModel)]="fromDate"
+      class="border-2 border-gray-700 rounded-md px-5 py-2"
+    />
+    <input
+      type="date"
+      [(ngModel)]="toDate"
+      class="border-2 border-gray-700 rounded-md px-5 py-2"
+    />
     <select class="select select-bordered w-48" [(ngModel)]="selectedDoctor">
       <option value="">All Doctors</option>
       @for (doctor of doctorsWithAppointments; track $index) {
@@ -54,14 +62,18 @@
       <button
         (click)="redirectToHome()"
         type="button"
-        class="btn btn-primary text-white"
+        class="btn bg-blue-600 hover:bg-blue-500 px-3 rounded text-white"
       >
         Back Home
       </button>
     </div>
     <!-- Print -->
     <div class="my-4 pl-2 lg:my-0 lg:pl-2 lg:pr-1" data-te-nav-item-ref>
-      <a (click)="printPage()" type="button" class="btn btn-primary text-white">
+      <a
+        (click)="printPage()"
+        type="button"
+        class="btn bg-blue-600 hover:bg-blue-500 px-3 rounded text-white"
+      >
         Print Page
       </a>
     </div>
@@ -72,15 +84,17 @@
   <div class="w-full overflow-hidden rounded-lg shadow-xs">
     <div class="w-full overflow-x-auto">
       @if (fromDate && !toDate) {
-        <h1 class="text-xl font-bold">Date: {{transform(fromDate)}}</h1>
-      }
-      @if (!fromDate && toDate) {
-        <h1 class="text-xl font-bold">Date: {{transform(toDate)}}</h1>
-      }
-      @if (fromDate && toDate) {
-        <h1 class="text-xl font-bold">Date: <span class="text-xl font-bold">From: {{transform(fromDate)}} To: {{transform(toDate)}}</span></h1>
-      } 
-      @if (selectedDoctor) {
+      <h1 class="text-xl font-bold">Date: {{ transform(fromDate) }}</h1>
+      } @if (!fromDate && toDate) {
+      <h1 class="text-xl font-bold">Date: {{ transform(toDate) }}</h1>
+      } @if (fromDate && toDate) {
+      <h1 class="text-xl font-bold">
+        Date:
+        <span class="text-xl font-bold"
+          >From: {{ transform(fromDate) }} To: {{ transform(toDate) }}</span
+        >
+      </h1>
+      } @if (selectedDoctor) {
       <h1 class="text-xl font-bold">
         Doctor: {{ this.doctorsService.getDoctorById(selectedDoctor)?.drName }}
       </h1>
@@ -108,21 +122,22 @@
             <th class="mx-1" [class.hidden-when-printing]="isPrinting">
               Department
             </th>
-            <th class="mx-1" [class.hidden-when-printing]="isPrinting">
-              Date
-            </th>
+            <th class="mx-1" [class.hidden-when-printing]="isPrinting">Date</th>
             <th class="mx-1">Patient Name</th>
             <th class="mx-1">Age</th>
             <th class="mx-1">Sex</th>
             <th class="mx-1">Mobile</th>
             <th class="mx-1" [class.hidden-when-printing]="isPrinting">Type</th>
-            <th class="mx-1" [class.hidden-when-printing]="isPrinting">Username</th>
+            <th class="mx-1" [class.hidden-when-printing]="isPrinting">
+              Username
+            </th>
             <th class="mx-1">Remarks</th>
-            @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717") || checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
+            @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717") ||
+            checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
             <th class="w-32" [class.hidden-when-printing]="isPrinting">
               Actions
             </th>
-          }
+            }
           </tr>
         </thead>
         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -153,10 +168,7 @@
                 departmentService.getDepartmentById(appointment?.departmentId)
               }}
             </td>
-            <td
-              class="mx-1 text-xs"
-              [class.hidden-when-printing]="isPrinting"
-            >
+            <td class="mx-1 text-xs" [class.hidden-when-printing]="isPrinting">
               {{ transform(appointment?.date) }}
             </td>
             <td class="mx-1 text-xs">{{ appointment?.pName }}</td>
@@ -166,31 +178,31 @@
             <td class="mx-2 text-xs" [class.hidden-when-printing]="isPrinting">
               @if (appointment?.type) {New} @else {Thursday}
             </td>
-            <td class="mx-2 text-xs" [class.hidden-when-printing]="isPrinting">{{appointment?.username}}</td>
-            <td class="mx-1 text-xs max-w-[180px]">{{appointment?.remarks}}</td>
-            <td
-              class="mx-1 text-sm"
-              [class.hidden-when-printing]="isPrinting"
-            >
-            <!-- Edit appointment -->
-            @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
+            <td class="mx-2 text-xs" [class.hidden-when-printing]="isPrinting">
+              {{ appointment?.username }}
+            </td>
+            <td class="mx-1 text-xs max-w-[180px]">
+              {{ appointment?.remarks }}
+            </td>
+            <td class="mx-1 text-sm" [class.hidden-when-printing]="isPrinting">
+              <!-- Edit appointment -->
+              @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
               <button
                 (click)="openEditAppointmentModal(appointment?.id)"
                 class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded dark:bg-green-700 dark:text-green-100 mr-2 inline-block my-2"
               >
                 Edit
               </button>
-            }
-            <!-- Delete appointment -->
-            @if (checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
+              }
+              <!-- Delete appointment -->
+              @if (checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
               <button
                 (click)="onDelete(appointment?.id)"
                 class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded dark:bg-red-700 dark:text-green-100 inline-block"
               >
                 Delete
               </button>
-            }
-              
+              }
             </td>
           </tr>
           } @empty {

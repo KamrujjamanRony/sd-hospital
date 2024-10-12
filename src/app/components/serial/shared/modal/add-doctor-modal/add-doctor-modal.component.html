@@ -337,62 +337,292 @@
             </label>
           }
         
-          <!-- newPatientLimit Input -->
-        <label class="form-control w-full !mt-0">
+       <div class="flex gap-2">
+           <!-- satNewPatientLimit Input -->
+           <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Daily Patient Limit</span>
+              <span class="label-text font-bold capitalize">Saturday New Patient Limit</span>
             </div>
             <input
               type="text"
-              formControlName="newPatientLimit"
+              formControlName="satNewPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('newPatientLimit')?.invalid &&
-                (addDoctorForm.get('newPatientLimit')?.dirty ||
-                  addDoctorForm.get('newPatientLimit')?.touched ||
+                addDoctorForm.get('satNewPatientLimit')?.invalid &&
+                (addDoctorForm.get('satNewPatientLimit')?.dirty ||
+                  addDoctorForm.get('satNewPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
               class="input input-bordered w-full input-sm outline-none"
               required
             />
-            <!-- @if(addDoctorForm.get('newPatientLimit')?.hasError('required') &&
-            (addDoctorForm.get('newPatientLimit')?.dirty ||
-            addDoctorForm.get('newPatientLimit')?.touched || isSubmitted)){
-            <div class="label !py-0">
-              <span class="label-text-alt text-rose-600 capitalize"
-                >New Patient Limit is required</span
-              >
-            </div>
-            } -->
           </label>
-          <!-- oldPatientLimit Input -->
+          <!-- satOldPatientLimit Input -->
         <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Thursday Patient Limit</span>
+              <span class="label-text font-bold capitalize">Saturday Old Patient Limit</span>
             </div>
             <input
               type="text"
-              formControlName="oldPatientLimit"
+              formControlName="satOldPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('oldPatientLimit')?.invalid &&
-                (addDoctorForm.get('oldPatientLimit')?.dirty ||
-                  addDoctorForm.get('oldPatientLimit')?.touched ||
+                addDoctorForm.get('satOldPatientLimit')?.invalid &&
+                (addDoctorForm.get('satOldPatientLimit')?.dirty ||
+                  addDoctorForm.get('satOldPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
               class="input input-bordered w-full input-sm outline-none"
               required
             />
-            <!-- @if(addDoctorForm.get('oldPatientLimit')?.hasError('required') &&
-            (addDoctorForm.get('oldPatientLimit')?.dirty ||
-            addDoctorForm.get('oldPatientLimit')?.touched || isSubmitted)){
-            <div class="label !py-0">
-              <span class="label-text-alt text-rose-600 capitalize"
-                >Old Patient Limit is required</span
-              >
-            </div>
-            } -->
           </label>
+       </div>
+        
+       <div class="flex gap-2">
+           <!-- sunNewPatientLimit Input -->
+           <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Sunday New Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="sunNewPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('sunNewPatientLimit')?.invalid &&
+                (addDoctorForm.get('sunNewPatientLimit')?.dirty ||
+                  addDoctorForm.get('sunNewPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+          <!-- sunOldPatientLimit Input -->
+        <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Sunday Old Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="sunOldPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('sunOldPatientLimit')?.invalid &&
+                (addDoctorForm.get('sunOldPatientLimit')?.dirty ||
+                  addDoctorForm.get('sunOldPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+       </div>
+        
+       <div class="flex gap-2">
+           <!-- monNewPatientLimit Input -->
+           <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Monday New Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="monNewPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('monNewPatientLimit')?.invalid &&
+                (addDoctorForm.get('monNewPatientLimit')?.dirty ||
+                  addDoctorForm.get('monNewPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+          <!-- monOldPatientLimit Input -->
+        <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Monday Old Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="monOldPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('monOldPatientLimit')?.invalid &&
+                (addDoctorForm.get('monOldPatientLimit')?.dirty ||
+                  addDoctorForm.get('monOldPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+       </div>
+        
+       <div class="flex gap-2">
+           <!-- tueNewPatientLimit Input -->
+           <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Tuesday New Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="tueNewPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('tueNewPatientLimit')?.invalid &&
+                (addDoctorForm.get('tueNewPatientLimit')?.dirty ||
+                  addDoctorForm.get('tueNewPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+          <!-- tueOldPatientLimit Input -->
+        <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Tuesday Old Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="tueOldPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('tueOldPatientLimit')?.invalid &&
+                (addDoctorForm.get('tueOldPatientLimit')?.dirty ||
+                  addDoctorForm.get('tueOldPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+       </div>
+        
+       <div class="flex gap-2">
+           <!-- wedNewPatientLimit Input -->
+           <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Wednesday New Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="wedNewPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('wedNewPatientLimit')?.invalid &&
+                (addDoctorForm.get('wedNewPatientLimit')?.dirty ||
+                  addDoctorForm.get('wedNewPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+          <!-- wedOldPatientLimit Input -->
+        <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Wednesday Old Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="wedOldPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('wedOldPatientLimit')?.invalid &&
+                (addDoctorForm.get('wedOldPatientLimit')?.dirty ||
+                  addDoctorForm.get('wedOldPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+       </div>
+        
+       <div class="flex gap-2">
+           <!-- thuNewPatientLimit Input -->
+           <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Thursday New Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="thuNewPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('thuNewPatientLimit')?.invalid &&
+                (addDoctorForm.get('thuNewPatientLimit')?.dirty ||
+                  addDoctorForm.get('thuNewPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+          <!-- thuOldPatientLimit Input -->
+        <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Thursday Old Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="thuOldPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('thuOldPatientLimit')?.invalid &&
+                (addDoctorForm.get('thuOldPatientLimit')?.dirty ||
+                  addDoctorForm.get('thuOldPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+       </div>
+        
+       <div class="flex gap-2">
+           <!-- friNewPatientLimit Input -->
+           <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Friday New Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="friNewPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('friNewPatientLimit')?.invalid &&
+                (addDoctorForm.get('friNewPatientLimit')?.dirty ||
+                  addDoctorForm.get('friNewPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+          <!-- friOldPatientLimit Input -->
+        <label class="form-control w-full !mt-0">
+            <div class="label !py-0">
+              <span class="label-text font-bold capitalize">Friday Old Patient Limit</span>
+            </div>
+            <input
+              type="text"
+              formControlName="friOldPatientLimit"
+              [class.invalid]="
+                addDoctorForm.get('friOldPatientLimit')?.invalid &&
+                (addDoctorForm.get('friOldPatientLimit')?.dirty ||
+                  addDoctorForm.get('friOldPatientLimit')?.touched ||
+                  isSubmitted)
+              "
+              placeholder="Type here"
+              class="input input-bordered w-full input-sm outline-none"
+              required
+            />
+          </label>
+       </div>
 
       </div>
 

@@ -1,23 +1,35 @@
 <div class="mx-auto px-12 my-24 lg:h-full md:h-64 bg-cover hero">
   <section class="mx-auto w-full md:w-[500px] lg:w-[900px]">
     <div class="lg:mr-4 xl:pr-4 text-center">
-      <h3 class="text-xl xl:text-2xl text-[#19D3AE] lg:pt-8 md:pt-4 pt-4 pb-1 font-bold">Appointment</h3>
-      <h2 class="xl:text-5xl lg:text-3xl md:text-2xl text-white text-2xl pb-2">Book Your Smile Session at SD Hospital</h2>
+      <h3
+        class="text-xl xl:text-2xl text-[#19D3AE] lg:pt-8 md:pt-4 pt-4 pb-1 font-bold"
+      >
+        Appointment
+      </h3>
+      <h2 class="xl:text-5xl lg:text-3xl md:text-2xl text-white text-2xl pb-2">
+        Book Your Smile Session at SD Hospital
+      </h2>
       <p class="lg:py-4 md:py-2 text-white text-wrap">
         <!-- Your journey to a brighter, healthier smile begins with a simple step: booking your appointment at SD Hospital. We understand the significance of a confident smile in shaping your overall well-being. That's why we're dedicated to providing you with expert care that not only enhances your smile but also improves your quality of life.  -->
-        আমাদের অ্যাপয়েন্টমেন্ট সেবা ব্যবহার করে সহজেই আপনার পছন্দসই ডাক্তারের জন্য অ্যাপয়েন্টমেন্ট সম্পন্ন করতে পারেন। অ্যাপয়েন্টমেন্টের জন্য এখনই বুক নাউ বাটনে ক্লিক করুন।
+        আমাদের অ্যাপয়েন্টমেন্ট সেবা ব্যবহার করে সহজেই আপনার পছন্দসই ডাক্তারের
+        জন্য অ্যাপয়েন্টমেন্ট সম্পন্ন করতে পারেন। অ্যাপয়েন্টমেন্টের জন্য এখনই বুক
+        নাউ বাটনে ক্লিক করুন।
       </p>
-      <button (click)="openAppointment()" class="px-8 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold">Book Now</button>
+      <button
+        (click)="openAppointment()"
+        class="px-8 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold"
+      >
+        Book Now
+      </button>
     </div>
   </section>
 </div>
-  
+
 @if(showAppointment) {
-  <app-appointment-modal (closeAppointment)="closeAppointment()"></app-appointment-modal>
+<app-appointment-modal
+  (closeAppointment)="closeAppointment()"
+></app-appointment-modal>
 }
-
-
-
 
 <!-- 
 <div class="bg-base-200 text-black">
@@ -47,7 +59,7 @@
           accusantium! Placeat voluptates esse ut optio facilis!
         </p>
         <button
-          class="btn btn-primary rounded text-white capitalize px-8 font-light text-xl"
+          class="btn bg-blue-600 hover:bg-blue-500 px-3 rounded rounded text-white capitalize px-8 font-light text-xl"
         >
           About Us
         </button>

@@ -80,37 +80,61 @@ export class EditDoctorModalComponent {
     additional: [''],
     notice: [''],
     serialBlock: [''],
-    newPatientLimit: [''],
-    oldPatientLimit: [''],
+    satNewPatientLimit: [''],
+    satOldPatientLimit: [''],
+    sunNewPatientLimit: [''],
+    sunOldPatientLimit: [''],
+    monNewPatientLimit: [''],
+    monOldPatientLimit: [''],
+    tueNewPatientLimit: [''],
+    tueOldPatientLimit: [''],
+    wedNewPatientLimit: [''],
+    wedOldPatientLimit: [''],
+    thuNewPatientLimit: [''],
+    thuOldPatientLimit: [''],
+    friNewPatientLimit: [''],
+    friOldPatientLimit: [''],
   });
 
   updateFormValues(): void {
     if (this.selected) {
       this.addDoctorForm.patchValue({
-        companyID: this.selected.companyID,
-        drSerial: this.selected.drSerial,
-        drName: this.selected.drName,
-        degree: this.selected.degree,
-        imageUrl: this.selected.imageUrl,
-        designation: this.selected.designation,
-        specialty: this.selected.specialty,
-        departmentId: this.selected.departmentId,
-        phone: this.selected.phone,
-        fee: this.selected.fee || 0,
-        visitTime: this.selected.visitTime,
-        room: this.selected.room,
-        description: this.selected.description,
-        additional: this.selected.additional,
-        notice: this.selected.notice,
-        serialBlock: this.selected.serialBlock,
-        newPatientLimit: this.selected.newPatientLimit,
-        oldPatientLimit: this.selected.oldPatientLimit,
+        companyID: this.selected?.companyID,
+        drSerial: this.selected?.drSerial,
+        drName: this.selected?.drName,
+        degree: this.selected?.degree,
+        imageUrl: this.selected?.imageUrl,
+        designation: this.selected?.designation,
+        specialty: this.selected?.specialty,
+        departmentId: this.selected?.departmentId,
+        phone: this.selected?.phone,
+        fee: this.selected?.fee || 0,
+        visitTime: this.selected?.visitTime,
+        room: this.selected?.room,
+        description: this.selected?.description,
+        additional: this.selected?.additional,
+        notice: this.selected?.notice,
+        serialBlock: this.selected?.serialBlock,
+        satNewPatientLimit: this.selected?.satNewPatientLimit,
+        satOldPatientLimit: this.selected?.satOldPatientLimit,
+        sunNewPatientLimit: this.selected?.sunNewPatientLimit,
+        sunOldPatientLimit: this.selected?.sunOldPatientLimit,
+        monNewPatientLimit: this.selected?.monNewPatientLimit,
+        monOldPatientLimit: this.selected?.monOldPatientLimit,
+        tueNewPatientLimit: this.selected?.tueNewPatientLimit,
+        tueOldPatientLimit: this.selected?.tueOldPatientLimit,
+        wedNewPatientLimit: this.selected?.wedNewPatientLimit,
+        wedOldPatientLimit: this.selected?.wedOldPatientLimit,
+        thuNewPatientLimit: this.selected?.thuNewPatientLimit,
+        thuOldPatientLimit: this.selected?.thuOldPatientLimit,
+        friNewPatientLimit: this.selected?.friNewPatientLimit,
+        friOldPatientLimit: this.selected?.friOldPatientLimit
       });
     }
   }
 
   onSubmit(): void {
-    const {drName, drSerial, degree, designation, specialty, departmentId, phone, fee, visitTime, room, description, additional, notice, serialBlock, newPatientLimit, oldPatientLimit, imageUrl } = this.addDoctorForm.value;
+    const {drName, drSerial, degree, designation, specialty, departmentId, phone, fee, visitTime, room, description, additional, notice, serialBlock,satNewPatientLimit, satOldPatientLimit, sunNewPatientLimit, sunOldPatientLimit, monNewPatientLimit, monOldPatientLimit, tueNewPatientLimit, tueOldPatientLimit, wedNewPatientLimit, wedOldPatientLimit, thuNewPatientLimit, thuOldPatientLimit, friNewPatientLimit, friOldPatientLimit, imageUrl } = this.addDoctorForm.value;
     if (drName && departmentId) {
       // console.log('submitted form', this.addDoctorForm.value);
       // const formData = {...this.addDoctorForm.value, "imageUrl":this.imageUrl, id: this.selected.id}
@@ -130,8 +154,20 @@ export class EditDoctorModalComponent {
       formData.append('Additional', additional || '');
       formData.append('Notice', notice || '');
       formData.append('SerialBlock', serialBlock || '');
-      formData.append('NewPatientLimit', newPatientLimit || '');
-      formData.append('OldPatientLimit', oldPatientLimit || '');
+      formData.append('SatNewPatientLimit', satNewPatientLimit || '');
+      formData.append('SatOldPatientLimit', satOldPatientLimit || '');
+      formData.append('SunNewPatientLimit', sunNewPatientLimit || '');
+      formData.append('SunOldPatientLimit', sunOldPatientLimit || '');
+      formData.append('MonNewPatientLimit', monNewPatientLimit || '');
+      formData.append('MonOldPatientLimit', monOldPatientLimit || '');
+      formData.append('TueNewPatientLimit', tueNewPatientLimit || '');
+      formData.append('TueOldPatientLimit', tueOldPatientLimit || '');
+      formData.append('WedNewPatientLimit', wedNewPatientLimit || '');
+      formData.append('WedOldPatientLimit', wedOldPatientLimit || '');
+      formData.append('ThuNewPatientLimit', thuNewPatientLimit || '');
+      formData.append('ThuOldPatientLimit', thuOldPatientLimit || '');
+      formData.append('FriNewPatientLimit', friNewPatientLimit || '');
+      formData.append('FriOldPatientLimit', friOldPatientLimit || '');
       formData.append('Fee', fee || '');
       formData.append('ImageUrl', imageUrl || '');
       this.mutation.mutate(formData);

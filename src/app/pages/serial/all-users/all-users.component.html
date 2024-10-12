@@ -1,15 +1,14 @@
-<app-cover
-  title="All User List"
-  sub1="Dashboard"
-  sub2="Users"
-></app-cover>
+<app-cover title="All User List" sub1="Dashboard" sub2="Users"></app-cover>
 
 <div class="container mx-auto flex justify-end">
   @if (checkRoles("ca28769c-f16d-4a8a-86ba-2bf15552403e")) {
-  <button (click)="openAddUserModal()" class="btn btn-primary text-white capitalize">
+  <button
+    (click)="openAddUserModal()"
+    class="btn bg-blue-600 hover:bg-blue-500 px-3 rounded text-white capitalize"
+  >
     Add User
   </button>
-}
+  }
 </div>
 
 <div class="mt-4 mx-4">
@@ -38,7 +37,7 @@
             <td class="px-4 py-3 text-xs">
               <ul class="list-decimal">
                 @for (role of user.roleIds; track role) {
-                  <li>{{getRolesName(role)}}</li>
+                <li>{{ getRolesName(role) }}</li>
                 }
               </ul>
             </td>
@@ -69,20 +68,16 @@
   </div>
 </div>
 
-
 <!-- add modal start -->
 @if(addUserModal) {
-<app-add-user-modal
-  (closeModal)="closeAddUserModal()"
-></app-add-user-modal>
+<app-add-user-modal (closeModal)="closeAddUserModal()"></app-add-user-modal>
 }
 <!-- add modal end -->
 <!-- edit modal start -->
 @if(editUserModal) {
-  <app-edit-user-modal
-    [user]="selected"
-    (closeModal)="closeEditUserModal()"
-  ></app-edit-user-modal>
-  }
-  <!-- edit modal end -->
-
+<app-edit-user-modal
+  [user]="selected"
+  (closeModal)="closeEditUserModal()"
+></app-edit-user-modal>
+}
+<!-- edit modal end -->

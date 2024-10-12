@@ -9,18 +9,30 @@
   @for(slide of slideImages; track slide){
   <swiper-slide>
     <div class="bg-gray-100">
-      <section class="relative px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 overflow-hidden py-2 flex flex-col justify-end items-center min-h-[100vh]">
+      <section
+        class="relative px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 overflow-hidden py-2 flex flex-col justify-end items-center min-h-[100vh]"
+      >
         <div class="h-full absolute top-0 left-0 z-0">
-          <img [src]="slide?.imageUrl" alt="" class="w-full min-h-screen object-cover" />
+          <img
+            [src]="slide?.imageUrl"
+            alt=""
+            class="w-full min-h-screen object-cover"
+          />
         </div>
-      
+
         <div class="lg:max-w-full xl:max-w-3/4 relative z-10 lg:mt-16 mx-5">
           <div class="relative">
             <!-- Background glass effect -->
-            <div class="absolute inset-0 bg-gradient-to-l from-cyan-500 to-blue-500 opacity-25 rounded-lg"></div>
+            <div
+              class="absolute inset-0 bg-gradient-to-l from-cyan-500 to-blue-500 opacity-25 rounded-lg"
+            ></div>
             <!-- Content -->
-            <div class="relative z-10 p-2 rounded-lg text-white bg-black bg-opacity-25 backdrop-filter backdrop-blur-md text-center">
-              <h1 class="text-xl md:text-2xl xl:text-3xl font-bold leading-tight">
+            <div
+              class="relative z-10 p-2 rounded-lg text-white bg-black bg-opacity-25 backdrop-filter backdrop-blur-md text-center"
+            >
+              <h1
+                class="text-xl md:text-2xl xl:text-3xl font-bold leading-tight"
+              >
                 {{ slide?.title }}
               </h1>
               <p class="text-sm md:text-md leading-snug">
@@ -30,7 +42,6 @@
           </div>
         </div>
       </section>
-      
     </div>
 
     <!-- <div [style.backgroundImage]="'url(' + slide + ')'" class="hero min-h-[95vh] bg-cover">
@@ -41,7 +52,7 @@
               LET'S MAKE YOUR LIFE HAPPIER
             </p>
             <h1 class="mb-5 text-7xl font-light">Healthy Living</h1>
-            <button class="btn btn-primary rounded text-white capitalize px-8 font-light text-xl">
+            <button class="btn bg-blue-600 hover:bg-blue-500 px-3 rounded rounded text-white capitalize px-8 font-light text-xl">
               Contact Us
             </button>
           </div>

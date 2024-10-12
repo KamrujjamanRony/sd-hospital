@@ -1,17 +1,16 @@
-<app-cover
-  title="All Doctor List"
-  sub1="Dashboard"
-  sub2="Doctor"
-></app-cover>
+<app-cover title="All Doctor List" sub1="Dashboard" sub2="Doctor"></app-cover>
 
 <div class="container mx-auto flex justify-end gap-2">
   <select class="select select-bordered w-48" [(ngModel)]="selectedDepartment">
     <option value="">All Departments</option>
     @for (data of departmentWithDoctor; track $index) {
-      <option [value]="data.id">{{ data?.departmentName }}</option>
+    <option [value]="data.id">{{ data?.departmentName }}</option>
     }
   </select>
-  <button (click)="openAddDoctorModal()" class="btn btn-primary text-white capitalize">
+  <button
+    (click)="openAddDoctorModal()"
+    class="btn bg-blue-600 hover:bg-blue-500 px-3 rounded text-white capitalize"
+  >
     Add Doctor
   </button>
 </div>
@@ -42,7 +41,8 @@
           <p class="text-center text-5xl">Loading...</p>
           } @case ('error') {
           <span>Error: {{ query.error()?.message }}</span>
-          } @default { @for (doctor of filterDoctorsByDepartment(sortbySl(query.data())); track doctor?.id) {
+          } @default { @for (doctor of
+          filterDoctorsByDepartment(sortbySl(query.data())); track doctor?.id) {
           <tr
             class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
           >
@@ -99,10 +99,9 @@
 <!-- add modal end -->
 <!-- edit modal start -->
 @if(editDoctorModal) {
-  <app-edit-doctor-modal
-    [id]="selectedId"
-    (closeModal)="closeEditDoctorModal()"
-  ></app-edit-doctor-modal>
-  }
-  <!-- edit modal end -->
-
+<app-edit-doctor-modal
+  [id]="selectedId"
+  (closeModal)="closeEditDoctorModal()"
+></app-edit-doctor-modal>
+}
+<!-- edit modal end -->

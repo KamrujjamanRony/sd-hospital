@@ -17,7 +17,7 @@ import { environment } from '../../../../../../environments/environments';
       </div>
       <div class="flex justify-center mt-5">
         <button mat-button (click)="confirm()" class="btn btn-outline btn-error mr-1">Confirm</button>
-        <button mat-button (click)="cancel()" class="btn btn-primary btn-square btn-outline">
+        <button mat-button (click)="cancel()" class="btn bg-blue-600 hover:bg-blue-500 px-3 rounded btn-square btn-outline">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
       </div>
@@ -56,7 +56,7 @@ export class DeleteConfirmationModalComponent {
   closeModal = output<void>();
   err: any = '';
   password: any = '';
-  
+
   constructor() { }
 
   confirm(): void {

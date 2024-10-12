@@ -4,7 +4,6 @@ import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angula
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { DoctorsService } from '../../../../../services/serial/doctors.service';
-import { ImgbbService } from '../../../../../services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 import { AuthService } from '../../../../../services/serial/auth.service';
 import { DepartmentService } from '../../../../../services/serial/department.service';
@@ -72,12 +71,24 @@ export class AddDoctorModalComponent {
     notice: [''],
     imageUrl: [''],
     serialBlock: [''],
-    newPatientLimit: [''],
-    oldPatientLimit: [''],
+    satNewPatientLimit: [''],
+    satOldPatientLimit: [''],
+    sunNewPatientLimit: [''],
+    sunOldPatientLimit: [''],
+    monNewPatientLimit: [''],
+    monOldPatientLimit: [''],
+    tueNewPatientLimit: [''],
+    tueOldPatientLimit: [''],
+    wedNewPatientLimit: [''],
+    wedOldPatientLimit: [''],
+    thuNewPatientLimit: [''],
+    thuOldPatientLimit: [''],
+    friNewPatientLimit: [''],
+    friOldPatientLimit: [''],
   });
 
   onSubmit(): void {
-    const {drName, drSerial, degree, designation, specialty, departmentId, phone, fee, visitTime, room, description, additional, notice, serialBlock, newPatientLimit, oldPatientLimit, imageUrl } = this.addDoctorForm.value;
+    const {drName, drSerial, degree, designation, specialty, departmentId, phone, fee, visitTime, room, description, additional, notice, serialBlock, satNewPatientLimit, satOldPatientLimit, sunNewPatientLimit, sunOldPatientLimit, monNewPatientLimit, monOldPatientLimit, tueNewPatientLimit, tueOldPatientLimit, wedNewPatientLimit, wedOldPatientLimit, thuNewPatientLimit, thuOldPatientLimit, friNewPatientLimit, friOldPatientLimit, imageUrl } = this.addDoctorForm.value;
     if (drName && departmentId) {
       
       const formData = new FormData();
@@ -96,8 +107,20 @@ export class AddDoctorModalComponent {
       formData.append('Additional', additional != null ? additional.toString() : '');
       formData.append('Notice', notice != null ? notice.toString() : '');
       formData.append('SerialBlock', serialBlock != null ? serialBlock.toString() : '');
-      formData.append('NewPatientLimit', newPatientLimit || '');
-      formData.append('OldPatientLimit', oldPatientLimit || '');
+      formData.append('SatNewPatientLimit', satNewPatientLimit || '');
+      formData.append('SatOldPatientLimit', satOldPatientLimit || '');
+      formData.append('SunNewPatientLimit', sunNewPatientLimit || '');
+      formData.append('SunOldPatientLimit', sunOldPatientLimit || '');
+      formData.append('MonNewPatientLimit', monNewPatientLimit || '');
+      formData.append('MonOldPatientLimit', monOldPatientLimit || '');
+      formData.append('TueNewPatientLimit', tueNewPatientLimit || '');
+      formData.append('TueOldPatientLimit', tueOldPatientLimit || '');
+      formData.append('WedNewPatientLimit', wedNewPatientLimit || '');
+      formData.append('WedOldPatientLimit', wedOldPatientLimit || '');
+      formData.append('ThuNewPatientLimit', thuNewPatientLimit || '');
+      formData.append('ThuOldPatientLimit', thuOldPatientLimit || '');
+      formData.append('FriNewPatientLimit', friNewPatientLimit || '');
+      formData.append('FriOldPatientLimit', friOldPatientLimit || '');
       formData.append('Fee', fee != null ? fee.toString() : '');
       formData.append('ImageUrl', imageUrl || '');
       // const formData = {...this.addDoctorForm.value, "imageUrl":this.imageUrl, id: crypto.randomUUID()}
