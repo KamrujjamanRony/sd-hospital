@@ -19,7 +19,7 @@
           class="select select-bordered select-sm w-full"
           formControlName="drCode"
           [class.invalid]="
-            appointmentForm.get('drCode')?.invalid &&
+            appointmentForm.get('drCode')?.invalid ||
             (appointmentForm.get('drCode')?.dirty ||
               appointmentForm.get('drCode')?.touched ||
               isSubmitted)
@@ -53,7 +53,7 @@
           class="select select-bordered select-sm w-full"
           formControlName="drCode"
           [class.invalid]="
-            appointmentForm.get('drCode')?.invalid &&
+            appointmentForm.get('drCode')?.invalid ||
             (appointmentForm.get('drCode')?.dirty ||
               appointmentForm.get('drCode')?.touched ||
               isSubmitted)
@@ -160,7 +160,7 @@
           type="text"
           formControlName="pName"
           [class.invalid]="
-            appointmentForm.get('pName')?.invalid &&
+            appointmentForm.get('pName')?.invalid ||
             (appointmentForm.get('pName')?.dirty ||
               appointmentForm.get('pName')?.touched ||
               isSubmitted)
