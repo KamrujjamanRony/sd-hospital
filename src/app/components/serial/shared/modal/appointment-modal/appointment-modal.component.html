@@ -185,9 +185,9 @@
             class="input input-bordered w-full input-sm outline-none"
             required
           />
-          @if(appointmentForm.get('pName')?.hasError('required') && (appointmentForm.get('pName')?.dirty || appointmentForm.get('pName')?.touched || isSubmitted)){
+          @if(appointmentForm.get('pName')?.hasError('required') && (appointmentForm.get('pName')?.touched || isSubmitted)){
             <div class="label !py-0">
-              <span class="label-text-alt text-rose-600 capitalize"
+              <span class="text-xs text-rose-600 capitalize"
                 >Patient name is required</span
               >
             </div>
@@ -201,20 +201,10 @@
           <input
             type="text"
             formControlName="age"
-            [class.invalid]="
-              appointmentForm.get('age')?.invalid && (appointmentForm.get('age')?.dirty || appointmentForm.get('age')?.touched || isSubmitted)
-            "
             placeholder="Type here"
             class="input input-bordered w-full input-sm"
             required
           />
-          <!-- @if(appointmentForm.get('age')?.hasError('required') && (appointmentForm.get('age')?.dirty || appointmentForm.get('age')?.touched || isSubmitted)){
-            <div class="label !py-0">
-              <span class="label-text-alt text-rose-600 capitalize"
-                >Patient Age is required</span
-              >
-            </div>
-          } -->
         </label>
         <!-- sex Input -->
         <label class="form-control w-full !mt-0">
@@ -226,22 +216,11 @@
           <select
             class="select select-bordered select-sm w-full"
             formControlName="sex"
-            [class.invalid]="
-              appointmentForm.get('sex')?.invalid && (appointmentForm.get('sex')?.dirty || appointmentForm.get('sex')?.touched || isSubmitted)
-            "
-            required
           >
             <option value="" disabled>Select sex</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <!-- @if(appointmentForm.get('sex')?.hasError('required') && (appointmentForm.get('sex')?.dirty || appointmentForm.get('sex')?.touched || isSubmitted)){
-            <div class="label !py-0">
-              <span class="label-text-alt text-rose-600 capitalize"
-                >Patient sex is required</span
-              >
-            </div>
-          } -->
         </label>
         
       <!-- mobile Input -->
@@ -252,6 +231,7 @@
         <input
           type="text"
           formControlName="mobile"
+          maxlength="11"
           [class.invalid]="
             appointmentForm.get('mobile')?.invalid &&
             (appointmentForm.get('mobile')?.dirty ||
@@ -262,6 +242,13 @@
           class="input input-bordered w-full input-sm"
           required
         />
+        @if(appointmentForm.get('mobile')?.hasError('required') && (appointmentForm.get('mobile')?.touched || isSubmitted)){
+          <div class="label !py-0">
+            <span class="text-xs text-rose-600 capitalize"
+              >Mobile Number is required</span
+            >
+          </div>
+        }
       </label>
         <!-- Date Input -->
         <label class="form-control w-full !mt-0">
@@ -289,7 +276,7 @@
           </select>
           @if(appointmentForm.get('date')?.hasError('required') && (appointmentForm.get('date')?.dirty || appointmentForm.get('date')?.touched || isSubmitted)){
             <div class="label !py-0">
-              <span class="label-text-alt text-rose-600 capitalize"
+              <span class="text-xs text-rose-600 capitalize"
                 >Appointment Date is required</span
               >
             </div>
@@ -346,12 +333,6 @@
         </div>
         <textarea
             formControlName="remarks"
-            [class.invalid]="
-              appointmentForm.get('remarks')?.invalid &&
-              (appointmentForm.get('remarks')?.dirty ||
-                appointmentForm.get('remarks')?.touched ||
-                isSubmitted)
-            "
             placeholder="Type here"
             class="input input-bordered w-full h-16"
             required

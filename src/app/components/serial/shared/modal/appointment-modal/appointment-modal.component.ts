@@ -184,6 +184,7 @@ export class AppointmentModalComponent {
   }
 
   onSubmit(): void {
+    this.isSubmitted = true;
     const { pName, age, sex, date, sL, type, departmentId, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
 
     if (pName && date) {
@@ -207,8 +208,7 @@ export class AppointmentModalComponent {
         formData.append('Confirmed', confirmed != null ? confirmed.toString() : '');
 
         this.appointmentMutation.mutate(formData);
-        // this.toastService.showToast('Appointment is successfully added!');
-        this.isSubmitted = true;
+        this.isSubmitted = false;
       } else {
         const formData = new FormData();
 
@@ -231,8 +231,7 @@ export class AppointmentModalComponent {
         formData.append('Confirmed', confirmed != null ? confirmed.toString() : '');
 
         this.UpdateAppointmentMutation.mutate(formData);
-        // this.toastService.showToast('Appointment is successfully updated!');
-        this.isSubmitted = true;
+        this.isSubmitted = false;
       }
     }
   }

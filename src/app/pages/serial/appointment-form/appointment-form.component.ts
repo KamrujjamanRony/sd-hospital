@@ -126,12 +126,12 @@ export class AppointmentFormComponent implements OnInit {
     pName: ['', Validators.required],
     age: [''],
     sex: [''],
-    mobile: [''],
+    mobile: ['', Validators.required],
     type: ["true"],
     date: ['', Validators.required],
     sL: "",
     departmentId: "",
-    drCode: '',
+    drCode: ['', Validators.required],
     fee: '',
     remarks: '',
     paymentStatus: false,
@@ -148,11 +148,11 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isSubmitted = true;
     const { pName, age, sex, date, type, departmentId, sL, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
-    console.log(type);
+    console.log(this.appointmentForm.value);
     if (drCode && pName && type && date) {
-      // console.log('submitted form', this.appointmentForm.value);
-      // const formData = { ...this.appointmentForm.value, id: crypto.randomUUID() }
+      console.log('submitted form', this.appointmentForm.value);
       const formData = new FormData();
 
       formData.append('CompanyID', environment.hospitalCode.toString());
@@ -172,10 +172,10 @@ export class AppointmentFormComponent implements OnInit {
       formData.append('Confirmed', confirmed != null ? confirmed.toString() : this.confirm);
       this.appointmentMutation.mutate(formData);
       
-      this.isSubmitted = true;
+      this.isSubmitted = false;
     } else {
       this.msg = "Please fill all required fields!";
-      this.isSubmitted = true;
+      this.isSubmitted = false;
     }
   }
 

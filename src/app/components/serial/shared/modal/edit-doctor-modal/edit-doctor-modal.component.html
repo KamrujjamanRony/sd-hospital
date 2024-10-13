@@ -204,6 +204,7 @@
           <input
             type="text"
             formControlName="phone"
+            maxlength="11"
             [class.invalid]="
               addDoctorForm.get('phone')?.invalid &&
               (addDoctorForm.get('phone')?.dirty ||
@@ -270,15 +271,6 @@
             class="input input-bordered w-full input-sm outline-none"
             required
           />
-          <!-- @if(addDoctorForm.get('visitTime')?.hasError('required') &&
-          (addDoctorForm.get('visitTime')?.dirty ||
-          addDoctorForm.get('visitTime')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Visit Time is required</span
-            >
-          </div>
-          } -->
         </label>
         <!-- room Input -->
         <label class="form-control w-full !mt-0">
@@ -298,15 +290,6 @@
             class="input input-bordered w-full input-sm outline-none"
             required
           />
-          <!-- @if(addDoctorForm.get('room')?.hasError('required') &&
-          (addDoctorForm.get('room')?.dirty ||
-          addDoctorForm.get('room')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Room no. is required</span
-            >
-          </div>
-          } -->
         </label>
         <!-- Image Input -->
         <label class="form-control w-full !mt-0">
@@ -346,15 +329,6 @@
             cols="30"
             rows="10"
           ></textarea>
-          <!-- @if(addDoctorForm.get('description')?.hasError('required') &&
-          (addDoctorForm.get('description')?.dirty ||
-          addDoctorForm.get('description')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Description is required</span
-            >
-          </div>
-          } -->
         </label>
         <!-- additional Input -->
         <label class="form-control w-full !mt-0">
@@ -375,15 +349,6 @@
             cols="30"
             rows="10"
           ></textarea>
-          <!-- @if(addDoctorForm.get('additional')?.hasError('required') &&
-          (addDoctorForm.get('additional')?.dirty ||
-          addDoctorForm.get('additional')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Additional Info. is required</span
-            >
-          </div>
-          } -->
         </label>
         <!-- notice Input -->
         <label class="form-control w-full !mt-0">
@@ -404,15 +369,6 @@
               cols="30"
               rows="10"
             ></textarea>
-            <!-- @if(addDoctorForm.get('notice')?.hasError('required') &&
-            (addDoctorForm.get('notice')?.dirty ||
-            addDoctorForm.get('notice')?.touched || isSubmitted)){
-            <div class="label !py-0">
-              <span class="label-text-alt text-rose-600 capitalize"
-                >Notice is required</span
-              >
-            </div>
-            } -->
           </label>
           <!-- serialBlock Input -->
           @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a")) {
@@ -433,15 +389,6 @@
                 class="input input-bordered w-full input-sm outline-none"
                 required
               />
-              <!-- @if(addDoctorForm.get('serialBlock')?.hasError('required') &&
-              (addDoctorForm.get('serialBlock')?.dirty ||
-              addDoctorForm.get('serialBlock')?.touched || isSubmitted)){
-              <div class="label !py-0">
-                <span class="label-text-alt text-rose-600 capitalize"
-                  >Serial Block is required</span
-                >
-              </div>
-              } -->
             </label>
           }
         
@@ -463,15 +410,6 @@
             class="input input-bordered w-full input-sm outline-none"
             required
           />
-          <!-- @if(addDoctorForm.get('newPatientLimit')?.hasError('required') &&
-          (addDoctorForm.get('newPatientLimit')?.dirty ||
-          addDoctorForm.get('newPatientLimit')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >New Patient Limit is required</span
-            >
-          </div>
-          } -->
         </label>
         <!-- oldPatientLimit Input -->
       <label class="form-control w-full !mt-0">
@@ -491,15 +429,6 @@
             class="input input-bordered w-full input-sm outline-none"
             required
           />
-          <!-- @if(addDoctorForm.get('oldPatientLimit')?.hasError('required') &&
-          (addDoctorForm.get('oldPatientLimit')?.dirty ||
-          addDoctorForm.get('oldPatientLimit')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Old Patient Limit is required</span
-            >
-          </div>
-          } -->
         </label>
 
       </div>

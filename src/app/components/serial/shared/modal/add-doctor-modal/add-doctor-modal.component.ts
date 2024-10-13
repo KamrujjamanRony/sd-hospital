@@ -62,7 +62,7 @@ export class AddDoctorModalComponent {
     designation: [''],
     specialty: [''],
     departmentId: ['', Validators.required],
-    phone: [''],
+    phone: ['', Validators.maxLength(11)],
     fee: [''],
     visitTime: [''],
     room: [''],
@@ -123,7 +123,6 @@ export class AddDoctorModalComponent {
       formData.append('FriOldPatientLimit', friOldPatientLimit || '');
       formData.append('Fee', fee != null ? fee.toString() : '');
       formData.append('ImageUrl', imageUrl || '');
-      // const formData = {...this.addDoctorForm.value, "imageUrl":this.imageUrl, id: crypto.randomUUID()}
       this.mutation.mutate(formData);
       this.closeThisModal();
     }

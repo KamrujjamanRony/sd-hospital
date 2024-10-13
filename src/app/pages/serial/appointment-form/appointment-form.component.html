@@ -36,11 +36,9 @@
           <li>No Doctor found</li>
           }
         </select>
-        @if(appointmentForm.get('drCode')?.hasError('required') &&
-        (appointmentForm.get('drCode')?.dirty ||
-        appointmentForm.get('drCode')?.touched || isSubmitted)){
+        @if(appointmentForm.get('drCode')?.hasError('required')){
         <div class="label !py-0">
-          <span class="label-text-alt text-[#e11d48] capitalize"
+          <span class="text-xs text-[#e11d48] capitalize"
             >Doctor is required</span
           >
         </div>
@@ -76,11 +74,9 @@
           <li>No Doctor found</li>
           } } }
         </select>
-        @if(appointmentForm.get('drCode')?.hasError('required') &&
-        (appointmentForm.get('drCode')?.dirty ||
-        appointmentForm.get('drCode')?.touched || isSubmitted)){
+        @if(appointmentForm.get('drCode')?.hasError('required')){
         <div class="label !py-0">
-          <span class="label-text-alt text-[#e11d48] capitalize"
+          <span class="text-xs text-[#e11d48] capitalize"
             >Doctor is required</span
           >
         </div>
@@ -122,7 +118,7 @@
         (appointmentForm.get('departmentId')?.dirty ||
         appointmentForm.get('departmentId')?.touched || isSubmitted)){
         <div class="label !py-0">
-          <span class="label-text-alt text-[#e11d48] capitalize"
+          <span class="text-xs text-[#e11d48] capitalize"
             >Department is required</span
           >
         </div>
@@ -173,11 +169,9 @@
           class="input input-bordered w-full input-sm outline-none"
           required
         />
-        @if(appointmentForm.get('pName')?.hasError('required') &&
-        (appointmentForm.get('pName')?.dirty ||
-        appointmentForm.get('pName')?.touched || isSubmitted)){
+        @if(appointmentForm.get('pName')?.hasError('required')){
         <div class="label !py-0">
-          <span class="label-text-alt text-[#e11d48] capitalize"
+          <span class="text-xs text-[#e11d48] capitalize"
             >Patient name is required</span
           >
         </div>
@@ -232,10 +226,7 @@
           class="select select-bordered select-sm w-full"
           formControlName="date"
           [class.invalid]="
-            appointmentForm.get('date')?.invalid &&
-            (appointmentForm.get('date')?.dirty ||
-              appointmentForm.get('date')?.touched ||
-              isSubmitted)
+            appointmentForm.get('date')?.invalid
           "
           required
         >
@@ -248,11 +239,9 @@
             {{ date | date : "d MMMM, yyyy" }}
           </option>
         </select>
-        @if(appointmentForm.get('date')?.hasError('required') &&
-        (appointmentForm.get('date')?.dirty ||
-        appointmentForm.get('date')?.touched || isSubmitted)){
+        @if(appointmentForm.get('date')?.invalid){
         <div class="label !py-0">
-          <span class="label-text-alt text-[#e11d48] capitalize"
+          <span class="text-xs text-[#e11d48] capitalize"
             >Appointment Date is required</span
           >
         </div>
@@ -266,16 +255,21 @@
         <input
           type="text"
           formControlName="mobile"
+          maxlength="11"
           [class.invalid]="
-            appointmentForm.get('mobile')?.invalid &&
-            (appointmentForm.get('mobile')?.dirty ||
-              appointmentForm.get('mobile')?.touched ||
-              isSubmitted)
+            appointmentForm.get('mobile')?.invalid
           "
           placeholder="Type here"
           class="input input-bordered w-full input-sm"
           required
         />
+        @if(appointmentForm.get('mobile')?.invalid){
+        <div class="label !py-0">
+          <span class="text-xs text-[#e11d48] capitalize"
+            >Mobile Number is required</span
+          >
+        </div>
+        }
       </label>
       <!-- paymentStatus Input -->
       <label class="form-control w-full !mt-0">
