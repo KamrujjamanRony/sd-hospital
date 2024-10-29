@@ -169,7 +169,7 @@ export const routes: Routes = [
           { path: 'career-list', component: CareerListComponent },
           { path: 'career-list/add', component: AddCareerComponent },
           { path: 'career-list/edit/:id', component: EditCareerComponent },
-          { path: 'delete', component: DeleteComponent },
+          { path: 'delete-all', component: DeleteComponent },
         ],
       },
     ],
