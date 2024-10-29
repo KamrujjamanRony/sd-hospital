@@ -63,29 +63,15 @@ export class AddUserModalComponent {
   onSubmit(): void {
     const { username, password, role } = this.addUsersForm.value;
     if (username && password && role) {
-      console.log('submitted form', this.addUsersForm.value);
       const formData = new FormData();
 
       formData.append('CompanyID', environment.hospitalCode.toString());
       formData.append('Username', username || '');
       formData.append('Password', environment.userCode + password || '');
       (role as any[]).map((roles: any) => {
-        console.log(roles)
         formData.append('Roles', roles || '');
       })
       this.mutation.mutate(formData);
-      // this.addUsersSubscription = this.UserAuthService.registerUser(formData)
-      //   .subscribe({
-      //     next: (response) => {
-      //       this.confirmModal = true;
-      //       setTimeout(() => {
-      //         this.closeThisModal();
-      //       }, 3000);
-      //     },
-      //     error: (error) => {
-      //       console.error('Error adding user:', error);
-      //     }
-      //   });
     }
     this.isSubmitted = true;
   }

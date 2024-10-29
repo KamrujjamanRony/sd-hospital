@@ -37,24 +37,11 @@ export class EditDepartmentModalComponent {
     this.updateFormValues();
   }
 
-  // selectedDepartment = injectQuery(() => ({
-  //   queryKey: ['departments', this.id],
-  //   queryFn: async () => {
-  //     const response = await fetch(`${environment.DepartmentApi}/${this.id}`);
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-  //     const data = await response.json();
-  //     this.selected = data;
-  //   },
-  // }));
-
 
 
   mutation = injectMutation((client) => ({
     mutationFn: (updateData: any) => this.departmentService.updateDepartment(this.selected.id, updateData),
     onSuccess: () => {
-      // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['departments'] })
     },
   }));
@@ -85,7 +72,6 @@ export class EditDepartmentModalComponent {
       formData.append('DepartmentName', departmentName);
       formData.append('Description', description || '');
       formData.append('ImgUrl', imgUrl || '');
-      // const formData = { "id": this.selected.id, ...this.addDepartmentForm.value, "imgUrl": this.imgUrl }
       this.mutation.mutate(formData);
       this.closeThisModal();
     }

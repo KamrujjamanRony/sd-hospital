@@ -14,7 +14,6 @@ import { Observable } from 'rxjs';
 export class FooterComponent {
   contactService = inject(ContactService);
   router = inject(Router);
-  // Define FontAwesome icons
   faFacebook = faFacebook;
   faInstagram = faInstagram;
   faTwitter = faTwitter;
@@ -33,9 +32,7 @@ export class FooterComponent {
   }
 
   navigateToExternalLink(url: string | undefined): void {
-    // http://localhost:4200/#/about
     if (url) {
-      console.log(url)
       window.open('http://' + url, '_blank');
     }
   }

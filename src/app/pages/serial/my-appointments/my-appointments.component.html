@@ -10,208 +10,217 @@
   [class.hide-when-printing]="isPrinting"
 >
   <div class="flex gap-2 flex-col md:flex-row">
-    <input
-      type="date"
-      [(ngModel)]="fromDate"
-      class="border border-gray-300 rounded-md px-5 py-2"
-    />
-    <input
-      type="date"
-      [(ngModel)]="toDate"
-      class="border border-gray-300 rounded-md px-5 py-2"
-    />
-    <select class="select select-bordered w-48" [(ngModel)]="selectedDoctor">
-      <option value="">All Doctors</option>
-      @for (doctor of doctorsWithAppointments; track $index) {
-      <option [value]="doctor.id">{{ doctor.drName }}</option>
-      }
-    </select>
-    <select class="select select-bordered w-32" [(ngModel)]="selectedType">
-      <option value="">All</option>
-      <option value="false">Thursday</option>
-    </select>
-    <!-- <select class="select select-bordered w-32" [(ngModel)]="selectedType">
-      <option value="">Type</option>
-      <option value="true">New</option>
-      <option value="false">Thursday</option>
-    </select> -->
-    <label class="input input-bordered flex items-center gap-2">
+    <div class="flex gap-2 flex-col md:flex-row">
       <input
-        type="text"
-        class="grow"
-        placeholder="Search"
-        [(ngModel)]="searchQuery"
+        type="date"
+        id="fromDate"
+        [(ngModel)]="fromDate"
+        (change)="onInputChange()"
+        class="border-2 border-gray-700 rounded-md px-5 py-2"
       />
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 16 16"
-        fill="currentColor"
-        class="w-4 h-4 opacity-70"
+      <input
+        type="date"
+        id="toDate"
+        [(ngModel)]="toDate"
+        (change)="onInputChange()"
+        class="border-2 border-gray-700 rounded-md px-5 py-2"
+      />
+      <select
+        class="select select-bordered w-48"
+        id="selectedDoctor"
+        [(ngModel)]="selectedDoctor"
+        (change)="onInputChange()"
       >
-        <path
-          fill-rule="evenodd"
-          d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-          clip-rule="evenodd"
+        <option value="">All Doctors</option>
+        @for (doctor of doctorsWithAppointments; track $index) {
+        <option [value]="doctor.id">{{ doctor.drName }}</option>
+        }
+      </select>
+      <label class="input input-bordered flex items-center gap-2">
+        <input
+          type="text"
+          class="grow"
+          placeholder="Search"
+          id="searchQuery"
+          [(ngModel)]="searchQuery"
+          (input)="onInputChange()"
         />
-      </svg>
-    </label>
-  </div>
-  <div class="flex gap-2 flex-col md:flex-row">
-    <!-- Home -->
-    <div class="my-4 pl-2 lg:my-0 lg:pl-2 lg:pr-1" data-te-nav-item-ref>
-      <button
-        (click)="redirectToHome()"
-        type="button"
-        class="btn bg-blue-600 hover:bg-blue-500 py-3 px-3 rounded text-white cursor-pointer"
-      >
-        Back Home
-      </button>
-    </div>
-    <!-- Print -->
-    <div class="my-4 pl-2 lg:my-0 lg:pl-2 lg:pr-1" data-te-nav-item-ref>
-      <a
-        (click)="printPage()"
-        type="button"
-        class="btn bg-rose-600 hover:bg-rose-500 py-3 px-3 rounded text-white cursor-pointer"
-      >
-        Print Page
-      </a>
-    </div>
-  </div>
-</div>
-
-<div class="mx-4" [class.black-when-printing]="isPrinting">
-  <div class="w-full overflow-hidden rounded-lg shadow-xs">
-    <div class="w-full overflow-x-auto">
-      @if (fromDate && !toDate) {
-      <h1 class="text-xl font-bold">Date: {{ transform(fromDate) }}</h1>
-      } @if (!fromDate && toDate) {
-      <h1 class="text-xl font-bold">Date: {{ transform(toDate) }}</h1>
-      } @if (fromDate && toDate) {
-      <h1 class="text-xl font-bold">
-        Date:
-        <span class="text-xl font-bold"
-          >From: {{ transform(fromDate) }} To: {{ transform(toDate) }}</span
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          fill="currentColor"
+          class="w-4 h-4 opacity-70"
         >
-      </h1>
-      } @if (selectedDoctor) {
-      <h1 class="text-xl font-bold">
-        Doctor: {{ this.doctorsService.getDoctorById(selectedDoctor)?.drName }}
-      </h1>
-      } @if (selectedDepartment) {
-      <h1 class="text-xl font-bold">
-        Department:
-        {{
-          this.departmentService.getDepartmentByDoctorId(selectedDepartment)
-            ?.departmentName
-        }}
-      </h1>
-      }
-      <p class="font-bold" [class.hidden-when-printing]="isPrinting">
-        Total : {{ totalAppointment }}
-      </p>
-      <table class="w-full">
-        <thead>
-          <tr
-            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-          >
-            <th class="mx-1">Sl</th>
-            <th class="mx-1" [class.hidden-when-printing]="isPrinting">
-              Doctor Name
-            </th>
-            <th class="mx-1" [class.hidden-when-printing]="isPrinting">
-              Department
-            </th>
-            <th class="mx-1" [class.hidden-when-printing]="isPrinting">Date</th>
-            <th class="mx-1">Patient Name</th>
-            <th class="mx-1">Age</th>
-            <th class="mx-1">Sex</th>
-            <th class="mx-1">Mobile</th>
-            <th class="mx-1" [class.hidden-when-printing]="isPrinting">Type</th>
-            <th class="mx-1" [class.hidden-when-printing]="isPrinting">
-              Username
-            </th>
-            <th class="mx-1">Remarks</th>
-            @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717") ||
-            checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
-            <th class="w-32" [class.hidden-when-printing]="isPrinting">
-              Actions
-            </th>
-            }
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-          @switch (appointmentQuery.status()) { @case ('pending') {
-          <p class="text-center text-5xl">Loading...</p>
-          } @case ('error') {
-          <span>Error: {{ appointmentQuery.error()?.message }}</span>
-          } @default { @for (appointment of
-          filterAppointmentsByUser(filterAppointmentsBySearch(filterAppointmentsByDoctor(filterAppointmentsByDate(filterAppointmentsByType(sortAppointments(appointmentQuery.data()))))));
-          track appointment?.id) {
-          <tr
-            class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
-          >
-            <td class="mx-1 text-xs">{{ appointment?.sl }}</td>
-            <td
-              class="mx-1 text-xs max-w-[150px]"
-              [class.hidden-when-printing]="isPrinting"
-            >
-              {{
-                this.doctorsService.getDoctorById(appointment?.drCode)?.drName
-              }}
-            </td>
-            <td
-              class="mx-1 text-xs max-w-[100px]"
-              [class.hidden-when-printing]="isPrinting"
-            >
-              {{
-                departmentService.getDepartmentById(appointment?.departmentId)
-              }}
-            </td>
-            <td class="mx-1 text-xs" [class.hidden-when-printing]="isPrinting">
-              {{ transform(appointment?.date) }}
-            </td>
-            <td class="mx-1 text-xs">{{ appointment?.pName }}</td>
-            <td class="mx-2 text-xs">{{ appointment?.age }}</td>
-            <td class="mx-2 text-xs">{{ appointment?.sex }}</td>
-            <td class="mx-2 text-xs">{{ appointment?.mobile }}</td>
-            <td class="mx-2 text-xs" [class.hidden-when-printing]="isPrinting">
-              @if (appointment?.type) {New} @else {Thursday}
-            </td>
-            <td class="mx-2 text-xs" [class.hidden-when-printing]="isPrinting">
-              {{ appointment?.username }}
-            </td>
-            <td class="mx-1 text-xs max-w-[180px]">
-              {{ appointment?.remarks }}
-            </td>
-            <td class="mx-1 text-sm" [class.hidden-when-printing]="isPrinting">
-              <!-- Edit appointment -->
-              @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
-              <button
-                (click)="openEditAppointmentModal(appointment?.id)"
-                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded dark:bg-green-700 dark:text-green-100 mr-2 inline-block my-2"
-              >
-                Edit
-              </button>
-              }
-            </td>
-          </tr>
-          } @empty {
-          <li>No appointment found</li>
-          } } }
-        </tbody>
-      </table>
+          <path
+            fill-rule="evenodd"
+            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </label>
     </div>
-    <div
-      class="grid mx-1 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-    ></div>
+    <div class="flex gap-2 flex-col md:flex-row">
+      <div class="my-4 pl-2 lg:my-0 lg:pl-2 lg:pr-1" data-te-nav-item-ref>
+        <button
+          (click)="redirectToHome()"
+          type="button"
+          class="btn bg-blue-600 hover:bg-blue-500 py-3 px-3 rounded-lg text-white cursor-pointer"
+        >
+          Back Home
+        </button>
+      </div>
+      <div class="my-4 pl-2 lg:my-0 lg:pl-2 lg:pr-1" data-te-nav-item-ref>
+        <a
+          (click)="printPage()"
+          type="button"
+          class="btn bg-rose-600 hover:bg-rose-500 py-3 px-3 rounded-lg text-white cursor-pointer"
+        >
+          Print Page
+        </a>
+      </div>
+    </div>
   </div>
-</div>
-<!-- edit modal start -->
-@if(editAppointmentModal) {
-<app-appointment-modal
-  [id]="selectedId"
-  (closeAppointment)="closeEditAppointmentModal()"
-></app-appointment-modal>
-}
-<!-- edit modal end -->
+  </div>
+
+  <div class="mx-4" [class.black-when-printing]="isPrinting">
+    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+      <div class="w-full overflow-x-auto">
+        @if (fromDate && !toDate) {
+        <h1 class="text-xl font-bold">Date: {{ transform(fromDate) }}</h1>
+        } @if (!fromDate && toDate) {
+        <h1 class="text-xl font-bold">Date: {{ transform(toDate) }}</h1>
+        } @if (fromDate && toDate) {
+        <h1 class="text-xl font-bold">
+          Date:
+          <span class="text-xl font-bold"
+            >From: {{ transform(fromDate) }} To: {{ transform(toDate) }}</span
+          >
+        </h1>
+        } @if (selectedDoctor) {
+        <h1 class="text-xl font-bold">
+          Doctor:
+          {{ this.doctorsService.getDoctorById(selectedDoctor)?.drName }}
+        </h1>
+        } @if (selectedDepartment) {
+        <h1 class="text-xl font-bold">
+          Department:
+          {{
+            this.departmentService.getDepartmentByDoctorId(selectedDepartment)
+              ?.departmentName
+          }}
+        </h1>
+        }
+        <p class="font-bold" [class.hidden-when-printing]="isPrinting">
+          Total : {{ totalAppointment }}
+        </p>
+        <table class="w-full">
+          <thead>
+            <tr
+              class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+            >
+              <th class="mx-1">Sl</th>
+              <th class="mx-1" [class.hidden-when-printing]="isPrinting">
+                Doctor Name
+              </th>
+              <th class="mx-1" [class.hidden-when-printing]="isPrinting">
+                Department
+              </th>
+              <th class="mx-1" [class.hidden-when-printing]="isPrinting">
+                Date
+              </th>
+              <th class="mx-1">Patient Name</th>
+              <th class="mx-1">Age</th>
+              <th class="mx-1">Sex</th>
+              <th class="mx-1">Mobile</th>
+              <th class="mx-1" [class.hidden-when-printing]="isPrinting">
+                Username
+              </th>
+              <th class="mx-1">Remarks</th>
+              @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717") ||
+              checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
+              <th class="w-32" [class.hidden-when-printing]="isPrinting">
+                Actions
+              </th>
+              }
+            </tr>
+          </thead>
+          <tbody
+            class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+          >
+            @for (appointment of filteredAppointments; track appointment?.id) {
+            <tr
+              class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
+            >
+              <td class="mx-1 text-xs">{{ appointment?.sl }}</td>
+              <td
+                class="mx-1 text-xs max-w-[150px]"
+                [class.hidden-when-printing]="isPrinting"
+              >
+                {{
+                  this.doctorsService.getDoctorById(appointment?.drCode)?.drName
+                }}
+              </td>
+              <td
+                class="mx-1 text-xs max-w-[100px]"
+                [class.hidden-when-printing]="isPrinting"
+              >
+                {{
+                  departmentService.getDepartmentById(appointment?.departmentId)
+                }}
+              </td>
+              <td
+                class="mx-1 text-xs"
+                [class.hidden-when-printing]="isPrinting"
+              >
+                {{ transform(appointment?.date) }}
+              </td>
+              <td class="mx-1 text-xs">{{ appointment?.pName }}</td>
+              <td class="mx-2 text-xs">{{ appointment?.age }}</td>
+              <td class="mx-2 text-xs">{{ appointment?.sex }}</td>
+              <td class="mx-2 text-xs">{{ appointment?.mobile }}</td>
+              <td
+                class="mx-2 text-xs"
+                [class.hidden-when-printing]="isPrinting"
+              >
+                {{ appointment?.username }}
+              </td>
+              <td class="mx-1 text-xs max-w-[180px]">
+                {{ appointment?.remarks }}
+              </td>
+              <td
+                class="mx-1 text-sm"
+                [class.hidden-when-printing]="isPrinting"
+              >
+                @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
+                <button
+                  (click)="openEditAppointmentModal(appointment?.id)"
+                  class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded dark:bg-green-700 dark:text-green-100 mr-2 inline-block my-2"
+                >
+                  Edit
+                </button>
+                } @if (checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
+                <button
+                  (click)="onDelete(appointment?.id)"
+                  class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded dark:bg-red-700 dark:text-green-100 inline-block"
+                >
+                  Delete
+                </button>
+                }
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div
+        class="grid mx-1 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+      ></div>
+    </div>
+  </div>
+
+  @if(editAppointmentModal) {
+  <app-appointment-modal
+    [id]="selectedId"
+    (closeAppointment)="closeEditAppointmentModal()"
+  ></app-appointment-modal>
+  }

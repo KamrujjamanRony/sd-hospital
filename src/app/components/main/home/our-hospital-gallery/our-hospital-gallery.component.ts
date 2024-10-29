@@ -27,7 +27,6 @@ export class OurHospitalGalleryComponent {
   }
 
   scrollToTop() {
-    // Scroll to the top of the page
     this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
   }
 

@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environments';
 @Injectable({
   providedIn: 'root'
 })
-export class DoctorsService {
+export class DoctorsServiceMain {
   http = inject(HttpClient);
 
   constructor() {}
@@ -27,6 +27,10 @@ export class DoctorsService {
 
   getDoctor(id: any): Observable<any>{
     return this.http.get<any>(`${environment.doctorApi}/GetDoctorById?id=${id}`);
+  }
+
+  getDoctorById(id: any): any{
+    return this.http.get<any>(`${environment.doctorApi}/GetDoctorById?id=${id}`).subscribe((data) => data );
   }
 
   updateDoctor(id: any, updateDoctorRequest: any | FormData): Observable<any>{

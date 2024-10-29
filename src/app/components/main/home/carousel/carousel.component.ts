@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
-// import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
 import { CarouselService } from '../../../../services/main/carousel.service';
-// register Swiper custom elements
 register();
 
 @Component({

@@ -27,7 +27,6 @@ export class AddCareerComponent {
   }
 
   constructor() {
-    // Initialize model properties
     this.model = {
       companyID: 20,   // TODO: environment.hospitalCode
       title: '',
@@ -36,7 +35,6 @@ export class AddCareerComponent {
     };
   }
 
-  // Handle form submission
   onFormSubmit(): void {
     const formData = new FormData();
 
@@ -48,7 +46,6 @@ export class AddCareerComponent {
     this.addCareerSubscription = this.careerService.addCareer(formData)
       .subscribe({
         next: (response) => {
-          // toast
           this.confirmModal = true;
         },
         error: (error) => {
@@ -57,7 +54,6 @@ export class AddCareerComponent {
       });
   }
 
-  // Unsubscribe from the subscription to avoid memory leaks
   ngOnDestroy(): void {
     this.addCareerSubscription?.unsubscribe();
   }

@@ -8,9 +8,6 @@ import { AboutComponent } from './pages/main/about/about.component';
 import { ContactComponent } from './pages/main/contact/contact.component';
 import { InstrumentGalleryComponent } from './pages/main/gallery/instrument-gallery/instrument-gallery.component';
 import { HospitalGalleryComponent } from './pages/main/gallery/hospital-gallery/hospital-gallery.component';
-import { DoctorsListComponent } from './pages/serial/MIS/list/doctors-list/doctors-list.component';
-import { AddDoctorComponent } from './pages/serial/MIS/add/add-doctor/add-doctor.component';
-import { EditDoctorComponent } from './pages/serial/MIS/all-edit/edit-doctor/edit-doctor.component';
 import { AboutUsComponent } from './pages/serial/MIS/about-us/about-us.component';
 import { ContactUsComponent } from './pages/serial/MIS/contact-us/contact-us.component';
 import { CarouselListComponent } from './pages/serial/MIS/list/carousel-list/carousel-list.component';
@@ -42,13 +39,11 @@ import { SerialAllDoctorsComponent } from './pages/serial/all-doctors/all-doctor
 import { RedirectComponent } from './pages/serial/redirect.component';
 import { AllUsersComponent } from './pages/serial/all-users/all-users.component';
 import { AllAppointmentComponent } from './pages/serial/all-appointment/all-appointment.component';
-import { PrintAppointmentComponent } from './pages/serial/print-appointment/print-appointment.component';
 import { DepartmentComponent } from './pages/main/department/department.component';
 import { MainDoctorListComponent } from './pages/main/doctors-list/doctors-list.component';
 import { ServicesListComponent } from './pages/serial/MIS/list/services-list/services-list.component';
 import { AddServicesComponent } from './pages/serial/MIS/add/add-services/add-services.component';
 import { EditServicesComponent } from './pages/serial/MIS/all-edit/edit-services/edit-services.component';
-import { OurServicesComponent } from './pages/main/our-services/our-services.component';
 import { ReportLayoutComponent } from './pages/layouts/report-layout/report-layout.component';
 import { CareerComponent } from './pages/main/career/career.component';
 import { CareerListComponent } from './pages/serial/MIS/list/career-list/career-list.component';
@@ -150,9 +145,6 @@ export const routes: Routes = [
           { path: '', component: CarouselListComponent },
           { path: 'add', component: AddCarouselComponent },
           { path: 'edit/:id', component: EditCarouselComponent },
-          { path: 'doctors', component: DoctorsListComponent },
-          { path: 'doctors/add', component: AddDoctorComponent },
-          { path: 'doctors/edit/:id', component: EditDoctorComponent },
           { path: 'about-us/:id', component: AboutUsComponent },
           { path: 'contact-us/:id', component: ContactUsComponent },
           { path: 'carousel', component: CarouselListComponent },
@@ -183,10 +175,6 @@ export const routes: Routes = [
   {
     path: 'all-appointment',
     component: AllAppointmentComponent,
-  },
-  {
-    path: 'print',
-    component: PrintAppointmentComponent,
   },
   {
     path: 'report',

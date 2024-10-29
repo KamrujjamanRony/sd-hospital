@@ -33,7 +33,6 @@ export class AddDepartmentModalComponent {
   mutation = injectMutation((client) => ({
     mutationFn: (formData: any) => this.departmentService.addDepartment(formData),
     onSuccess: () => {
-      // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['departments'] })
     },
   }));

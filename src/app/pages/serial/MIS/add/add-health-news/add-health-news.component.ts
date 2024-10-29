@@ -27,7 +27,6 @@ export class AddHealthNewsComponent {
   }
 
   constructor() {
-    // Initialize model properties
     this.model = {
       companyID: environment.hospitalCode,
       healthNewsSerial: null,
@@ -38,7 +37,6 @@ export class AddHealthNewsComponent {
     };
   }
 
-  // Handle form submission
   onFormSubmit(): void {
     const formData = new FormData();
 
@@ -52,7 +50,6 @@ export class AddHealthNewsComponent {
     this.addHealthNewsSubscription = this.healthNewsService.addHealthNews(formData)
       .subscribe({
         next: (response) => {
-          // toast
           this.confirmModal = true;
         },
         error: (error) => {
@@ -61,7 +58,6 @@ export class AddHealthNewsComponent {
       });
   }
 
-  // Unsubscribe from the subscription to avoid memory leaks
   ngOnDestroy(): void {
     this.addHealthNewsSubscription?.unsubscribe();
   }

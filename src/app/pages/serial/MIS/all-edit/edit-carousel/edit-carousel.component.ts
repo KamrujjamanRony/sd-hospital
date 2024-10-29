@@ -59,7 +59,6 @@ export class EditCarouselComponent implements OnInit, OnDestroy {
       this.editCarouselSubscription = this.carouselService.updateCarousel(this.id, formData)
         .subscribe({
           next: () => {
-            // toast
             this.confirmModal = true;
           }
         });

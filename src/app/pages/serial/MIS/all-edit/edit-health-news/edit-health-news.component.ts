@@ -64,7 +64,6 @@ export class EditHealthNewsComponent {
       this.editHealthNewsSubscription = this.healthNewsService.updateHealthNews(this.id, formData)
         .subscribe({
           next: (response) => {
-            // toast
             this.confirmModal = true;
           }
         });

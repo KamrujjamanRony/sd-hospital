@@ -67,24 +67,20 @@ export class AppointmentModalComponent {
   appointmentMutation = injectMutation((client) => ({
     mutationFn: (formData: any) => this.appointmentService.addAppointment(formData),
     onSuccess: () => {
-      // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['appointments'] })
     },
     onError: (error: any) => {
-      console.log("clicked on Appointment");
-      this.handleError(error); // Handle the error
+      this.handleError(error);
     }
   }));
 
   UpdateAppointmentMutation = injectMutation((client) => ({
     mutationFn: (formData: any) => this.appointmentService.updateAppointment(this.selected.id, formData),
     onSuccess: () => {
-      // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['appointments'] })
     },
     onError: (error: any) => {
-      console.log("clicked on Appointment");
-      this.handleError(error); // Handle the error
+      this.handleError(error);
     }
   }));
 

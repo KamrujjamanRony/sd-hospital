@@ -26,7 +26,6 @@ export class ActiveLinkComponent {
     } else {
       return false;
     }
-    // return this.router.isActive(this.to, true);
   }
   handleDropdownOpen(){
     this.isDropdownOpen =false;

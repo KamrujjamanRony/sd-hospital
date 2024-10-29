@@ -18,7 +18,6 @@ import { environment } from '../../../../environments/environments';
   styleUrl: './serial-main.component.css'
 })
 export class SerialMainComponent {
-  // usersService = inject(UsersService);
   authService = inject(AuthService);
   UserAuthService = inject(UserAuthService);
   queryClient = injectQueryClient();
@@ -26,11 +25,6 @@ export class SerialMainComponent {
   isSubmitted = false;
   user: any;
   private loginSubscription?: Subscription;
-
-  // query = injectQuery(() => ({
-  //   queryKey: ['users'],
-  //   queryFn: () => this.usersService.getUsers(),
-  // }));
 
   constructor(){
     this.setUser();
@@ -43,11 +37,9 @@ export class SerialMainComponent {
   });
 
   onSubmit(): void {
-    // const users = this.query.data();
     let { username, password } = this.userForm.value;
     if (username && password) {
       password = environment.userCode + password;
-      // const formData = {username, password}
       this.loginSubscription = this.UserAuthService.loginUser({username, password})
       .subscribe({
         next: (response: any) => {

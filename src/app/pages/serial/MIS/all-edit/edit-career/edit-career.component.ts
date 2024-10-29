@@ -60,7 +60,6 @@ export class EditCareerComponent {
       this.editCareerSubscription = this.careerService.updateCareer(this.id, formData)
         .subscribe({
           next: () => {
-            // toast
             this.confirmModal = true;
           }
         });

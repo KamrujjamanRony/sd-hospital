@@ -15,7 +15,6 @@ import { environment } from '../../../../../../environments/environments';
 })
 export class AddHospitalNewsComponent {
   hospitalNewsService = inject(HospitalNewsService);
-  // Component properties
   yourTitle: any = 'add a Hospital News';
   yourSub1: any = 'Dashboard';
   yourSub2: any = 'Add Hospital News';
@@ -29,7 +28,6 @@ export class AddHospitalNewsComponent {
   }
 
   constructor() {
-    // Initialize model properties
     this.model = {
       companyID: environment.hospitalCode,
       newsSerial: null,
@@ -39,7 +37,6 @@ export class AddHospitalNewsComponent {
     };
   }
 
-  // Handle form submission
   onFormSubmit(): void {
     const formData = new FormData();
 
@@ -52,7 +49,6 @@ export class AddHospitalNewsComponent {
     this.addHospitalNewsSubscription = this.hospitalNewsService.addHospitalNews(formData)
       .subscribe({
         next: (response) => {
-          // toast
           this.confirmModal = true;
         },
         error: (error) => {
@@ -61,7 +57,6 @@ export class AddHospitalNewsComponent {
       });
   }
 
-  // Unsubscribe from the subscription to avoid memory leaks
   ngOnDestroy(): void {
     this.addHospitalNewsSubscription?.unsubscribe();
   }

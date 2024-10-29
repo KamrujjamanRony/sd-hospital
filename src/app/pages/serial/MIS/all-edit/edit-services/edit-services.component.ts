@@ -62,7 +62,6 @@ export class EditServicesComponent {
       this.editServicesSubscription = this.servicesService.updateServices(this.id, formData)
         .subscribe({
           next: (response) => {
-            // toast
             this.confirmModal = true;
           }
         });

@@ -10,6 +10,7 @@ import { DoctorsService } from '../../../../../services/serial/doctors.service';
 import { AuthService } from '../../../../../services/serial/auth.service';
 import { environment } from '../../../../../../environments/environments';
 import { DepartmentService } from '../../../../../services/serial/department.service';
+import { AppointmentsService } from '../../../../../services/serial/appointments.service';
 
 @Component({
   selector: 'app-appointment-modal',
@@ -24,6 +25,7 @@ export class AppointmentModalComponent {
   fb = inject(FormBuilder);
   toastService = inject(ToastService);
   appointmentService = inject(AppointmentService);
+  appointmentsService = inject(AppointmentsService);
   departmentService = inject(DepartmentService);
   doctorsService = inject(DoctorsService);
   authService = inject(AuthService);
@@ -50,9 +52,16 @@ export class AppointmentModalComponent {
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
-    this.selected = this.appointmentService.getAppointment(this.id);
-    this.updateFormValues();
-    this.blockSerials = this.doctor?.serialBlock?.split(',');
+    if (this.id) {
+      this.appointmentsService.getAppointmentDataById(this.id).subscribe(data => {
+        this.selected = data;
+        this.updateFormValues();
+        this.blockSerials = this.doctor?.serialBlock?.split(',');
+      });
+    }
+    if (this.doctor) {
+      this.blockSerials = this.doctor?.serialBlock?.split(',');
+    }
   }
 
   checkRoles(roleId: any) {
@@ -78,37 +87,30 @@ export class AppointmentModalComponent {
   appointmentMutation = injectMutation((client) => ({
     mutationFn: (formData: any) => this.appointmentService.addAppointment(formData),
     onSuccess: () => {
-      // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['appointments'] });
       this.msg = "Appointment is successfully added!"
-      // toast
       this.confirmModal = true;
       setTimeout(() => {
         this.closeAppointmentModal();
       }, 2000);
     },
     onError: (error: any) => {
-      this.handleError(error); // Handle the error
-      // setTimeout(() => {
-      //   this.closeAppointmentModal();
-      // }, 2000);
+      this.handleError(error);
     }
   }));
 
   UpdateAppointmentMutation = injectMutation((client) => ({
     mutationFn: (formData: any) => this.appointmentService.updateAppointment(this.selected.id, formData),
     onSuccess: () => {
-      // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['appointments'] });
       this.msg = "Appointment is successfully updated!"
-      // toast
       this.confirmModal = true;
       setTimeout(() => {
         this.closeAppointmentModal();
       }, 2000);
     },
     onError: (error: any) => {
-      this.handleError(error); // Handle the error
+      this.handleError(error);
       setTimeout(() => {
         this.closeAppointmentModal();
       }, 2000);
@@ -116,7 +118,6 @@ export class AppointmentModalComponent {
   }));
 
   private handleError(error: any) {
-    // console.log(error?.response?.data?.message);
     this.err = error?.response?.data?.message;
     console.error(error);
   }
@@ -151,7 +152,6 @@ export class AppointmentModalComponent {
   updateFormValues(): void {
     if (this.selected) {
   
-      // Format the date to yyyy-mm-dd
       const formattedDate = this.datePipe.transform(this.selected.date, 'yyyy-MM-dd');
   
       this.appointmentForm.patchValue({
@@ -160,7 +160,7 @@ export class AppointmentModalComponent {
         sex: this.selected.sex,
         mobile: this.selected.mobile,
         type: this.selected.type.toString(),
-        date: formattedDate, // Assign the formatted date
+        date: formattedDate,
         sL: this.selected.sl,
         departmentId: this.selected.departmentId,
         drCode: this.selected.drCode,
@@ -169,7 +169,6 @@ export class AppointmentModalComponent {
         paymentStatus: this.selected.paymentStatus,
         confirmed: this.selected.confirmed,
       });
-      // console.log(this.appointmentForm.value)
     }
   }
 
@@ -240,7 +239,6 @@ export class AppointmentModalComponent {
     const currentValue = this.appointmentForm.get('type')?.value;
     const newValue = currentValue === 'false' ? 'true' : 'false';
     this.appointmentForm.get('type')?.setValue(newValue);
-    // console.log(this.appointmentForm.get('type')?.value)
   }
 
   dates: Date[] = Array.from({ length: 15 }, (_, i) => {
@@ -249,7 +247,7 @@ export class AppointmentModalComponent {
     return date;
   });
 
-  // Define the isPastDate method
+
   isPastDate(date: Date): boolean {
     const today = new Date();
     today.setHours(0, 0, 0, 0);

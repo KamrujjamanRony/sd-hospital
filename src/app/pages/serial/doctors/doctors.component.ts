@@ -23,16 +23,9 @@ export class DoctorsComponent {
 
   constructor() {}
 
-  ngOnInit(): void {
-    // this.hospitalDoctors$ = this.doctorsService.getAllDoctors().pipe(
-    //   map((doctors: any[]) =>
-    //     doctors.filter((doctor: any) => doctor.hospitalCode == this.hospitalCode)
-    //   )
-    // );
-  }
+  ngOnInit(): void { }
 
   scrollToTop() {
-    // Scroll to the top of the page
     this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
   }
 

@@ -58,7 +58,6 @@ export class EditDoctorModalComponent {
   mutation = injectMutation((client) => ({
     mutationFn: (updateData: any) => this.doctorsService.updateDoctor(this.selected.id, updateData),
     onSuccess: () => {
-      // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['doctors'] })
     },
   }));
@@ -136,8 +135,6 @@ export class EditDoctorModalComponent {
   onSubmit(): void {
     const {drName, drSerial, degree, designation, specialty, departmentId, phone, fee, visitTime, room, description, additional, notice, serialBlock,satNewPatientLimit, satOldPatientLimit, sunNewPatientLimit, sunOldPatientLimit, monNewPatientLimit, monOldPatientLimit, tueNewPatientLimit, tueOldPatientLimit, wedNewPatientLimit, wedOldPatientLimit, thuNewPatientLimit, thuOldPatientLimit, friNewPatientLimit, friOldPatientLimit, imageUrl } = this.addDoctorForm.value;
     if (drName && departmentId) {
-      // console.log('submitted form', this.addDoctorForm.value);
-      // const formData = {...this.addDoctorForm.value, "imageUrl":this.imageUrl, id: this.selected.id}
       const formData = new FormData();
 
       formData.append('CompanyID', environment.hospitalCode.toString());

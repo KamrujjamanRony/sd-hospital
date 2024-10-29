@@ -31,7 +31,6 @@ export class AddServicesComponent {
         this.services = data;
       });
     }
-    // Initialize model properties
     this.model = {
       companyID: environment.hospitalCode,
       title: "",
@@ -40,7 +39,6 @@ export class AddServicesComponent {
     };
   }
 
-  // Handle form submission
   onFormSubmit(): void {
     const formData = new FormData();
 
@@ -52,7 +50,6 @@ export class AddServicesComponent {
     this.addInstrumentSubscription = this.servicesService.addServices(formData)
       .subscribe({
         next: (response) => {
-          // toast
           this.confirmModal = true;
         },
         error: (error) => {
@@ -61,7 +58,6 @@ export class AddServicesComponent {
       });
   }
 
-  // Unsubscribe from the subscription to avoid memory leaks
   ngOnDestroy(): void {
     this.addInstrumentSubscription?.unsubscribe();
   }

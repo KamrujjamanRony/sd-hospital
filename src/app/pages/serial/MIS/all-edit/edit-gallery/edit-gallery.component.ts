@@ -60,7 +60,6 @@ export class EditGalleryComponent {
       this.editGallerySubscription = this.galleryService.updateGallery(this.id, formData)
         .subscribe({
           next: (response) => {
-            // toast
             this.confirmModal = true;
           }
         });

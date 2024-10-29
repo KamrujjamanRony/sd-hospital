@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DoctorsService } from '../../../services/main/doctors.service';
+import { DoctorsServiceMain } from '../../../services/main/doctors.service';
 import { ActivatedRoute } from '@angular/router';
 import { CoverComponent } from "../../../components/main/shared/cover/cover.component";
 
@@ -12,7 +12,7 @@ import { CoverComponent } from "../../../components/main/shared/cover/cover.comp
     imports: [CoverComponent]
 })
 export class DoctorComponent {
-  doctorsService = inject(DoctorsService);
+  doctorsService = inject(DoctorsServiceMain);
   route = inject(ActivatedRoute);
   
   emptyImg: any = '../../../../assets/images/doctor.png';

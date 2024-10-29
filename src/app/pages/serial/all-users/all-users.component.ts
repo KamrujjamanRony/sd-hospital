@@ -49,20 +49,6 @@ export class AllUsersComponent {
     return roleName?.name;
   }
 
-  // mutation = injectMutation((client) => ({
-  //   mutationFn: (id: any) => this.usersService.deleteUser(id),
-  //   onSuccess: () => {
-  //     client.invalidateQueries({ queryKey: ['users'] })
-  //   },
-  // }));
-
-  // onDelete(id: any) {
-  //   const result = confirm("Are you sure you want to delete this item?");
-  //   if (result === true) {
-  //     this.mutation.mutate(id);
-  //   }
-  // }
-
   openAddUserModal() {
     this.addUserModal = true;
   }

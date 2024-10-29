@@ -27,7 +27,6 @@ export class AddGalleryComponent {
   }
 
   constructor() {
-    // Initialize model properties
     this.model = {
       companyID: environment.hospitalCode,
       galerySerial: null,
@@ -37,7 +36,6 @@ export class AddGalleryComponent {
     };
   }
 
-  // Handle form submission
   onFormSubmit(): void {
     const formData = new FormData();
 
@@ -50,7 +48,6 @@ export class AddGalleryComponent {
     this.addGallerySubscription = this.galleryService.addGallery(formData)
       .subscribe({
         next: (response) => {
-          // toast
           this.confirmModal = true;
         },
         error: (error) => {
@@ -59,7 +56,6 @@ export class AddGalleryComponent {
       });
   }
 
-  // Unsubscribe from the subscription to avoid memory leaks
   ngOnDestroy(): void {
     this.addGallerySubscription?.unsubscribe();
   }

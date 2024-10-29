@@ -28,17 +28,13 @@ export class NavbarComponent {
     this.dataService.getJsonData().subscribe(data => {
       this.jsonData = data;
     });
-    // Subscribe to router events
     this.router.events
       .pipe(
-        filter(event => event instanceof NavigationEnd) // Filter only NavigationEnd events
+        filter(event => event instanceof NavigationEnd)
       )
       .subscribe(() => {
-        // Update fullUrl when route changes
         this.fullUrl = this.location.prepareExternalUrl(this.location.path());
       });
-
-    // Initialize fullUrl
     this.fullUrl = this.location.prepareExternalUrl(this.location.path());
   }
 
@@ -50,7 +46,6 @@ export class NavbarComponent {
   logOut() {
     this.authService.deleteUser();
 
-    // Reload the current route
     window.location.reload();
   }
 

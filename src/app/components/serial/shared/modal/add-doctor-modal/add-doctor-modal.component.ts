@@ -49,7 +49,6 @@ export class AddDoctorModalComponent {
   mutation = injectMutation((client) => ({
     mutationFn: (formData: any) => this.doctorsService.addDoctor(formData),
     onSuccess: () => {
-      // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['doctors'] })
     },
   }));

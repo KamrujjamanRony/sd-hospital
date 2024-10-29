@@ -28,11 +28,10 @@ export class DepartmentService {
   async getDepartments(): Promise<any[]> {
     try {
       const response = await this.apiClient.get<any[]>('/');
-      const filteredDepartments = response.data.filter(data => data.companyID == environment.hospitalCode);
-      return filteredDepartments;
+      // const filteredDepartments = response.data.filter(data => data.companyID == environment.hospitalCode);
+      return response.data;
     } catch (error) {
       console.error('Error fetching departments:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   }
@@ -43,7 +42,6 @@ export class DepartmentService {
       return response.data;
     } catch (error) {
       console.error('Error fetching departments:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   } 
@@ -59,7 +57,6 @@ export class DepartmentService {
       return response;
     } catch (error) {
       console.error('Error fetching departments:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   };
@@ -70,7 +67,6 @@ export class DepartmentService {
       return response;
     } catch (error) {
       console.error('Error fetching departments:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   }

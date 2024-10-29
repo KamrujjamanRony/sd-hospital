@@ -32,7 +32,6 @@ export class UserAuthService {
       const response = await this.apiClient.post('/', model);
     } catch (error) {
       console.error('Error adding user:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   } 

@@ -39,31 +39,14 @@ export class EditUserModalComponent {
       this.userRole = data.role;
       this.updateFormValues();
     });
-    // this.UsersService.getUserRole(this.user).subscribe(roles => {
-    //   this.selectedRoles = roles;
-    //   console.log(this.selectedRoles)
-    // });
-    // this.selected = this.UsersService.getUser(this.id)
   }
 
-  // selectedUser = injectQuery(() => ({
-  //   queryKey: ['Users', this.id],
-  //   queryFn: async () => {
-  //     const response = await fetch(`${environment.UserApi}/${this.id}`);
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-  //     const data = await response.json();
-  //     this.selected = data;
-  //   },
-  // }));
 
 
 
   mutation = injectMutation((client) => ({
     mutationFn: (updateData: any) => this.UsersService.updateUser(this.user.userId, updateData),
     onSuccess: () => {
-      // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['users'] })
     },
   }));
@@ -82,7 +65,6 @@ export class EditUserModalComponent {
 
   onSubmit(): void {
     const { role } = this.addUserForm.value;
-    // console.log(this.addUserForm.value)
     if (role) {
       this.mutation.mutate(role);
       this.closeThisModal();

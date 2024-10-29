@@ -55,7 +55,7 @@ export class SerialAllDoctorsComponent {
 
   filterDoctorsByDepartment(doctors: any): any {
     if (this.selectedDepartment == "") {
-      return doctors; // If search query is empty, return all doctors
+      return doctors;
     }
 
     const selected = doctors.filter((data: any) => data && data.departmentId == this.selectedDepartment);

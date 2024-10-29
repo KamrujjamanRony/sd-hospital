@@ -33,7 +33,6 @@ export class UsersService {
       return response.data;
     } catch (error) {
       console.error('Error fetching users:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   }
@@ -42,39 +41,15 @@ export class UsersService {
     return this.http.get<any[]>(`${environment.userApi}/GetUserRolesByUserId?userId=${userId}`);
   }
 
-  //   async addUser(model: any | FormData): Promise<any>{
-  //     try {
-  //       const response = await this.apiClient.post('/users', model);
-  //       return response.data;
-  //     } catch (error) {
-  //       console.error('Error fetching users:', error);
-  //       // Optionally rethrow the error or return a default value
-  //       throw error;
-  //     }
-  //   }
-
   async updateUser(userId: any, updateRoles: any): Promise<any> {
     try {
       const response = await this.apiClient.post(`/UpdateUserRole?userId=${userId}`, updateRoles);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching users:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   };
-
-  //   async deleteUser(id: any): Promise<any>{
-  //     try {
-  //       const response = await this.apiClient.delete(`/users/${id}`);
-  //       return response;
-  //     } catch (error) {
-  //       console.error('Error fetching users:', error);
-  //       // Optionally rethrow the error or return a default value
-  //       throw error;
-  //     }
-  //   }
 
   getUser(id: any): any {
     const users = this.queryClient.getQueryData(['users']) as any[];

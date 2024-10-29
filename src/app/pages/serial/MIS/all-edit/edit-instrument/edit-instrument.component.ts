@@ -62,7 +62,6 @@ export class EditInstrumentComponent {
       this.editInstrumentSubscription = this.instrumentService.updateInstrument(this.id, formData)
         .subscribe({
           next: (response) => {
-            // toast
             this.confirmModal = true;
           }
         });

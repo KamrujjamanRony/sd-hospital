@@ -11,7 +11,7 @@ export class AppointmentService {
   queryClient = injectQueryClient();
 
   apiClient = axios.create({
-    baseURL: environment.appointmentApi,
+    baseURL: environment.rootApi + '/Appointment/'
     // headers: {
     //   'Content-Type' : 'application/json',
     //   'Accept' : 'application/json'
@@ -33,11 +33,9 @@ export class AppointmentService {
   async getAppointments(): Promise<any[]> {
     try {
       const response = await this.apiClient.get<any[]>('/');
-      const filteredAppointments = response.data.filter(data => data.companyID == environment.hospitalCode);
-      return filteredAppointments;
+      return response.data;
     } catch (error) {
       console.error('Error fetching Appointments:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   }
@@ -47,8 +45,7 @@ export class AppointmentService {
       const response = await this.apiClient.post('/', model);
       return response.data;
     } catch (error) {
-      // console.error('Error fetching Appointments:', error);
-      // Optionally rethrow the error or return a default value
+      console.error('Error fetching Appointments:', error);
       throw error;
     }
   }
@@ -59,7 +56,6 @@ export class AppointmentService {
       return response;
     } catch (error) {
       console.error('Error fetching appointment:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   };
@@ -70,7 +66,6 @@ export class AppointmentService {
       return response;
     } catch (error) {
       console.error('Error fetching appointment:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   }
@@ -80,31 +75,4 @@ export class AppointmentService {
     const selected = Appointments?.find((d) => d.id == id);
     return selected.AppointmentName;
   }
-  
-
-  // getAppointments(): Promise<any[]> {
-  //   return lastValueFrom(
-  //     this.http.get<any[]>(environment.appointmentApi).pipe(
-  //       map(appointments => appointments.filter(data => data.companyID == environment.hospitalCode))
-  //     ),
-  //   )
-  // } 
-
-  // addAppointment(model: any | FormData): Promise<any> {
-  //   return lastValueFrom(
-  //     this.http.post<void>(environment.appointmentApi, model),
-  //   )
-  // }
-
-  // updateAppointment(id: any, updateData: any): Promise<any> {
-  //   return lastValueFrom(
-  //     this.http.put<any>(`${environment.appointmentApi}/${id}`, updateData),
-  //   )
-  // }
-
-  // deleteAppointment(id: any): Promise<any> {
-  //   return lastValueFrom(
-  //     this.http.delete<void>(`${environment.appointmentApi}/${id}`),
-  //   )
-  // }
 }

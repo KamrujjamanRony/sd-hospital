@@ -32,11 +32,10 @@ export class DoctorsService {
   async getDoctors(): Promise<any[]> {
     try {
       const response = await this.apiClient.get<any[]>('/');
-      const filteredDoctors = response.data.filter(data => data.companyID == environment.hospitalCode);
-      return filteredDoctors;
+      // const filteredDoctors = response.data.filter(data => data.companyID == environment.hospitalCode);
+      return response.data;
     } catch (error) {
       console.error('Error fetching doctors:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   }
@@ -44,10 +43,8 @@ export class DoctorsService {
   async addDoctor(model: any | FormData): Promise<any>{
     try {
       const response = await this.apiClient.post('/', model);
-      console.log(response.data);
     } catch (error) {
       console.error('Error fetching doctors:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   }
@@ -58,7 +55,6 @@ export class DoctorsService {
       return response;
     } catch (error) {
       console.error('Error fetching doctors:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   };
@@ -69,7 +65,6 @@ export class DoctorsService {
       return response;
     } catch (error) {
       console.error('Error fetching doctors:', error);
-      // Optionally rethrow the error or return a default value
       throw error;
     }
   }

@@ -10,10 +10,6 @@ export class ContactService {
   http = inject(HttpClient);
 
   constructor() {}
-  
-  // addAddress(model: any | FormData): Observable<void>{
-  //   return this.http.post<void>(`${environment.baseApi}/Address`, model)
-  // }
 
   getAllAddress(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.baseApi}/Address`);

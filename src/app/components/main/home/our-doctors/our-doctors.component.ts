@@ -1,6 +1,6 @@
 import { Component, Renderer2, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { DoctorsService } from '../../../../services/main/doctors.service';
+import { DoctorsServiceMain } from '../../../../services/main/doctors.service';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../../../environments/environments';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import { DoctorCardComponent } from "../../shared/all-cards/doctor-card/doctor-c
 export class OurDoctorsComponent {
   router = inject(Router);
   renderer = inject(Renderer2);
-  doctorsService = inject(DoctorsService);
+  doctorsService = inject(DoctorsServiceMain);
   hospitalDoctors$?: Observable<any[]>;
 
   constructor() {}
@@ -32,7 +32,6 @@ export class OurDoctorsComponent {
   }
 
   scrollToTop() {
-    // Scroll to the top of the page
     this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
   }
 }

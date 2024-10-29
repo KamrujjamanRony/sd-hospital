@@ -26,7 +26,6 @@ export class OurProductsComponent {
   }
 
   scrollToTop() {
-    // Scroll to the top of the page
     this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
   }
 

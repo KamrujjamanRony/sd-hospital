@@ -26,7 +26,6 @@ export class AddCarouselComponent implements OnDestroy {
   }
 
   constructor() {
-    // Initialize model properties
     this.model = {
       companyID: environment.hospitalCode,
       title: '',
@@ -35,7 +34,6 @@ export class AddCarouselComponent implements OnDestroy {
     };
   }
 
-  // Handle form submission
   onFormSubmit(): void {
     const formData = new FormData();
 
@@ -47,7 +45,6 @@ export class AddCarouselComponent implements OnDestroy {
     this.addCarouselSubscription = this.carouselService.addCarousel(formData)
       .subscribe({
         next: (response) => {
-          // toast
           this.confirmModal = true;
         },
         error: (error) => {
@@ -56,7 +53,6 @@ export class AddCarouselComponent implements OnDestroy {
       });
   }
 
-  // Unsubscribe from the subscription to avoid memory leaks
   ngOnDestroy(): void {
     this.addCarouselSubscription?.unsubscribe();
   }

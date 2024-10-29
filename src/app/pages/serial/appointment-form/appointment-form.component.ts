@@ -47,7 +47,6 @@ export class AppointmentFormComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUser();
     this.getConfirm()
-    // Update the form group after this.confirm is set
     this.updateFormGroup();
   }
 
@@ -56,7 +55,6 @@ export class AppointmentFormComponent implements OnInit {
     return result;
   }
 
-  // Method to update the form group
   updateFormGroup(): void {
     this.appointmentForm.patchValue({
       confirmed: this.confirm
@@ -69,11 +67,6 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   getConfirm() {
-    // if (this.user?.roleIds?.find((role: any) => role == "c90aed50-ad56-431b-afa4-c36e8cac039a")) {
-    //   this.confirm = true
-    // } else {
-    //   this.confirm = false
-    // }
     this.confirm = false;
   }
 
@@ -90,15 +83,12 @@ export class AppointmentFormComponent implements OnInit {
   appointmentMutation = injectMutation((client) => ({
     mutationFn: (formData: any) => this.appointmentService.addAppointment(formData),
     onSuccess: () => {
-      // Reset FormData
       this.formReset();
-      // toast
       this.msg = "Appointment is successfully added!";
-      // Invalidate and refetch by using the client directly
       client.invalidateQueries({ queryKey: ['appointments'] });
     },
     onError: (error: any) => {
-      this.handleError(error); // Handle the error
+      this.handleError(error);
       setTimeout(() => {
         this.closeAppointmentModal();
       }, 2000);
@@ -106,7 +96,6 @@ export class AppointmentFormComponent implements OnInit {
   }));
 
   private handleError(error: any) {
-    // console.log(error?.response?.data?.message);
     this.msg = error?.response?.data?.message;
     console.error(error);
   }
@@ -150,9 +139,8 @@ export class AppointmentFormComponent implements OnInit {
   onSubmit(): void {
     this.isSubmitted = true;
     const { pName, age, sex, date, type, departmentId, sL, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
-    console.log(this.appointmentForm.value);
+
     if (drCode && pName && type && date) {
-      console.log('submitted form', this.appointmentForm.value);
       const formData = new FormData();
 
       formData.append('CompanyID', environment.hospitalCode.toString());
@@ -178,57 +166,13 @@ export class AppointmentFormComponent implements OnInit {
       this.isSubmitted = false;
     }
   }
-
-  toggleSelection(): void {
-    const currentValue = this.appointmentForm.get('type')?.value;
-    const newValue = currentValue === 'false' ? 'true' : 'false';
-    this.appointmentForm.get('type')?.setValue(newValue);
-    console.log(this.appointmentForm.get('type')?.value);
-    if (newValue === 'false') {
-      // Filter dates to only include Thursdays
-      const thursdayDates: Date[] = [];
-      let date = new Date();
-      
-      // Continue until we have at least 8 Thursday dates
-      while (thursdayDates.length < 8) {
-        if (date.getDay() === 4) { // 4 represents Thursday
-          thursdayDates.push(new Date(date)); // Clone the date object
-        }
-        date.setDate(date.getDate() + 1); // Move to the next day
-      }
-      
-      this.dates = thursdayDates;
-    } else {
-      // Filter dates to exclude Thursdays
-      this.dates = this.updateDate();;
-    }
-  }
-
-  updateDate(){
-    // Filter dates to exclude Thursdays (when type is 'true')
-      const nonThursdayDates: Date[] = [];
-      let date = new Date();
-      
-      // Generate a range and collect dates excluding Thursdays
-      while (nonThursdayDates.length < 15) {
-        if (date.getDay() !== 4) { // Exclude Thursday (4 represents Thursday)
-          nonThursdayDates.push(new Date(date)); // Clone the date object
-        }
-        date.setDate(date.getDate() + 1); // Move to the next day
-      }
-      
-      return nonThursdayDates;
-  }
-
-  dates: Date[] = this.updateDate();
   
-  // dates: Date[] = Array.from({ length: 15 }, (_, i) => {
-  //   const date = new Date();
-  //   date.setDate(date.getDate() + i);
-  //   return date;
-  // });
+  dates: Date[] = Array.from({ length: 15 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() + i);
+    return date;
+  });
 
-  // Define the isPastDate method
   isPastDate(date: Date): boolean {
     const today = new Date();
     today.setHours(0, 0, 0, 0);

@@ -27,7 +27,6 @@ export class AddInstrumentComponent {
   }
 
   constructor() {
-    // Initialize model properties
     this.model = {
       companyID: environment.hospitalCode,
       productSerial: null,
@@ -38,7 +37,6 @@ export class AddInstrumentComponent {
     };
   }
 
-  // Handle form submission
   onFormSubmit(): void {
     const formData = new FormData();
 
@@ -52,7 +50,6 @@ export class AddInstrumentComponent {
     this.addInstrumentSubscription = this.instrumentService.addInstrument(formData)
       .subscribe({
         next: (response) => {
-          // toast
           this.confirmModal = true;
         },
         error: (error) => {
@@ -61,7 +58,6 @@ export class AddInstrumentComponent {
       });
   }
 
-  // Unsubscribe from the subscription to avoid memory leaks
   ngOnDestroy(): void {
     this.addInstrumentSubscription?.unsubscribe();
   }

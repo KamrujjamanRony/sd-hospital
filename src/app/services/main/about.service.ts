@@ -11,10 +11,6 @@ export class AboutService {
 
   constructor() {}
 
-  // addAbout(model: any | FormData): Observable<void>{
-  //   return this.http.post<void>(`${environment.baseApi}/AboutUs`, model)
-  // }
-
   getAllAbout(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.baseApi}/AboutUs`);
   }
@@ -32,11 +28,4 @@ export class AboutService {
   updateAbout(id: any, updateAboutRequest: any | FormData): Observable<any>{
     return this.http.put<any>(`${environment.baseApi}/AboutUs/EditAboutUs/${id}`, updateAboutRequest);
   }
-
-  // deleteAbout(id: any): Observable<any>{
-  //   return this.http.delete<any>(`${environment.baseApi}/AboutUs/DeleteAboutUs?id=${id}`);
-  // }
-
-  
-  
 }

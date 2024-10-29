@@ -125,7 +125,7 @@
         }
       </label>
       <!-- type Input -->
-      <label class="form-control w-full !mt-0">
+      <!-- <label class="form-control w-full !mt-0">
         <div class="label !py-0">
           <span class="label-text font-bold capitalize"> Patient Type: </span>
         </div>
@@ -136,7 +136,7 @@
             Thursday
           </label>
         </div>
-      </label>
+      </label> -->
       
       <!-- <label class="form-control w-full !mt-0">
         <div class="label !py-0">
@@ -236,7 +236,7 @@
             [value]="date | date : 'yyyy-MM-dd'"
             [disabled]="isPastDate(date)"
           >
-            {{ date | date : "d MMMM, yyyy" }}
+            {{ date | date : "d MMM, yyyy, EEEE" }}
           </option>
         </select>
         @if(appointmentForm.get('date')?.invalid){
@@ -299,50 +299,50 @@
           <option value="true">Yes</option>
         </select>
       </label>
-    </div>
-    <!-- sL Input -->
-    @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a") && blockSerials) {
-      <label class="form-control w-full !mt-0">
+      <!-- sL Input -->
+      @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a") && blockSerials) {
+        <label class="form-control w-full !mt-0">
+          <div class="label !py-0">
+            <span class="label-text font-bold capitalize"> Block Serials </span>
+          </div>
+          <select
+            class="select select-bordered select-sm w-full"
+            formControlName="sL"
+          [class.invalid]="
+            appointmentForm.get('sL')?.invalid &&
+            (appointmentForm.get('sL')?.dirty ||
+              appointmentForm.get('sL')?.touched ||
+              isSubmitted)
+          "
+          >
+            <option value="" disabled>Select Block Serial</option>
+            @for(serial of blockSerials; track $index) {
+              <option [value]="serial">{{serial}}</option>
+            }
+          </select>
+        </label>
+  
+  
+      <!-- <label class="form-control w-full !mt-0">
         <div class="label !py-0">
-          <span class="label-text font-bold capitalize"> Block Serials </span>
+          <span class="label-text font-bold capitalize">Serial</span>
         </div>
-        <select
-          class="select select-bordered select-sm w-full"
+        <input
+          type="text"
           formControlName="sL"
-        [class.invalid]="
-          appointmentForm.get('sL')?.invalid &&
-          (appointmentForm.get('sL')?.dirty ||
-            appointmentForm.get('sL')?.touched ||
-            isSubmitted)
-        "
-        >
-          <option value="" disabled>Select Block Serial</option>
-          @for(serial of blockSerials; track $index) {
-            <option [value]="serial">{{serial}}</option>
-          }
-        </select>
-      </label>
-
-
-    <!-- <label class="form-control w-full !mt-0">
-      <div class="label !py-0">
-        <span class="label-text font-bold capitalize">Serial</span>
-      </div>
-      <input
-        type="text"
-        formControlName="sL"
-        [class.invalid]="
-          appointmentForm.get('sL')?.invalid &&
-          (appointmentForm.get('sL')?.dirty ||
-            appointmentForm.get('sL')?.touched ||
-            isSubmitted)
-        "
-        placeholder="Type here"
-        class="input input-bordered w-full input-sm outline-none"
-        required
-      />
-    </label> -->
-    }
+          [class.invalid]="
+            appointmentForm.get('sL')?.invalid &&
+            (appointmentForm.get('sL')?.dirty ||
+              appointmentForm.get('sL')?.touched ||
+              isSubmitted)
+          "
+          placeholder="Type here"
+          class="input input-bordered w-full input-sm outline-none"
+          required
+        />
+      </label> -->
+      }
+    </div>
     <!-- remarks Input -->
     <label class="form-control w-full !mt-0">
       <div class="label !py-0">
