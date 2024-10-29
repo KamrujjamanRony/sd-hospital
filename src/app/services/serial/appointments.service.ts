@@ -28,5 +28,9 @@ export class AppointmentsService {
     deleteAppointmentData(id: any): Observable<any>{
       return this.http.delete<any>(`${environment.rootApi}/Appointment/DeleteAppointment?id=${id}`)
     }
+  
+    deleteAllAppointmentData(from: any, to: any): Observable<any>{
+      return this.http.delete<any>(environment.rootApi + `/Appointment/DeleteAppointmentFromTo?fromDate=${from}&toDate=${to ? to : from}`)
+    }
 
 }

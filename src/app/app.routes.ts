@@ -49,6 +49,7 @@ import { CareerComponent } from './pages/main/career/career.component';
 import { CareerListComponent } from './pages/serial/MIS/list/career-list/career-list.component';
 import { AddCareerComponent } from './pages/serial/MIS/add/add-career/add-career.component';
 import { EditCareerComponent } from './pages/serial/MIS/all-edit/edit-career/edit-career.component';
+import { DeleteComponent } from './pages/serial/MIS/delete/delete.component';
 
 export const routes: Routes = [
   {
@@ -168,6 +169,7 @@ export const routes: Routes = [
           { path: 'career-list', component: CareerListComponent },
           { path: 'career-list/add', component: AddCareerComponent },
           { path: 'career-list/edit/:id', component: EditCareerComponent },
+          { path: 'delete', component: DeleteComponent },
         ],
       },
     ],

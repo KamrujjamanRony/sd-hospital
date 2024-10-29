@@ -66,8 +66,13 @@ export class AllAppointmentComponent {
     const to = this.toDate ? (this.toDate instanceof Date ? this.toDate : new Date(this.toDate)) : from;
 
     this.appointmentsService.getAppointmentData(this.formatDate(from), this.formatDate(to)).subscribe(data => {
-      this.appointments = data;
       this.totalAppointment = data.length;
+      if (this.totalAppointment === 0) {
+        this.loading = false;
+        this.filteredAppointments = [];
+        return;
+      }
+      this.appointments = data;
 
       const uniqueDrCodes = Array.from(new Set(data.map((appointment: any) => appointment?.drCode)));
 
