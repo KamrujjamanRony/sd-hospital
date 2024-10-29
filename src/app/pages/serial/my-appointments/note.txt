@@ -1,11 +1,5 @@
-  filterAppointmentsByUser(appointments: any) {
-    this.totalAppointment = appointments.length
-    if (!this.user.username) {
-      return appointments;
+ if (this.user.username) {
+      filteredAppointments = filteredAppointments.filter(
+        (appointment) => appointment.username === this.user.username
+      );
     }
-    const selectedAppointment = appointments.filter((appointment: { username: any; }) =>
-      appointment.username == this.user.username
-    );
-    this.totalAppointment = selectedAppointment.length;
-    return selectedAppointment;
-  }

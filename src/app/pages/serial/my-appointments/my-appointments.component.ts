@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { injectQueryClient } from '@tanstack/angular-query-experimental';
-import { forkJoin, Subscription } from 'rxjs';
+import { catchError, forkJoin, of, Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
@@ -38,6 +38,7 @@ export class MyAppointmentsComponent {
   editAppointmentModal: boolean = false;
   private appointmentSubscription?: Subscription;
   searchQuery: any = '';
+  loading: boolean = false;
 
   fromDate: any = new Date();
   toDate: any;
@@ -54,7 +55,6 @@ export class MyAppointmentsComponent {
   ngOnInit(): void {
     this.user = this.authService.getUser();
     this.fetchAppointments()
-    
   }
 
   onInputChange(): void {
@@ -62,32 +62,43 @@ export class MyAppointmentsComponent {
   }
 
   fetchAppointments(): void {
+    this.loading = true;
     const from = this.fromDate instanceof Date ? this.fromDate : new Date(this.fromDate);
     const to = this.toDate ? (this.toDate instanceof Date ? this.toDate : new Date(this.toDate)) : from;
-  
+
     this.appointmentsService.getAppointmentData(this.formatDate(from), this.formatDate(to)).subscribe(data => {
       this.appointments = data;
       this.totalAppointment = data.length;
-  
-      const uniqueDrCodes = Array.from(new Set(data.map((appointment: any) => appointment.drCode)));
-  
-      const doctorObservables = uniqueDrCodes.map(drCode => 
-        this.doctorsServiceMain.getDoctor(drCode)
+
+      const uniqueDrCodes = Array.from(new Set(data.map((appointment: any) => appointment?.drCode)));
+
+      const doctorObservables = uniqueDrCodes.map(drCode =>
+        this.doctorsServiceMain.getDoctor(drCode).pipe(
+          catchError((error) => {
+            console.error(`Error fetching doctor with ID ${drCode}:`, error);
+            return of({ drName: "Unknown Doctor" });
+          })
+        )
       );
-  
+
       forkJoin(doctorObservables).subscribe(doctorsData => {
         this.doctorsWithAppointments = doctorsData.map((doctor, index) => ({
           id: uniqueDrCodes[index],
           drName: doctor?.drName || "Unknown Doctor",
         }));
         this.applyFilters();
+        this.loading = false;
+      }, (error) => {
+        console.error("Error fetching appointments data:", error);
+        this.loading = false;
       });
     });
   }
-  
+
+
 
   applyFilters(): void {
-    let filteredAppointments = this.appointments;
+    let filteredAppointments = this.appointments.sort((a, b) => a.sl - b.sl);
     if (this.user.username) {
       filteredAppointments = filteredAppointments.filter(
         (appointment) => appointment.username === this.user.username
@@ -103,7 +114,7 @@ export class MyAppointmentsComponent {
       filteredAppointments = filteredAppointments.filter(appointment =>
         (appointment.pName && appointment.pName.toLowerCase().includes(query)) ||
         (appointment.age && appointment.age.toString().includes(query)) ||
-        (appointment.sex && appointment.sex.toLowerCase().includes(query)) || 
+        (appointment.sex && appointment.sex.toLowerCase().includes(query)) ||
         (appointment.remarks && appointment.remarks.toLowerCase().includes(query)) ||
         (appointment.mobile && appointment.mobile.toString().includes(query)) ||
         (appointment.username && appointment.username.toLowerCase().includes(query))
@@ -111,6 +122,7 @@ export class MyAppointmentsComponent {
     }
     this.filteredAppointments = filteredAppointments;
     this.totalAppointment = this.filteredAppointments.length;
+    this.loading = false;
   }
 
   onDelete(id: any) {
@@ -118,7 +130,7 @@ export class MyAppointmentsComponent {
     if (result === true) {
       this.appointmentSubscription = this.appointmentsService.deleteAppointmentData(id).subscribe({
         next: () => {
-          this.fetchAppointments(); 
+          this.fetchAppointments();
         },
       });
     }
@@ -150,12 +162,13 @@ export class MyAppointmentsComponent {
 
   closeEditAppointmentModal() {
     this.editAppointmentModal = false;
-    this.fetchAppointments(); 
+    this.fetchAppointments();
   }
 
   redirectToHome(): void {
     this.router.navigateByUrl('/serial/admin');
   }
+
 
   isPrinting: boolean = false;
   printPage() {

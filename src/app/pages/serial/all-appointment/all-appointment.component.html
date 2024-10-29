@@ -97,6 +97,12 @@
     <p class="text-2xl text-gray-600 text-center ml-2 mt-2">Loading...</p>
   </div>
 </div>
+} @else if(totalAppointment == 0) {
+  <div class="flex items-center justify-center h-[70vh]">
+    <div>
+      <h1 class="text-xl text-gray-600 text-center">No appointment found</h1>
+    </div>
+  </div>
 } @else {
 <div class="mx-4" [class.black-when-printing]="isPrinting">
   <div class="w-full overflow-hidden rounded-lg shadow-xs">
@@ -220,7 +226,9 @@
     ></div>
   </div>
 </div>
-} @if(editAppointmentModal) {
+} 
+
+@if(editAppointmentModal) {
 <app-appointment-modal
   [id]="selectedId"
   (closeAppointment)="closeEditAppointmentModal()"
