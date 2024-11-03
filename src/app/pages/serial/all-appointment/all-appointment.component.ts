@@ -70,6 +70,7 @@ export class AllAppointmentComponent {
       if (this.totalAppointment === 0) {
         this.loading = false;
         this.filteredAppointments = [];
+        
         return;
       }
       this.appointments = data;

@@ -61,7 +61,7 @@ export class AddDoctorModalComponent {
     designation: [''],
     specialty: [''],
     departmentId: ['', Validators.required],
-    phone: ['', Validators.maxLength(11)],
+    phone: ['', Validators.maxLength(14)],
     fee: [''],
     visitTime: [''],
     room: [''],
