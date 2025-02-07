@@ -1,16 +1,15 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { DepartmentService } from '../../../../../services/serial/department.service';
 
 @Component({
-  selector: 'app-doctor-details',
-  standalone: true,
-  imports: [],
-  templateUrl: './doctor-details.component.html'
+    selector: 'app-doctor-details',
+    imports: [],
+    templateUrl: './doctor-details.component.html'
 })
 export class DoctorDetailsComponent {
   @Input() doctor: any;
-  @Output() closeDoctorDetails = new EventEmitter<void>();
-  @Output() handleClick = new EventEmitter<void>();
+  readonly closeDoctorDetails = output<void>();
+  readonly handleClick = output<void>();
   departmentService = inject(DepartmentService);
 
   constructor(){}

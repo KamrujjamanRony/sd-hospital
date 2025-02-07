@@ -1,20 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { NewsModalComponent } from "../../all-modals/news-modal/news-modal.component";
 
 @Component({
     selector: 'app-news-card',
-    standalone: true,
     templateUrl: './news-card.component.html',
     styleUrl: './news-card.component.css',
     imports: [CommonModule, NewsModalComponent]
 })
 export class NewsCardComponent {
   @Input() img!: any;
-  @Input() title!: any;
-  @Input() subtitle!: any;
-  @Input() description!: any;
-  @Input() isAside: boolean = false;
+  readonly title = input.required<any>();
+  readonly subtitle = input.required<any>();
+  readonly description = input.required<any>();
+  readonly isAside = input<boolean>(false);
   showModal: boolean = false;
 
   openNewsDetails() {

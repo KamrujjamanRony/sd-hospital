@@ -9,10 +9,9 @@ import { DeleteConfirmationModalComponent } from '../../../../../components/main
 import { AuthService } from '../../../../../services/serial/auth.service';
 
 @Component({
-  selector: 'app-carousel-list',
-  templateUrl: './carousel-list.component.html',
-  standalone: true,
-  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent]
+    selector: 'app-carousel-list',
+    templateUrl: './carousel-list.component.html',
+    imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent]
 })
 export class CarouselListComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);

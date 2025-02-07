@@ -8,11 +8,10 @@ import { Subscription } from 'rxjs';
 import { CareerService } from '../../../../../services/main/career.service';
 
 @Component({
-  selector: 'app-edit-career',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './edit-career.component.html',
-  styleUrl: './edit-career.component.css'
+    selector: 'app-edit-career',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './edit-career.component.html',
+    styleUrl: './edit-career.component.css'
 })
 export class EditCareerComponent {
   careerService = inject(CareerService);

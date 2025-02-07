@@ -2,9 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-redirect',
-  template: '',
-  styleUrls: []
+    selector: 'app-redirect',
+    template: '',
+    styleUrls: [],
+    standalone: false
 })
 export class RedirectComponent implements OnInit {
   router = inject(Router);

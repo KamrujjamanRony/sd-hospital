@@ -1,18 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DoctorDetailsComponent } from '../shared/modal/doctor-details/doctor-details.component';
 import { AppointmentModalComponent } from '../shared/modal/appointment-modal/appointment-modal.component';
 
 @Component({
-  selector: 'app-doctor-card',
-  standalone: true,
-  imports: [DoctorDetailsComponent, AppointmentModalComponent],
-  templateUrl: './doctor-card.component.html'
+    selector: 'app-doctor-card',
+    imports: [DoctorDetailsComponent, AppointmentModalComponent],
+    templateUrl: './doctor-card.component.html'
 })
 export class DoctorCardComponent {
-  @Input() 
-  doctor: any;
-  @Input()
-  department!: string;
+  readonly doctor = input<any>();
+  readonly department = input.required<string>();
   showModal: boolean = false;
   showAppointment: boolean = false;
   doctorMale = '../../../assets/images/doctor.png';

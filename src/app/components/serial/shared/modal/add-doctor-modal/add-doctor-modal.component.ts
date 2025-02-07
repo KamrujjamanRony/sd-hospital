@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
@@ -10,13 +10,12 @@ import { DepartmentService } from '../../../../../services/serial/department.ser
 
 @Component({
     selector: 'app-add-doctor-modal',
-    standalone: true,
     templateUrl: './add-doctor-modal.component.html',
     styleUrl: './add-doctor-modal.component.css',
     imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class AddDoctorModalComponent {
-  @Output() closeModal = new EventEmitter<void>();
+  readonly closeModal = output<void>();
   doctorsService = inject(DoctorsService);
   departmentService = inject(DepartmentService)
   authService = inject(AuthService);

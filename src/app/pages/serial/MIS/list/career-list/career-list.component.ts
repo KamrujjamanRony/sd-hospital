@@ -11,11 +11,10 @@ import { CareerService } from '../../../../../services/main/career.service';
 
 
 @Component({
-  selector: 'app-career-list',
-  standalone: true,
-  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
-  templateUrl: './career-list.component.html',
-  styleUrl: './career-list.component.css'
+    selector: 'app-career-list',
+    imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
+    templateUrl: './career-list.component.html',
+    styleUrl: './career-list.component.css'
 })
 export class CareerListComponent {
   authService = inject(AuthService);

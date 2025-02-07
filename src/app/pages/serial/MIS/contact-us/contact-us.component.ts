@@ -7,10 +7,9 @@ import { ContactService } from '../../../../services/main/contact.service';
 import { environment } from '../../../../../environments/environments';
 
 @Component({
-  selector: 'app-contact-us',
-  templateUrl: './contact-us.component.html',
-  standalone: true,
-  imports: [CoverComponent, FormsModule]
+    selector: 'app-contact-us',
+    templateUrl: './contact-us.component.html',
+    imports: [CoverComponent, FormsModule]
 })
 export class ContactUsComponent implements OnInit, OnDestroy {
   contactService = inject(ContactService);

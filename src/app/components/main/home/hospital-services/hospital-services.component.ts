@@ -2,11 +2,10 @@ import { Component, inject } from '@angular/core';
 import { ServicesService } from '../../../../services/main/services.service';
 
 @Component({
-  selector: 'app-hospital-services',
-  standalone: true,
-  imports: [],
-  templateUrl: './hospital-services.component.html',
-  styleUrl: './hospital-services.component.css'
+    selector: 'app-hospital-services',
+    imports: [],
+    templateUrl: './hospital-services.component.html',
+    styleUrl: './hospital-services.component.css'
 })
 export class HospitalServicesComponent {
   servicesService = inject(ServicesService);

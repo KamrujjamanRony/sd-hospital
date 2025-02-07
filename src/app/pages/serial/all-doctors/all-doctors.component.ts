@@ -1,6 +1,5 @@
 import { Component, Renderer2, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -10,11 +9,10 @@ import { CoverComponent } from '../../../components/serial/shared/cover/cover.co
 import { DoctorsService } from '../../../services/serial/doctors.service';
 import { DepartmentService } from '../../../services/serial/department.service';
 @Component({
-    selector: 'app-all-doctors',
-    standalone: true,
-    templateUrl: './all-doctors.component.html',
-    styleUrl: './all-doctors.component.css',
-    imports: [CommonModule, RouterLink, CoverComponent, AddDoctorModalComponent, EditDoctorModalComponent, FormsModule]
+  selector: 'app-all-doctors',
+  templateUrl: './all-doctors.component.html',
+  styleUrl: './all-doctors.component.css',
+  imports: [CommonModule, CoverComponent, AddDoctorModalComponent, EditDoctorModalComponent, FormsModule]
 })
 export class SerialAllDoctorsComponent {
   doctorsService = inject(DoctorsService);
@@ -28,7 +26,7 @@ export class SerialAllDoctorsComponent {
   selectedDepartment: string = '';
   departmentWithDoctor: any = [];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.getDepartmentWithDoctor();
@@ -38,7 +36,7 @@ export class SerialAllDoctorsComponent {
     queryKey: ['doctors'],
     queryFn: () => this.doctorsService.getDoctors(),
   }));
-  
+
   sortbySl(data: any): any {
     if (data.length === 0) {
       return data;

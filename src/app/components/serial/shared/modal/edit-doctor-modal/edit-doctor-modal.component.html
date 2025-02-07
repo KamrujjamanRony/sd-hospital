@@ -11,7 +11,7 @@
         <h2 class="text-2xl font-bold text-center w-full">Update Doctor</h2>
 
         <button
-          class="rounded bg-red-600 p-2 w-8 h-8 text-center text-white transition-all hover:opacity-80"
+          class="rounded bg-red-600 p-2 w-8 h-8 text-center text-gray-50 transition-all hover:opacity-80"
           (click)="closeThisModal()"
         >
           X
@@ -87,7 +87,9 @@
         <!-- designation Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Doctor Designation</span>
+            <span class="label-text font-bold capitalize"
+              >Doctor Designation</span
+            >
           </div>
           <input
             type="text"
@@ -124,42 +126,44 @@
         </label>
         <!-- departmentId Input -->
         <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Department:</span
-              >
-            </div>
-            <select
-              class="select select-bordered select-sm w-full"
-              formControlName="departmentId"
-              [class.invalid]="
-                addDoctorForm.get('departmentId')?.invalid && (addDoctorForm.get('departmentId')?.dirty || addDoctorForm.get('departmentId')?.touched || isSubmitted)
-              "
-              required
+          <div class="label !py-0">
+            <span class="label-text font-bold capitalize">Department:</span>
+          </div>
+          <select
+            class="select select-bordered select-sm w-full"
+            formControlName="departmentId"
+            [class.invalid]="
+              addDoctorForm.get('departmentId')?.invalid &&
+              (addDoctorForm.get('departmentId')?.dirty ||
+                addDoctorForm.get('departmentId')?.touched ||
+                isSubmitted)
+            "
+            required
+          >
+            <option value="" disabled>Select Department</option>
+            @switch (query.status()) { @case ('pending') {
+            <option class="text-center text-5xl">Loading...</option>
+            } @case ('error') {
+            <option>Error: {{ query.error()?.message }}</option>
+            } @default { @for (department of query.data(); track department.id)
+            {
+            <option [value]="department?.id">
+              {{ department?.departmentName }}
+            </option>
+            } @empty {
+            <li>No Department found</li>
+            } } }
+          </select>
+          @if(addDoctorForm.get('departmentId')?.hasError('required') &&
+          (addDoctorForm.get('departmentId')?.dirty ||
+          addDoctorForm.get('departmentId')?.touched || isSubmitted)){
+          <div class="label !py-0">
+            <span class="label-text-alt text-rose-600 capitalize"
+              >Department is required</span
             >
-              <option value="" disabled>Select Department</option>
-              @switch (query.status()) { @case ('pending') {
-                <option class="text-center text-5xl">Loading...</option>
-                } @case ('error') {
-                <option>Error: {{ query.error()?.message }}</option>
-                } @default { @for (department of query.data(); track department.id) {
-                <option
-                [value]="department?.id"
-              >
-                {{ department?.departmentName }}
-              </option>
-              } @empty {
-                <li>No Department found</li>
-                } } }
-            </select>
-            @if(addDoctorForm.get('departmentId')?.hasError('required') && (addDoctorForm.get('departmentId')?.dirty || addDoctorForm.get('departmentId')?.touched || isSubmitted)){
-              <div class="label !py-0">
-                <span class="label-text-alt text-rose-600 capitalize"
-                  >Department is required</span
-                >
-              </div>
-            }
-          </label>
+          </div>
+          }
+        </label>
         <!-- phone Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
@@ -279,7 +283,9 @@
         <!-- additional Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Additional Info.</span>
+            <span class="label-text font-bold capitalize"
+              >Additional Info.</span
+            >
           </div>
           <textarea
             formControlName="additional"
@@ -298,51 +304,53 @@
         </label>
         <!-- notice Input -->
         <label class="form-control w-full !mt-0">
+          <div class="label !py-0">
+            <span class="label-text font-bold capitalize">Notice</span>
+          </div>
+          <textarea
+            formControlName="notice"
+            [class.invalid]="
+              addDoctorForm.get('notice')?.invalid &&
+              (addDoctorForm.get('notice')?.dirty ||
+                addDoctorForm.get('notice')?.touched ||
+                isSubmitted)
+            "
+            placeholder="Type here"
+            class="input input-bordered w-full"
+            required
+            cols="30"
+            rows="10"
+          ></textarea>
+        </label>
+        <!-- serialBlock Input -->
+        @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a")) {
+        <label class="form-control w-full !mt-0">
+          <div class="label !py-0">
+            <span class="label-text font-bold capitalize">Serial Block</span>
+          </div>
+          <input
+            type="text"
+            formControlName="serialBlock"
+            [class.invalid]="
+              addDoctorForm.get('serialBlock')?.invalid &&
+              (addDoctorForm.get('serialBlock')?.dirty ||
+                addDoctorForm.get('serialBlock')?.touched ||
+                isSubmitted)
+            "
+            placeholder="Type here"
+            class="input input-bordered w-full input-sm outline-none"
+            required
+          />
+        </label>
+        }
+
+        <div class="flex gap-2">
+          <!-- satNewPatientLimit Input -->
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Notice</span>
-            </div>
-            <textarea
-              formControlName="notice"
-              [class.invalid]="
-                addDoctorForm.get('notice')?.invalid &&
-                (addDoctorForm.get('notice')?.dirty ||
-                  addDoctorForm.get('notice')?.touched ||
-                  isSubmitted)
-              "
-              placeholder="Type here"
-              class="input input-bordered w-full"
-              required
-              cols="30"
-              rows="10"
-            ></textarea>
-          </label>
-          <!-- serialBlock Input -->
-          @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a")) {
-            <label class="form-control w-full !mt-0">
-              <div class="label !py-0">
-                <span class="label-text font-bold capitalize">Serial Block</span>
-              </div>
-              <input
-                type="text"
-                formControlName="serialBlock"
-                [class.invalid]="
-                  addDoctorForm.get('serialBlock')?.invalid &&
-                  (addDoctorForm.get('serialBlock')?.dirty ||
-                    addDoctorForm.get('serialBlock')?.touched ||
-                    isSubmitted)
-                "
-                placeholder="Type here"
-                class="input input-bordered w-full input-sm outline-none"
-                required
-              />
-            </label>
-          }
-        
-       <div class="flex gap-2">
-           <!-- satNewPatientLimit Input -->
-           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Saturday New Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Saturday New Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -359,9 +367,11 @@
             />
           </label>
           <!-- satOldPatientLimit Input -->
-        <label class="form-control w-full !mt-0">
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Saturday Old Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Saturday Old Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -377,13 +387,15 @@
               required
             />
           </label>
-       </div>
-        
-       <div class="flex gap-2">
-           <!-- sunNewPatientLimit Input -->
-           <label class="form-control w-full !mt-0">
+        </div>
+
+        <div class="flex gap-2">
+          <!-- sunNewPatientLimit Input -->
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Sunday New Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Sunday New Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -400,9 +412,11 @@
             />
           </label>
           <!-- sunOldPatientLimit Input -->
-        <label class="form-control w-full !mt-0">
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Sunday Old Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Sunday Old Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -418,13 +432,15 @@
               required
             />
           </label>
-       </div>
-        
-       <div class="flex gap-2">
-           <!-- monNewPatientLimit Input -->
-           <label class="form-control w-full !mt-0">
+        </div>
+
+        <div class="flex gap-2">
+          <!-- monNewPatientLimit Input -->
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Monday New Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Monday New Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -441,9 +457,11 @@
             />
           </label>
           <!-- monOldPatientLimit Input -->
-        <label class="form-control w-full !mt-0">
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Monday Old Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Monday Old Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -459,13 +477,15 @@
               required
             />
           </label>
-       </div>
-        
-       <div class="flex gap-2">
-           <!-- tueNewPatientLimit Input -->
-           <label class="form-control w-full !mt-0">
+        </div>
+
+        <div class="flex gap-2">
+          <!-- tueNewPatientLimit Input -->
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Tuesday New Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Tuesday New Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -482,9 +502,11 @@
             />
           </label>
           <!-- tueOldPatientLimit Input -->
-        <label class="form-control w-full !mt-0">
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Tuesday Old Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Tuesday Old Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -500,13 +522,15 @@
               required
             />
           </label>
-       </div>
-        
-       <div class="flex gap-2">
-           <!-- wedNewPatientLimit Input -->
-           <label class="form-control w-full !mt-0">
+        </div>
+
+        <div class="flex gap-2">
+          <!-- wedNewPatientLimit Input -->
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Wednesday New Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Wednesday New Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -523,9 +547,11 @@
             />
           </label>
           <!-- wedOldPatientLimit Input -->
-        <label class="form-control w-full !mt-0">
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Wednesday Old Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Wednesday Old Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -541,13 +567,15 @@
               required
             />
           </label>
-       </div>
-        
-       <div class="flex gap-2">
-           <!-- thuNewPatientLimit Input -->
-           <label class="form-control w-full !mt-0">
+        </div>
+
+        <div class="flex gap-2">
+          <!-- thuNewPatientLimit Input -->
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Thursday New Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Thursday New Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -564,9 +592,11 @@
             />
           </label>
           <!-- thuOldPatientLimit Input -->
-        <label class="form-control w-full !mt-0">
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Thursday Old Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Thursday Old Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -582,13 +612,15 @@
               required
             />
           </label>
-       </div>
-        
-       <div class="flex gap-2">
-           <!-- friNewPatientLimit Input -->
-           <label class="form-control w-full !mt-0">
+        </div>
+
+        <div class="flex gap-2">
+          <!-- friNewPatientLimit Input -->
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Friday New Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Friday New Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -605,9 +637,11 @@
             />
           </label>
           <!-- friOldPatientLimit Input -->
-        <label class="form-control w-full !mt-0">
+          <label class="form-control w-full !mt-0">
             <div class="label !py-0">
-              <span class="label-text font-bold capitalize">Friday Old Patient Limit</span>
+              <span class="label-text font-bold capitalize"
+                >Friday Old Patient Limit</span
+              >
             </div>
             <input
               type="text"
@@ -623,14 +657,13 @@
               required
             />
           </label>
-       </div>
-
+        </div>
       </div>
 
       <div class="!mt-2">
         <button
           type="submit"
-          class="rounded bg-primary py-1 text-white transition-all hover:opacity-80 w-full"
+          class="rounded bg-primary py-1 text-gray-50 transition-all hover:opacity-80 w-full"
         >
           Submit Here
         </button>
@@ -638,5 +671,3 @@
     </form>
   </div>
 </div>
-
-

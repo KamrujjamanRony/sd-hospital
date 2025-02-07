@@ -8,7 +8,6 @@ import { OurHospitalGalleryComponent } from "../../../components/main/home/our-h
 
 @Component({
     selector: 'app-home',
-    standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
     imports: [CarouselComponent, HeroComponent, OurDoctorsComponent, OurProductsComponent, HospitalServicesComponent, OurHospitalGalleryComponent]

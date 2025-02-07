@@ -7,10 +7,9 @@ import { ContactService } from '../../../../../services/main/contact.service';
 import { AuthService } from '../../../../../services/serial/auth.service';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  standalone: true,
-  imports: [RouterLink]
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    imports: [RouterLink]
 })
 export class SidebarComponent implements OnInit {
   authService = inject(AuthService);

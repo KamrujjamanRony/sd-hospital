@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { format, isBefore } from 'date-fns';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
@@ -13,12 +13,11 @@ import { DepartmentService } from '../../../../../services/serial/department.ser
 import { AppointmentsService } from '../../../../../services/serial/appointments.service';
 
 @Component({
-  selector: 'app-appointment-modal',
-  standalone: true,
-  templateUrl: './appointment-modal.component.html',
-  styleUrl: './appointment-modal.component.css',
-  providers: [DatePipe],
-  imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent]
+    selector: 'app-appointment-modal',
+    templateUrl: './appointment-modal.component.html',
+    styleUrl: './appointment-modal.component.css',
+    providers: [DatePipe],
+    imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent]
 })
 export class AppointmentModalComponent {
   datePipe = inject(DatePipe);
@@ -33,9 +32,9 @@ export class AppointmentModalComponent {
   blockSerials: any;
   msg: any;
   err: any;
-  @Input() doctor: any;
-  @Input() id!: any;
-  @Output() closeAppointment = new EventEmitter<void>();
+  readonly doctor = input<any>();
+  readonly id = input.required<any>();
+  readonly closeAppointment = output<void>();
 
   closeAppointmentModal(): void {
     this.closeAppointment.emit();
@@ -52,15 +51,17 @@ export class AppointmentModalComponent {
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
-    if (this.id) {
-      this.appointmentsService.getAppointmentDataById(this.id).subscribe(data => {
+    const id = this.id();
+    if (id) {
+      this.appointmentsService.getAppointmentDataById(id).subscribe(data => {
         this.selected = data;
         this.updateFormValues();
-        this.blockSerials = this.doctor?.serialBlock?.split(',');
+        this.blockSerials = this.doctor()?.serialBlock?.split(',');
       });
     }
-    if (this.doctor) {
-      this.blockSerials = this.doctor?.serialBlock?.split(',');
+    const doctor = this.doctor();
+    if (doctor) {
+      this.blockSerials = doctor?.serialBlock?.split(',');
     }
   }
 
@@ -192,15 +193,16 @@ export class AppointmentModalComponent {
 
         formData.append('CompanyID', environment.hospitalCode.toString() || '');
         formData.append('Date', date || '');
-        formData.append('DepartmentId', this.doctor.departmentId || '');
+        const doctor = this.doctor();
+        formData.append('DepartmentId', doctor.departmentId || '');
         formData.append('SL', sL || '');
         formData.append('Type', type != null ? type.toString() : '');
-        formData.append('DrCode', this.doctor.id || '');
+        formData.append('DrCode', doctor.id || '');
         formData.append('PName', pName || '');
         formData.append('Age', age || '');
         formData.append('Sex', sex || '');
         formData.append('Mobile', mobile || '');
-        formData.append('Fee', this.doctor.fee || '');
+        formData.append('Fee', doctor.fee || '');
         formData.append('Remarks', remarks || '');
         formData.append('Username', this.user.username || '');
         formData.append('PaymentStatus', paymentStatus != null ? paymentStatus.toString() : '');

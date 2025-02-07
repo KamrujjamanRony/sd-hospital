@@ -6,17 +6,19 @@
       >
         Appointment
       </h3>
-      <h2 class="xl:text-5xl lg:text-3xl md:text-2xl text-white text-2xl pb-2">
+      <h2
+        class="xl:text-5xl lg:text-3xl md:text-2xl text-gray-50 text-2xl pb-2"
+      >
         Book Your Smile Session at SD Hospital
       </h2>
-      <p class="lg:py-4 md:py-2 text-white text-wrap">
+      <p class="lg:py-4 md:py-2 text-gray-50 text-wrap">
         আমাদের অ্যাপয়েন্টমেন্ট সেবা ব্যবহার করে সহজেই আপনার পছন্দসই ডাক্তারের
         জন্য অ্যাপয়েন্টমেন্ট সম্পন্ন করতে পারেন। অ্যাপয়েন্টমেন্টের জন্য এখনই বুক
         নাউ বাটনে ক্লিক করুন।
       </p>
       <button
         (click)="openAppointment()"
-        class="px-8 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold"
+        class="px-8 py-4 bg-teal-500 text-gray-50 rounded inline-block mt-8 font-semibold"
       >
         Book Now
       </button>
@@ -26,6 +28,7 @@
 
 @if(showAppointment) {
 <app-appointment-modal
+  id=""
   (closeAppointment)="closeAppointment()"
 ></app-appointment-modal>
 }

@@ -7,11 +7,10 @@ import { ActivatedRoute } from '@angular/router';
 import { ServicesService } from '../../../../../services/main/services.service';
 
 @Component({
-  selector: 'app-edit-services',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './edit-services.component.html',
-  styleUrl: './edit-services.component.css'
+    selector: 'app-edit-services',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './edit-services.component.html',
+    styleUrl: './edit-services.component.css'
 })
 export class EditServicesComponent {
   servicesService = inject(ServicesService);

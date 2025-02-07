@@ -11,11 +11,10 @@ import { AppointmentsService } from '../../../../services/serial/appointments.se
 import { environment } from '../../../../../environments/environments';
 
 @Component({
-  selector: 'app-delete',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './delete.component.html',
-  styleUrl: './delete.component.css'
+    selector: 'app-delete',
+    imports: [FormsModule],
+    templateUrl: './delete.component.html',
+    styleUrl: './delete.component.css'
 })
 export class DeleteComponent {
   appointmentsService = inject(AppointmentsService);

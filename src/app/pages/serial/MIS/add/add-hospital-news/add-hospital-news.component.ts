@@ -7,11 +7,10 @@ import { HospitalNewsService } from '../../../../../services/main/hospitalNews.s
 import { environment } from '../../../../../../environments/environments';
 
 @Component({
-  selector: 'app-add-hospital-news',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './add-hospital-news.component.html',
-  styleUrl: './add-hospital-news.component.css'
+    selector: 'app-add-hospital-news',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './add-hospital-news.component.html',
+    styleUrl: './add-hospital-news.component.css'
 })
 export class AddHospitalNewsComponent {
   hospitalNewsService = inject(HospitalNewsService);

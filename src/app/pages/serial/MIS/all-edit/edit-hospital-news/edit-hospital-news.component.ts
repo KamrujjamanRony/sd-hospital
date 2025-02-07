@@ -7,11 +7,10 @@ import { ConfirmModalComponent } from '../../../../../components/main/shared/all
 import { HospitalNewsService } from '../../../../../services/main/hospitalNews.service';
 
 @Component({
-  selector: 'app-edit-hospital-news',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './edit-hospital-news.component.html',
-  styleUrl: './edit-hospital-news.component.css'
+    selector: 'app-edit-hospital-news',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './edit-hospital-news.component.html',
+    styleUrl: './edit-hospital-news.component.css'
 })
 export class EditHospitalNewsComponent {
   hospitalNewsService = inject(HospitalNewsService);

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
@@ -7,15 +7,14 @@ import { UsersService } from '../../../../../services/serial/users.service';
 import { DataService } from '../../../../../services/serial/data.service';
 
 @Component({
-  selector: 'app-edit-user-modal',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './edit-user-modal.component.html',
-  styleUrl: './edit-user-modal.component.css'
+    selector: 'app-edit-user-modal',
+    imports: [CommonModule, ReactiveFormsModule],
+    templateUrl: './edit-user-modal.component.html',
+    styleUrl: './edit-user-modal.component.css'
 })
 export class EditUserModalComponent {
-  @Input() user!: any;
-  @Output() closeModal = new EventEmitter<void>();
+  readonly user = input.required<any>();
+  readonly closeModal = output<void>();
   UsersService = inject(UsersService);
   dataService = inject(DataService);
   fb = inject(FormBuilder);
@@ -45,7 +44,7 @@ export class EditUserModalComponent {
 
 
   mutation = injectMutation((client) => ({
-    mutationFn: (updateData: any) => this.UsersService.updateUser(this.user.userId, updateData),
+    mutationFn: (updateData: any) => this.UsersService.updateUser(this.user().userId, updateData),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['users'] })
     },
@@ -56,9 +55,10 @@ export class EditUserModalComponent {
   });
 
   updateFormValues(): void {
-    if (this.user) {
+    const user = this.user();
+    if (user) {
       this.addUserForm.patchValue({
-        role: this.user?.roleIds,
+        role: user?.roleIds,
       });
     }
   }

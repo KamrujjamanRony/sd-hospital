@@ -1,16 +1,25 @@
-<section class="cover bg-gradient-to-l from-cyan-500 to-blue-500 relative px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 overflow-hidden py-48 flex
-      items-center max-h-96">
-        <div class="h-full w-full absolute top-0 left-0 z-0">
-          <img src="https://img.freepik.com/free-photo/gradient-dark-blue-futuristic-digital-background_53876-160646.jpg?t=st=1713524092~exp=1713527692~hmac=5bb425a06bba38ab6c2073c0e5a8b5e98ea2571bcabddb638fec4a93bd33e3d0&w=1380" alt="" class="w-full h-full object-cover opacity-20">
-        </div>
+<section
+  class="cover bg-gradient-to-l from-cyan-500 to-blue-500 relative px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 overflow-hidden py-48 flex items-center max-h-96"
+>
+  <div class="h-full w-full absolute top-0 left-0 z-0">
+    <img
+      src="https://img.freepik.com/free-photo/gradient-dark-blue-futuristic-digital-background_53876-160646.jpg?t=st=1713524092~exp=1713527692~hmac=5bb425a06bba38ab6c2073c0e5a8b5e98ea2571bcabddb638fec4a93bd33e3d0&w=1380"
+      alt=""
+      class="w-full h-full object-cover opacity-20"
+    />
+  </div>
 
-        <div class="w-full relative z-10 h-100 mt-32 text-center text-white">
-          <p class="font-cinzel text-sm md:text-xl lg:text-2xl font-semibold mt-5">
-            <span class="text-[#57f7e7]">Home</span> / About
-          </p>
-            <h1 class="text-white text-4xl md:text-5xl xl:text-6xl font-bold leading-tight text-center uppercase">about us</h1>
-        </div>
-      </section>
+  <div class="w-full relative z-10 h-100 mt-32 text-center text-gray-50">
+    <p class="font-cinzel text-sm md:text-xl lg:text-2xl font-semibold mt-5">
+      <span class="text-[#57f7e7]">Home</span> / About
+    </p>
+    <h1
+      class="text-gray-50 text-4xl md:text-5xl xl:text-6xl font-bold leading-tight text-center uppercase"
+    >
+      about us
+    </h1>
+  </div>
+</section>
 
 <div class="container mx-auto mt-5">
   <h1
@@ -22,7 +31,7 @@
   <div
     class="block bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.1),0_10px_20px_-2px_rgba(0,0,0,0.07)] md:m-12"
   >
-  @if (about?.title) {
+    @if (about?.title) {
     <div class="p-6">
       <h2
         style="white-space: pre-line"
@@ -30,12 +39,11 @@
       >
         {{ about?.title }}
       </h2>
-      <p style="white-space: pre-line" class="mb-8 pb-2 text-slate-400 lg:pb-0">
+      <p style="white-space: pre-line" class="mb-8 pb-2 text-gray-900 lg:pb-0">
         {{ about?.description }}
       </p>
     </div>
-  }
-  @if (about?.title2) {
+    } @if (about?.title2) {
     <div class="p-6">
       <h2
         style="white-space: pre-line"
@@ -43,12 +51,11 @@
       >
         {{ about?.title2 }}
       </h2>
-      <p style="white-space: pre-line" class="mb-8 pb-2 text-slate-400 lg:pb-0">
+      <p style="white-space: pre-line" class="mb-8 pb-2 text-gray-900 lg:pb-0">
         {{ about?.description2 }}
       </p>
     </div>
-  }
-  @if (about?.title3) {
+    } @if (about?.title3) {
     <div class="p-6">
       <h2
         style="white-space: pre-line"
@@ -56,12 +63,11 @@
       >
         {{ about?.title3 }}
       </h2>
-      <p style="white-space: pre-line" class="mb-8 pb-2 text-slate-400 lg:pb-0">
+      <p style="white-space: pre-line" class="mb-8 pb-2 text-gray-900 lg:pb-0">
         {{ about?.description3 }}
       </p>
     </div>
-  }
-  @if (about?.title4) {
+    } @if (about?.title4) {
     <div class="p-6">
       <h2
         style="white-space: pre-line"
@@ -69,12 +75,11 @@
       >
         {{ about?.title4 }}
       </h2>
-      <p style="white-space: pre-line" class="mb-8 pb-2 text-slate-400 lg:pb-0">
+      <p style="white-space: pre-line" class="mb-8 pb-2 text-gray-900 lg:pb-0">
         {{ about?.description4 }}
       </p>
     </div>
-  }
-  @if (about?.title5) {
+    } @if (about?.title5) {
     <div class="p-6">
       <h2
         style="white-space: pre-line"
@@ -82,10 +87,10 @@
       >
         {{ about?.title5 }}
       </h2>
-      <p style="white-space: pre-line" class="mb-8 pb-2 text-slate-400 lg:pb-0">
+      <p style="white-space: pre-line" class="mb-8 pb-2 text-gray-900 lg:pb-0">
         {{ about?.description5 }}
       </p>
     </div>
-  }
+    }
   </div>
 </div>

@@ -8,11 +8,10 @@ import { InstrumentService } from '../../../../../services/main/instrument.servi
 import { ImgbbService } from '../../../../../services/main/imgbb.service';
 
 @Component({
-  selector: 'app-edit-instrument',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './edit-instrument.component.html',
-  styleUrl: './edit-instrument.component.css'
+    selector: 'app-edit-instrument',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './edit-instrument.component.html',
+    styleUrl: './edit-instrument.component.css'
 })
 export class EditInstrumentComponent {
   imgbbService = inject(ImgbbService);

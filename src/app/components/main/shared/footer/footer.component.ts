@@ -6,10 +6,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [FontAwesomeModule],
-  templateUrl: './footer.component.html'
+    selector: 'app-footer',
+    imports: [FontAwesomeModule],
+    templateUrl: './footer.component.html'
 })
 export class FooterComponent {
   contactService = inject(ContactService);

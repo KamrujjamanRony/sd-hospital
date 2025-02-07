@@ -1,14 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
-  selector: 'app-cover',
-  standalone: true,
-  imports: [],
-  templateUrl: './cover.component.html'
+    selector: 'app-cover',
+    imports: [],
+    templateUrl: './cover.component.html'
 })
 export class CoverComponent {
-  @Input() title: any = '';
-  @Input() sub1: any = '';
-  @Input() sub2: any = '';
+  readonly title = input<any>('');
+  readonly sub1 = input<any>('');
+  readonly sub2 = input<any>('');
 
 }

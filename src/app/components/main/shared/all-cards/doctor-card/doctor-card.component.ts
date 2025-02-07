@@ -1,15 +1,14 @@
-import { Component, Input, Renderer2, inject } from '@angular/core';
+import { Component, Renderer2, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-doctor-card',
-  standalone: true,
-  imports: [RouterLink],
-  templateUrl: './doctor-card.component.html',
-  styleUrl: './doctor-card.component.css'
+    selector: 'app-doctor-card',
+    imports: [RouterLink],
+    templateUrl: './doctor-card.component.html',
+    styleUrl: './doctor-card.component.css'
 })
 export class DoctorCardComponent {
-  @Input() doctor!: any;
+  readonly doctor = input.required<any>();
   renderer = inject(Renderer2);
   doctorMale = '../../../../assets/images/doctor.png';
   doctorFemale = '../../../../assets/images/Dr-Famale.jpg';

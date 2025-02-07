@@ -8,11 +8,10 @@ import { InstrumentService } from '../../../../../services/main/instrument.servi
 import { DeleteConfirmationModalComponent } from '../../../../../components/main/shared/all-modals/delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
-  selector: 'app-instrument-list',
-  standalone: true,
-  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
-  templateUrl: './instrument-list.component.html',
-  styleUrl: './instrument-list.component.css'
+    selector: 'app-instrument-list',
+    imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
+    templateUrl: './instrument-list.component.html',
+    styleUrl: './instrument-list.component.css'
 })
 export class InstrumentListComponent {
   instrumentService = inject(InstrumentService);

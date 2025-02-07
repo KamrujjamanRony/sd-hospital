@@ -10,7 +10,6 @@ import { DataService } from '../../../services/serial/data.service';
 
 @Component({
     selector: 'app-all-users',
-    standalone: true,
     templateUrl: './all-users.component.html',
     styleUrl: './all-users.component.css',
     imports: [CoverComponent, AddUserModalComponent, EditUserModalComponent]

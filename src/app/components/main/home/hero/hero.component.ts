@@ -3,7 +3,6 @@ import { AppointmentModalComponent } from "../../shared/all-modals/appointment-m
 
 @Component({
     selector: 'app-hero',
-    standalone: true,
     templateUrl: './hero.component.html',
     styleUrl: './hero.component.css',
     imports: [AppointmentModalComponent]

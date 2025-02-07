@@ -8,11 +8,10 @@ import { environment } from '../../../../../../environments/environments';
 import { CareerService } from '../../../../../services/main/career.service';
 
 @Component({
-  selector: 'app-add-career',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './add-career.component.html',
-  styleUrl: './add-career.component.css'
+    selector: 'app-add-career',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './add-career.component.html',
+    styleUrl: './add-career.component.css'
 })
 export class AddCareerComponent {
   careerService = inject(CareerService);

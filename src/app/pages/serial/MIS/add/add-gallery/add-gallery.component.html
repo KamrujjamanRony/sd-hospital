@@ -6,16 +6,15 @@
     (ngSubmit)="onFormSubmit()"
     class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
   >
-
     <div class="mb-4">
       <label
-        class="block text-gray-700 text-sm font-bold mb-2"
+        class="block text-gray-900 text-sm font-bold mb-2"
         for="galerySerial"
       >
         Gallery Serial <span class="text-red-600">*</span>
       </label>
       <input
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
         id="galerySerial"
         name="galerySerial"
         type="number"
@@ -26,13 +25,13 @@
     </div>
     <div class="mb-4">
       <label
-        class="block text-gray-700 text-sm font-bold mb-2"
+        class="block text-gray-900 text-sm font-bold mb-2"
         for="galeryName"
       >
         Gallery Name
       </label>
       <input
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
         id="galeryName"
         name="galeryName"
         type="text"
@@ -42,11 +41,11 @@
       />
     </div>
     <div class="mb-4">
-      <label for="imageFile" class="block text-gray-700 text-sm font-bold mb-2"
+      <label for="imageFile" class="block text-gray-900 text-sm font-bold mb-2"
         >Gallery Image</label
       >
       <input
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
         id="gPicUrl"
         name="gPicUrl"
         type="text"
@@ -58,7 +57,7 @@
 
     <div class="mb-4">
       <label
-        class="block text-gray-700 text-sm font-bold mb-2"
+        class="block text-gray-900 text-sm font-bold mb-2"
         for="description"
       >
         Description
@@ -66,7 +65,7 @@
       <textarea
         name="description"
         id="description"
-        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
         cols="30"
         rows="10"
         placeholder="Enter Gallery description here"
@@ -75,14 +74,16 @@
     </div>
     <input
       type="submit"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      class="bg-blue-500 hover:bg-blue-700 text-gray-50 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       value="Add"
     />
   </form>
 </div>
 
 @if(confirmModal){
-  <confirm-modal title="Gallery is successfully added!" url="/serial/admin/all-mis/gallery-list" (closeModal)="closeModal()" />
+<confirm-modal
+  title="Gallery is successfully added!"
+  url="/serial/admin/all-mis/gallery-list"
+  (closeModal)="closeModal()"
+/>
 }
-
-

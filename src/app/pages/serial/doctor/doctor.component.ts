@@ -6,7 +6,6 @@ import { DoctorsService } from '../../../services/serial/doctors.service';
 
 @Component({
     selector: 'app-doctor',
-    standalone: true,
     templateUrl: './doctor.component.html',
     styleUrl: './doctor.component.css',
     imports: [CoverComponent]

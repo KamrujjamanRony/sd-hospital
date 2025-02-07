@@ -7,10 +7,9 @@ import { AboutService } from '../../../../services/main/about.service';
 import { environment } from '../../../../../environments/environments';
 
 @Component({
-  selector: 'app-about-us',
-  templateUrl: './about-us.component.html',
-  standalone: true,
-  imports: [CoverComponent, FormsModule]
+    selector: 'app-about-us',
+    templateUrl: './about-us.component.html',
+    imports: [CoverComponent, FormsModule]
 })
 export class AboutUsComponent implements OnInit, OnDestroy {
   aboutService = inject(AboutService);

@@ -8,11 +8,10 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 
 @Component({
-  selector: 'app-add-gallery',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './add-gallery.component.html',
-  styleUrl: './add-gallery.component.css'
+    selector: 'app-add-gallery',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './add-gallery.component.html',
+    styleUrl: './add-gallery.component.css'
 })
 export class AddGalleryComponent {
   galleryService = inject(GalleryService);

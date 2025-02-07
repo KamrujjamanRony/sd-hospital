@@ -1,11 +1,15 @@
 @if (checkRoles("dd6bf328-6ecc-4c45-ba72-c3086482603b")) {
 
 <section>
-  <app-cover title="all carousel information" sub1="MIS" sub2="Carousel"></app-cover>
+  <app-cover
+    title="all carousel information"
+    sub1="MIS"
+    sub2="Carousel"
+  ></app-cover>
 
-@if (loading) {
+  @if (loading) {
   <div
-    class="block text-white mt-10 mb-4 mx-auto h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+    class="block text-gray-50 mt-10 mb-4 mx-auto h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
     role="status"
   >
     <span
@@ -15,11 +19,11 @@
   </div>
 
   <div class="text-center">Loading...</div>
-} @else {
+  } @else {
   <div class="container mx-auto flex justify-end">
     <a
       routerLink="add"
-      class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded uppercase"
+      class="bg-green-500 hover:bg-green-400 text-gray-50 font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded uppercase"
     >
       add carousel
     </a>
@@ -31,7 +35,7 @@
         <table class="w-full">
           <thead>
             <tr
-              class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+              class="text-xs font-semibold tracking-wide text-left text-gray-900 uppercase border-b bg-gray-50"
             >
               <th class="px-4 py-3">Image</th>
               <th class="px-4 py-3">Title</th>
@@ -39,63 +43,57 @@
               <th class="px-4 py-3">Actions</th>
             </tr>
           </thead>
-          <tbody
-            class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
-          >
-          @if (carousels$) {
-            @for (carousel of carousels$ | async; track $index) {
-              <tr
-                class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
-              >
-                <td class="px-4 py-3">
-                  <img
-                    [src]="
-                      carousel?.imageUrl !== ''
-                        ? carousel.imageUrl
-                        : emptyImg
-                    "
-                    alt="carousel Image"
-                    class="w-8 md:w-16 rounded"
-                  />
-                </td>
-                <td class="px-4 py-3 text-xs">{{ carousel.title }}</td>
-                <td class="px-4 py-3 text-sm">{{ carousel?.description?.slice(0,100) }}...</td>
-                <td class="px-4 py-3 text-sm">
-                  <a
-                    [routerLink]="['edit', carousel.id]"
-                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded dark:bg-green-700 dark:text-green-100 mr-2 inline-block my-2"
-                  >
-                    Edit
-                  </a>
-                  <button
-                    (click)="onDelete(carousel.id)"
-                    class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded dark:bg-red-700 dark:text-green-100 inline-block"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            }
-          }
+          <tbody class="bg-white divide-y">
+            @if (carousels$) { @for (carousel of carousels$ | async; track
+            $index) {
+            <tr class="bg-gray-50 hover:bg-gray-100">
+              <td class="px-4 py-3">
+                <img
+                  [src]="
+                    carousel?.imageUrl !== '' ? carousel.imageUrl : emptyImg
+                  "
+                  alt="carousel Image"
+                  class="w-8 md:w-16 rounded"
+                />
+              </td>
+              <td class="px-4 py-3 text-xs">{{ carousel.title }}</td>
+              <td class="px-4 py-3 text-sm">
+                {{ carousel?.description?.slice(0, 100) }}...
+              </td>
+              <td class="px-4 py-3 text-sm">
+                <a
+                  [routerLink]="['edit', carousel.id]"
+                  class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded mr-2 inline-block my-2"
+                >
+                  Edit
+                </a>
+                <button
+                  (click)="onDelete(carousel.id)"
+                  class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded inline-block"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            } }
           </tbody>
         </table>
       </div>
       <div
-        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-900 uppercase border-t bg-gray-50 sm:grid-cols-9"
       ></div>
     </div>
   </div>
-}
+  }
 </section>
 
 } @else {
-  <h1 class="text-2xl text-center font-bold text-rose-500">You haven't any permission!</h1>
+<h1 class="text-2xl text-center font-bold text-rose-500">
+  You haven't any permission!
+</h1>
+} @if (isConfirmOpen) {
+<app-delete-confirmation-modal
+  (confirmDelete)="confirmDelete()"
+  (closeModal)="closeModal()"
+></app-delete-confirmation-modal>
 }
-
-
-
-@if (isConfirmOpen) {
-  <app-delete-confirmation-modal (confirmDelete)="confirmDelete()" (closeModal)="closeModal()"></app-delete-confirmation-modal>
-}
-
-

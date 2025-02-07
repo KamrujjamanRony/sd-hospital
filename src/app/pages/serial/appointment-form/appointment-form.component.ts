@@ -1,10 +1,9 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, inject, OnInit, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { format, isBefore } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { ConfirmModalComponent } from '../../../components/serial/shared/modal/confirm-modal/confirm-modal.component';
-import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
 import { ToastService } from '../../../services/serial/toast.service';
 import { AppointmentService } from '../../../services/serial/appointment.service';
 import { DoctorsService } from '../../../services/serial/doctors.service';
@@ -14,10 +13,9 @@ import { DepartmentService } from '../../../services/serial/department.service';
 
 @Component({
   selector: 'app-appointment-form',
-  standalone: true,
   templateUrl: './appointment-form.component.html',
   styleUrl: './appointment-form.component.css',
-  imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent, NavbarComponent, FormsModule]
+  imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent, FormsModule]
 })
 export class AppointmentFormComponent implements OnInit {
   fb = inject(FormBuilder);
@@ -38,7 +36,7 @@ export class AppointmentFormComponent implements OnInit {
   confirmModal!: boolean;
 
 
-  @Output() closeAppointment = new EventEmitter<void>();
+  readonly closeAppointment = output<void>();
 
   closeAppointmentModal(): void {
     this.closeAppointment.emit();
@@ -159,14 +157,14 @@ export class AppointmentFormComponent implements OnInit {
       formData.append('PaymentStatus', paymentStatus != null ? paymentStatus.toString() : '');
       formData.append('Confirmed', confirmed != null ? confirmed.toString() : this.confirm);
       this.appointmentMutation.mutate(formData);
-      
+
       this.isSubmitted = false;
     } else {
       this.msg = "Please fill all required fields!";
       this.isSubmitted = false;
     }
   }
-  
+
   dates: Date[] = Array.from({ length: 15 }, (_, i) => {
     const date = new Date();
     date.setDate(date.getDate() + i);

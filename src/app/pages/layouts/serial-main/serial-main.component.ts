@@ -3,7 +3,6 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
-import { FooterComponent } from '../../../components/serial/shared/footer/footer.component';
 import { AuthService } from '../../../services/serial/auth.service';
 import { UserAuthService } from '../../../services/serial/userAuth.service';
 import { injectQueryClient } from '@tanstack/angular-query-experimental';
@@ -12,8 +11,7 @@ import { environment } from '../../../../environments/environments';
 
 @Component({
   selector: 'app-serial-main',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule, NavbarComponent, FooterComponent, ReactiveFormsModule],
+  imports: [CommonModule, RouterOutlet, FormsModule, NavbarComponent, ReactiveFormsModule],
   templateUrl: './serial-main.component.html',
   styleUrl: './serial-main.component.css'
 })
@@ -26,7 +24,7 @@ export class SerialMainComponent {
   user: any;
   private loginSubscription?: Subscription;
 
-  constructor(){
+  constructor() {
     this.setUser();
   }
 
@@ -40,26 +38,26 @@ export class SerialMainComponent {
     let { username, password } = this.userForm.value;
     if (username && password) {
       password = environment.userCode + password;
-      this.loginSubscription = this.UserAuthService.loginUser({username, password})
-      .subscribe({
-        next: (response: any) => {
-          const userModel = {token: response.token, username: response.username, roleIds: response.roleIds};
-          this.authService.setUser(userModel);
-          this.setUser();
-        },
-        error: (error) => {
-          console.error('Error adding user:', error);
-        }
-      });
+      this.loginSubscription = this.UserAuthService.loginUser({ username, password })
+        .subscribe({
+          next: (response: any) => {
+            const userModel = { token: response.token, username: response.username, roleIds: response.roleIds };
+            this.authService.setUser(userModel);
+            this.setUser();
+          },
+          error: (error) => {
+            console.error('Error adding user:', error);
+          }
+        });
       this.isSubmitted = true;
     }
   };
 
-  getLocation(){
-    
+  getLocation() {
+
   }
 
-  setUser(){
+  setUser() {
     this.user = this.authService.getUser();
   }
 

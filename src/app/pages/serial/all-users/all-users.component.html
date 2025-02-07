@@ -4,7 +4,7 @@
   @if (checkRoles("ca28769c-f16d-4a8a-86ba-2bf15552403e")) {
   <button
     (click)="openAddUserModal()"
-    class="btn bg-blue-600 hover:bg-blue-500 px-3 rounded text-white capitalize"
+    class="btn bg-blue-600 hover:bg-blue-500 px-3 rounded text-gray-50 capitalize"
   >
     Add User
   </button>
@@ -17,22 +17,20 @@
       <table class="w-full">
         <thead>
           <tr
-            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+            class="text-xs font-semibold tracking-wide text-left text-gray-900 uppercase border-b bg-gray-50"
           >
             <th class="px-4 py-3">Username</th>
             <th class="px-4 py-3">Role</th>
             <th class="px-4 py-3">Actions</th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tbody class="bg-white divide-y">
           @switch (query.status()) { @case ('pending') {
           <p class="text-center text-5xl">Loading...</p>
           } @case ('error') {
           <span>Error: {{ query.error()?.message }}</span>
           } @default { @for (user of query.data(); track user.id) {
-          <tr
-            class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
-          >
+          <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
             <td class="px-4 py-3 text-xs">{{ user.userName }}</td>
             <td class="px-4 py-3 text-xs">
               <ul class="list-decimal">
@@ -44,13 +42,13 @@
             <td class="px-4 py-3 text-sm">
               <button
                 (click)="openEditUserModal(user)"
-                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded dark:bg-green-700 dark:text-green-100 mr-2 inline-block my-2"
+                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded mr-2 inline-block my-2"
               >
                 Edit
               </button>
               <!-- <button
                 (click)="onDelete(user.id)"
-                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded dark:bg-red-700 dark:text-green-100 inline-block"
+                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded inline-block"
               >
                 Delete
               </button> -->
@@ -63,7 +61,7 @@
       </table>
     </div>
     <div
-      class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+      class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-900 uppercase border-t bg-gray-50 sm:grid-cols-9"
     ></div>
   </div>
 </div>

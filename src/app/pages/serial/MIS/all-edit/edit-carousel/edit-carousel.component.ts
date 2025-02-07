@@ -8,10 +8,9 @@ import { CarouselService } from '../../../../../services/main/carousel.service';
 import { ImgbbService } from '../../../../../services/main/imgbb.service';
 
 @Component({
-  selector: 'app-edit-carousel',
-  templateUrl: './edit-carousel.component.html',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent]
+    selector: 'app-edit-carousel',
+    templateUrl: './edit-carousel.component.html',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent]
 })
 export class EditCarouselComponent implements OnInit, OnDestroy {
   carouselService = inject(CarouselService);

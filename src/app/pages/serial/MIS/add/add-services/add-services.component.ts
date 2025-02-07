@@ -7,11 +7,10 @@ import { environment } from '../../../../../../environments/environments';
 import { ServicesService } from '../../../../../services/main/services.service';
 
 @Component({
-  selector: 'app-add-services',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './add-services.component.html',
-  styleUrl: './add-services.component.css'
+    selector: 'app-add-services',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './add-services.component.html',
+    styleUrl: './add-services.component.css'
 })
 export class AddServicesComponent {
   servicesService = inject(ServicesService);

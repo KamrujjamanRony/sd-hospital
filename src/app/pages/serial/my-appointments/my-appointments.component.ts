@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { AppointmentModalComponent } from '../../../components/serial/shared/modal/appointment-modal/appointment-modal.component';
-import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
 import { DoctorsService } from '../../../services/serial/doctors.service';
 import { AuthService } from '../../../services/serial/auth.service';
 import { DepartmentService } from '../../../services/serial/department.service';
@@ -15,10 +14,9 @@ import { DoctorsServiceMain } from '../../../services/main/doctors.service';
 
 @Component({
   selector: 'app-my-appointments',
-  standalone: true,
   templateUrl: './my-appointments.component.html',
   styleUrl: './my-appointments.component.css',
-  imports: [CoverComponent, AppointmentModalComponent, FormsModule, NavbarComponent]
+  imports: [CoverComponent, AppointmentModalComponent, FormsModule]
 })
 export class MyAppointmentsComponent {
   appointmentsService = inject(AppointmentsService);

@@ -1,13 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { NewsCardComponent } from '../../../components/main/shared/all-cards/news-card/news-card.component';
-import { CoverComponent } from '../../../components/main/shared/cover/cover.component';
 import { Observable } from 'rxjs';
 import { CareerService } from '../../../services/main/career.service';
 
 @Component({
   selector: 'app-career',
-  standalone: true,
-  imports: [NewsCardComponent, CoverComponent],
+  imports: [NewsCardComponent],
   templateUrl: './career.component.html',
   styleUrl: './career.component.css'
 })

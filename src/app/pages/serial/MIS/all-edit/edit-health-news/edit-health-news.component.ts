@@ -8,11 +8,10 @@ import { HealthNewsService } from '../../../../../services/main/healthNews.servi
 import { ImgbbService } from '../../../../../services/main/imgbb.service';
 
 @Component({
-  selector: 'app-edit-health-news',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './edit-health-news.component.html',
-  styleUrl: './edit-health-news.component.css'
+    selector: 'app-edit-health-news',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './edit-health-news.component.html',
+    styleUrl: './edit-health-news.component.css'
 })
 export class EditHealthNewsComponent {
   imgbbService = inject(ImgbbService);

@@ -1,21 +1,18 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { AddDepartmentModalComponent } from '../../../components/serial/shared/modal/add-department-modal/add-department-modal.component';
 import { EditDepartmentModalComponent } from '../../../components/serial/shared/modal/edit-department-modal/edit-department-modal.component';
-import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
 import { AuthService } from '../../../services/serial/auth.service';
 import { DepartmentService } from '../../../services/serial/department.service';
 
 @Component({
-    selector: 'app-all-department',
-    standalone: true,
-    templateUrl: './all-department.component.html',
-    styleUrl: './all-department.component.css',
-    imports: [CoverComponent, RouterLink, AddDepartmentModalComponent, CommonModule, EditDepartmentModalComponent, NavbarComponent]
+  selector: 'app-all-department',
+  templateUrl: './all-department.component.html',
+  styleUrl: './all-department.component.css',
+  imports: [CoverComponent, AddDepartmentModalComponent, CommonModule, EditDepartmentModalComponent]
 })
 export class AllDepartmentComponent {
   departmentService = inject(DepartmentService)

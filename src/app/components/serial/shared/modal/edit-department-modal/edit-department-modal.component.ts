@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
@@ -8,15 +8,14 @@ import { environment } from '../../../../../../environments/environments';
 import { DepartmentService } from '../../../../../services/serial/department.service';
 
 @Component({
-  selector: 'app-edit-department-modal',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './edit-department-modal.component.html',
-  styleUrl: './edit-department-modal.component.css'
+    selector: 'app-edit-department-modal',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    templateUrl: './edit-department-modal.component.html',
+    styleUrl: './edit-department-modal.component.css'
 })
 export class EditDepartmentModalComponent {
-  @Input() id!: any;
-  @Output() closeModal = new EventEmitter<void>();
+  readonly id = input.required<any>();
+  readonly closeModal = output<void>();
   departmentService = inject(DepartmentService);
   imgbbService = inject(ImgbbService);
   fb = inject(FormBuilder);
@@ -33,7 +32,7 @@ export class EditDepartmentModalComponent {
   constructor() { }
 
   ngOnInit(): void {
-    this.selected = this.departmentService.getDepartment(this.id)
+    this.selected = this.departmentService.getDepartment(this.id())
     this.updateFormValues();
   }
 

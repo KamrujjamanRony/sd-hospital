@@ -13,11 +13,10 @@ import { DepartmentService } from '../../../services/serial/department.service';
 import { AppointmentsService } from '../../../services/serial/appointments.service';
 
 @Component({
-  selector: 'app-all-appointment',
-  standalone: true,
-  templateUrl: './all-appointment.component.html',
-  styleUrls: ['./all-appointment.component.css'],
-  imports: [CoverComponent, AppointmentModalComponent, ReactiveFormsModule, CommonModule, FormsModule]
+    selector: 'app-all-appointment',
+    templateUrl: './all-appointment.component.html',
+    styleUrls: ['./all-appointment.component.css'],
+    imports: [CoverComponent, AppointmentModalComponent, ReactiveFormsModule, CommonModule, FormsModule]
 })
 export class AllAppointmentComponent {
   appointmentsService = inject(AppointmentsService);

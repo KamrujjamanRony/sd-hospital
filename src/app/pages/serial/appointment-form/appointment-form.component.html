@@ -20,9 +20,9 @@
           formControlName="drCode"
           [class.invalid]="
             appointmentForm.get('drCode')?.invalid ||
-            (appointmentForm.get('drCode')?.dirty ||
-              appointmentForm.get('drCode')?.touched ||
-              isSubmitted)
+            appointmentForm.get('drCode')?.dirty ||
+            appointmentForm.get('drCode')?.touched ||
+            isSubmitted
           "
           (change)="onDoctorChange()"
           required
@@ -54,9 +54,9 @@
           formControlName="drCode"
           [class.invalid]="
             appointmentForm.get('drCode')?.invalid ||
-            (appointmentForm.get('drCode')?.dirty ||
-              appointmentForm.get('drCode')?.touched ||
-              isSubmitted)
+            appointmentForm.get('drCode')?.dirty ||
+            appointmentForm.get('drCode')?.touched ||
+            isSubmitted
           "
           (change)="onDoctorChange()"
           required
@@ -137,7 +137,7 @@
           </label>
         </div>
       </label> -->
-      
+
       <!-- <label class="form-control w-full !mt-0">
         <div class="label !py-0">
           <span class="label-text font-bold capitalize"> Patient Type: </span>
@@ -161,9 +161,9 @@
           formControlName="pName"
           [class.invalid]="
             appointmentForm.get('pName')?.invalid ||
-            (appointmentForm.get('pName')?.dirty ||
-              appointmentForm.get('pName')?.touched ||
-              isSubmitted)
+            appointmentForm.get('pName')?.dirty ||
+            appointmentForm.get('pName')?.touched ||
+            isSubmitted
           "
           placeholder="Type here"
           class="input input-bordered w-full input-sm outline-none"
@@ -225,9 +225,7 @@
         <select
           class="select select-bordered select-sm w-full"
           formControlName="date"
-          [class.invalid]="
-            appointmentForm.get('date')?.invalid
-          "
+          [class.invalid]="appointmentForm.get('date')?.invalid"
           required
         >
           <option value="" disabled>Select Appointment Date</option>
@@ -256,9 +254,7 @@
           type="text"
           formControlName="mobile"
           maxlength="14"
-          [class.invalid]="
-            appointmentForm.get('mobile')?.invalid
-          "
+          [class.invalid]="appointmentForm.get('mobile')?.invalid"
           placeholder="Type here"
           class="input input-bordered w-full input-sm"
           required
@@ -301,28 +297,27 @@
       </label>
       <!-- sL Input -->
       @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a") && blockSerials) {
-        <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize"> Block Serials </span>
-          </div>
-          <select
-            class="select select-bordered select-sm w-full"
-            formControlName="sL"
+      <label class="form-control w-full !mt-0">
+        <div class="label !py-0">
+          <span class="label-text font-bold capitalize"> Block Serials </span>
+        </div>
+        <select
+          class="select select-bordered select-sm w-full"
+          formControlName="sL"
           [class.invalid]="
             appointmentForm.get('sL')?.invalid &&
             (appointmentForm.get('sL')?.dirty ||
               appointmentForm.get('sL')?.touched ||
               isSubmitted)
           "
-          >
-            <option value="" disabled>Select Block Serial</option>
-            @for(serial of blockSerials; track $index) {
-              <option [value]="serial">{{serial}}</option>
-            }
-          </select>
-        </label>
-  
-  
+        >
+          <option value="" disabled>Select Block Serial</option>
+          @for(serial of blockSerials; track $index) {
+          <option [value]="serial">{{ serial }}</option>
+          }
+        </select>
+      </label>
+
       <!-- <label class="form-control w-full !mt-0">
         <div class="label !py-0">
           <span class="label-text font-bold capitalize">Serial</span>
@@ -368,7 +363,7 @@
     <div class="!mt-2">
       <button
         type="submit"
-        class="rounded bg-primary py-1 text-white transition-all hover:opacity-80 w-full"
+        class="rounded bg-primary py-1 text-gray-50 transition-all hover:opacity-80 w-full"
       >
         Submit Here
       </button>
@@ -376,7 +371,6 @@
   </form>
 </div>
 
-
 @if(msg){
-  <confirm-modal [title]="msg" (closeModal)="closeModal()" />
+<confirm-modal url="" [title]="msg" (closeModal)="closeModal()" />
 }

@@ -8,11 +8,10 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 
 @Component({
-  selector: 'app-add-instrument',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './add-instrument.component.html',
-  styleUrl: './add-instrument.component.css'
+    selector: 'app-add-instrument',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './add-instrument.component.html',
+    styleUrl: './add-instrument.component.css'
 })
 export class AddInstrumentComponent {
   instrumentService = inject(InstrumentService);

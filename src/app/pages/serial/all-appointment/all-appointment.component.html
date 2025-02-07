@@ -64,7 +64,7 @@
         <button
           (click)="redirectToHome()"
           type="button"
-          class="btn bg-blue-600 hover:bg-blue-500 py-3 px-3 rounded-lg text-white cursor-pointer"
+          class="btn bg-blue-600 hover:bg-blue-500 py-3 px-3 rounded-lg text-gray-50 cursor-pointer"
         >
           Back Home
         </button>
@@ -73,7 +73,7 @@
         <a
           (click)="printPage()"
           type="button"
-          class="btn bg-rose-600 hover:bg-rose-500 py-3 px-3 rounded-lg text-white cursor-pointer"
+          class="btn bg-rose-600 hover:bg-rose-500 py-3 px-3 rounded-lg text-gray-50 cursor-pointer"
         >
           Print Page
         </a>
@@ -86,7 +86,7 @@
 <div class="flex items-center justify-center h-[70vh]">
   <div>
     <div
-      class="inline-block h-28 w-28 animate-spin rounded-full border-8 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+      class="inline-block h-28 w-28 animate-spin rounded-full border-8 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite]"
       role="status"
     >
       <span
@@ -94,15 +94,15 @@
         >Loading...</span
       >
     </div>
-    <p class="text-2xl text-gray-600 text-center ml-2 mt-2">Loading...</p>
+    <p class="text-2xl text-gray-900 text-center ml-2 mt-2">Loading...</p>
   </div>
 </div>
 } @else if(totalAppointment == 0) {
-  <div class="flex items-center justify-center h-[70vh]">
-    <div>
-      <h1 class="text-xl text-gray-600 text-center">No appointment found</h1>
-    </div>
+<div class="flex items-center justify-center h-[70vh]">
+  <div>
+    <h1 class="text-xl text-gray-900 text-center">No appointment found</h1>
   </div>
+</div>
 } @else {
 <div class="mx-4" [class.black-when-printing]="isPrinting">
   <div class="w-full overflow-hidden rounded-lg shadow-xs">
@@ -138,7 +138,7 @@
       <table class="w-full">
         <thead>
           <tr
-            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+            class="text-xs font-semibold tracking-wide text-left text-gray-900 uppercase border-b bg-gray-50"
           >
             <th class="mx-1">Sl</th>
             <th class="mx-1" [class.hidden-when-printing]="isPrinting">
@@ -164,11 +164,9 @@
             }
           </tr>
         </thead>
-        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tbody class="bg-white divide-y">
           @for (appointment of filteredAppointments; track appointment?.id) {
-          <tr
-            class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
-          >
+          <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
             <td class="mx-1 text-xs">{{ appointment?.sl }}</td>
             <td
               class="mx-1 text-xs max-w-[150px]"
@@ -203,14 +201,14 @@
               @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
               <button
                 (click)="openEditAppointmentModal(appointment?.id)"
-                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded dark:bg-green-700 dark:text-green-100 mr-2 inline-block my-2"
+                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded mr-2 inline-block my-2"
               >
                 Edit
               </button>
               } @if (checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
               <button
                 (click)="onDelete(appointment?.id)"
-                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded dark:bg-red-700 dark:text-green-100 inline-block"
+                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded inline-block"
               >
                 Delete
               </button>
@@ -222,13 +220,11 @@
       </table>
     </div>
     <div
-      class="grid mx-1 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+      class="grid mx-1 text-xs font-semibold tracking-wide text-gray-900 uppercase border-t bg-gray-50 sm:grid-cols-9"
     ></div>
   </div>
 </div>
-} 
-
-@if(editAppointmentModal) {
+} @if(editAppointmentModal) {
 <app-appointment-modal
   [id]="selectedId"
   (closeAppointment)="closeEditAppointmentModal()"

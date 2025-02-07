@@ -1,8 +1,12 @@
-<app-cover title="All Digital Diagnostic Center News" sub1="MIS" sub2="Diagnostic News"></app-cover>
+<app-cover
+  title="All Digital Diagnostic Center News"
+  sub1="MIS"
+  sub2="Diagnostic News"
+></app-cover>
 
 @if (!healthNews$) {
 <div
-  class="block text-white mt-10 mb-4 mx-auto h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+  class="block text-gray-50 mt-10 mb-4 mx-auto h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
   role="status"
 >
   <span
@@ -16,7 +20,7 @@
 <div class="container mx-auto flex justify-end">
   <a
     routerLink="add"
-    class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded uppercase"
+    class="bg-green-500 hover:bg-green-400 text-gray-50 font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded uppercase"
   >
     add health news
   </a>
@@ -28,7 +32,7 @@
       <table class="w-full">
         <thead>
           <tr
-            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+            class="text-xs font-semibold tracking-wide text-left text-gray-900 uppercase border-b bg-gray-50"
           >
             <th class="px-4 py-3">Serial</th>
             <th class="px-4 py-3">Image</th>
@@ -38,36 +42,30 @@
             <th class="px-4 py-3">Actions</th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tbody class="bg-white divide-y">
           @for (healthNews of healthNews$ | async; track $index) {
-          <tr
-            class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
-          >
+          <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
             <td class="px-4 py-3 text-xs">{{ healthNews.healthNewsSerial }}</td>
             <td class="px-4 py-3">
-                <img
-                  [src]="
-                    healthNews?.hnUrl !== ''
-                      ? healthNews.hnUrl
-                      : emptyImg
-                  "
-                  alt="healthNews Image"
-                  class="w-8 md:w-16 rounded"
-                />
-              </td>
+              <img
+                [src]="healthNews?.hnUrl !== '' ? healthNews.hnUrl : emptyImg"
+                alt="healthNews Image"
+                class="w-8 md:w-16 rounded"
+              />
+            </td>
             <td class="px-4 py-3 text-xs">{{ healthNews.title }}</td>
             <td class="px-4 py-3 text-xs">{{ healthNews.subTitle }}</td>
             <td class="px-4 py-3 text-xs">{{ healthNews.description }}</td>
             <td class="px-4 py-3 text-sm">
               <a
                 [routerLink]="['edit', healthNews.id]"
-                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded dark:bg-green-700 dark:text-green-100 mr-2 inline-block my-2"
+                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded mr-2 inline-block my-2"
               >
                 Edit
               </a>
               <button
                 (click)="onDelete(healthNews.id)"
-                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded dark:bg-red-700 dark:text-green-100 inline-block"
+                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded inline-block"
               >
                 Delete
               </button>
@@ -78,14 +76,13 @@
       </table>
     </div>
     <div
-      class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+      class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-900 uppercase border-t bg-gray-50 sm:grid-cols-9"
     ></div>
   </div>
 </div>
-}
-
-
-
-@if (isConfirmOpen) {
-  <app-delete-confirmation-modal (confirmDelete)="confirmDelete()" (closeModal)="closeModal()"></app-delete-confirmation-modal>
+} @if (isConfirmOpen) {
+<app-delete-confirmation-modal
+  (confirmDelete)="confirmDelete()"
+  (closeModal)="closeModal()"
+></app-delete-confirmation-modal>
 }

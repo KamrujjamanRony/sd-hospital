@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { format, isBefore } from 'date-fns';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
@@ -11,12 +11,11 @@ import { AuthService } from '../../../../../services/serial/auth.service';
 import { DepartmentService } from '../../../../../services/serial/department.service';
 
 @Component({
-  selector: 'app-appointment-modal',
-  standalone: true,
-  templateUrl: './appointment-modal.component.html',
-  styleUrl: './appointment-modal.component.css',
-  providers: [DatePipe],
-  imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent]
+    selector: 'app-appointment-modal',
+    templateUrl: './appointment-modal.component.html',
+    styleUrl: './appointment-modal.component.css',
+    providers: [DatePipe],
+    imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent]
 })
 export class AppointmentModalComponent {
   datePipe = inject(DatePipe);
@@ -26,9 +25,9 @@ export class AppointmentModalComponent {
   departmentService = inject(DepartmentService);
   doctorsService = inject(DoctorsService);
   authService = inject(AuthService);
-  @Input() doctor: any;
-  @Input() id!: any;
-  @Output() closeAppointment = new EventEmitter<void>();
+  readonly doctor = input<any>();
+  readonly id = input.required<any>();
+  readonly closeAppointment = output<void>();
 
   closeAppointmentModal(): void {
     this.closeAppointment.emit();
@@ -46,8 +45,8 @@ export class AppointmentModalComponent {
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
-    this.selected = this.appointmentService.getAppointment(this.id);
-    this.selectedDoctor = this.doctor;
+    this.selected = this.appointmentService.getAppointment(this.id());
+    this.selectedDoctor = this.doctor();
   }
 
   closeModal() {

@@ -2,8 +2,8 @@ import { Component, Input, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../../../environments/environments';
 @Component({
-  selector: 'app-delete-confirmation-modal',
-  template: `
+    selector: 'app-delete-confirmation-modal',
+    template: `
     <div class="modal-container bg-orange-50">
       <h1 class="font-bold">Are you sure you want to delete this item?</h1>
       <div class="form-control w-full max-w-xs">
@@ -23,7 +23,7 @@ import { environment } from '../../../../../../environments/environments';
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     .modal-container {
       position: fixed;
       top: 50%;
@@ -48,8 +48,7 @@ import { environment } from '../../../../../../environments/environments';
       text-align: center;
     }
   `],
-  standalone: true,
-  imports: [FormsModule]
+    imports: [FormsModule]
 })
 export class DeleteConfirmationModalComponent {
   confirmDelete = output<void>();

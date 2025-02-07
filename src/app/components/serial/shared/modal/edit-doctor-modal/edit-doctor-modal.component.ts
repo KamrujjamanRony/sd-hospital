@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
@@ -10,15 +10,14 @@ import { AuthService } from '../../../../../services/serial/auth.service';
 import { DepartmentService } from '../../../../../services/serial/department.service';
 
 @Component({
-  selector: 'app-edit-doctor-modal',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './edit-doctor-modal.component.html',
-  styleUrl: './edit-doctor-modal.component.css'
+    selector: 'app-edit-doctor-modal',
+    imports: [CommonModule, ReactiveFormsModule],
+    templateUrl: './edit-doctor-modal.component.html',
+    styleUrl: './edit-doctor-modal.component.css'
 })
 export class EditDoctorModalComponent {
-  @Input() id!: any;
-  @Output() closeModal = new EventEmitter<void>();
+  readonly id = input.required<any>();
+  readonly closeModal = output<void>();
   doctorsService = inject(DoctorsService);
   departmentService = inject(DepartmentService)
   imgbbService = inject(ImgbbService);
@@ -41,7 +40,7 @@ export class EditDoctorModalComponent {
   ngOnInit(): void {
     this.user = this.authService.getUser();
     const doctors = this.queryClient.getQueryData(['doctors']) as any[];
-    this.selected = doctors?.find((d) => d.id == this.id);
+    this.selected = doctors?.find((d) => d.id == this.id());
     this.updateFormValues();
    }
 

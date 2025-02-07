@@ -1,28 +1,26 @@
 @if (gallery) {
 <section class="pb-10">
-    <div class="container mx-auto text-center">
-      <h1 class="text-5xl py-20">Hospital Gallery</h1>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-        @for (data of gallery; track data.id) {
-          <app-gallery-card [img]="data.gPicUrl" [title]="data.galeryName" [description]="data.description" />
-        }
-
-        
-      </div>
-      <a
-        routerLink="/gallery/hospital"
-        data-aos="zoom-in"
-        data-aos-easing="ease-out-cubic"
-        data-aos-duration="2000"
-        class="px-8 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold"
-        (click)="scrollToTop()"
-      >
-        More
-      </a>
+  <div class="container mx-auto text-center">
+    <h1 class="text-5xl py-20">Hospital Gallery</h1>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      @for (data of gallery; track data.id) {
+      <app-gallery-card
+        [img]="data.gPicUrl"
+        [title]="data.galeryName"
+        [description]="data.description"
+      />
+      }
     </div>
-  </section>
+    <a
+      routerLink="/gallery/hospital"
+      data-aos="zoom-in"
+      data-aos-easing="ease-out-cubic"
+      data-aos-duration="2000"
+      class="px-8 py-4 bg-teal-500 text-gray-50 rounded inline-block mt-8 font-semibold"
+      (click)="scrollToTop()"
+    >
+      More
+    </a>
+  </div>
+</section>
 }
-  
-
-

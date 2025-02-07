@@ -5,10 +5,9 @@ import { InstrumentService } from '../../../../services/main/instrument.service'
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-our-products',
-  standalone: true,
-  imports: [RouterLink, InstrumentCardComponent],
-  templateUrl: './our-products.component.html'
+    selector: 'app-our-products',
+    imports: [RouterLink, InstrumentCardComponent],
+    templateUrl: './our-products.component.html'
 })
 export class OurProductsComponent {
   instrumentService = inject(InstrumentService);

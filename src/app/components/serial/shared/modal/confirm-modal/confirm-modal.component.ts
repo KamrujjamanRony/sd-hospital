@@ -1,15 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
-  selector: 'confirm-modal',
-  standalone: true,
-  imports: [],
-  templateUrl: './confirm-modal.component.html',
-  styleUrl: './confirm-modal.component.css'
+    selector: 'confirm-modal',
+    imports: [],
+    templateUrl: './confirm-modal.component.html',
+    styleUrl: './confirm-modal.component.css'
 })
 export class ConfirmModalComponent {
-  @Input() title!: any;
-  @Output() closeModal = new EventEmitter<void>();
+  readonly title = input.required<any>();
+  readonly closeModal = output<void>();
 
   constructor(){}
 

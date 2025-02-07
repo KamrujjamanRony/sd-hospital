@@ -1,15 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
-  selector: 'app-instrument-card',
-  standalone: true,
-  imports: [],
-  templateUrl: './instrument-card.component.html',
-  styleUrl: './instrument-card.component.css'
+    selector: 'app-instrument-card',
+    imports: [],
+    templateUrl: './instrument-card.component.html',
+    styleUrl: './instrument-card.component.css'
 })
 export class InstrumentCardComponent {
-  @Input() img!: any;
-  @Input() title!: any;
-  @Input() origin!: any;
+  readonly img = input.required<any>();
+  readonly title = input.required<any>();
+  readonly origin = input.required<any>();
 
 }

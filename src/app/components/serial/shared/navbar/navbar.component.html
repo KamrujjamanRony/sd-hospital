@@ -1,5 +1,5 @@
 @if (!fullUrl.includes("my-appointments")) {
-<div class="navbar container mx-auto bg-primary text-white">
+<div class="navbar container mx-auto bg-primary text-gray-50">
   <div class="navbar-start">
     <div class="dropdown">
       <div
@@ -36,20 +36,17 @@
         </button>
         <hr class="pb-2" />
         <li>
-          <app-active-link
-            to="/serial"
-            children="Home"
-          ></app-active-link>
+          <app-active-link to="/serial" children="Home"></app-active-link>
         </li>
         @if (checkRoles("0f1a1539-3b29-4f5d-9cf5-7d17dc80e79e")) {
-          <li>
-            <app-active-link
-              to="appointment-form"
-              children="Appointment Form"
-            ></app-active-link>
-          </li>
+        <li>
+          <app-active-link
+            to="appointment-form"
+            children="Appointment Form"
+          ></app-active-link>
+        </li>
         }
-        
+
         <li>
           <app-active-link
             to="my-appointments"
@@ -57,12 +54,9 @@
           ></app-active-link>
         </li>
         @if (checkRoles("74b750b7-bd3a-42cb-bf11-e0e3d62056d4")) {
-          <li>
-            <app-active-link
-              to="admin"
-              children="Admin"
-            ></app-active-link>
-          </li>
+        <li>
+          <app-active-link to="admin" children="Admin"></app-active-link>
+        </li>
         }
       </ul>
       }
@@ -74,20 +68,17 @@
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1 text-lg flex">
       <li>
-        <app-active-link
-          to="/serial"
-          children="Home"
-        ></app-active-link>
+        <app-active-link to="/serial" children="Home"></app-active-link>
       </li>
       @if (checkRoles("0f1a1539-3b29-4f5d-9cf5-7d17dc80e79e")) {
-        <li>
-          <app-active-link
-            to="appointment-form"
-            children="Appointment Form"
-          ></app-active-link>
-        </li>
+      <li>
+        <app-active-link
+          to="appointment-form"
+          children="Appointment Form"
+        ></app-active-link>
+      </li>
       }
-      
+
       <li>
         <app-active-link
           to="my-appointments"
@@ -95,14 +86,10 @@
         ></app-active-link>
       </li>
       @if (checkRoles("74b750b7-bd3a-42cb-bf11-e0e3d62056d4")) {
-        <li>
-          <app-active-link
-            to="admin"
-            children="Admin"
-          ></app-active-link>
-        </li>
+      <li>
+        <app-active-link to="admin" children="Admin"></app-active-link>
+      </li>
       }
-      
     </ul>
   </div>
   <div class="navbar-end">
@@ -110,7 +97,7 @@
     >}
     <button
       (click)="logOut()"
-      class="rounded text-sm bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80"
+      class="rounded text-sm bg-red-600 px-4 py-2 text-gray-50 transition-all hover:opacity-80"
     >
       Log Out
     </button>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
@@ -8,14 +8,13 @@ import { environment } from '../../../../../../environments/environments';
 import { DepartmentService } from '../../../../../services/serial/department.service';
 
 @Component({
-  selector: 'app-add-department-modal',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './add-department-modal.component.html',
-  styleUrl: './add-department-modal.component.css'
+    selector: 'app-add-department-modal',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    templateUrl: './add-department-modal.component.html',
+    styleUrl: './add-department-modal.component.css'
 })
 export class AddDepartmentModalComponent {
-  @Output() closeModal = new EventEmitter<void>();
+  readonly closeModal = output<void>();
   departmentService = inject(DepartmentService);
   imgbbService = inject(ImgbbService);
   fb = inject(FormBuilder);

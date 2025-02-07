@@ -8,10 +8,9 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 
 @Component({
-  selector: 'app-add-carousel',
-  templateUrl: './add-carousel.component.html',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent]
+    selector: 'app-add-carousel',
+    templateUrl: './add-carousel.component.html',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent]
 })
 export class AddCarouselComponent implements OnDestroy {
   carouselService = inject(CarouselService);

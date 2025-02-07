@@ -1,17 +1,29 @@
-<a [routerLink]="['/doctor', doctor.id]" (click)="scrollToTop()" class="overflow-hidden text-center bg-white rounded shadow-md text-slate-500 shadow-slate-400 hover:shadow-slate-500 inline-block w-72 md:w-96 lg:w-60 xl:w-96 h-full">
-    
-    <figure class="p-6 pb-0">
-      <span class="relative inline-flex items-center justify-center w-44 h-44 text-white rounded-full">
-        <img [src]="doctor.imageUrl ? doctor.imageUrl : doctorMale" alt="user name" title="user name" width="80" height="80" class="max-w-full rounded-full w-full h-full" />
-      </span>
-    </figure>
-    
-    <div class="p-6">
-      <header class="mb-4">
-        <h3 class="text-xl font-medium text-slate-700">{{ doctor.drName }}</h3>
-        <p class=" text-slate-400">{{ doctor.designation }}</p>
-        <p class=" text-slate-400 whitespace-pre-line">{{ doctor.degree }}</p>
-        <p class=" text-blue-400">{{ doctor.specialty }}</p>
-      </header>
-    </div>
-  </a>
+<a
+  [routerLink]="['/doctor', doctor().id]"
+  (click)="scrollToTop()"
+  class="overflow-hidden text-center bg-white rounded shadow-md text-gray-900 shadow-slate-400 hover:shadow-slate-500 inline-block w-72 md:w-96 lg:w-60 xl:w-96 h-full"
+>
+  <figure class="p-6 pb-0">
+    <span
+      class="relative inline-flex items-center justify-center w-44 h-44 text-gray-50 rounded-full"
+    >
+      <img
+        [src]="doctor().imageUrl ? doctor().imageUrl : doctorMale"
+        alt="user name"
+        title="user name"
+        width="80"
+        height="80"
+        class="max-w-full rounded-full w-full h-full"
+      />
+    </span>
+  </figure>
+
+  <div class="p-6">
+    <header class="mb-4">
+      <h3 class="text-xl font-medium text-gray-900">{{ doctor().drName }}</h3>
+      <p class="text-gray-900">{{ doctor().designation }}</p>
+      <p class="text-gray-900 whitespace-pre-line">{{ doctor().degree }}</p>
+      <p class="text-blue-400">{{ doctor().specialty }}</p>
+    </header>
+  </div>
+</a>

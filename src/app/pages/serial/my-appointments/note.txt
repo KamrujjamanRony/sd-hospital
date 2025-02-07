@@ -1,5 +1,0 @@
- if (this.user.username) {
-      filteredAppointments = filteredAppointments.filter(
-        (appointment) => appointment.username === this.user.username
-      );
-    }

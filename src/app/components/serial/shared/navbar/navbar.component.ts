@@ -1,15 +1,14 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ActiveLinkComponent } from "../active-link/active-link.component";
 import { filter } from 'rxjs';
 import { AuthService } from '../../../../services/serial/auth.service';
 import { DataService } from '../../../../services/serial/data.service';
 @Component({
   selector: 'app-navbar',
-  standalone: true,
   templateUrl: './navbar.component.html',
-  imports: [CommonModule, RouterLink, ActiveLinkComponent]
+  imports: [CommonModule, ActiveLinkComponent]
 })
 export class NavbarComponent {
   authService = inject(AuthService);
@@ -21,7 +20,7 @@ export class NavbarComponent {
   jsonData: any;
   isMenuOpen = false;
 
-  constructor(){}
+  constructor() { }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();

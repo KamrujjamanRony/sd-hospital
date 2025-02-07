@@ -8,11 +8,10 @@ import { HealthNewsService } from '../../../../../services/main/healthNews.servi
 import { DeleteConfirmationModalComponent } from '../../../../../components/main/shared/all-modals/delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
-  selector: 'app-health-news-list',
-  standalone: true,
-  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
-  templateUrl: './health-news-list.component.html',
-  styleUrl: './health-news-list.component.css'
+    selector: 'app-health-news-list',
+    imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
+    templateUrl: './health-news-list.component.html',
+    styleUrl: './health-news-list.component.css'
 })
 export class HealthNewsListComponent {
   healthNewsService = inject(HealthNewsService);

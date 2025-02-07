@@ -1,22 +1,25 @@
-<app-cover title="Update HospitalNews information" sub1="MIS" sub2="Edit HospitalNews"></app-cover>
+<app-cover
+  title="Update HospitalNews information"
+  sub1="MIS"
+  sub2="Edit HospitalNews"
+></app-cover>
 
 <div class="w-full max-w-7xl mx-auto">
   @if (model) {
-    <form
+  <form
     #form="ngForm"
     (ngSubmit)="onFormSubmit()"
     class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
   >
-
     <div class="mb-4">
       <label
-        class="block text-gray-700 text-sm font-bold mb-2"
+        class="block text-gray-900 text-sm font-bold mb-2"
         for="newsSerial"
       >
         Serial <span class="text-red-600">*</span>
       </label>
       <input
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
         id="newsSerial"
         name="newsSerial"
         type="number"
@@ -26,14 +29,11 @@
       />
     </div>
     <div class="mb-4">
-      <label
-        class="block text-gray-700 text-sm font-bold mb-2"
-        for="title"
-      >
+      <label class="block text-gray-900 text-sm font-bold mb-2" for="title">
         Title
       </label>
       <input
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
         id="title"
         name="title"
         type="text"
@@ -43,14 +43,11 @@
       />
     </div>
     <div class="mb-4">
-      <label
-        class="block text-gray-700 text-sm font-bold mb-2"
-        for="subTitle"
-      >
+      <label class="block text-gray-900 text-sm font-bold mb-2" for="subTitle">
         SubTitle
       </label>
       <input
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
         id="subTitle"
         name="subTitle"
         type="text"
@@ -62,7 +59,7 @@
 
     <div class="mb-4">
       <label
-        class="block text-gray-700 text-sm font-bold mb-2"
+        class="block text-gray-900 text-sm font-bold mb-2"
         for="description"
       >
         Description
@@ -70,7 +67,7 @@
       <textarea
         name="description"
         id="description"
-        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
         cols="30"
         rows="10"
         placeholder="Enter product description here"
@@ -79,7 +76,7 @@
     </div>
     <input
       type="submit"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      class="bg-blue-500 hover:bg-blue-700 text-gray-50 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       value="Update"
     />
   </form>
@@ -87,6 +84,9 @@
 </div>
 
 @if(confirmModal){
-  <confirm-modal title="Hospital News is successfully updated!" url="/serial/admin/all-mis/hospitalNews-list" (closeModal)="closeModal()" />
+<confirm-modal
+  title="Hospital News is successfully updated!"
+  url="/serial/admin/all-mis/hospitalNews-list"
+  (closeModal)="closeModal()"
+/>
 }
-

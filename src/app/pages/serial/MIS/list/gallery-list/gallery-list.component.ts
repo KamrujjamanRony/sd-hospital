@@ -8,11 +8,10 @@ import { GalleryService } from '../../../../../services/main/gallery.service';
 import { DeleteConfirmationModalComponent } from '../../../../../components/main/shared/all-modals/delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
-  selector: 'app-gallery-list',
-  standalone: true,
-  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
-  templateUrl: './gallery-list.component.html',
-  styleUrl: './gallery-list.component.css'
+    selector: 'app-gallery-list',
+    imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
+    templateUrl: './gallery-list.component.html',
+    styleUrl: './gallery-list.component.css'
 })
 export class GalleryListComponent {
   galleryService = inject(GalleryService);

@@ -5,11 +5,10 @@ import { CarouselService } from '../../../../services/main/carousel.service';
 register();
 
 @Component({
-  selector: 'app-carousel',
-  standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './carousel.component.html'
+    selector: 'app-carousel',
+    imports: [CommonModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './carousel.component.html'
 })
 export class CarouselComponent {
   carouselService = inject(CarouselService);

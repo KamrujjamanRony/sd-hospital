@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
@@ -9,14 +9,13 @@ import { environment } from '../../../../../../environments/environments';
 import { DataService } from '../../../../../services/serial/data.service';
 
 @Component({
-  selector: 'app-add-user-modal',
-  standalone: true,
-  templateUrl: './add-user-modal.component.html',
-  styleUrl: './add-user-modal.component.css',
-  imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent]
+    selector: 'app-add-user-modal',
+    templateUrl: './add-user-modal.component.html',
+    styleUrl: './add-user-modal.component.css',
+    imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent]
 })
 export class AddUserModalComponent {
-  @Output() closeModal = new EventEmitter<void>();
+  readonly closeModal = output<void>();
   UserAuthService = inject(UserAuthService);
   dataService = inject(DataService);
   fb = inject(FormBuilder);

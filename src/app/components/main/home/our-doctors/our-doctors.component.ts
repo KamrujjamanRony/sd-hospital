@@ -8,7 +8,6 @@ import { DoctorCardComponent } from "../../shared/all-cards/doctor-card/doctor-c
 
 @Component({
     selector: 'app-our-doctors',
-    standalone: true,
     templateUrl: './our-doctors.component.html',
     imports: [RouterLink, CommonModule, DoctorCardComponent]
 })

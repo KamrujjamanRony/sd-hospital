@@ -8,11 +8,10 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 
 @Component({
-  selector: 'app-add-health-news',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './add-health-news.component.html',
-  styleUrl: './add-health-news.component.css'
+    selector: 'app-add-health-news',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './add-health-news.component.html',
+    styleUrl: './add-health-news.component.css'
 })
 export class AddHealthNewsComponent {
   healthNewsService = inject(HealthNewsService);

@@ -8,11 +8,10 @@ import { GalleryService } from '../../../../../services/main/gallery.service';
 import { ImgbbService } from '../../../../../services/main/imgbb.service';
 
 @Component({
-  selector: 'app-edit-gallery',
-  standalone: true,
-  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-  templateUrl: './edit-gallery.component.html',
-  styleUrl: './edit-gallery.component.css'
+    selector: 'app-edit-gallery',
+    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+    templateUrl: './edit-gallery.component.html',
+    styleUrl: './edit-gallery.component.css'
 })
 export class EditGalleryComponent {
   imgbbService = inject(ImgbbService);

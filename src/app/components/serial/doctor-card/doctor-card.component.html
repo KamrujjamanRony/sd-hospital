@@ -1,36 +1,59 @@
 <div class="card lg:card-side bg-base-100 shadow-xl">
-    <figure>
-      <img class="w-72 object-fill h-[300px]" [src]="doctor.imageUrl ? doctor.imageUrl : doctorMale" alt="Doctor Image">
-    </figure>
-    <div class="card-body">
-      <h2 class="card-title lg:text-3xl">{{ doctor?.drName }}</h2>
-      <p class="text-accent font-bold">{{ doctor?.degree }}</p>
-      <p>{{ doctor?.description?.slice(0, 100) }}</p>
-      @if (department) {
-        <div class="card-actions justify-end">
-            <button (click)="openDoctorDetails()" class="inline-block rounded border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950" data-twe-ripple-init>
-              Doctor Details
-            </button>
-            <button (click)="openAppointment()" class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong" data-twe-ripple-init>Appointment</button>
-          </div>
-      }
-      @else {
-        <div class="card-actions justify-end">
-            <button class="rounded bg-sky-600 px-4 py-2 text-white transition-all hover:opacity-80">Update</button>
-            <button class="rounded bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80">Delete</button>
-          </div>
-      }
+  <figure>
+    <img
+      class="w-72 object-fill h-[300px]"
+      [src]="doctor().imageUrl ? doctor().imageUrl : doctorMale"
+      alt="Doctor Image"
+    />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title lg:text-3xl">{{ doctor()?.drName }}</h2>
+    <p class="text-accent font-bold">{{ doctor()?.degree }}</p>
+    <p>{{ doctor()?.description?.slice(0, 100) }}</p>
+    @if (department()) {
+    <div class="card-actions justify-end">
+      <button
+        (click)="openDoctorDetails()"
+        class="inline-block rounded border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none"
+        data-twe-ripple-init
+      >
+        Doctor Details
+      </button>
+      <button
+        (click)="openAppointment()"
+        class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-gray-50 shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none"
+        data-twe-ripple-init
+      >
+        Appointment
+      </button>
     </div>
+    } @else {
+    <div class="card-actions justify-end">
+      <button
+        class="rounded bg-sky-600 px-4 py-2 text-gray-50 transition-all hover:opacity-80"
+      >
+        Update
+      </button>
+      <button
+        class="rounded bg-red-600 px-4 py-2 text-gray-50 transition-all hover:opacity-80"
+      >
+        Delete
+      </button>
+    </div>
+    }
   </div>
+</div>
 
-  @if(showModal){
-    <app-doctor-details [doctor]="doctor" (closeDoctorDetails)="closeDoctorDetails()" (handleClick)="handleClick()"></app-doctor-details>
-  }
-  
-  @if(showAppointment) {
-    <app-appointment-modal [doctor]="doctor" (closeAppointment)="closeAppointment()"></app-appointment-modal>
-  }
-  
-  
-  
-  
+@if(showModal){
+<app-doctor-details
+  [doctor]="doctor()"
+  (closeDoctorDetails)="closeDoctorDetails()"
+  (handleClick)="handleClick()"
+></app-doctor-details>
+} @if(showAppointment) {
+<app-appointment-modal
+  id=""
+  [doctor]="doctor()"
+  (closeAppointment)="closeAppointment()"
+></app-appointment-modal>
+}

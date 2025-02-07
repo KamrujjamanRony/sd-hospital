@@ -9,14 +9,14 @@
     >
       <div class="flex justify-between">
         <h2 class="text-2xl font-bold text-center w-full">
-          {{selected ? "UPDATE APPOINTMENT" : "BOOK AN APPOINTMENT"}}
+          {{ selected ? "UPDATE APPOINTMENT" : "BOOK AN APPOINTMENT" }}
         </h2>
         <h2 class="text-2xl font-bold text-center w-full">
-          {{doctor?.name}}
+          {{ doctor()?.name }}
         </h2>
 
         <button
-          class="rounded bg-red-600 p-2 w-8 h-8 text-center text-white transition-all hover:opacity-80"
+          class="rounded bg-red-600 p-2 w-8 h-8 text-center text-gray-50 transition-all hover:opacity-80"
           (click)="closeAppointmentModal()"
         >
           X
@@ -25,119 +25,123 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 w-full gap-x-5">
         @if(selected){
-          <!-- drCode Input -->
+        <!-- drCode Input -->
         @if(doctorList){
-          <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize">
-                Doctor:
-              </span>
-            </div>
-            <select
-              class="select select-bordered select-sm w-full"
-              formControlName="drCode"
-              [class.invalid]="
-                appointmentForm.get('drCode')?.invalid && (appointmentForm.get('drCode')?.dirty || appointmentForm.get('drCode')?.touched || isSubmitted)
-              "
+        <label class="form-control w-full !mt-0">
+          <div class="label !py-0">
+            <span class="label-text font-bold capitalize"> Doctor: </span>
+          </div>
+          <select
+            class="select select-bordered select-sm w-full"
+            formControlName="drCode"
+            [class.invalid]="
+              appointmentForm.get('drCode')?.invalid &&
+              (appointmentForm.get('drCode')?.dirty ||
+                appointmentForm.get('drCode')?.touched ||
+                isSubmitted)
+            "
             (change)="onDoctorChange()"
-              required
-            >
-              <option value="" disabled>Select Doctor</option>
-              @for (doctor of doctorList; track doctor?.id) {
-                <option
-                [value]="doctor?.id"
-              >
-                {{ doctor?.drName }}
-              </option>
-              } @empty {
-                <li>No Doctor found</li>
-              }
-            </select>
-            @if(appointmentForm.get('drCode')?.hasError('required') && (appointmentForm.get('drCode')?.dirty || appointmentForm.get('drCode')?.touched || isSubmitted)){
-              <div class="label !py-0">
-                <span class="label-text-alt text-rose-600 capitalize"
-                  >Doctor is required</span
-                >
-              </div>
+            required
+          >
+            <option value="" disabled>Select Doctor</option>
+            @for (doctor of doctorList; track doctor?.id) {
+            <option [value]="doctor?.id">
+              {{ doctor?.drName }}
+            </option>
+            } @empty {
+            <li>No Doctor found</li>
             }
-          </label>
+          </select>
+          @if(appointmentForm.get('drCode')?.hasError('required') &&
+          (appointmentForm.get('drCode')?.dirty ||
+          appointmentForm.get('drCode')?.touched || isSubmitted)){
+          <div class="label !py-0">
+            <span class="label-text-alt text-rose-600 capitalize"
+              >Doctor is required</span
+            >
+          </div>
+          }
+        </label>
         } @else {
-          <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize">
-                Doctor:
-              </span>
-            </div>
-            <select
-              class="select select-bordered select-sm w-full"
-              formControlName="drCode"
-              [class.invalid]="
-                appointmentForm.get('drCode')?.invalid && (appointmentForm.get('drCode')?.dirty || appointmentForm.get('drCode')?.touched || isSubmitted)
-              "
+        <label class="form-control w-full !mt-0">
+          <div class="label !py-0">
+            <span class="label-text font-bold capitalize"> Doctor: </span>
+          </div>
+          <select
+            class="select select-bordered select-sm w-full"
+            formControlName="drCode"
+            [class.invalid]="
+              appointmentForm.get('drCode')?.invalid &&
+              (appointmentForm.get('drCode')?.dirty ||
+                appointmentForm.get('drCode')?.touched ||
+                isSubmitted)
+            "
             (change)="onDoctorChange()"
-              required
+            required
+          >
+            <option value="" disabled>Select Doctor</option>
+            @switch (doctorQuery.status()) { @case ('pending') {
+            <option class="text-center text-5xl">Loading...</option>
+            } @case ('error') {
+            <option>Error: {{ doctorQuery.error()?.message }}</option>
+            } @default { @for (doctor of doctorQuery.data(); track doctor.id) {
+            <option [value]="doctor?.id">
+              {{ doctor?.drName }}
+            </option>
+            } @empty {
+            <li>No Doctor found</li>
+            } } }
+          </select>
+          @if(appointmentForm.get('drCode')?.hasError('required') &&
+          (appointmentForm.get('drCode')?.dirty ||
+          appointmentForm.get('drCode')?.touched || isSubmitted)){
+          <div class="label !py-0">
+            <span class="label-text-alt text-rose-600 capitalize"
+              >Doctor is required</span
             >
-              <option value="" disabled>Select Doctor</option>
-              @switch (doctorQuery.status()) { @case ('pending') {
-                <option class="text-center text-5xl">Loading...</option>
-                } @case ('error') {
-                <option>Error: {{ doctorQuery.error()?.message }}</option>
-                } @default { @for (doctor of doctorQuery.data(); track doctor.id) {
-                <option
-                [value]="doctor?.id"
-              >
-                {{ doctor?.drName }}
-              </option>
-              } @empty {
-                <li>No Doctor found</li>
-                } } }
-            </select>
-            @if(appointmentForm.get('drCode')?.hasError('required') && (appointmentForm.get('drCode')?.dirty || appointmentForm.get('drCode')?.touched || isSubmitted)){
-              <div class="label !py-0">
-                <span class="label-text-alt text-rose-600 capitalize"
-                  >Doctor is required</span
-                >
-              </div>
-            }
-          </label>
+          </div>
+          }
+        </label>
         }
         <!-- departmentId Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
-            <span class="label-text font-bold capitalize">
-              Department:
-            </span>
+            <span class="label-text font-bold capitalize"> Department: </span>
           </div>
           <select
             class="select select-bordered select-sm w-full"
             formControlName="departmentId"
             [class.invalid]="
-              appointmentForm.get('departmentId')?.invalid && (appointmentForm.get('departmentId')?.dirty || appointmentForm.get('departmentId')?.touched || isSubmitted)
+              appointmentForm.get('departmentId')?.invalid &&
+              (appointmentForm.get('departmentId')?.dirty ||
+                appointmentForm.get('departmentId')?.touched ||
+                isSubmitted)
             "
             (change)="onDepartmentChange()"
             required
           >
             <option value="" disabled>Select Department</option>
             @switch (departmentQuery.status()) { @case ('pending') {
-              <option class="text-center text-5xl">Loading...</option>
-              } @case ('error') {
-              <option>Error: {{ departmentQuery.error()?.message }}</option>
-              } @default { @for (department of departmentQuery.data(); track department.id) {
-              <option
-              [value]="department?.id"
-            >
+            <option class="text-center text-5xl">Loading...</option>
+            } @case ('error') {
+            <option>Error: {{ departmentQuery.error()?.message }}</option>
+            } @default { @for (department of departmentQuery.data(); track
+            department.id) {
+            <option [value]="department?.id">
               {{ department?.departmentName }}
             </option>
             } @empty {
-              <li>No Department found</li>
-              } } }
+            <li>No Department found</li>
+            } } }
           </select>
-          @if(appointmentForm.get('departmentId')?.hasError('required') && (appointmentForm.get('departmentId')?.dirty || appointmentForm.get('departmentId')?.touched || isSubmitted)){
-            <div class="label !py-0">
-              <span class="label-text-alt text-rose-600 capitalize"
-                >Department is required</span
-              >
-            </div>
+          @if(appointmentForm.get('departmentId')?.hasError('required') &&
+          (appointmentForm.get('departmentId')?.dirty ||
+          appointmentForm.get('departmentId')?.touched || isSubmitted)){
+          <div class="label !py-0">
+            <span class="label-text-alt text-rose-600 capitalize"
+              >Department is required</span
+            >
+          </div>
           }
         </label>
         }
@@ -153,7 +157,7 @@
             </label>
           </div>
         </label> -->
-        
+
         <!-- <label class="form-control w-full !mt-0">
           <div class="label !py-0">
             <span class="label-text font-bold capitalize">
@@ -179,18 +183,22 @@
             type="text"
             formControlName="pName"
             [class.invalid]="
-              appointmentForm.get('pName')?.invalid && (appointmentForm.get('pName')?.dirty || appointmentForm.get('pName')?.touched || isSubmitted)
+              appointmentForm.get('pName')?.invalid &&
+              (appointmentForm.get('pName')?.dirty ||
+                appointmentForm.get('pName')?.touched ||
+                isSubmitted)
             "
             placeholder="Type here"
             class="input input-bordered w-full input-sm outline-none"
             required
           />
-          @if(appointmentForm.get('pName')?.hasError('required') && (appointmentForm.get('pName')?.touched || isSubmitted)){
-            <div class="label !py-0">
-              <span class="text-xs text-rose-600 capitalize"
-                >Patient name is required</span
-              >
-            </div>
+          @if(appointmentForm.get('pName')?.hasError('required') &&
+          (appointmentForm.get('pName')?.touched || isSubmitted)){
+          <div class="label !py-0">
+            <span class="text-xs text-rose-600 capitalize"
+              >Patient name is required</span
+            >
+          </div>
           }
         </label>
         <!-- age Input -->
@@ -209,9 +217,7 @@
         <!-- sex Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
-            <span class="label-text font-bold capitalize">
-              Patient Sex:
-            </span>
+            <span class="label-text font-bold capitalize"> Patient Sex: </span>
           </div>
           <select
             class="select select-bordered select-sm w-full"
@@ -222,47 +228,49 @@
             <option value="Female">Female</option>
           </select>
         </label>
-        
-      <!-- mobile Input -->
-      <label class="form-control w-full !mt-0">
-        <div class="label !py-0">
-          <span class="label-text font-bold capitalize">Patient Mobile</span>
-        </div>
-        <input
-          type="text"
-          formControlName="mobile"
-          maxlength="14"
-          [class.invalid]="
-            appointmentForm.get('mobile')?.invalid &&
-            (appointmentForm.get('mobile')?.dirty ||
-              appointmentForm.get('mobile')?.touched ||
-              isSubmitted)
-          "
-          placeholder="Type here"
-          class="input input-bordered w-full input-sm"
-          required
-        />
-        @if(appointmentForm.get('mobile')?.hasError('required') && (appointmentForm.get('mobile')?.touched || isSubmitted)){
+
+        <!-- mobile Input -->
+        <label class="form-control w-full !mt-0">
+          <div class="label !py-0">
+            <span class="label-text font-bold capitalize">Patient Mobile</span>
+          </div>
+          <input
+            type="text"
+            formControlName="mobile"
+            maxlength="14"
+            [class.invalid]="
+              appointmentForm.get('mobile')?.invalid &&
+              (appointmentForm.get('mobile')?.dirty ||
+                appointmentForm.get('mobile')?.touched ||
+                isSubmitted)
+            "
+            placeholder="Type here"
+            class="input input-bordered w-full input-sm"
+            required
+          />
+          @if(appointmentForm.get('mobile')?.hasError('required') &&
+          (appointmentForm.get('mobile')?.touched || isSubmitted)){
           <div class="label !py-0">
             <span class="text-xs text-rose-600 capitalize"
               >Mobile Number is required</span
             >
           </div>
-        }
-      </label>
+          }
+        </label>
       </div>
       <!-- Date Input -->
       <label class="form-control w-full !mt-0">
         <div class="label !py-0">
-          <span class="label-text font-bold capitalize"
-            >Appointment Date:</span
-          >
+          <span class="label-text font-bold capitalize">Appointment Date:</span>
         </div>
         <select
           class="select select-bordered select-sm w-full"
           formControlName="date"
           [class.invalid]="
-            appointmentForm.get('date')?.invalid && (appointmentForm.get('date')?.dirty || appointmentForm.get('date')?.touched || isSubmitted)
+            appointmentForm.get('date')?.invalid &&
+            (appointmentForm.get('date')?.dirty ||
+              appointmentForm.get('date')?.touched ||
+              isSubmitted)
           "
           required
         >
@@ -275,16 +283,18 @@
             {{ date | date : "d MMM, yyyy, EEEE" }}
           </option>
         </select>
-        @if(appointmentForm.get('date')?.hasError('required') && (appointmentForm.get('date')?.dirty || appointmentForm.get('date')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="text-xs text-rose-600 capitalize"
-              >Appointment Date is required</span
-            >
-          </div>
+        @if(appointmentForm.get('date')?.hasError('required') &&
+        (appointmentForm.get('date')?.dirty ||
+        appointmentForm.get('date')?.touched || isSubmitted)){
+        <div class="label !py-0">
+          <span class="text-xs text-rose-600 capitalize"
+            >Appointment Date is required</span
+          >
+        </div>
         }
       </label>
       <!-- sL Input -->
-    @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a") && !selected) {
+      @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a") && !selected) {
       <label class="form-control w-full !mt-0">
         <div class="label !py-0">
           <span class="label-text font-bold capitalize"> Block Serials </span>
@@ -292,20 +302,19 @@
         <select
           class="select select-bordered select-sm w-full"
           formControlName="sL"
-        [class.invalid]="
-          appointmentForm.get('sL')?.invalid &&
-          (appointmentForm.get('sL')?.dirty ||
-            appointmentForm.get('sL')?.touched ||
-            isSubmitted)
-        "
+          [class.invalid]="
+            appointmentForm.get('sL')?.invalid &&
+            (appointmentForm.get('sL')?.dirty ||
+              appointmentForm.get('sL')?.touched ||
+              isSubmitted)
+          "
         >
           <option value="" disabled>Select Block Serial</option>
           @for(serial of blockSerials; track $index) {
-            <option [value]="serial">{{serial}}</option>
+          <option [value]="serial">{{ serial }}</option>
           }
         </select>
       </label>
-
 
       <!-- <label class="form-control w-full !mt-0">
         <div class="label !py-0">
@@ -332,17 +341,17 @@
           <span class="label-text font-bold capitalize">Remarks</span>
         </div>
         <textarea
-            formControlName="remarks"
-            placeholder="Type here"
-            class="input input-bordered w-full h-16"
-            required
-          ></textarea>
+          formControlName="remarks"
+          placeholder="Type here"
+          class="input input-bordered w-full h-16"
+          required
+        ></textarea>
       </label>
 
       <div class="!mt-2">
         <button
           type="submit"
-          class="rounded bg-primary py-1 text-white transition-all hover:opacity-80 w-full"
+          class="rounded bg-primary py-1 text-gray-50 transition-all hover:opacity-80 w-full"
         >
           Submit Here
         </button>
@@ -352,8 +361,7 @@
 </div>
 
 @if(msg){
-  <confirm-modal [title]="msg" (closeModal)="closeModal()" />
-}
-@if(err){
-  <confirm-modal [title]="err" (closeModal)="closeModal()" />
+<confirm-modal url="" [title]="msg" (closeModal)="closeModal()" />
+} @if(err){
+<confirm-modal url="" [title]="err" (closeModal)="closeModal()" />
 }

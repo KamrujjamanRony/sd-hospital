@@ -1,16 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { CoverComponent } from "../shared/cover/cover.component";
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PageHeaderComponent } from "../shared/page-header/page-header.component";
 import { DoctorCardComponent } from '../doctor-card/doctor-card.component';
 import { DoctorsService } from '../../../services/serial/doctors.service';
 
 @Component({
-    selector: 'app-doctors-list',
-    standalone: true,
-    templateUrl: './doctors-list.component.html',
-    imports: [CoverComponent, CommonModule, RouterLink, PageHeaderComponent, DoctorCardComponent]
+  selector: 'app-doctors-list',
+  templateUrl: './doctors-list.component.html',
+  imports: [CommonModule, PageHeaderComponent, DoctorCardComponent]
 })
 export class DoctorListComponent {
   department: any;
@@ -20,7 +18,7 @@ export class DoctorListComponent {
   route = inject(ActivatedRoute);
   doctorService = inject(DoctorsService);
 
-  
+
   constructor() { }
 
   ngOnInit(): void {

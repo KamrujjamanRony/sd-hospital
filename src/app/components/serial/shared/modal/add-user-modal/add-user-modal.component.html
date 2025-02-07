@@ -11,7 +11,7 @@
         <h2 class="text-2xl font-bold text-center w-full">Add User</h2>
 
         <button
-          class="rounded bg-red-600 p-2 w-8 h-8 text-center text-white transition-all hover:opacity-80"
+          class="rounded bg-red-600 p-2 w-8 h-8 text-center text-gray-50 transition-all hover:opacity-80"
           (click)="closeThisModal()"
         >
           X
@@ -78,9 +78,7 @@
         <!-- Role Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
-            <span class="label-text font-bold capitalize">
-              Role:
-            </span>
+            <span class="label-text font-bold capitalize"> Role: </span>
           </div>
           <select
             class="select select-bordered select-sm w-full min-h-[300px]"
@@ -93,26 +91,27 @@
                 isSubmitted)
             "
           >
-          <option class="text-center border-b font-bold text-black" disabled>Select Multiple Role</option>
-            @for (role of userRole; track role?.id) {
-              <option
-              class="p-4 text-center border-b"
-              [value]="role?.id"
+            <option
+              class="text-center border-b font-bold text-gray-900"
+              disabled
             >
+              Select Multiple Role
+            </option>
+            @for (role of userRole; track role?.id) {
+            <option class="p-4 text-center border-b" [value]="role?.id">
               {{ role?.name }}
             </option>
             } @empty {
-              <li>No role found</li>
+            <li>No role found</li>
             }
           </select>
         </label>
-
       </div>
 
       <div class="!mt-2">
         <button
           type="submit"
-          class="rounded bg-primary py-1 text-white transition-all hover:opacity-80 w-full"
+          class="rounded bg-primary py-1 text-gray-50 transition-all hover:opacity-80 w-full"
         >
           Submit Here
         </button>
@@ -122,5 +121,9 @@
 </div>
 
 @if(confirmModal){
-  <confirm-modal title="User created successfully!" (closeModal)="closeConfirmModal()" />
+<confirm-modal
+  url=""
+  title="User created successfully!"
+  (closeModal)="closeConfirmModal()"
+/>
 }
