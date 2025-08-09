@@ -9,31 +9,31 @@ import { environment } from '../../../environments/environments';
 export class CareerService {
   http = inject(HttpClient);
 
-  constructor() {}
+  constructor() { }
 
-  addCareer(model: any | FormData): Observable<void>{
-    return this.http.post<void>(`${environment.baseApi}/Carousel`, model)
+  addCareer(model: any | FormData): Observable<void> {
+    return this.http.post<void>(`${environment.baseApi}/Career`, model)
   }
 
   getAllCareer(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.baseApi}/Carousel`);
+    return this.http.get<any[]>(`${environment.baseApi}/Career`);
   }
 
   getCompanyCareer(): Observable<any[]> {
     return this.getAllCareer().pipe(
-      map(Career => Career.filter(a => a.companyID === 20))   // TODO: environment.hospitalCode
+      map(Career => Career.filter(a => a.companyID === environment.hospitalCode))
     );
   }
 
-  getCareer(id: any): Observable<any>{
-    return this.http.get<any>(`${environment.baseApi}/Carousel/GetCarouselById?id=${id}`);
+  getCareer(id: any): Observable<any> {
+    return this.http.get<any>(`${environment.baseApi}/Career/GetCareerById?id=${id}`);
   }
 
-  updateCareer(id: any, updateCareerRequest: any | FormData): Observable<any>{
-    return this.http.put<any>(`${environment.baseApi}/Carousel/EditCarousel/${id}`, updateCareerRequest);
+  updateCareer(id: any, updateCareerRequest: any | FormData): Observable<any> {
+    return this.http.put<any>(`${environment.baseApi}/Career/EditCareer/${id}`, updateCareerRequest);
   }
 
-  deleteCareer(id: any): Observable<any>{
-    return this.http.delete<any>(`${environment.baseApi}/Carousel/DeleteCarousel?id=${id}`);
+  deleteCareer(id: any): Observable<any> {
+    return this.http.delete<any>(`${environment.baseApi}/Career/DeleteCareer?id=${id}`);
   }
 }

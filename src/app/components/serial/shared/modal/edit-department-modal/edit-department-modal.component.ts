@@ -1,51 +1,46 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
-import { CommonModule } from '@angular/common';
 import { ImgbbService } from '../../../../../services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 import { DepartmentService } from '../../../../../services/serial/department.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-edit-department-modal',
-    imports: [CommonModule, ReactiveFormsModule, FormsModule],
-    templateUrl: './edit-department-modal.component.html',
-    styleUrl: './edit-department-modal.component.css'
+  selector: 'app-edit-department-modal',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  templateUrl: './edit-department-modal.component.html',
+  styleUrl: './edit-department-modal.component.css'
 })
-export class EditDepartmentModalComponent {
-  readonly id = input.required<any>();
-  readonly closeModal = output<void>();
+export class EditDepartmentModalComponent implements OnInit {
+  @Input() id!: any;
+  @Output() closeModal = new EventEmitter<void>();
   departmentService = inject(DepartmentService);
   imgbbService = inject(ImgbbService);
   fb = inject(FormBuilder);
-  queryClient = injectQueryClient();
-  selected!: any;
-  private editDepartmentSubscription?: Subscription;
+  private subscriptions: Subscription[] = [];
+  selected: any;
+  isSubmitted = false;
+
+  ngOnInit(): void {
+    this.loadDepartment();
+  }
+
+  loadDepartment(): void {
+    this.subscriptions.push(
+      this.departmentService.getDepartmentById(this.id).subscribe(department => {
+        this.selected = department;
+        this.updateFormValues();
+      })
+    );
+  }
 
   closeThisModal(): void {
     this.closeModal.emit();
   }
 
-  isSubmitted = false;
-
-  constructor() { }
-
-  ngOnInit(): void {
-    this.selected = this.departmentService.getDepartment(this.id())
-    this.updateFormValues();
-  }
-
-
-
-  mutation = injectMutation((client) => ({
-    mutationFn: (updateData: any) => this.departmentService.updateDepartment(this.selected.id, updateData),
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['departments'] })
-    },
-  }));
-
-  addDepartmentForm = this.fb.group({
+  editDepartmentForm = this.fb.group({
     companyID: [environment.hospitalCode, Validators.required],
     departmentName: ["", Validators.required],
     description: [""],
@@ -54,7 +49,8 @@ export class EditDepartmentModalComponent {
 
   updateFormValues(): void {
     if (this.selected) {
-      this.addDepartmentForm.patchValue({
+      this.editDepartmentForm.patchValue({
+        companyID: this.selected.companyID,
         departmentName: this.selected.departmentName,
         description: this.selected.description,
         imgUrl: this.selected.imgUrl,
@@ -63,21 +59,34 @@ export class EditDepartmentModalComponent {
   }
 
   onSubmit(): void {
-    const { departmentName, description, imgUrl } = this.addDepartmentForm.value;
-    if (departmentName) {
-      const formData = new FormData();
-
-      formData.append('CompanyID', environment.hospitalCode.toString());
-      formData.append('DepartmentName', departmentName);
-      formData.append('Description', description || '');
-      formData.append('ImgUrl', imgUrl || '');
-      this.mutation.mutate(formData);
-      this.closeThisModal();
+    if (this.editDepartmentForm.invalid) {
+      this.isSubmitted = true;
+      return;
     }
-    this.isSubmitted = true;
-  };
+
+    const formData = new FormData();
+    const formValue = this.editDepartmentForm.value;
+
+    Object.keys(formValue).forEach(key => {
+      const value = formValue[key as keyof typeof formValue];
+      if (value !== null && value !== undefined) {
+        formData.append(key, value.toString());
+      }
+    });
+
+    this.subscriptions.push(
+      this.departmentService.updateDepartment(this.selected.id, formData).subscribe({
+        next: () => {
+          this.closeThisModal();
+        },
+        error: (error) => {
+          console.error('Error updating department:', error);
+        }
+      })
+    );
+  }
 
   ngOnDestroy(): void {
-    this.editDepartmentSubscription?.unsubscribe();
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

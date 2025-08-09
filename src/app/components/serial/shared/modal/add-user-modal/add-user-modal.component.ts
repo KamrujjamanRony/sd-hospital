@@ -1,57 +1,45 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
-import { CommonModule } from '@angular/common';
 import { ConfirmModalComponent } from "../confirm-modal/confirm-modal.component";
 import { UserAuthService } from '../../../../../services/serial/userAuth.service';
 import { environment } from '../../../../../../environments/environments';
 import { DataService } from '../../../../../services/serial/data.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-add-user-modal',
-    templateUrl: './add-user-modal.component.html',
-    styleUrl: './add-user-modal.component.css',
-    imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent]
+  selector: 'app-add-user-modal',
+  standalone: true,
+  templateUrl: './add-user-modal.component.html',
+  styleUrl: './add-user-modal.component.css',
+  imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent]
 })
-export class AddUserModalComponent {
-  readonly closeModal = output<void>();
-  UserAuthService = inject(UserAuthService);
+export class AddUserModalComponent implements OnInit {
+  @Output() closeModal = new EventEmitter<void>();
+  userAuthService = inject(UserAuthService);
   dataService = inject(DataService);
   fb = inject(FormBuilder);
-  queryClient = injectQueryClient();
-  private addUsersSubscription?: Subscription;
+  private subscriptions: Subscription[] = [];
+  isSubmitted = false;
+  confirmModal = false;
+  userRole: any[] = [];
+
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.dataService.getJsonData().subscribe(data => {
+        this.userRole = data.role;
+      })
+    );
+  }
 
   closeThisModal(): void {
     this.closeModal.emit();
   }
 
-  isSubmitted = false;
-  confirmModal: boolean = false;
-  userRole: any = [];
-
-  constructor() { }
-
-  ngOnInit(): void {
-    this.dataService.getJsonData().subscribe(data => {
-      this.userRole = data.role;
-    });
-  }
-
-  closeConfirmModal() {
+  closeConfirmModal(): void {
     this.confirmModal = false;
+    this.closeThisModal();
   }
-
-  mutation = injectMutation((client) => ({
-    mutationFn: (formData: any) => this.UserAuthService.registerUser(formData),
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['users'] });
-      this.confirmModal = true;
-      setTimeout(() => {
-        this.closeThisModal();
-      }, 3000);
-    },
-  }));
 
   addUsersForm = this.fb.group({
     username: ['', Validators.required],
@@ -60,23 +48,32 @@ export class AddUserModalComponent {
   });
 
   onSubmit(): void {
-    const { username, password, role } = this.addUsersForm.value;
-    if (username && password && role) {
-      const formData = new FormData();
-
-      formData.append('CompanyID', environment.hospitalCode.toString());
-      formData.append('Username', username || '');
-      formData.append('Password', environment.userCode + password || '');
-      (role as any[]).map((roles: any) => {
-        formData.append('Roles', roles || '');
-      })
-      this.mutation.mutate(formData);
+    if (this.addUsersForm.invalid) {
+      this.isSubmitted = true;
+      return;
     }
-    this.isSubmitted = true;
+
+    const { username, password, role } = this.addUsersForm.value;
+    const formData = new FormData();
+
+    formData.append('CompanyID', environment.hospitalCode.toString());
+    formData.append('Username', username || '');
+    formData.append('Password', environment.userCode + password || '');
+    (role as unknown as any[]).forEach(r => formData.append('Roles', r));
+
+    this.subscriptions.push(
+      this.userAuthService.registerUser(formData).subscribe({
+        next: () => {
+          this.confirmModal = true;
+        },
+        error: (error) => {
+          console.error('Error registering user:', error);
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.addUsersSubscription?.unsubscribe();
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
-
 }

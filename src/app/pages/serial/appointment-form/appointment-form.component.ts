@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { format, isBefore } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { ConfirmModalComponent } from '../../../components/serial/shared/modal/confirm-modal/confirm-modal.component';
@@ -10,9 +9,11 @@ import { DoctorsService } from '../../../services/serial/doctors.service';
 import { AuthService } from '../../../services/serial/auth.service';
 import { environment } from '../../../../environments/environments';
 import { DepartmentService } from '../../../services/serial/department.service';
+import { forkJoin, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-appointment-form',
+  standalone: true,
   templateUrl: './appointment-form.component.html',
   styleUrl: './appointment-form.component.css',
   imports: [CommonModule, ReactiveFormsModule, ConfirmModalComponent, FormsModule]
@@ -24,7 +25,8 @@ export class AppointmentFormComponent implements OnInit {
   departmentService = inject(DepartmentService);
   doctorsService = inject(DoctorsService);
   authService = inject(AuthService);
-  doctorList: any;
+  doctorList: any = [];
+  departmentList: any = [];
   format = format;
   isSubmitted = false;
   selected!: any;
@@ -32,25 +34,76 @@ export class AppointmentFormComponent implements OnInit {
   blockSerials: any;
   msg: any;
   confirm!: any;
-
   confirmModal!: boolean;
-
+  private subscriptions: Subscription[] = [];
 
   readonly closeAppointment = output<void>();
 
-  closeAppointmentModal(): void {
-    this.closeAppointment.emit();
-  }
+  // Add this to your component class
+  originalDoctorList: any[] = [];
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
-    this.getConfirm()
+    this.getConfirm();
+    this.loadInitialData();
     this.updateFormGroup();
   }
 
+  loadInitialData() {
+    forkJoin([
+      this.doctorsService.getDoctors(),
+      this.departmentService.getDepartments()
+    ]).subscribe({
+      next: ([doctors, departments]) => {
+        this.originalDoctorList = doctors; // Store the original list
+        this.doctorList = doctors; // Initialize filtered list
+        this.departmentList = departments;
+      },
+      error: (error) => {
+        console.error('Error loading initial data:', error);
+      }
+    });
+  }
+
+  onDepartmentChange() {
+    const departmentId = this.appointmentForm.value.departmentId;
+
+    if (departmentId) {
+      // Always filter from the original list
+      this.doctorList = this.originalDoctorList.filter((d: any) => d.departmentId == departmentId);
+
+      // Reset doctor selection when department changes
+      this.appointmentForm.patchValue({
+        drCode: '',
+        fee: ''
+      });
+      this.selected = null;
+    } else {
+      // If no department selected, show all doctors
+      this.doctorList = [...this.originalDoctorList];
+    }
+  }
+
+  onDoctorChange() {
+    const doctorId = this.appointmentForm.value.drCode;
+    if (doctorId) {
+      // Find the selected doctor from the already loaded list
+      this.selected = this.doctorList.find((d: any) => d.id === doctorId);
+
+      if (this.selected) {
+        this.blockSerials = this.selected.serialBlock?.split(',');
+
+        // Update department and fee
+        this.appointmentForm.patchValue({
+          departmentId: this.selected.departmentId,
+          fee: this.selected.fee
+        });
+      }
+    }
+  }
+
   checkRoles(roleId: any) {
-    const result = this.user?.roleIds?.find((role: any) => role == roleId)
-    return result;
+    return this.user?.roleIds?.find((role: any) => role == roleId);
   }
 
   updateFormGroup(): void {
@@ -68,46 +121,6 @@ export class AppointmentFormComponent implements OnInit {
     this.confirm = false;
   }
 
-  departmentQuery = injectQuery(() => ({
-    queryKey: ['departments'],
-    queryFn: () => this.departmentService.getDepartments(),
-  }));
-
-  doctorQuery = injectQuery(() => ({
-    queryKey: ['doctors'],
-    queryFn: () => this.doctorsService.getDoctors(),
-  }));
-
-  appointmentMutation = injectMutation((client) => ({
-    mutationFn: (formData: any) => this.appointmentService.addAppointment(formData),
-    onSuccess: () => {
-      this.formReset();
-      this.msg = "Appointment is successfully added!";
-      client.invalidateQueries({ queryKey: ['appointments'] });
-    },
-    onError: (error: any) => {
-      this.handleError(error);
-      setTimeout(() => {
-        this.closeAppointmentModal();
-      }, 2000);
-    }
-  }));
-
-  private handleError(error: any) {
-    this.msg = error?.response?.data?.message;
-    console.error(error);
-  }
-
-  async onDepartmentChange() {
-    this.doctorList = await this.doctorsService.filterDoctorsByDepartment(this.appointmentForm.value.departmentId);
-  }
-
-  onDoctorChange() {
-    this.selected = this.doctorsService.getDoctorById(this.appointmentForm.value.drCode);
-    this.blockSerials = this.selected?.serialBlock?.split(',');
-    this.updateFormValues();
-  }
-
   appointmentForm = this.fb.group({
     companyID: environment.hospitalCode,
     pName: ['', Validators.required],
@@ -123,7 +136,7 @@ export class AppointmentFormComponent implements OnInit {
     remarks: '',
     paymentStatus: false,
     confirmed: this.confirm,
-  })
+  });
 
   updateFormValues(): void {
     if (this.selected) {
@@ -140,7 +153,6 @@ export class AppointmentFormComponent implements OnInit {
 
     if (drCode && pName && type && date) {
       const formData = new FormData();
-
       formData.append('CompanyID', environment.hospitalCode.toString());
       formData.append('Date', date);
       formData.append('DepartmentId', departmentId != null ? departmentId.toString() : '');
@@ -156,8 +168,22 @@ export class AppointmentFormComponent implements OnInit {
       formData.append('Remarks', remarks || '');
       formData.append('PaymentStatus', paymentStatus != null ? paymentStatus.toString() : '');
       formData.append('Confirmed', confirmed != null ? confirmed.toString() : this.confirm);
-      this.appointmentMutation.mutate(formData);
 
+      this.subscriptions.push(
+        this.appointmentService.addAppointment(formData).subscribe({
+          next: () => {
+            this.formReset();
+            this.msg = "Appointment is successfully added!";
+            this.confirmModal = true;
+          },
+          error: (error) => {
+            this.handleError(error);
+            setTimeout(() => {
+              this.closeAppointmentModal();
+            }, 2000);
+          }
+        })
+      );
       this.isSubmitted = false;
     } else {
       this.msg = "Please fill all required fields!";
@@ -196,4 +222,16 @@ export class AppointmentFormComponent implements OnInit {
     });
   }
 
+  closeAppointmentModal(): void {
+    this.closeAppointment.emit();
+  }
+
+  private handleError(error: any) {
+    this.msg = error?.error?.message || 'An error occurred';
+    console.error(error);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
 }

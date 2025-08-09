@@ -1,111 +1,37 @@
 import { Injectable } from '@angular/core';
-import { injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
-import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
+  constructor(private http: HttpClient) { }
 
-  queryClient = injectQueryClient();
+  private apiUrl = environment.DepartmentApi;
 
-  apiClient = axios.create({
-    baseURL: environment.DepartmentApi,
-    // headers: {
-    //   'Content-Type' : 'application/json',
-    //   'Accept' : 'application/json'
-    // }
-  })
-
-  constructor() { } 
-
-  query = injectQuery(() => ({
-    queryKey: ['departments'],
-    queryFn: () => this.getDepartments(),
-  }));
-
-  async getDepartments(): Promise<any[]> {
-    try {
-      const response = await this.apiClient.get<any[]>('/');
-      // const filteredDepartments = response.data.filter(data => data.companyID == environment.hospitalCode);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching departments:', error);
-      throw error;
-    }
+  getDepartments(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  async addDepartment(model: any | FormData): Promise<any>{
-    try {
-      const response = await this.apiClient.post('/', model);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching departments:', error);
-      throw error;
-    }
-  } 
-  
-  getDepartment(id: any): any{
-    const departments = this.queryClient.getQueryData(['departments']) as any[];
-    return departments?.find((d) => d.id == id);
+  addDepartment(model: any | FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, model);
   }
 
-  async updateDepartment(id: any, updateData: any): Promise<any>{
-    try {
-      const response = await this.apiClient.put(`/EditDepartment/${id}`, updateData);
-      return response;
-    } catch (error) {
-      console.error('Error fetching departments:', error);
-      throw error;
-    }
-  };
-
-  async deleteDepartment(id: any): Promise<any>{
-    try {
-      const response = await this.apiClient.delete(`/DeleteDepartment?id=${id}`);
-      return response;
-    } catch (error) {
-      console.error('Error fetching departments:', error);
-      throw error;
-    }
+  updateDepartment(id: any, updateData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/EditDepartment/${id}`, updateData);
   }
 
-  getDepartmentById(id: any): any{
-    const departments = this.queryClient.getQueryData(['departments']) as any[];
-    const selected = departments?.find((d) => d.id == id);
-    return selected?.departmentName;
+  deleteDepartment(id: any): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/DeleteDepartment?id=${id}`);
   }
 
-  getDepartmentByDoctorId(id: any): any{
-    const departments = this.queryClient.getQueryData(['departments']) as any[];
-    const selected = departments?.find((d) => d.id == id);
-    return selected;
+  getDepartmentById(id: any): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/GetDepartmentById?id=${id}`);
   }
 
-  // getDepartments(): Promise<any[]> {
-  //   return lastValueFrom(
-  //     this.http.get<any[]>(environment.DepartmentApi).pipe(
-  //       map(departments => departments.filter(data => data.companyID == environment.hospitalCode))
-  //     ),
-  //   )
-  // }
-  
-  // addDepartment(model: any | FormData): Promise<any> {
-  //   return lastValueFrom(
-  //     this.http.post<void>(environment.DepartmentApi, model),
-  //   )
-  // }
-
-  // updateDepartment(id: any, updateData: any): Promise<any> {
-  //   return lastValueFrom(
-  //     this.http.put<any>(`${environment.DepartmentApi}/${id}`, updateData),
-  //   )
-  // }
-
-  // deleteDepartment(id: any): Promise<any> {
-  //   return lastValueFrom(
-  //     this.http.delete<void>(`${environment.DepartmentApi}/${id}`),
-  //   )
-  // }
+  getDepartmentByDoctorId(id: any): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/GetDepartmentByDoctorId?id=${id}`);
+  }
 }

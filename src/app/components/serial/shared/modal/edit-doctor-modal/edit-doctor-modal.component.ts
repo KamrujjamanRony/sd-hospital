@@ -1,67 +1,68 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
 import { DoctorsService } from '../../../../../services/serial/doctors.service';
 import { ImgbbService } from '../../../../../services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 import { AuthService } from '../../../../../services/serial/auth.service';
 import { DepartmentService } from '../../../../../services/serial/department.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-edit-doctor-modal',
-    imports: [CommonModule, ReactiveFormsModule],
-    templateUrl: './edit-doctor-modal.component.html',
-    styleUrl: './edit-doctor-modal.component.css'
+  selector: 'app-edit-doctor-modal',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './edit-doctor-modal.component.html',
+  styleUrl: './edit-doctor-modal.component.css'
 })
-export class EditDoctorModalComponent {
-  readonly id = input.required<any>();
-  readonly closeModal = output<void>();
+export class EditDoctorModalComponent implements OnInit {
+  @Input() id!: any;
+  @Output() closeModal = new EventEmitter<void>();
+
   doctorsService = inject(DoctorsService);
-  departmentService = inject(DepartmentService)
+  departmentService = inject(DepartmentService);
   imgbbService = inject(ImgbbService);
   authService = inject(AuthService);
-  user: any;
   fb = inject(FormBuilder);
-  queryClient = injectQueryClient();
-  selected!: any;
-  private editDoctorSubscription?: Subscription;
+
+  private subscriptions: Subscription[] = [];
+  user: any;
+  selected: any;
+  departments: any[] = [];
+  isSubmitted = false;
+
+  ngOnInit(): void {
+    this.user = this.authService.getUser();
+    this.loadDoctor();
+    this.loadDepartments();
+  }
+
+  loadDoctor(): void {
+    this.subscriptions.push(
+      this.doctorsService.getDoctorById(this.id).subscribe(doctor => {
+        this.selected = doctor;
+        this.updateFormValues();
+      })
+    );
+  }
+
+  loadDepartments(): void {
+    this.subscriptions.push(
+      this.departmentService.getDepartments().subscribe(departments => {
+        this.departments = departments;
+      })
+    );
+  }
+
+  checkRoles(roleId: any): boolean {
+    return this.user?.roleIds?.includes(roleId);
+  }
 
   closeThisModal(): void {
     this.closeModal.emit();
   }
 
-
-  isSubmitted = false;
-
-  constructor(){}
-
-  ngOnInit(): void {
-    this.user = this.authService.getUser();
-    const doctors = this.queryClient.getQueryData(['doctors']) as any[];
-    this.selected = doctors?.find((d) => d.id == this.id());
-    this.updateFormValues();
-   }
-
-   checkRoles(roleId: any) {
-     const result = this.user?.roleIds?.find((role: any) => role == roleId)
-     return result;
-   }
-
-  query = injectQuery(() => ({
-    queryKey: ['departments'],
-    queryFn: () => this.departmentService.getDepartments(),
-  }));
-
-  mutation = injectMutation((client) => ({
-    mutationFn: (updateData: any) => this.doctorsService.updateDoctor(this.selected.id, updateData),
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['doctors'] })
-    },
-  }));
-
-  addDoctorForm = this.fb.group({
+  doctorForm = this.fb.group({
     companyID: [environment.hospitalCode, Validators.required],
     drSerial: [''],
     drName: ['', Validators.required],
@@ -96,7 +97,7 @@ export class EditDoctorModalComponent {
 
   updateFormValues(): void {
     if (this.selected) {
-      this.addDoctorForm.patchValue({
+      this.doctorForm.patchValue({
         companyID: this.selected?.companyID,
         drSerial: this.selected?.drSerial,
         drName: this.selected?.drName,
@@ -132,48 +133,34 @@ export class EditDoctorModalComponent {
   }
 
   onSubmit(): void {
-    const {drName, drSerial, degree, designation, specialty, departmentId, phone, fee, visitTime, room, description, additional, notice, serialBlock,satNewPatientLimit, satOldPatientLimit, sunNewPatientLimit, sunOldPatientLimit, monNewPatientLimit, monOldPatientLimit, tueNewPatientLimit, tueOldPatientLimit, wedNewPatientLimit, wedOldPatientLimit, thuNewPatientLimit, thuOldPatientLimit, friNewPatientLimit, friOldPatientLimit, imageUrl } = this.addDoctorForm.value;
-    if (drName && departmentId) {
-      const formData = new FormData();
-
-      formData.append('CompanyID', environment.hospitalCode.toString());
-      formData.append('DrSerial', drSerial || '');
-      formData.append('DrName', drName);
-      formData.append('Degree', degree || '');
-      formData.append('Designation', designation || '');
-      formData.append('Specialty', specialty || '');
-      formData.append('DepartmentId', departmentId);
-      formData.append('Phone', phone || '');
-      formData.append('VisitTime', visitTime || '');
-      formData.append('Room', room || '');
-      formData.append('Description', description || '');
-      formData.append('Additional', additional || '');
-      formData.append('Notice', notice || '');
-      formData.append('SerialBlock', serialBlock || '');
-      formData.append('SatNewPatientLimit', satNewPatientLimit || '');
-      formData.append('SatOldPatientLimit', satOldPatientLimit || '');
-      formData.append('SunNewPatientLimit', sunNewPatientLimit || '');
-      formData.append('SunOldPatientLimit', sunOldPatientLimit || '');
-      formData.append('MonNewPatientLimit', monNewPatientLimit || '');
-      formData.append('MonOldPatientLimit', monOldPatientLimit || '');
-      formData.append('TueNewPatientLimit', tueNewPatientLimit || '');
-      formData.append('TueOldPatientLimit', tueOldPatientLimit || '');
-      formData.append('WedNewPatientLimit', wedNewPatientLimit || '');
-      formData.append('WedOldPatientLimit', wedOldPatientLimit || '');
-      formData.append('ThuNewPatientLimit', thuNewPatientLimit || '');
-      formData.append('ThuOldPatientLimit', thuOldPatientLimit || '');
-      formData.append('FriNewPatientLimit', friNewPatientLimit || '');
-      formData.append('FriOldPatientLimit', friOldPatientLimit || '');
-      formData.append('Fee', fee || '');
-      formData.append('ImageUrl', imageUrl || '');
-      this.mutation.mutate(formData);
-      this.closeThisModal();
+    if (this.doctorForm.invalid) {
+      this.isSubmitted = true;
+      return;
     }
-    this.isSubmitted = true;
+
+    const formData = new FormData();
+    const formValue = this.doctorForm.value;
+
+    Object.keys(formValue).forEach(key => {
+      const value = formValue[key as keyof typeof formValue];
+      if (value !== null && value !== undefined) {
+        formData.append(key, value.toString());
+      }
+    });
+
+    this.subscriptions.push(
+      this.doctorsService.updateDoctor(this.selected.id, formData).subscribe({
+        next: () => {
+          this.closeThisModal();
+        },
+        error: (error) => {
+          console.error('Error updating doctor:', error);
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.editDoctorSubscription?.unsubscribe();
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
-
 }

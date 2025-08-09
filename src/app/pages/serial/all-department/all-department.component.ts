@@ -1,88 +1,98 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { injectMutation, injectQuery, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { AddDepartmentModalComponent } from '../../../components/serial/shared/modal/add-department-modal/add-department-modal.component';
 import { EditDepartmentModalComponent } from '../../../components/serial/shared/modal/edit-department-modal/edit-department-modal.component';
 import { AuthService } from '../../../services/serial/auth.service';
 import { DepartmentService } from '../../../services/serial/department.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-all-department',
+  standalone: true,
   templateUrl: './all-department.component.html',
   styleUrl: './all-department.component.css',
-  imports: [CoverComponent, AddDepartmentModalComponent, CommonModule, EditDepartmentModalComponent]
+  imports: [CommonModule, CoverComponent, AddDepartmentModalComponent, EditDepartmentModalComponent]
 })
-export class AllDepartmentComponent {
-  departmentService = inject(DepartmentService)
-  queryClient = injectQueryClient()
+export class AllDepartmentComponent implements OnInit, OnDestroy {
+  departmentService = inject(DepartmentService);
   authService = inject(AuthService);
+
   user: any;
   emptyImg: any;
-  departments: any;
+  departments: any[] = [];
   selectedId: any;
   showModal: boolean = false;
   addDepartmentModal: boolean = false;
   editDepartmentModal: boolean = false;
-  private departmentSubscription?: Subscription;
-
-  constructor() { }
+  private subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
+    this.loadDepartments();
   }
 
-  checkRoles(roleId: any) {
-    const result = this.user?.roleIds?.find((role: any) => role == roleId)
-    return result;
+  loadDepartments(): void {
+    this.subscriptions.push(
+      this.departmentService.getDepartments().subscribe({
+        next: (departments) => {
+          this.departments = departments;
+        },
+        error: (error) => {
+          console.error('Error loading departments:', error);
+        }
+      })
+    );
   }
 
-  query = injectQuery(() => ({
-    queryKey: ['departments'],
-    queryFn: () => this.departmentService.getDepartments(),
-  }));
+  checkRoles(roleId: any): boolean {
+    return this.user?.roleIds?.includes(roleId);
+  }
 
-  mutation = injectMutation((client) => ({
-    mutationFn: (id: any) => this.departmentService.deleteDepartment(id),
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['departments'] })
-    },
-  }));
-
-  onDelete(id: any) {
+  onDelete(id: any): void {
     const result = confirm("Are you sure you want to delete this item?");
     if (result === true) {
-      this.mutation.mutate(id);
+      this.subscriptions.push(
+        this.departmentService.deleteDepartment(id).subscribe({
+          next: () => {
+            this.loadDepartments(); // Refresh the list after deletion
+          },
+          error: (error) => {
+            console.error('Error deleting department:', error);
+          }
+        })
+      );
     }
   }
 
-  openDoctorDetails() {
+  openDoctorDetails(): void {
     this.showModal = true;
   }
 
-  openAddDepartmentModal() {
+  openAddDepartmentModal(): void {
     this.addDepartmentModal = true;
   }
 
-  openEditDepartmentModal(id: any) {
+  openEditDepartmentModal(id: any): void {
     this.selectedId = id;
     this.editDepartmentModal = true;
   }
 
-  closeDoctorDetails() {
+  closeDoctorDetails(): void {
     this.showModal = false;
   }
 
-  closeAddDepartmentModal() {
+  closeAddDepartmentModal(): void {
     this.addDepartmentModal = false;
+    this.loadDepartments(); // Refresh the list after adding
   }
 
-  closeEditDepartmentModal() {
+  closeEditDepartmentModal(): void {
     this.editDepartmentModal = false;
+    this.loadDepartments(); // Refresh the list after editing
   }
 
   ngOnDestroy(): void {
-    this.departmentSubscription?.unsubscribe();
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

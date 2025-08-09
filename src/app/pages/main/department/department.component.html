@@ -4,7 +4,7 @@
   <div class="h-full w-full absolute top-0 left-0 z-0">
     <img
       src="https://img.freepik.com/free-photo/gradient-dark-blue-futuristic-digital-background_53876-160646.jpg?t=st=1713524092~exp=1713527692~hmac=5bb425a06bba38ab6c2073c0e5a8b5e98ea2571bcabddb638fec4a93bd33e3d0&w=1380"
-      alt=""
+      alt="Medical department background"
       class="w-full h-full object-cover opacity-20"
     />
   </div>
@@ -22,15 +22,25 @@
 </section>
 
 <section class="container mx-auto my-5">
+  @if (loading) {
+  <div class="flex justify-center items-center py-12">
+    <div
+      class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+    ></div>
+  </div>
+  } @else if (error) {
+  <div class="text-center py-12 text-red-500">
+    {{ error }}
+  </div>
+  } @else {
   <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-12 pb-12">
-    @switch (query.status()) { @case ('pending') {
-    <span>Loading...</span>
-    } @case ('error') {
-    <span>Error: {{ query.error()?.message }}</span>
-    } @default { @for(category of query.data(); track category.id){
+    @for (category of departments; track category.id) {
     <app-category [category]="category"></app-category>
     } @empty {
-    <li>No Department found</li>
-    } } }
+    <div class="col-span-full text-center py-12 text-gray-500">
+      No departments found
+    </div>
+    }
   </div>
+  }
 </section>

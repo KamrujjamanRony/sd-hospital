@@ -1,79 +1,106 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
 import { UsersService } from '../../../../../services/serial/users.service';
 import { DataService } from '../../../../../services/serial/data.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-edit-user-modal',
-    imports: [CommonModule, ReactiveFormsModule],
-    templateUrl: './edit-user-modal.component.html',
-    styleUrl: './edit-user-modal.component.css'
+  selector: 'app-edit-user-modal',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './edit-user-modal.component.html',
+  styleUrls: ['./edit-user-modal.component.css']
 })
-export class EditUserModalComponent {
-  readonly user = input.required<any>();
-  readonly closeModal = output<void>();
-  UsersService = inject(UsersService);
+export class EditUserModalComponent implements OnInit {
+  @Input() user: any;
+  @Output() closeModal = new EventEmitter<void>();
+
+  usersService = inject(UsersService);
   dataService = inject(DataService);
   fb = inject(FormBuilder);
-  queryClient = injectQueryClient();
-  selected!: any;
-  selectedRoles!: any;
-  private editUserSubscription?: Subscription;
 
-  closeThisModal(): void {
-    this.closeModal.emit();
-  }
-
-  
+  private subscriptions: Subscription[] = [];
+  userRole: any[] = [];
   isSubmitted = false;
-  userRole: any = [];
+  isLoading = false;
+  errorMessage: string | null = null;
 
-  constructor() { }
-
-  ngOnInit(): void {
-    this.dataService.getJsonData().subscribe(data => {
-      this.userRole = data.role;
-      this.updateFormValues();
-    });
-  }
-
-
-
-
-  mutation = injectMutation((client) => ({
-    mutationFn: (updateData: any) => this.UsersService.updateUser(this.user().userId, updateData),
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['users'] })
-    },
-  }));
-
-  addUserForm = this.fb.group({
-    role: new FormControl([] as string[], Validators.required),
+  userForm = this.fb.group({
+    username: new FormControl({ value: '', disabled: true }),
+    role: new FormControl([] as string[], Validators.required)
   });
 
+  ngOnInit(): void {
+    this.loadRoles();
+    this.updateFormValues();
+  }
+
+  loadRoles(): void {
+    this.subscriptions.push(
+      this.dataService.getJsonData().subscribe({
+        next: (data) => {
+          this.userRole = data.role || [];
+        },
+        error: (error) => {
+          console.error('Error loading roles:', error);
+          this.errorMessage = 'Failed to load roles. Please try again.';
+        }
+      })
+    );
+  }
+
   updateFormValues(): void {
-    const user = this.user();
-    if (user) {
-      this.addUserForm.patchValue({
-        role: user?.roleIds,
+    if (this.user) {
+      this.userForm.patchValue({
+        username: this.user.userName,
+        role: this.user.roleIds || []
       });
     }
   }
 
   onSubmit(): void {
-    const { role } = this.addUserForm.value;
-    if (role) {
-      this.mutation.mutate(role);
-      this.closeThisModal();
-    }
     this.isSubmitted = true;
-  };
+    this.errorMessage = null;
 
-  ngOnDestroy(): void {
-    this.editUserSubscription?.unsubscribe();
+    if (this.userForm.invalid || !this.user?.userId) {
+      return;
+    }
+
+    this.isLoading = true;
+    const roles = this.userForm.value.role || [];
+
+    this.subscriptions.push(
+      this.usersService.updateUser(this.user.userId, roles).subscribe({
+        next: () => {
+          this.closeThisModal();
+        },
+        error: (error) => {
+          console.error('Error updating user:', error);
+          this.errorMessage = 'Failed to update user. Please try again.';
+          this.isLoading = false;
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
+    );
   }
 
+  showError(controlName: string): boolean {
+    const control = this.userForm.get(controlName);
+    return !!control?.invalid && (control?.dirty || control?.touched || this.isSubmitted);
+  }
+
+  isRoleSelected(roleId: string): boolean {
+    return this.userForm.value.role?.includes(roleId) || false;
+  }
+
+  closeThisModal(): void {
+    this.closeModal.emit();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
 }

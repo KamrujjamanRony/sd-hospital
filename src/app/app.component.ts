@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterOutlet } from '@angular/router';
 import { VisitorCountService } from './services/main/visitor-count.service';
 
@@ -7,7 +7,7 @@ import { VisitorCountService } from './services/main/visitor-count.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [CommonModule, RouterOutlet]
+  imports: [RouterOutlet]
 })
 export class AppComponent {
   visitorCountService = inject(VisitorCountService);

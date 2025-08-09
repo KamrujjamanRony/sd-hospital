@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DoctorsServiceMain } from '../../../services/main/doctors.service';
 import { ActivatedRoute } from '@angular/router';
+import { DoctorsService } from '../../../services/serial/doctors.service';
 
 @Component({
   selector: 'app-doctor',
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   imports: []
 })
 export class DoctorComponent {
-  doctorsService = inject(DoctorsServiceMain);
+  doctorsService = inject(DoctorsService);
   route = inject(ActivatedRoute);
 
   emptyImg: any = '../../../../assets/images/doctor.png';
@@ -24,7 +24,7 @@ export class DoctorComponent {
     this.paramsSubscription = this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
       if (this.id) {
-        this.doctorsService.getDoctor(this.id).subscribe({
+        this.doctorsService.getDoctorById(this.id).subscribe({
           next: (data: any | undefined) => {
             this.doctor = data;
           }

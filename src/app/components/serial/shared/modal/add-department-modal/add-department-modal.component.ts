@@ -1,40 +1,29 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, inject, output } from '@angular/core';
+import { Component, inject, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental';
 import { ImgbbService } from '../../../../../services/serial/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 import { DepartmentService } from '../../../../../services/serial/department.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-add-department-modal',
-    imports: [CommonModule, ReactiveFormsModule, FormsModule],
-    templateUrl: './add-department-modal.component.html',
-    styleUrl: './add-department-modal.component.css'
+  selector: 'app-add-department-modal',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  templateUrl: './add-department-modal.component.html',
+  styleUrl: './add-department-modal.component.css'
 })
 export class AddDepartmentModalComponent {
-  readonly closeModal = output<void>();
+  @Output() closeModal = new EventEmitter<void>();
   departmentService = inject(DepartmentService);
   imgbbService = inject(ImgbbService);
   fb = inject(FormBuilder);
-  queryClient = injectQueryClient();
-  private addDepartmentSubscription?: Subscription;
+  private subscriptions: Subscription[] = [];
+  isSubmitted = false;
 
   closeThisModal(): void {
     this.closeModal.emit();
   }
-
-  isSubmitted = false;
-
-  constructor(){}
-
-  mutation = injectMutation((client) => ({
-    mutationFn: (formData: any) => this.departmentService.addDepartment(formData),
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['departments'] })
-    },
-  }));
 
   addDepartmentForm = this.fb.group({
     departmentName: ['', Validators.required],
@@ -43,22 +32,32 @@ export class AddDepartmentModalComponent {
   });
 
   onSubmit(): void {
-    const {departmentName, description, imgUrl} = this.addDepartmentForm.value;
-    if (departmentName) {
-      
+    if (this.addDepartmentForm.invalid) {
+      this.isSubmitted = true;
+      return;
+    }
+
+    const { departmentName, description, imgUrl } = this.addDepartmentForm.value;
     const formData = new FormData();
 
     formData.append('CompanyID', environment.hospitalCode.toString());
-    formData.append('DepartmentName', departmentName);
-    formData.append('Description',  description != null ? description.toString() : '');
+    formData.append('DepartmentName', departmentName || '');
+    formData.append('Description', description || '');
     formData.append('ImgUrl', imgUrl || '');
-      this.mutation.mutate(formData);
-      this.closeThisModal();
-    }
-    this.isSubmitted = true;
+
+    this.subscriptions.push(
+      this.departmentService.addDepartment(formData).subscribe({
+        next: () => {
+          this.closeThisModal();
+        },
+        error: (error) => {
+          console.error('Error adding department:', error);
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.addDepartmentSubscription?.unsubscribe();
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

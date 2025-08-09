@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
@@ -6,7 +6,7 @@ import { SidebarComponent } from '../../../components/serial/shared/all-sidebar/
 
 @Component({
     selector: 'app-serial-admin',
-    imports: [FormsModule, CommonModule, RouterOutlet, SidebarComponent],
+    imports: [FormsModule, RouterOutlet, SidebarComponent],
     templateUrl: './serial-admin.component.html',
     styleUrl: './serial-admin.component.css'
 })

@@ -1,31 +1,31 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
 import { AuthService } from '../../../services/serial/auth.service';
 import { UserAuthService } from '../../../services/serial/userAuth.service';
-import { injectQueryClient } from '@tanstack/angular-query-experimental';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../../environments/environments';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-serial-main',
+  standalone: true,
   imports: [CommonModule, RouterOutlet, FormsModule, NavbarComponent, ReactiveFormsModule],
   templateUrl: './serial-main.component.html',
-  styleUrl: './serial-main.component.css'
+  styleUrls: ['./serial-main.component.css']
 })
-export class SerialMainComponent {
-  authService = inject(AuthService);
-  UserAuthService = inject(UserAuthService);
-  queryClient = injectQueryClient();
-  fb = inject(FormBuilder);
+export class SerialMainComponent implements OnDestroy {
+  private authService = inject(AuthService);
+  private userAuthService = inject(UserAuthService);
+  private fb = inject(FormBuilder);
+
+  private subscriptions: Subscription[] = [];
   isSubmitted = false;
   user: any;
-  private loginSubscription?: Subscription;
 
   constructor() {
-    this.setUser();
+    this.user = this.authService.getUser();
   }
 
   userForm = this.fb.group({
@@ -34,35 +34,44 @@ export class SerialMainComponent {
     password: ['', Validators.required],
   });
 
-  onSubmit(): void {
-    let { username, password } = this.userForm.value;
-    if (username && password) {
-      password = environment.userCode + password;
-      this.loginSubscription = this.UserAuthService.loginUser({ username, password })
-        .subscribe({
-          next: (response: any) => {
-            const userModel = { token: response.token, username: response.username, roleIds: response.roleIds };
-            this.authService.setUser(userModel);
-            this.setUser();
-          },
-          error: (error) => {
-            console.error('Error adding user:', error);
-          }
-        });
-      this.isSubmitted = true;
-    }
-  };
-
-  getLocation() {
-
+  showError(controlName: string): boolean {
+    const control = this.userForm.get(controlName);
+    return !!control?.invalid && (control?.dirty || control?.touched || this.isSubmitted);
   }
 
-  setUser() {
-    this.user = this.authService.getUser();
+  onSubmit(): void {
+    this.isSubmitted = true;
+
+    if (this.userForm.invalid) {
+      return;
+    }
+
+    const { username, password } = this.userForm.value;
+    const loginData = {
+      username: username || '',
+      password: environment.userCode + (password || '')
+    };
+
+    this.subscriptions.push(
+      this.userAuthService.loginUser(loginData).subscribe({
+        next: (response: any) => {
+          const userModel = {
+            token: response.token,
+            username: response.username,
+            roleIds: response.roleIds
+          };
+          this.authService.setUser(userModel);
+          this.user = userModel;
+        },
+        error: (error) => {
+          console.error('Login error:', error);
+          // You could add error handling logic here (show error message to user)
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.loginSubscription?.unsubscribe();
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
-
 }

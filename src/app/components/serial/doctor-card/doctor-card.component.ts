@@ -1,11 +1,11 @@
 import { Component, input } from '@angular/core';
 import { DoctorDetailsComponent } from '../shared/modal/doctor-details/doctor-details.component';
-import { AppointmentModalComponent } from '../shared/modal/appointment-modal/appointment-modal.component';
+import { AppointmentModalSerialComponent } from '../shared/modal/appointment-modal-serial/appointment-modal-serial.component';
 
 @Component({
-    selector: 'app-doctor-card',
-    imports: [DoctorDetailsComponent, AppointmentModalComponent],
-    templateUrl: './doctor-card.component.html'
+  selector: 'app-doctor-card',
+  imports: [DoctorDetailsComponent, AppointmentModalSerialComponent],
+  templateUrl: './doctor-card.component.html'
 })
 export class DoctorCardComponent {
   readonly doctor = input<any>();

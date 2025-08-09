@@ -11,15 +11,12 @@ import { CareerService } from '../../../services/main/career.service';
 })
 export class CareerComponent {
   careerService = inject(CareerService);
-
-  career$?: Observable<any[]>;
-  career?: any;
+  career?: any[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
-    this.career$ = this.careerService.getCompanyCareer();
-    this.career$.subscribe(data => {
+    this.careerService.getCompanyCareer().subscribe(data => {
       this.career = data;
     })
   }

@@ -3,14 +3,14 @@
 >
   <div class="rounded-xl max-w-[840px] w-full max-h-[90vh] overflow-y-auto">
     <form
-      [formGroup]="addUserForm"
-      (submit)="onSubmit()"
+      [formGroup]="userForm"
+      (ngSubmit)="onSubmit()"
       class="bg-[#e3c9f8] p-6 space-y-6 rounded-lg shadow-lg"
     >
-      <div class="flex justify-between">
-        <h2 class="text-2xl font-bold text-center w-full">Edit User</h2>
-
+      <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-center w-full">Edit User Roles</h2>
         <button
+          type="button"
           class="rounded bg-red-600 p-2 w-8 h-8 text-center text-gray-50 transition-all hover:opacity-80"
           (click)="closeThisModal()"
         >
@@ -18,51 +18,71 @@
         </button>
       </div>
 
+      @if (errorMessage) {
+      <div class="alert alert-error">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="stroke-current shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>{{ errorMessage }}</span>
+      </div>
+      }
+
       <div class="grid grid-cols-1 w-full gap-x-5">
-        <label class="form-control w-full !mt-0">
+        <!-- Username Display -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text font-bold">Username</span>
+          </div>
           <input
             type="text"
-            [value]="user()?.userName"
-            placeholder="Type here"
-            class="input input-bordered w-full input-sm outline-none"
-            required
+            formControlName="username"
+            class="input input-bordered w-full"
+            readonly
           />
-          @if(addUserForm.get('username')?.hasError('required') &&
-          (addUserForm.get('username')?.dirty ||
-          addUserForm.get('username')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Username is required</span
-            >
-          </div>
-          }
         </label>
 
-        <!-- Role Input -->
-        <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize"> Role: </span>
+        <!-- Role Selection -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text font-bold">Roles</span>
+            @if (showError('role')) {
+            <span class="label-text-alt text-error"
+              >At least one role is required</span
+            >
+            }
           </div>
           <select
-            class="select select-bordered select-sm w-full min-h-[300px]"
+            class="select select-bordered select-sm w-full !h-60"
             formControlName="role"
             multiple
-            [class.invalid]="
-              addUserForm.get('role')?.invalid &&
-              (addUserForm.get('role')?.dirty ||
-                addUserForm.get('role')?.touched ||
-                isSubmitted)
-            "
+            [class.select-error]="showError('role')"
           >
-            <option class="text-center border-b" disabled>
-              Select Multiple Role
+            <option
+              disabled
+              class="text-center border-b font-bold text-gray-900"
+            >
+              Select Multiple Roles
             </option>
-            @for (role of userRole; track role?.id) {
-            <option class="p-4 text-center border-b" [value]="role?.id">
-              {{ role?.name }}
+            @for (role of userRole; track role.id) {
+            <option
+              [value]="role.id"
+              [selected]="isRoleSelected(role.id)"
+              class="p-2 text-center border-b"
+            >
+              {{ role.name }}
             </option>
             } @empty {
-            <li>No role found</li>
+            <option disabled>No roles available</option>
             }
           </select>
         </label>
@@ -73,7 +93,7 @@
           type="submit"
           class="rounded bg-primary py-1 text-gray-50 transition-all hover:opacity-80 w-full"
         >
-          Submit Here
+          Save Changes
         </button>
       </div>
     </form>

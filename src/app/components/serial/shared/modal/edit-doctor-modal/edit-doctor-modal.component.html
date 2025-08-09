@@ -3,7 +3,7 @@
 >
   <div class="rounded-xl max-w-[840px] w-full max-h-[90vh] overflow-y-auto">
     <form
-      [formGroup]="addDoctorForm"
+      [formGroup]="doctorForm"
       (submit)="onSubmit()"
       class="bg-[#e3c9f8] p-6 space-y-6 rounded-lg shadow-lg"
     >
@@ -28,18 +28,18 @@
             type="text"
             formControlName="drName"
             [class.invalid]="
-              addDoctorForm.get('drName')?.invalid &&
-              (addDoctorForm.get('drName')?.dirty ||
-                addDoctorForm.get('drName')?.touched ||
+              doctorForm.get('drName')?.invalid &&
+              (doctorForm.get('drName')?.dirty ||
+                doctorForm.get('drName')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
             class="input input-bordered w-full input-sm outline-none"
             required
           />
-          @if(addDoctorForm.get('drName')?.hasError('required') &&
-          (addDoctorForm.get('drName')?.dirty ||
-          addDoctorForm.get('drName')?.touched || isSubmitted)){
+          @if(doctorForm.get('drName')?.hasError('required') &&
+          (doctorForm.get('drName')?.dirty || doctorForm.get('drName')?.touched
+          || isSubmitted)){
           <div class="label !py-0">
             <span class="label-text-alt text-rose-600 capitalize"
               >Doctor name is required</span
@@ -56,9 +56,9 @@
             type="text"
             formControlName="drSerial"
             [class.invalid]="
-              addDoctorForm.get('drSerial')?.invalid &&
-              (addDoctorForm.get('drSerial')?.dirty ||
-                addDoctorForm.get('drSerial')?.touched ||
+              doctorForm.get('drSerial')?.invalid &&
+              (doctorForm.get('drSerial')?.dirty ||
+                doctorForm.get('drSerial')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -74,9 +74,9 @@
           <textarea
             formControlName="degree"
             [class.invalid]="
-              addDoctorForm.get('degree')?.invalid &&
-              (addDoctorForm.get('degree')?.dirty ||
-                addDoctorForm.get('degree')?.touched ||
+              doctorForm.get('degree')?.invalid &&
+              (doctorForm.get('degree')?.dirty ||
+                doctorForm.get('degree')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -95,9 +95,9 @@
             type="text"
             formControlName="designation"
             [class.invalid]="
-              addDoctorForm.get('designation')?.invalid &&
-              (addDoctorForm.get('designation')?.dirty ||
-                addDoctorForm.get('designation')?.touched ||
+              doctorForm.get('designation')?.invalid &&
+              (doctorForm.get('designation')?.dirty ||
+                doctorForm.get('designation')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -114,9 +114,9 @@
             type="text"
             formControlName="specialty"
             [class.invalid]="
-              addDoctorForm.get('specialty')?.invalid &&
-              (addDoctorForm.get('specialty')?.dirty ||
-                addDoctorForm.get('specialty')?.touched ||
+              doctorForm.get('specialty')?.invalid &&
+              (doctorForm.get('specialty')?.dirty ||
+                doctorForm.get('specialty')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -133,30 +133,23 @@
             class="select select-bordered select-sm w-full"
             formControlName="departmentId"
             [class.invalid]="
-              addDoctorForm.get('departmentId')?.invalid &&
-              (addDoctorForm.get('departmentId')?.dirty ||
-                addDoctorForm.get('departmentId')?.touched ||
+              doctorForm.get('departmentId')?.invalid &&
+              (doctorForm.get('departmentId')?.dirty ||
+                doctorForm.get('departmentId')?.touched ||
                 isSubmitted)
             "
             required
           >
             <option value="" disabled>Select Department</option>
-            @switch (query.status()) { @case ('pending') {
-            <option class="text-center text-5xl">Loading...</option>
-            } @case ('error') {
-            <option>Error: {{ query.error()?.message }}</option>
-            } @default { @for (department of query.data(); track department.id)
-            {
+            @for (department of departments; track department.id) {
             <option [value]="department?.id">
               {{ department?.departmentName }}
             </option>
-            } @empty {
-            <li>No Department found</li>
-            } } }
+            }
           </select>
-          @if(addDoctorForm.get('departmentId')?.hasError('required') &&
-          (addDoctorForm.get('departmentId')?.dirty ||
-          addDoctorForm.get('departmentId')?.touched || isSubmitted)){
+          @if(doctorForm.get('departmentId')?.hasError('required') &&
+          (doctorForm.get('departmentId')?.dirty ||
+          doctorForm.get('departmentId')?.touched || isSubmitted)){
           <div class="label !py-0">
             <span class="label-text-alt text-rose-600 capitalize"
               >Department is required</span
@@ -174,9 +167,9 @@
             formControlName="phone"
             maxlength="14"
             [class.invalid]="
-              addDoctorForm.get('phone')?.invalid &&
-              (addDoctorForm.get('phone')?.dirty ||
-                addDoctorForm.get('phone')?.touched ||
+              doctorForm.get('phone')?.invalid &&
+              (doctorForm.get('phone')?.dirty ||
+                doctorForm.get('phone')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -193,9 +186,9 @@
             type="number"
             formControlName="fee"
             [class.invalid]="
-              addDoctorForm.get('fee')?.invalid &&
-              (addDoctorForm.get('fee')?.dirty ||
-                addDoctorForm.get('fee')?.touched ||
+              doctorForm.get('fee')?.invalid &&
+              (doctorForm.get('fee')?.dirty ||
+                doctorForm.get('fee')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -212,9 +205,9 @@
             type="text"
             formControlName="visitTime"
             [class.invalid]="
-              addDoctorForm.get('visitTime')?.invalid &&
-              (addDoctorForm.get('visitTime')?.dirty ||
-                addDoctorForm.get('visitTime')?.touched ||
+              doctorForm.get('visitTime')?.invalid &&
+              (doctorForm.get('visitTime')?.dirty ||
+                doctorForm.get('visitTime')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -231,9 +224,9 @@
             type="text"
             formControlName="room"
             [class.invalid]="
-              addDoctorForm.get('room')?.invalid &&
-              (addDoctorForm.get('room')?.dirty ||
-                addDoctorForm.get('room')?.touched ||
+              doctorForm.get('room')?.invalid &&
+              (doctorForm.get('room')?.dirty ||
+                doctorForm.get('room')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -250,9 +243,9 @@
             type="text"
             formControlName="imageUrl"
             [class.invalid]="
-              addDoctorForm.get('imageUrl')?.invalid &&
-              (addDoctorForm.get('imageUrl')?.dirty ||
-                addDoctorForm.get('imageUrl')?.touched ||
+              doctorForm.get('imageUrl')?.invalid &&
+              (doctorForm.get('imageUrl')?.dirty ||
+                doctorForm.get('imageUrl')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -268,9 +261,9 @@
           <textarea
             formControlName="description"
             [class.invalid]="
-              addDoctorForm.get('description')?.invalid &&
-              (addDoctorForm.get('description')?.dirty ||
-                addDoctorForm.get('description')?.touched ||
+              doctorForm.get('description')?.invalid &&
+              (doctorForm.get('description')?.dirty ||
+                doctorForm.get('description')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -290,9 +283,9 @@
           <textarea
             formControlName="additional"
             [class.invalid]="
-              addDoctorForm.get('additional')?.invalid &&
-              (addDoctorForm.get('additional')?.dirty ||
-                addDoctorForm.get('additional')?.touched ||
+              doctorForm.get('additional')?.invalid &&
+              (doctorForm.get('additional')?.dirty ||
+                doctorForm.get('additional')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -310,9 +303,9 @@
           <textarea
             formControlName="notice"
             [class.invalid]="
-              addDoctorForm.get('notice')?.invalid &&
-              (addDoctorForm.get('notice')?.dirty ||
-                addDoctorForm.get('notice')?.touched ||
+              doctorForm.get('notice')?.invalid &&
+              (doctorForm.get('notice')?.dirty ||
+                doctorForm.get('notice')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -332,9 +325,9 @@
             type="text"
             formControlName="serialBlock"
             [class.invalid]="
-              addDoctorForm.get('serialBlock')?.invalid &&
-              (addDoctorForm.get('serialBlock')?.dirty ||
-                addDoctorForm.get('serialBlock')?.touched ||
+              doctorForm.get('serialBlock')?.invalid &&
+              (doctorForm.get('serialBlock')?.dirty ||
+                doctorForm.get('serialBlock')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
@@ -356,9 +349,9 @@
               type="text"
               formControlName="satNewPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('satNewPatientLimit')?.invalid &&
-                (addDoctorForm.get('satNewPatientLimit')?.dirty ||
-                  addDoctorForm.get('satNewPatientLimit')?.touched ||
+                doctorForm.get('satNewPatientLimit')?.invalid &&
+                (doctorForm.get('satNewPatientLimit')?.dirty ||
+                  doctorForm.get('satNewPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -377,9 +370,9 @@
               type="text"
               formControlName="satOldPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('satOldPatientLimit')?.invalid &&
-                (addDoctorForm.get('satOldPatientLimit')?.dirty ||
-                  addDoctorForm.get('satOldPatientLimit')?.touched ||
+                doctorForm.get('satOldPatientLimit')?.invalid &&
+                (doctorForm.get('satOldPatientLimit')?.dirty ||
+                  doctorForm.get('satOldPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -401,9 +394,9 @@
               type="text"
               formControlName="sunNewPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('sunNewPatientLimit')?.invalid &&
-                (addDoctorForm.get('sunNewPatientLimit')?.dirty ||
-                  addDoctorForm.get('sunNewPatientLimit')?.touched ||
+                doctorForm.get('sunNewPatientLimit')?.invalid &&
+                (doctorForm.get('sunNewPatientLimit')?.dirty ||
+                  doctorForm.get('sunNewPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -422,9 +415,9 @@
               type="text"
               formControlName="sunOldPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('sunOldPatientLimit')?.invalid &&
-                (addDoctorForm.get('sunOldPatientLimit')?.dirty ||
-                  addDoctorForm.get('sunOldPatientLimit')?.touched ||
+                doctorForm.get('sunOldPatientLimit')?.invalid &&
+                (doctorForm.get('sunOldPatientLimit')?.dirty ||
+                  doctorForm.get('sunOldPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -446,9 +439,9 @@
               type="text"
               formControlName="monNewPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('monNewPatientLimit')?.invalid &&
-                (addDoctorForm.get('monNewPatientLimit')?.dirty ||
-                  addDoctorForm.get('monNewPatientLimit')?.touched ||
+                doctorForm.get('monNewPatientLimit')?.invalid &&
+                (doctorForm.get('monNewPatientLimit')?.dirty ||
+                  doctorForm.get('monNewPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -467,9 +460,9 @@
               type="text"
               formControlName="monOldPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('monOldPatientLimit')?.invalid &&
-                (addDoctorForm.get('monOldPatientLimit')?.dirty ||
-                  addDoctorForm.get('monOldPatientLimit')?.touched ||
+                doctorForm.get('monOldPatientLimit')?.invalid &&
+                (doctorForm.get('monOldPatientLimit')?.dirty ||
+                  doctorForm.get('monOldPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -491,9 +484,9 @@
               type="text"
               formControlName="tueNewPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('tueNewPatientLimit')?.invalid &&
-                (addDoctorForm.get('tueNewPatientLimit')?.dirty ||
-                  addDoctorForm.get('tueNewPatientLimit')?.touched ||
+                doctorForm.get('tueNewPatientLimit')?.invalid &&
+                (doctorForm.get('tueNewPatientLimit')?.dirty ||
+                  doctorForm.get('tueNewPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -512,9 +505,9 @@
               type="text"
               formControlName="tueOldPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('tueOldPatientLimit')?.invalid &&
-                (addDoctorForm.get('tueOldPatientLimit')?.dirty ||
-                  addDoctorForm.get('tueOldPatientLimit')?.touched ||
+                doctorForm.get('tueOldPatientLimit')?.invalid &&
+                (doctorForm.get('tueOldPatientLimit')?.dirty ||
+                  doctorForm.get('tueOldPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -536,9 +529,9 @@
               type="text"
               formControlName="wedNewPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('wedNewPatientLimit')?.invalid &&
-                (addDoctorForm.get('wedNewPatientLimit')?.dirty ||
-                  addDoctorForm.get('wedNewPatientLimit')?.touched ||
+                doctorForm.get('wedNewPatientLimit')?.invalid &&
+                (doctorForm.get('wedNewPatientLimit')?.dirty ||
+                  doctorForm.get('wedNewPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -557,9 +550,9 @@
               type="text"
               formControlName="wedOldPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('wedOldPatientLimit')?.invalid &&
-                (addDoctorForm.get('wedOldPatientLimit')?.dirty ||
-                  addDoctorForm.get('wedOldPatientLimit')?.touched ||
+                doctorForm.get('wedOldPatientLimit')?.invalid &&
+                (doctorForm.get('wedOldPatientLimit')?.dirty ||
+                  doctorForm.get('wedOldPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -581,9 +574,9 @@
               type="text"
               formControlName="thuNewPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('thuNewPatientLimit')?.invalid &&
-                (addDoctorForm.get('thuNewPatientLimit')?.dirty ||
-                  addDoctorForm.get('thuNewPatientLimit')?.touched ||
+                doctorForm.get('thuNewPatientLimit')?.invalid &&
+                (doctorForm.get('thuNewPatientLimit')?.dirty ||
+                  doctorForm.get('thuNewPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -602,9 +595,9 @@
               type="text"
               formControlName="thuOldPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('thuOldPatientLimit')?.invalid &&
-                (addDoctorForm.get('thuOldPatientLimit')?.dirty ||
-                  addDoctorForm.get('thuOldPatientLimit')?.touched ||
+                doctorForm.get('thuOldPatientLimit')?.invalid &&
+                (doctorForm.get('thuOldPatientLimit')?.dirty ||
+                  doctorForm.get('thuOldPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -626,9 +619,9 @@
               type="text"
               formControlName="friNewPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('friNewPatientLimit')?.invalid &&
-                (addDoctorForm.get('friNewPatientLimit')?.dirty ||
-                  addDoctorForm.get('friNewPatientLimit')?.touched ||
+                doctorForm.get('friNewPatientLimit')?.invalid &&
+                (doctorForm.get('friNewPatientLimit')?.dirty ||
+                  doctorForm.get('friNewPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"
@@ -647,9 +640,9 @@
               type="text"
               formControlName="friOldPatientLimit"
               [class.invalid]="
-                addDoctorForm.get('friOldPatientLimit')?.invalid &&
-                (addDoctorForm.get('friOldPatientLimit')?.dirty ||
-                  addDoctorForm.get('friOldPatientLimit')?.touched ||
+                doctorForm.get('friOldPatientLimit')?.invalid &&
+                (doctorForm.get('friOldPatientLimit')?.dirty ||
+                  doctorForm.get('friOldPatientLimit')?.touched ||
                   isSubmitted)
               "
               placeholder="Type here"

@@ -1,4 +1,4 @@
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ActiveLinkComponent } from "../active-link/active-link.component";
@@ -8,7 +8,7 @@ import { DataService } from '../../../../services/serial/data.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  imports: [CommonModule, ActiveLinkComponent]
+  imports: [ActiveLinkComponent]
 })
 export class NavbarComponent {
   authService = inject(AuthService);

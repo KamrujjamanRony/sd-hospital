@@ -141,18 +141,13 @@
             required
           >
             <option value="" disabled>Select Department</option>
-            @switch (query.status()) { @case ('pending') {
-            <option class="text-center text-5xl">Loading...</option>
-            } @case ('error') {
-            <option>Error: {{ query.error()?.message }}</option>
-            } @default { @for (department of query.data(); track department.id)
-            {
+            @for (department of departments; track department.id) {
             <option [value]="department?.id">
               {{ department?.departmentName }}
             </option>
             } @empty {
             <li>No Department found</li>
-            } } }
+            }
           </select>
           @if(addDoctorForm.get('departmentId')?.hasError('required') &&
           (addDoctorForm.get('departmentId')?.dirty ||

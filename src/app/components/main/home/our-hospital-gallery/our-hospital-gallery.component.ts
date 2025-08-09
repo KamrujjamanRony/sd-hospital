@@ -20,7 +20,7 @@ export class OurHospitalGalleryComponent {
   ngOnInit(): void {
     this.gallery$ = this.galleryService.getCompanyGallery();
     this.gallery$.subscribe(data => {
-      this.gallery = data.slice(0, 3);
+      this.gallery = data?.slice(0, 3);
     })
   }
 

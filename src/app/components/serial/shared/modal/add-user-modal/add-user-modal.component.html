@@ -81,7 +81,7 @@
             <span class="label-text font-bold capitalize"> Role: </span>
           </div>
           <select
-            class="select select-bordered select-sm w-full min-h-[300px]"
+            class="select select-bordered select-sm w-full !h-60"
             formControlName="role"
             multiple
             [class.invalid]="
@@ -98,7 +98,7 @@
               Select Multiple Role
             </option>
             @for (role of userRole; track role?.id) {
-            <option class="p-4 text-center border-b" [value]="role?.id">
+            <option class="p-2 text-center border-b" [value]="role?.id">
               {{ role?.name }}
             </option>
             } @empty {

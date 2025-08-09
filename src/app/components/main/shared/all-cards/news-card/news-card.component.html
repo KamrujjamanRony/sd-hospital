@@ -24,7 +24,7 @@
   </h1>
   <p class="text-sm text-gray-900 italic">{{ subtitle() }}</p>
   <p class="mb-4 text-gray-900 text-justify">
-    {{ description().slice(0, 250) }}@if (description().length > 250) {...}
+    {{ description()?.slice(0, 250) }}@if (description().length > 250) {...}
   </p>
   <button
     (click)="openNewsDetails()"

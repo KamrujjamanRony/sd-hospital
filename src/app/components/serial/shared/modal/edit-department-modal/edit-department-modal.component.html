@@ -3,7 +3,7 @@
 >
   <div class="rounded-xl max-w-[840px] w-full max-h-[90vh] overflow-y-auto">
     <form
-      [formGroup]="addDepartmentForm"
+      [formGroup]="editDepartmentForm"
       (submit)="onSubmit()"
       class="bg-[#e3c9f8] p-6 space-y-6 rounded-lg shadow-lg"
     >
@@ -13,6 +13,7 @@
         <button
           class="rounded bg-red-600 p-2 w-8 h-8 text-center text-gray-50 transition-all hover:opacity-80"
           (click)="closeThisModal()"
+          type="button"
         >
           X
         </button>
@@ -28,18 +29,18 @@
             type="text"
             formControlName="departmentName"
             [class.invalid]="
-              addDepartmentForm.get('departmentName')?.invalid &&
-              (addDepartmentForm.get('departmentName')?.dirty ||
-                addDepartmentForm.get('departmentName')?.touched ||
+              editDepartmentForm.get('departmentName')?.invalid &&
+              (editDepartmentForm.get('departmentName')?.dirty ||
+                editDepartmentForm.get('departmentName')?.touched ||
                 isSubmitted)
             "
             placeholder="Type here"
             class="input input-bordered w-full input-sm outline-none"
             required
           />
-          @if(addDepartmentForm.get('departmentName')?.hasError('required') &&
-          (addDepartmentForm.get('departmentName')?.dirty ||
-          addDepartmentForm.get('departmentName')?.touched || isSubmitted)){
+          @if(editDepartmentForm.get('departmentName')?.hasError('required') &&
+          (editDepartmentForm.get('departmentName')?.dirty ||
+          editDepartmentForm.get('departmentName')?.touched || isSubmitted)){
           <div class="label !py-0">
             <span class="label-text-alt text-rose-600 capitalize"
               >Department name is required</span
@@ -47,25 +48,26 @@
           </div>
           }
         </label>
+
         <!-- Image Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Image</span>
+            <span class="label-text font-bold capitalize">Image URL</span>
           </div>
           <input
             type="text"
             formControlName="imgUrl"
             [class.invalid]="
-              addDepartmentForm.get('imgUrl')?.invalid &&
-              (addDepartmentForm.get('imgUrl')?.dirty ||
-                addDepartmentForm.get('imgUrl')?.touched ||
+              editDepartmentForm.get('imgUrl')?.invalid &&
+              (editDepartmentForm.get('imgUrl')?.dirty ||
+                editDepartmentForm.get('imgUrl')?.touched ||
                 isSubmitted)
             "
-            placeholder="Type here"
+            placeholder="Paste image URL here"
             class="input input-bordered w-full input-sm outline-none"
-            required
           />
         </label>
+
         <!-- description Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
@@ -74,26 +76,16 @@
           <textarea
             formControlName="description"
             [class.invalid]="
-              addDepartmentForm.get('description')?.invalid &&
-              (addDepartmentForm.get('description')?.dirty ||
-                addDepartmentForm.get('description')?.touched ||
+              editDepartmentForm.get('description')?.invalid &&
+              (editDepartmentForm.get('description')?.dirty ||
+                editDepartmentForm.get('description')?.touched ||
                 isSubmitted)
             "
-            placeholder="Type here"
-            class="input input-bordered w-full"
-            required
+            placeholder="Type description here"
+            class="input input-bordered w-full h-32"
             cols="30"
             rows="10"
           ></textarea>
-          <!-- @if(addDepartmentForm.get('description')?.hasError('required') &&
-          (addDepartmentForm.get('description')?.dirty ||
-          addDepartmentForm.get('description')?.touched || isSubmitted)){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Description is required</span
-            >
-          </div>
-          } -->
         </label>
       </div>
 
@@ -102,7 +94,7 @@
           type="submit"
           class="rounded bg-primary py-1 text-gray-50 transition-all hover:opacity-80 w-full"
         >
-          Update
+          Update Department
         </button>
       </div>
     </form>

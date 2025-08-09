@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GalleryService } from '../../../../services/main/gallery.service';
@@ -7,7 +7,7 @@ import { GalleryCardComponent } from "../../../../components/main/shared/all-car
 @Component({
   selector: 'app-hospital-gallery',
   templateUrl: './hospital-gallery.component.html',
-  imports: [CommonModule, GalleryCardComponent]
+  imports: [GalleryCardComponent]
 })
 export class HospitalGalleryComponent {
   galleryService = inject(GalleryService);

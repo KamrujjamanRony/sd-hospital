@@ -1,24 +1,28 @@
-import { Component, inject } from '@angular/core';
-import { injectQuery } from '@tanstack/angular-query-experimental';
+import { Component, inject, OnInit } from '@angular/core';
 import { PageHeaderComponent } from '../../../components/serial/shared/page-header/page-header.component';
-import { CategoryComponent } from '../../../components/serial/category/category.component';
 import { DepartmentService } from '../../../services/serial/department.service';
+import { CommonModule } from '@angular/common';
+import { SerialCategoryComponent } from '../../../components/serial/serial-category/serial-category.component';
 
 @Component({
   selector: 'app-departments',
+  standalone: true,
   templateUrl: './departments.component.html',
   styleUrl: './departments.component.css',
-  imports: [PageHeaderComponent, CategoryComponent]
+  imports: [CommonModule, PageHeaderComponent, SerialCategoryComponent]
 })
-export class DepartmentsComponent {
-  departmentService = inject(DepartmentService)
+export class DepartmentsComponent implements OnInit {
+  departmentService = inject(DepartmentService);
+  departments: any[] = [];
 
-  constructor() { }
-
-  ngOnInit(): void { }
-
-  query = injectQuery(() => ({
-    queryKey: ['departments'],
-    queryFn: () => this.departmentService.getDepartments(),
-  }))
+  ngOnInit(): void {
+    this.departmentService.getDepartments().subscribe({
+      next: (departments) => {
+        this.departments = departments;
+      },
+      error: (error) => {
+        console.error('Error loading departments:', error);
+      }
+    });
+  }
 }

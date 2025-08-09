@@ -121,15 +121,12 @@
       } @if (selectedDoctor) {
       <h1 class="text-xl font-bold">
         Doctor:
-        {{ this.doctorsService.getDoctorById(selectedDoctor)?.drName }}
+        {{ getDoctorName(selectedDoctor) }}
       </h1>
       } @if (selectedDepartment) {
       <h1 class="text-xl font-bold">
         Department:
-        {{
-          this.departmentService.getDepartmentByDoctorId(selectedDepartment)
-            ?.departmentName
-        }}
+        {{ getDepartmentName(selectedDepartment) }}
       </h1>
       }
       <p class="font-bold" [class.hidden-when-printing]="isPrinting">
@@ -172,9 +169,7 @@
               class="mx-1 text-xs max-w-[150px]"
               [class.hidden-when-printing]="isPrinting"
             >
-              {{
-                this.doctorsService.getDoctorById(appointment?.drCode)?.drName
-              }}
+              {{ getDoctorName(appointment?.drCode) }}
             </td>
             <td
               class="mx-1 text-xs max-w-[100px]"
@@ -225,8 +220,8 @@
   </div>
 </div>
 } @if(editAppointmentModal) {
-<app-appointment-modal
+<app-appointment-modal-serial
   [id]="selectedId"
   (closeAppointment)="closeEditAppointmentModal()"
-></app-appointment-modal>
+></app-appointment-modal-serial>
 }
