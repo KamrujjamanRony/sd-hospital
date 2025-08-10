@@ -22,8 +22,28 @@
     />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (
+          ((e.ctrlKey || e.metaKey) && e.key === "u") ||
+          ((e.ctrlKey || e.metaKey) && e.key === "U") ||
+          ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "i") ||
+          ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "I") ||
+          e.key === "F12" ||
+          ((e.ctrlKey || e.metaKey) && e.key === "p") ||
+          ((e.ctrlKey || e.metaKey) && e.key === "P") ||
+          ((e.ctrlKey || e.metaKey) && e.key === "s") ||
+          ((e.ctrlKey || e.metaKey) && e.key === "S")
+        ) {
+          e.preventDefault();
+        }
+      });
+    </script>
   </head>
-  <body disable-devtool-auto src='cdn.jsdelivr.net/npm/disable-devtool' >
+  <body disable-devtool-auto src="cdn.jsdelivr.net/npm/disable-devtool">
     <app-root></app-root>
   </body>
 </html>

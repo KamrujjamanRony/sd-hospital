@@ -1,11 +1,11 @@
-@if (!loading && slides.length > 0) {
+@if (!loading() && slides().length > 0) {
 <div class="relative w-full h-[100vh] overflow-hidden group">
   <!-- Slides Container -->
   <div
     class="relative w-full h-full transition-transform duration-1000 ease-in-out"
-    [style.transform]="'translateX(-' + currentIndex * 100 + '%)'"
+    [style.transform]="'translateX(-' + currentIndex() * 100 + '%)'"
   >
-    @for(slide of slides; track slide.id; let i = $index) {
+    @for(slide of slides(); track slide.id; let i = $index) {
     <div
       class="absolute top-0 left-0 w-full h-full"
       [style.left]="i * 100 + '%'"
@@ -36,6 +36,8 @@
       </div>
       }
     </div>
+    } @empty {
+    <p>No Slider Available!</p>
     }
   </div>
 
@@ -88,7 +90,7 @@
     </button>
   </div>
 </div>
-} @else if (loading) {
+} @else if (loading()) {
 <div class="flex justify-center items-center h-[80vh] bg-gray-100">
   <div class="animate-pulse flex flex-col items-center">
     <div class="w-16 h-16 bg-rose-600 rounded-full mb-4"></div>

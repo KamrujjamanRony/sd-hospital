@@ -26,7 +26,7 @@
   </section>
 </div>
 
-@if(showAppointment) {
+@if(showAppointment()) {
 <app-appointment-modal
   id=""
   (closeAppointment)="closeAppointment()"

@@ -32,7 +32,7 @@
         (change)="onInputChange()"
       >
         <option value="">All Doctors</option>
-        @for (doctor of doctorsWithAppointments; track $index) {
+        @for (doctor of doctorsWithAppointments(); track $index) {
         <option [value]="doctor.id">{{ doctor.drName }}</option>
         }
       </select>
@@ -71,7 +71,7 @@
       </div>
       <div class="my-4 pl-2 lg:my-0 lg:pl-2 lg:pr-1">
         <button
-          (click)="printPage()"
+          (click)="generatePDF()"
           type="button"
           class="btn bg-rose-600 hover:bg-rose-500 py-3 px-3 rounded-lg text-gray-50 cursor-pointer"
         >
@@ -82,7 +82,7 @@
   </div>
 </div>
 
-@if (loading) {
+@if (loading()) {
 <div class="flex items-center justify-center h-[70vh]">
   <div>
     <div
@@ -97,7 +97,7 @@
     <p class="text-2xl text-gray-900 text-center ml-2 mt-2">Loading...</p>
   </div>
 </div>
-} @else if (totalAppointment == 0) {
+} @else if (totalAppointment() == 0) {
 <div class="flex items-center justify-center h-[70vh]">
   <div>
     <h1 class="text-xl text-gray-900 text-center">No appointment found</h1>
@@ -107,30 +107,30 @@
 <div class="mx-4" [class.black-when-printing]="isPrinting">
   <div class="w-full overflow-hidden rounded-lg shadow-xs">
     <div class="w-full overflow-x-auto">
-      @if (fromDate && !toDate) {
-      <h1 class="text-xl font-bold">Date: {{ transform(fromDate) }}</h1>
-      } @if (!fromDate && toDate) {
-      <h1 class="text-xl font-bold">Date: {{ transform(toDate) }}</h1>
-      } @if (fromDate && toDate) {
+      @if (fromDate() && !toDate) {
+      <h1 class="text-xl font-bold">Date: {{ transform(fromDate()) }}</h1>
+      } @if (!fromDate && toDate()) {
+      <h1 class="text-xl font-bold">Date: {{ transform(toDate()) }}</h1>
+      } @if (fromDate() && toDate()) {
       <h1 class="text-xl font-bold">
         Date:
         <span class="text-xl font-bold"
-          >From: {{ transform(fromDate) }} To: {{ transform(toDate) }}</span
+          >From: {{ transform(fromDate()) }} To: {{ transform(toDate()) }}</span
         >
       </h1>
-      } @if (selectedDoctor) {
+      } @if (selectedDoctor()) {
       <h1 class="text-xl font-bold">
         Doctor:
-        {{ getDoctorName(selectedDoctor) }}
+        {{ getDoctorName(selectedDoctor()) }}
       </h1>
-      } @if (selectedDepartment) {
+      } @if (selectedDepartment()) {
       <h1 class="text-xl font-bold">
         Department:
-        {{ getDepartmentName(selectedDepartment) }}
+        {{ getDepartmentName(selectedDepartment()) }}
       </h1>
       }
       <p class="font-bold" [class.hidden-when-printing]="isPrinting">
-        Total : {{ totalAppointment }}
+        Total : {{ totalAppointment() }}
       </p>
       <table class="w-full">
         <thead>
@@ -167,7 +167,7 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y">
-          @for (appointment of filteredAppointments; track appointment.id) {
+          @for (appointment of filteredAppointments(); track appointment.id) {
           <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
             <td class="px-4 py-3 text-sm">{{ appointment.sl }}</td>
             <td
@@ -231,9 +231,9 @@
     </div>
   </div>
 </div>
-} @if (editAppointmentModal) {
+} @if (editAppointmentModal()) {
 <app-appointment-modal-serial
-  [id]="selectedId"
+  [id]="selectedId()"
   (closeAppointment)="closeEditAppointmentModal()"
 ></app-appointment-modal-serial>
 }
