@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageHeaderComponent } from "../shared/page-header/page-header.component";
 import { DoctorCardComponent } from '../doctor-card/doctor-card.component';
@@ -12,15 +12,14 @@ import { Observable, Subscription } from 'rxjs';
   imports: [PageHeaderComponent, DoctorCardComponent]
 })
 export class DoctorListComponent implements OnInit {
-  department: any;
-  doctorList: any[] = [];
+  department = '';
+  doctorList = signal<any[]>([]);
   emptyImg: any = '../../../../assets/images/doctor.png';
   private subscriptions: Subscription[] = [];
-  loading: boolean = true;
+  loading = signal<boolean>(true);
 
   route = inject(ActivatedRoute);
   doctorsService = inject(DoctorsService);
-  doctors$!: Observable<any[]>;
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -31,21 +30,17 @@ export class DoctorListComponent implements OnInit {
     );
   }
 
-  loadDoctors(): void {
-    this.doctors$ = this.doctorsService.getDoctors();
-  }
-
   loadDoctorsByDepartment(): void {
-    this.loading = true;
+    this.loading.set(true);
     this.subscriptions.push(
       this.doctorsService.getDoctors().subscribe({
         next: (doctors) => {
-          this.doctorList = doctors.filter(d => d.departmentId === this.department);
-          this.loading = false;
+          this.doctorList.set(doctors.filter(d => d.departmentId === this.department));
+          this.loading.set(false);
         },
         error: (error) => {
           console.error('Error loading doctors:', error);
-          this.loading = false;
+          this.loading.set(false);
         }
       })
     );

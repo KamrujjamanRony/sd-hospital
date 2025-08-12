@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { DoctorDetailsComponent } from '../shared/modal/doctor-details/doctor-details.component';
 import { AppointmentModalSerialComponent } from '../shared/modal/appointment-modal-serial/appointment-modal-serial.component';
 
@@ -10,31 +10,31 @@ import { AppointmentModalSerialComponent } from '../shared/modal/appointment-mod
 export class DoctorCardComponent {
   readonly doctor = input<any>();
   readonly department = input.required<string>();
-  showModal: boolean = false;
-  showAppointment: boolean = false;
+  showModal = signal<boolean>(false);
+  showAppointment = signal<boolean>(false);
   doctorMale = '../../../assets/images/doctor.png';
 
   constructor() { }
 
   handleClick() {
-    this.showAppointment = true;
-    this.showModal = false;
+    this.showAppointment.set(true);
+    this.showModal.set(false);
   }
 
   openDoctorDetails() {
-    this.showModal = true;
+    this.showAppointment.set(true);
   }
 
   openAppointment() {
-    this.showAppointment = true;
+    this.showAppointment.set(true);
   }
 
   closeDoctorDetails() {
-    this.showModal = false;
+    this.showModal.set(false);
   }
 
   closeAppointment() {
-    this.showAppointment = false;
+    this.showAppointment.set(false);
   }
 
 }

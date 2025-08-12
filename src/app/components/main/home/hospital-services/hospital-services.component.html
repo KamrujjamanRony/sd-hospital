@@ -1,27 +1,30 @@
 <section
   class="relative px-4 py-16 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 lg:py-32 bg-gray-200"
 >
-@if (header) {
-  <h2 class="text-xl lg:text-3xl leading-tight font-bold mt-4 text-center py-2 lg:py-5">
-    {{header}}
+  @if (header()) {
+  <h2
+    class="text-xl lg:text-3xl leading-tight font-bold mt-4 text-center py-2 lg:py-5"
+  >
+    {{ header() }}
   </h2>
-}
+  }
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-5 lg:gap-7">
-    @for (service of services; track $index) {
-      <div class="md:flex">
-        <div>
-          <div class="w-10 h-10 bg-gradient-to-l from-cyan-500 to-blue-500 rounded-full"></div>
-        </div>
-        <div class="md:ml-8 mt-4 md:mt-0">
-          <h4 class="text-xl font-bold leading-tight">
-            {{service?.title}}
-          </h4>
-          <p class="mt-2 leading-relaxed text-justify">
-            {{service?.description}}
-          </p>
-        </div>
+    @for (service of services(); track $index) {
+    <div class="md:flex">
+      <div>
+        <div
+          class="w-10 h-10 bg-gradient-to-l from-cyan-500 to-blue-500 rounded-full"
+        ></div>
       </div>
+      <div class="md:ml-8 mt-4 md:mt-0">
+        <h4 class="text-xl font-bold leading-tight">
+          {{ service?.title }}
+        </h4>
+        <p class="mt-2 leading-relaxed text-justify">
+          {{ service?.description }}
+        </p>
+      </div>
+    </div>
     }
   </div>
-  
 </section>

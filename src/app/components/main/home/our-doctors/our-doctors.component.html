@@ -1,10 +1,10 @@
-@if (hospitalDoctors$ | async) {
+@if (hospitalDoctors()) {
 <div class="container mx-auto">
   <div class="text-center">
     <h2 class="text-5xl py-20">Our Doctor</h2>
     <div class="container mx-auto my-5">
       <div class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10">
-        @for (doctor of hospitalDoctors$ | async; track $index) {
+        @for (doctor of hospitalDoctors() | slice:0:3; track $index) {
         <app-doctor-card [doctor]="doctor"></app-doctor-card>
         }
       </div>

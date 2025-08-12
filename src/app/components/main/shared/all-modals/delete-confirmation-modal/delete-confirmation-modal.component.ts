@@ -1,9 +1,9 @@
-import { Component, Input, inject, output } from '@angular/core';
+import { Component, Input, inject, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../../../environments/environments';
 @Component({
-    selector: 'app-delete-confirmation-modal',
-    template: `
+  selector: 'app-delete-confirmation-modal',
+  template: `
     <div class="modal-container bg-orange-50">
       <h1 class="font-bold">Are you sure you want to delete this item?</h1>
       <div class="form-control w-full max-w-xs">
@@ -12,7 +12,7 @@ import { environment } from '../../../../../../environments/environments';
         </label>
         <input type="password" placeholder="Auth Code" [(ngModel)]="password" class="input input-bordered input-accent w-full max-w-xs" />
         <label class="label">
-          <span class="label-text-alt text-red-500">{{err}}</span>
+          <span class="label-text-alt text-red-500">{{err()}}</span>
         </label>
       </div>
       <div class="flex justify-center mt-5">
@@ -23,7 +23,7 @@ import { environment } from '../../../../../../environments/environments';
       </div>
     </div>
   `,
-    styles: [`
+  styles: [`
     .modal-container {
       position: fixed;
       top: 50%;
@@ -48,18 +48,18 @@ import { environment } from '../../../../../../environments/environments';
       text-align: center;
     }
   `],
-    imports: [FormsModule]
+  imports: [FormsModule]
 })
 export class DeleteConfirmationModalComponent {
   confirmDelete = output<void>();
   closeModal = output<void>();
-  err: any = '';
-  password: any = '';
+  err = signal<any>('');
+  password = signal<any>('');
 
   constructor() { }
 
   confirm(): void {
-    this.password === environment.authKey ? this.confirmDelete.emit() : this.err = "Please enter correct password";
+    this.password() === environment.authKey ? this.confirmDelete.emit() : this.err.set("Please enter correct password");
   }
 
   cancel(): void {

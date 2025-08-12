@@ -9,7 +9,7 @@
     >
       <div class="flex justify-between items-center">
         <h2 class="text-2xl font-bold">
-          {{ selected ? "UPDATE APPOINTMENT" : "BOOK AN APPOINTMENT" }}
+          {{ selected() ? "UPDATE APPOINTMENT" : "BOOK AN APPOINTMENT" }}
         </h2>
         <button
           type="button"
@@ -32,13 +32,13 @@
               formControlName="pName"
               [class.input-error]="
                 appointmentForm.get('pName')?.invalid &&
-                (appointmentForm.get('pName')?.touched || isSubmitted)
+                (appointmentForm.get('pName')?.touched || isSubmitted())
               "
               placeholder="Patient full name"
               class="input input-bordered w-full"
             />
             @if(appointmentForm.get('pName')?.invalid &&
-            (appointmentForm.get('pName')?.touched || isSubmitted)) {
+            (appointmentForm.get('pName')?.touched || isSubmitted())) {
             <div class="text-xs text-error mt-1">Patient name is required</div>
             }
           </label>
@@ -81,13 +81,13 @@
               formControlName="mobile"
               [class.input-error]="
                 appointmentForm.get('mobile')?.invalid &&
-                (appointmentForm.get('mobile')?.touched || isSubmitted)
+                (appointmentForm.get('mobile')?.touched || isSubmitted())
               "
               placeholder="01XXXXXXXXX"
               class="input input-bordered w-full"
             />
             @if(appointmentForm.get('mobile')?.invalid &&
-            (appointmentForm.get('mobile')?.touched || isSubmitted)) {
+            (appointmentForm.get('mobile')?.touched || isSubmitted())) {
             <div class="text-xs text-error mt-1">
               Valid mobile number is required
             </div>
@@ -106,19 +106,19 @@
               (change)="onDepartmentChange()"
               [class.select-error]="
                 appointmentForm.get('departmentId')?.invalid &&
-                (appointmentForm.get('departmentId')?.touched || isSubmitted)
+                (appointmentForm.get('departmentId')?.touched || isSubmitted())
               "
               class="select select-bordered w-full"
             >
               <option value="" disabled selected>Select department</option>
-              @for (department of departments; track department.id) {
+              @for (department of departments(); track department.id) {
               <option [value]="department.id">
                 {{ department.departmentName }}
               </option>
               }
             </select>
             @if(appointmentForm.get('departmentId')?.invalid &&
-            (appointmentForm.get('departmentId')?.touched || isSubmitted)) {
+            (appointmentForm.get('departmentId')?.touched || isSubmitted())) {
             <div class="text-xs text-error mt-1">Department is required</div>
             }
           </label>
@@ -132,17 +132,17 @@
               (change)="onDoctorChange()"
               [class.select-error]="
                 appointmentForm.get('drCode')?.invalid &&
-                (appointmentForm.get('drCode')?.touched || isSubmitted)
+                (appointmentForm.get('drCode')?.touched || isSubmitted())
               "
               class="select select-bordered w-full"
             >
               <option value="" disabled selected>Select doctor</option>
-              @for (doctor of doctorList; track doctor.id) {
+              @for (doctor of doctorList(); track doctor.id) {
               <option [value]="doctor.id">{{ doctor.drName }}</option>
               }
             </select>
             @if(appointmentForm.get('drCode')?.invalid &&
-            (appointmentForm.get('drCode')?.touched || isSubmitted)) {
+            (appointmentForm.get('drCode')?.touched || isSubmitted())) {
             <div class="text-xs text-error mt-1">Doctor is required</div>
             }
           </label>
@@ -155,7 +155,7 @@
               formControlName="date"
               [class.select-error]="
                 appointmentForm.get('date')?.invalid &&
-                (appointmentForm.get('date')?.touched || isSubmitted)
+                (appointmentForm.get('date')?.touched || isSubmitted())
               "
               class="select select-bordered w-full"
             >
@@ -170,7 +170,7 @@
               }
             </select>
             @if(appointmentForm.get('date')?.invalid &&
-            (appointmentForm.get('date')?.touched || isSubmitted)) {
+            (appointmentForm.get('date')?.touched || isSubmitted())) {
             <div class="text-xs text-error mt-1">Date is required</div>
             }
           </label>
@@ -209,9 +209,9 @@
       <button
         type="submit"
         class="rounded bg-primary py-1 text-gray-50 transition-all hover:opacity-80 w-full"
-        [disabled]="appointmentForm.invalid && isSubmitted"
+        [disabled]="appointmentForm.invalid && isSubmitted()"
       >
-        {{ selected ? "UPDATE APPOINTMENT" : "BOOK APPOINTMENT" }}
+        {{ selected() ? "UPDATE APPOINTMENT" : "BOOK APPOINTMENT" }}
       </button>
     </form>
   </div>

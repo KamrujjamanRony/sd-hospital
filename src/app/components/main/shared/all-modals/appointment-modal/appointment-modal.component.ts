@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, input, output, OnInit } from '@angular/core';
+import { Component, inject, input, output, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { format, isBefore } from 'date-fns';
 import { Observable, Subscription } from 'rxjs';
@@ -30,29 +30,22 @@ export class AppointmentModalComponent implements OnInit {
   readonly doctor = input<any>();
   readonly id = input.required<any>();
   readonly closeAppointment = output<void>();
-
-  // Data state
-  departments$!: Observable<any[]>;
-  doctors$!: Observable<any[]>;
   private subscriptions: Subscription[] = [];
 
   // Form state
   format = format;
-  selected!: any;
-  selectedDoctor: any;
-  doctorList: any;
-  confirmModal: boolean = false;
-  user: any;
-  errorMessage: string | null = null;
-  isSubmitting = false;
+  selected = signal<any>(null);
+  selectedDoctor = signal<any>(null);
+  doctorList = signal<any>(null);
+  confirmModal = signal<boolean>(false);
+  user = signal<any>(null);
+  errorMessage = signal<any>(null);
+  isSubmitting = signal<boolean>(false);
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
-    this.selected = this.appointmentService.getAppointment(this.id());
-    this.selectedDoctor = this.doctor();
-
-    // Initialize data
-    this.loadDepartments();
+    this.user.set(this.authService.getUser());
+    this.selected.set(this.appointmentService.getAppointment(this.id()));
+    this.selectedDoctor.set(this.doctor());
   }
 
   closeAppointmentModal(): void {
@@ -60,11 +53,7 @@ export class AppointmentModalComponent implements OnInit {
   }
 
   closeModal() {
-    this.confirmModal = false;
-  }
-
-  loadDepartments(): void {
-    this.departments$ = this.departmentService.getDepartments();
+    this.confirmModal.set(false);
   }
 
   onDepartmentChange() {
@@ -72,7 +61,7 @@ export class AppointmentModalComponent implements OnInit {
       this.subscriptions.push(
         this.doctorsService.getDoctors().subscribe({
           next: (doctors) => {
-            this.doctorList = doctors.filter(d => d.departmentId === this.appointmentForm.value.departmentId);
+            this.doctorList.set(doctors.filter(d => d.departmentId === this.appointmentForm.value.departmentId));
           },
           error: (error) => {
             console.error('Error loading doctors:', error);
@@ -83,27 +72,27 @@ export class AppointmentModalComponent implements OnInit {
   }
 
   private handleError(error: any) {
-    this.errorMessage = error.message || 'An error occurred. Please try again.';
+    this.errorMessage.set(error.message || 'An error occurred. Please try again.');
     console.error(error);
-    this.isSubmitting = false;
+    this.isSubmitting.set(false);
   }
 
   onSubmit(): void {
-    if (this.isSubmitting) return;
-    this.isSubmitting = true;
-    this.errorMessage = null;
+    if (this.isSubmitting()) return;
+    this.isSubmitting.set(true);
+    this.errorMessage.set(null);
 
     const formData = this.prepareFormData();
 
-    const operation$ = this.selected?.id
-      ? this.appointmentService.updateAppointment(this.selected.id, formData)
+    const operation$ = this.selected()?.id
+      ? this.appointmentService.updateAppointment(this.selected().id, formData)
       : this.appointmentService.addAppointment(formData);
 
     this.subscriptions.push(
       operation$.subscribe({
         next: () => {
-          this.confirmModal = true;
-          this.isSubmitting = false;
+          this.confirmModal.set(true);
+          this.isSubmitting.set(false);
           this.closeAppointmentModal();
         },
         error: (error) => {

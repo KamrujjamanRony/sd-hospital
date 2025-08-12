@@ -17,8 +17,8 @@
       </div>
 
       <div class="w-full text-center text-lg">
-        @if (selectedDoctor) {
-        <h1 class="">নামঃ {{ selectedDoctor?.drName }}</h1>
+        @if (selectedDoctor()) {
+        <h1 class="">নামঃ {{ selectedDoctor()?.drName }}</h1>
         }
         <h1 class="">
           সিরিয়ালের জন্য ০১৭০১৪১৩৪১৩ অথবা ০১৭৭৬৬১০৬১০ নাম্বারে কল করুন।
@@ -29,11 +29,11 @@
   </div>
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   url=""
   [title]="
-    selected
+    selected()
       ? 'Appointment is successfully updated!'
       : 'Appointment is successfully added!'
   "

@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { format, isBefore } from 'date-fns';
 import { Subscription } from 'rxjs';
@@ -34,16 +34,16 @@ export class AppointmentModalSerialComponent implements OnInit {
   @Input() id: any;
   @Output() closeAppointment = new EventEmitter<void>();
 
-  user: any;
+  user = signal<any>(null);
   blockSerials: string[] = [];
   msg: string | null = null;
   err: string | null = null;
-  isSubmitted = false;
-  selected: any;
-  selectedDoctor: any;
-  doctorList: any[] = [];
-  departments: any[] = [];
-  confirmModal = false;
+  isSubmitted = signal<boolean>(false);
+  selected = signal<any>(null);
+  selectedDoctor = signal<any>(null);
+  doctorList = signal<any[]>([]);
+  departments = signal<any[]>([]);
+  confirmModal = signal<boolean>(false);
   private subscriptions: Subscription[] = [];
 
   // Generate dates for the next 15 days
@@ -54,7 +54,7 @@ export class AppointmentModalSerialComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
+    this.user.set(this.authService.getUser());
     this.fetchDepartments();
     if (this.id) {
       this.loadAppointment();
@@ -73,7 +73,7 @@ export class AppointmentModalSerialComponent implements OnInit {
   fetchDepartments(): void {
     this.subscriptions.push(
       this.departmentService.getDepartments().subscribe(departments => {
-        this.departments = departments;
+        this.departments.set(departments);
       })
     );
   }
@@ -82,7 +82,7 @@ export class AppointmentModalSerialComponent implements OnInit {
     this.subscriptions.push(
       this.appointmentsService.getAppointmentDataById(this.id).subscribe({
         next: (data) => {
-          this.selected = data;
+          this.selected.set(data);
           this.updateFormValues();
           this.loadDoctorList(data.departmentId); // Pass departmentId here
         },
@@ -99,11 +99,11 @@ export class AppointmentModalSerialComponent implements OnInit {
       this.subscriptions.push(
         this.doctorsService.getDoctors().subscribe({
           next: (doctors) => {
-            this.doctorList = doctors.filter(d => d.departmentId === departmentId);
+            this.doctorList.set(doctors.filter(d => d.departmentId === departmentId));
             // If editing an appointment, ensure the doctor is in the list
-            if (this.selected?.drCode && !this.doctorList.some(d => d.id === this.selected.drCode)) {
-              this.doctorsService.getDoctorById(this.selected.drCode).subscribe(doctor => {
-                this.doctorList.push(doctor);
+            if (this.selected()?.drCode && !this.doctorList().some(d => d.id === this.selected().drCode)) {
+              this.doctorsService.getDoctorById(this.selected().drCode).subscribe(doctor => {
+                this.doctorList().push(doctor);
               });
             }
           },
@@ -113,7 +113,7 @@ export class AppointmentModalSerialComponent implements OnInit {
         })
       );
     } else {
-      this.doctorList = [];
+      this.doctorList.set([]);
     }
   }
 
@@ -151,7 +151,7 @@ export class AppointmentModalSerialComponent implements OnInit {
   }
 
   checkRoles(roleId: string): boolean {
-    return this.user?.roleIds?.includes(roleId);
+    return this.user()?.roleIds?.includes(roleId);
   }
 
   closeAppointmentModal(): void {
@@ -159,7 +159,7 @@ export class AppointmentModalSerialComponent implements OnInit {
   }
 
   closeModal(): void {
-    this.confirmModal = false;
+    this.confirmModal.set(false);
     this.err = null;
     this.msg = null;
   }
@@ -183,27 +183,27 @@ export class AppointmentModalSerialComponent implements OnInit {
 
   updateFormValues(): void {
     if (this.selected) {
-      const formattedDate = this.datePipe.transform(this.selected.date, 'yyyy-MM-dd');
+      const formattedDate = this.datePipe.transform(this.selected().date, 'yyyy-MM-dd');
       this.appointmentForm.patchValue({
-        pName: this.selected.pName,
-        age: this.selected.age,
-        sex: this.selected.sex,
-        mobile: this.selected.mobile,
-        type: this.selected.type?.toString(),
+        pName: this.selected().pName,
+        age: this.selected().age,
+        sex: this.selected().sex,
+        mobile: this.selected().mobile,
+        type: this.selected().type?.toString(),
         date: formattedDate || '',
-        sL: this.selected.sl,
-        departmentId: this.selected.departmentId,
-        drCode: this.selected.drCode,
-        fee: this.selected.fee,
-        remarks: this.selected.remarks,
-        paymentStatus: this.selected.paymentStatus,
-        confirmed: this.selected.confirmed,
+        sL: this.selected().sl,
+        departmentId: this.selected().departmentId,
+        drCode: this.selected().drCode,
+        fee: this.selected().fee,
+        remarks: this.selected().remarks,
+        paymentStatus: this.selected().paymentStatus,
+        confirmed: this.selected().confirmed,
       });
     }
   }
 
   onSubmit(): void {
-    this.isSubmitted = true;
+    this.isSubmitted.set(true);
 
     if (this.appointmentForm.invalid) {
       return;
@@ -219,7 +219,7 @@ export class AppointmentModalSerialComponent implements OnInit {
       }
     });
 
-    if (this.selected) {
+    if (this.selected()) {
       this.updateAppointment(formData);
     } else {
       this.createAppointment(formData);
@@ -231,7 +231,7 @@ export class AppointmentModalSerialComponent implements OnInit {
       this.appointmentService.addAppointment(formData).subscribe({
         next: () => {
           this.msg = "Appointment successfully created!";
-          this.confirmModal = true;
+          this.confirmModal.set(true);
           setTimeout(() => this.closeAppointmentModal(), 2000);
         },
         error: (error) => {
@@ -243,10 +243,10 @@ export class AppointmentModalSerialComponent implements OnInit {
 
   private updateAppointment(formData: FormData): void {
     this.subscriptions.push(
-      this.appointmentService.updateAppointment(this.selected.id, formData).subscribe({
+      this.appointmentService.updateAppointment(this.selected().id, formData).subscribe({
         next: () => {
           this.msg = "Appointment successfully updated!";
-          this.confirmModal = true;
+          this.confirmModal.set(true);
           setTimeout(() => this.closeAppointmentModal(), 2000);
         },
         error: (error) => {
@@ -258,7 +258,7 @@ export class AppointmentModalSerialComponent implements OnInit {
 
   private handleError(error: any): void {
     this.err = error?.error?.message || 'An error occurred while processing your request';
-    this.confirmModal = true;
+    this.confirmModal.set(true);
     console.error('Error:', error);
   }
 

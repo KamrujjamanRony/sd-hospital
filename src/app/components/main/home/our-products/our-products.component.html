@@ -1,9 +1,9 @@
-@if (instruments) {
+@if (instruments().length > 0) {
 <section class="pb-10">
   <div class="container mx-auto text-center">
     <h1 class="text-5xl py-20">Instrument Gallery</h1>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      @for (instrument of instruments; track instrument.id) {
+      @for (instrument of instruments() | slice:0:3; track instrument.id) {
       <app-instrument-card
         [img]="instrument.pUrl"
         [title]="instrument.productName"

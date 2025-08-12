@@ -31,7 +31,7 @@
               addDepartmentForm.get('departmentName')?.invalid &&
               (addDepartmentForm.get('departmentName')?.dirty ||
                 addDepartmentForm.get('departmentName')?.touched ||
-                isSubmitted)
+                isSubmitted())
             "
             placeholder="Type here"
             class="input input-bordered w-full input-sm outline-none"
@@ -39,7 +39,7 @@
           />
           @if(addDepartmentForm.get('departmentName')?.hasError('required') &&
           (addDepartmentForm.get('departmentName')?.dirty ||
-          addDepartmentForm.get('departmentName')?.touched || isSubmitted)){
+          addDepartmentForm.get('departmentName')?.touched || isSubmitted())){
           <div class="label !py-0">
             <span class="label-text-alt text-rose-600 capitalize"
               >Department name is required</span
@@ -59,7 +59,7 @@
               addDepartmentForm.get('imgUrl')?.invalid &&
               (addDepartmentForm.get('imgUrl')?.dirty ||
                 addDepartmentForm.get('imgUrl')?.touched ||
-                isSubmitted)
+                isSubmitted())
             "
             placeholder="Type here"
             class="input input-bordered w-full input-sm outline-none"
@@ -77,7 +77,7 @@
               addDepartmentForm.get('description')?.invalid &&
               (addDepartmentForm.get('description')?.dirty ||
                 addDepartmentForm.get('description')?.touched ||
-                isSubmitted)
+                isSubmitted())
             "
             placeholder="Type here"
             class="input input-bordered w-full"

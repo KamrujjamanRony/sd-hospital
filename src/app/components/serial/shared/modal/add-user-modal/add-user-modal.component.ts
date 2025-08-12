@@ -1,4 +1,4 @@
-import { Component, inject, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, inject, Output, EventEmitter, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ConfirmModalComponent } from "../confirm-modal/confirm-modal.component";
@@ -20,14 +20,14 @@ export class AddUserModalComponent implements OnInit {
   dataService = inject(DataService);
   fb = inject(FormBuilder);
   private subscriptions: Subscription[] = [];
-  isSubmitted = false;
-  confirmModal = false;
-  userRole: any[] = [];
+  isSubmitted = signal<boolean>(false);
+  confirmModal = signal<boolean>(false);
+  userRole = signal<any[]>([]);
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.dataService.getJsonData().subscribe(data => {
-        this.userRole = data.role;
+        this.userRole.set(data.role);
       })
     );
   }
@@ -37,7 +37,7 @@ export class AddUserModalComponent implements OnInit {
   }
 
   closeConfirmModal(): void {
-    this.confirmModal = false;
+    this.confirmModal.set(false);
     this.closeThisModal();
   }
 
@@ -49,7 +49,7 @@ export class AddUserModalComponent implements OnInit {
 
   onSubmit(): void {
     if (this.addUsersForm.invalid) {
-      this.isSubmitted = true;
+      this.isSubmitted.set(true);
       return;
     }
 
@@ -64,7 +64,7 @@ export class AddUserModalComponent implements OnInit {
     this.subscriptions.push(
       this.userAuthService.registerUser(formData).subscribe({
         next: () => {
-          this.confirmModal = true;
+          this.confirmModal.set(true);
         },
         error: (error) => {
           console.error('Error registering user:', error);

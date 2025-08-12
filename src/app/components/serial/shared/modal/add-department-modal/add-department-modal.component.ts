@@ -1,4 +1,4 @@
-import { Component, inject, Output, EventEmitter } from '@angular/core';
+import { Component, inject, Output, EventEmitter, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ImgbbService } from '../../../../../services/serial/imgbb.service';
@@ -19,7 +19,7 @@ export class AddDepartmentModalComponent {
   imgbbService = inject(ImgbbService);
   fb = inject(FormBuilder);
   private subscriptions: Subscription[] = [];
-  isSubmitted = false;
+  isSubmitted = signal<boolean>(false);
 
   closeThisModal(): void {
     this.closeModal.emit();
@@ -33,7 +33,7 @@ export class AddDepartmentModalComponent {
 
   onSubmit(): void {
     if (this.addDepartmentForm.invalid) {
-      this.isSubmitted = true;
+      this.isSubmitted.set(true);
       return;
     }
 

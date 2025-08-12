@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ServicesService } from '../../../../services/main/services.service';
 
 @Component({
@@ -9,15 +9,15 @@ import { ServicesService } from '../../../../services/main/services.service';
 })
 export class HospitalServicesComponent {
   servicesService = inject(ServicesService);
-  services: any;
-  header: any;
+  services = signal<any>([]);
+  header = signal<any>('');
 
   constructor() { }
 
   ngOnInit(): void {
     this.servicesService.getCompanyServices().subscribe(data => {
-      this.header = data[0]?.title;
-      this.services = data?.slice(1, data.length);
+      this.header.set(data[0]?.title);
+      this.services.set(data?.slice(1, data.length));
     });
   }
 }

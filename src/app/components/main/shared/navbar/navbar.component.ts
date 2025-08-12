@@ -1,12 +1,12 @@
 
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-navbar',
-    imports: [RouterLink],
-    templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.css'
+  selector: 'app-navbar',
+  imports: [RouterLink],
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   menuItems = [
@@ -65,14 +65,14 @@ export class NavbarComponent {
       link: '/contact'
     },
   ];
-  isOpen: boolean = false;
+  isOpen = signal(false);
 
-  toggleMenu(){
-    this.isOpen = !this.isOpen;
+  toggleMenu() {
+    this.isOpen.set(!this.isOpen());
   }
 
-  closeMenu(){
-    this.isOpen = !this.isOpen;
+  closeMenu() {
+    this.isOpen.set(!this.isOpen());
   }
 
 }

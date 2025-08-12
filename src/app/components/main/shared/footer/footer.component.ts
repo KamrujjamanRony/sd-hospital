@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { ContactService } from '../../../../services/main/contact.service';
@@ -6,9 +6,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-footer',
-    imports: [FontAwesomeModule],
-    templateUrl: './footer.component.html'
+  selector: 'app-footer',
+  imports: [FontAwesomeModule],
+  templateUrl: './footer.component.html'
 })
 export class FooterComponent {
   contactService = inject(ContactService);
@@ -16,16 +16,15 @@ export class FooterComponent {
   faFacebook = faFacebook;
   faInstagram = faInstagram;
   faTwitter = faTwitter;
-  allContact$?: Observable<any[]>;
-  contact!: any;
-  
-  constructor() {}
+  contact = signal<any>(null);
+
+  constructor() { }
 
   ngOnInit(): void {
     this.contactService.getCompanyAddress()
       .subscribe({
         next: (response) => {
-          this.contact = response;
+          this.contact.set(response);
         }
       });
   }

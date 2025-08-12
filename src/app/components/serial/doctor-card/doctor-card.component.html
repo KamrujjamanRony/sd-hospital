@@ -44,13 +44,13 @@
   </div>
 </div>
 
-@if(showModal){
+@if(showModal()){
 <app-doctor-details
   [doctor]="doctor()"
   (closeDoctorDetails)="closeDoctorDetails()"
   (handleClick)="handleClick()"
 ></app-doctor-details>
-} @if(showAppointment) {
+} @if(showAppointment()) {
 <app-appointment-modal-serial
   id=""
   [doctor]="doctor()"

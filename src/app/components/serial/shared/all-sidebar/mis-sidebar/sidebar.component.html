@@ -275,7 +275,7 @@
       }
       <li>
         <a
-          [routerLink]="['about-us/', about?.id]"
+          [routerLink]="['about-us/', about()?.id]"
           class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 text-gray-50-600 hover:text-gray-50-800 border-l-4 border-transparent hover:border-blue-500 pr-6"
         >
           <span class="inline-flex justify-center items-center ml-4">
@@ -303,7 +303,7 @@
       <li></li>
       <li>
         <a
-          [routerLink]="['contact-us/', address?.id]"
+          [routerLink]="['contact-us/', address()?.id]"
           class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 text-gray-50-600 hover:text-gray-50-800 border-l-4 border-transparent hover:border-blue-500 pr-6"
         >
           <span class="inline-flex justify-center items-center ml-4">

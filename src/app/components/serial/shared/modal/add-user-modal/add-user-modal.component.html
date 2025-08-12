@@ -31,7 +31,7 @@
               addUsersForm.get('username')?.invalid &&
               (addUsersForm.get('username')?.dirty ||
                 addUsersForm.get('username')?.touched ||
-                isSubmitted)
+                isSubmitted())
             "
             placeholder="Type here"
             class="input input-bordered w-full input-sm outline-none"
@@ -39,7 +39,7 @@
           />
           @if(addUsersForm.get('username')?.hasError('required') &&
           (addUsersForm.get('username')?.dirty ||
-          addUsersForm.get('username')?.touched || isSubmitted)){
+          addUsersForm.get('username')?.touched || isSubmitted())){
           <div class="label !py-0">
             <span class="label-text-alt text-rose-600 capitalize"
               >Username is required</span
@@ -59,7 +59,7 @@
               addUsersForm.get('password')?.invalid &&
               (addUsersForm.get('password')?.dirty ||
                 addUsersForm.get('password')?.touched ||
-                isSubmitted)
+                isSubmitted())
             "
             placeholder="Type here"
             class="input input-bordered w-full input-sm outline-none"
@@ -67,7 +67,7 @@
           />
           @if(addUsersForm.get('password')?.hasError('required') &&
           (addUsersForm.get('password')?.dirty ||
-          addUsersForm.get('password')?.touched || isSubmitted)){
+          addUsersForm.get('password')?.touched || isSubmitted())){
           <div class="label !py-0">
             <span class="label-text-alt text-rose-600 capitalize"
               >Password is required</span
@@ -88,7 +88,7 @@
               addUsersForm.get('role')?.invalid &&
               (addUsersForm.get('role')?.dirty ||
                 addUsersForm.get('role')?.touched ||
-                isSubmitted)
+                isSubmitted())
             "
           >
             <option
@@ -97,7 +97,7 @@
             >
               Select Multiple Role
             </option>
-            @for (role of userRole; track role?.id) {
+            @for (role of userRole(); track role?.id) {
             <option class="p-2 text-center border-b" [value]="role?.id">
               {{ role?.name }}
             </option>
@@ -120,7 +120,7 @@
   </div>
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   url=""
   title="User created successfully!"

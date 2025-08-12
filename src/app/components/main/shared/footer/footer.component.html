@@ -16,77 +16,77 @@
     </div>
     <div class="gap-0">
       <span class="footer-title">Support</span>
-      @if (contact?.phoneNumber1) {
-      <p>{{ contact?.phoneNumber1 }}</p>
-      } @if (contact?.phoneNumber2) {
-      <p>{{ contact?.phoneNumber2 }}</p>
-      } @if (contact?.phoneNumber3) {
-      <p>{{ contact?.phoneNumber3 }}</p>
-      } @if (contact?.email) {
+      @if (contact()?.phoneNumber1) {
+      <p>{{ contact()?.phoneNumber1 }}</p>
+      } @if (contact()?.phoneNumber2) {
+      <p>{{ contact()?.phoneNumber2 }}</p>
+      } @if (contact()?.phoneNumber3) {
+      <p>{{ contact()?.phoneNumber3 }}</p>
+      } @if (contact()?.email) {
       <p>E-mail ID:</p>
-      } @if (contact?.email) {<a
-        [href]="'http://mailto:' + contact?.email"
+      } @if (contact()?.email) {<a
+        [href]="'http://mailto:' + contact()?.email"
         class="link link-hover"
-        >{{ contact?.email }}</a
-      >} @if (contact?.facebookLink) {
+        >{{ contact()?.email }}</a
+      >} @if (contact()?.facebookLink) {
       <p>Facebook:</p>
-      } @if (contact?.facebookLink) {<a
-        [href]="'http://' + contact.facebookLink"
+      } @if (contact()?.facebookLink) {<a
+        [href]="'http://' + contact().facebookLink"
         class="link link-hover"
         target="_blank"
       >
-        {{ contact.facebookLink }} </a
-      >} @if (contact?.othersLink1) {
+        {{ contact().facebookLink }} </a
+      >} @if (contact()?.othersLink1) {
       <p>Website:</p>
-      } @if (contact?.othersLink1) {<a
-        [href]="'http://' + contact.othersLink1"
+      } @if (contact()?.othersLink1) {<a
+        [href]="'http://' + contact().othersLink1"
         class="link link-hover"
         target="_blank"
       >
-        {{ contact.othersLink1 }} </a
-      >} @if (contact?.othersLink2) {<a
-        [href]="'http://' + contact.othersLink1"
+        {{ contact().othersLink1 }} </a
+      >} @if (contact()?.othersLink2) {<a
+        [href]="'http://' + contact().othersLink1"
         class="link link-hover"
         target="_blank"
       >
-        {{ contact?.othersLink2 }} </a
+        {{ contact()?.othersLink2 }} </a
       >}
     </div>
     <div>
       <span class="footer-title">Our Address</span>
-      @if (contact?.address1) {
-      <p>{{ contact?.address1 }}</p>
-      } @if (contact?.address2) {
-      <p>{{ contact?.address2 }}</p>
+      @if (contact()?.address1) {
+      <p>{{ contact()?.address1 }}</p>
+      } @if (contact()?.address2) {
+      <p>{{ contact()?.address2 }}</p>
       }
       <span class="footer-title mt-2">Customer Care Hours</span>
       <p>Every Day: 7:30 AM - 10:00 PM</p>
       <span class="footer-title mt-2">Social Media</span>
       <div>
         <ul class="flex">
-          @if (contact?.facebookLink) {
+          @if (contact()?.facebookLink) {
           <li
             class="bg-primary text-gray-50 hover:bg-base-200 hover:font w-10 h-10 rounded-full flex justify-center items-center hover:text-primary mx-1"
           >
             <a
               target="_blank"
-              [href]="contact.facebookLink"
+              [href]="contact().facebookLink"
               class="link link-hover"
             >
               <fa-icon [icon]="faFacebook"></fa-icon>
             </a>
           </li>
           }
-          <!-- @if (contact?.facebookLink) {
+          <!-- @if (contact()?.facebookLink) {
             <li class="bg-primary text-gray-50 hover:bg-base-200 w-10 h-10 rounded-full flex justify-center items-center hover:text-primary mx-1">
-              <a target="_blank" [href]="'http://' + contact.facebookLink" class="link link-hover">
+              <a target="_blank" [href]="'http://' + contact().facebookLink" class="link link-hover">
                 <fa-icon [icon]="faInstagram"></fa-icon>
               </a>
             </li>
           }
-          @if (contact?.facebookLink) {
+          @if (contact()?.facebookLink) {
             <li class="bg-primary text-gray-50 hover:bg-base-200 hover:font w-10 h-10 rounded-full flex justify-center items-center hover:text-primary mx-1">
-              <a target="_blank" [href]="'http://' + contact.facebookLink" class="link link-hover">
+              <a target="_blank" [href]="'http://' + contact().facebookLink" class="link link-hover">
                 <fa-icon [icon]="faTwitter"></fa-icon>
               </a>
             </li>

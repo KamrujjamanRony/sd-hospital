@@ -1,4 +1,4 @@
-import { Component, inject, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, inject, Output, EventEmitter, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DoctorsService } from '../../../../../services/serial/doctors.service';
@@ -21,25 +21,25 @@ export class AddDoctorModalComponent implements OnInit {
   authService = inject(AuthService);
   fb = inject(FormBuilder);
   private subscriptions: Subscription[] = [];
-  user: any;
-  departments: any[] = [];
-  isSubmitted = false;
+  user = signal<any>(null);
+  departments = signal<any[]>([]);
+  isSubmitted = signal<boolean>(false);
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
+    this.user.set(this.authService.getUser());
     this.loadDepartments();
   }
 
   loadDepartments(): void {
     this.subscriptions.push(
       this.departmentService.getDepartments().subscribe(departments => {
-        this.departments = departments;
+        this.departments.set(departments);
       })
     );
   }
 
   checkRoles(roleId: any): boolean {
-    return this.user?.roleIds?.includes(roleId);
+    return this.user()?.roleIds?.includes(roleId);
   }
 
   closeThisModal(): void {
@@ -81,7 +81,7 @@ export class AddDoctorModalComponent implements OnInit {
 
   onSubmit(): void {
     if (this.addDoctorForm.invalid) {
-      this.isSubmitted = true;
+      this.isSubmitted.set(true);
       return;
     }
 
