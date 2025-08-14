@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { CoverComponent } from "../../../components/main/shared/cover/cover.component";
 import { DoctorCardComponent } from "../../../components/main/shared/all-cards/doctor-card/doctor-card.component";
-import { DoctorsServiceMain } from '../../../services/main/doctors.service';
+import { DoctorsService } from '../../../services/serial/doctors.service';
 
 @Component({
   selector: 'app-doctors',
@@ -13,7 +13,7 @@ import { DoctorsServiceMain } from '../../../services/main/doctors.service';
   imports: [CommonModule, CoverComponent, DoctorCardComponent]
 })
 export class DoctorsComponent {
-  doctorsService = inject(DoctorsServiceMain);
+  doctorsService = inject(DoctorsService);
 
   emptyImg: any = '../../../../assets/images/doctor.png';
 
@@ -22,7 +22,7 @@ export class DoctorsComponent {
   constructor() { }
 
   ngOnInit(): void {
-    this.doctors$ = this.doctorsService.getAllDoctor();
+    this.doctors$ = this.doctorsService.getDoctors();
   }
 
 }

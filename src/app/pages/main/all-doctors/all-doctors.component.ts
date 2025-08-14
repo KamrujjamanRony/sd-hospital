@@ -19,8 +19,6 @@ export class AllDoctorsComponent {
   hospitalDoctors$?: Observable<any[]>;
   hospitalCode: any = environment.hospitalCode;
 
-  constructor() { }
-
   ngOnInit(): void {
     this.hospitalDoctors$ = this.doctorsService.getCompanyDoctor()
   }

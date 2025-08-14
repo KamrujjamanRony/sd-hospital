@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { CategoryComponent } from '../../../components/main/shared/all-cards/category/category.component';
@@ -15,27 +15,27 @@ export class DepartmentComponent implements OnInit, OnDestroy {
   private departmentService = inject(DepartmentService);
   private subscriptions: Subscription[] = [];
 
-  departments: any[] = [];
-  loading: boolean = true;
-  error: string | null = null;
+  departments = signal<any[]>([]);
+  loading = signal<boolean>(true);
+  error = signal<any>(null);
 
   ngOnInit(): void {
     this.loadDepartments();
   }
 
   loadDepartments(): void {
-    this.loading = true;
-    this.error = null;
+    this.loading.set(true);
+    this.error.set(null);
 
     this.subscriptions.push(
       this.departmentService.getDepartments().subscribe({
         next: (departments) => {
-          this.departments = departments;
-          this.loading = false;
+          this.departments.set(departments);
+          this.loading.set(false);
         },
         error: (err) => {
-          this.error = err.message || 'Failed to load departments';
-          this.loading = false;
+          this.error.set(err.message || 'Failed to load departments');
+          this.loading.set(false);
         }
       })
     );

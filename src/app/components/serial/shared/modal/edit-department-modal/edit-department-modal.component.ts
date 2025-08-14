@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ImgbbService } from '../../../../../services/serial/imgbb.service';
@@ -20,8 +20,8 @@ export class EditDepartmentModalComponent implements OnInit {
   imgbbService = inject(ImgbbService);
   fb = inject(FormBuilder);
   private subscriptions: Subscription[] = [];
-  selected: any;
-  isSubmitted = false;
+  selected = signal<any>(null);
+  isSubmitted = signal<boolean>(false);
 
   ngOnInit(): void {
     this.loadDepartment();
@@ -30,7 +30,7 @@ export class EditDepartmentModalComponent implements OnInit {
   loadDepartment(): void {
     this.subscriptions.push(
       this.departmentService.getDepartmentById(this.id).subscribe(department => {
-        this.selected = department;
+        this.selected.set(department);
         this.updateFormValues();
       })
     );
@@ -48,19 +48,19 @@ export class EditDepartmentModalComponent implements OnInit {
   });
 
   updateFormValues(): void {
-    if (this.selected) {
+    if (this.selected()) {
       this.editDepartmentForm.patchValue({
-        companyID: this.selected.companyID,
-        departmentName: this.selected.departmentName,
-        description: this.selected.description,
-        imgUrl: this.selected.imgUrl,
+        companyID: this.selected().companyID,
+        departmentName: this.selected().departmentName,
+        description: this.selected().description,
+        imgUrl: this.selected().imgUrl,
       });
     }
   }
 
   onSubmit(): void {
     if (this.editDepartmentForm.invalid) {
-      this.isSubmitted = true;
+      this.isSubmitted.set(true);
       return;
     }
 
@@ -75,7 +75,7 @@ export class EditDepartmentModalComponent implements OnInit {
     });
 
     this.subscriptions.push(
-      this.departmentService.updateDepartment(this.selected.id, formData).subscribe({
+      this.departmentService.updateDepartment(this.selected().id, formData).subscribe({
         next: () => {
           this.closeThisModal();
         },

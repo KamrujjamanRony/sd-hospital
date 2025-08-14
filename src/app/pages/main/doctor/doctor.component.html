@@ -21,44 +21,48 @@
   </div>
 </section>
 
-@if (doctor) {
+@if (doctor()) {
 <div class="container mx-auto my-12 max-w-5xl px-1 md:px-12">
   <div>
     <div>
       <div>
         <div class="mb-4 flex flex-col md:flex-row gap-5 justify-center">
-          @if (doctor.imageUrl) {
+          @if (doctor()?.imageUrl) {
           <figure class="md:w-96 lg:w-xs border-2 p-1">
-            <img class="thumbnail" alt="Doctor image" [src]="doctor.imageUrl" />
+            <img
+              class="thumbnail"
+              alt="Doctor image"
+              [src]="doctor()?.imageUrl"
+            />
           </figure>
           }
 
           <div class="w-full">
-            <h1 class="widget_title text-5xl mb-4">{{ doctor.drName }}</h1>
-            @if (doctor.department || doctor.specialty || doctor.degree ||
-            doctor.designation) {
+            <h1 class="widget_title text-5xl mb-4">{{ doctor()?.drName }}</h1>
+            @if (doctor()?.department || doctor()?.specialty || doctor()?.degree
+            || doctor()?.designation) {
             <div class="mb-4">
               <h3 class="widget_title font-bold">Information</h3>
 
-              @if (doctor.department) {
+              @if (doctor()?.department) {
               <div class="flex flex-row border-b-[1px]">
                 <span class="basis-1/4">Department</span>
-                <span class="basis-3/4">{{ doctor.department }}</span>
+                <span class="basis-3/4">{{ doctor()?.department }}</span>
               </div>
-              } @if (doctor.specialty) {
+              } @if (doctor()?.specialty) {
               <div class="flex flex-row border-b-[1px]">
                 <span class="basis-1/4">Specialty </span>
-                <span class="basis-3/4">{{ doctor.specialty }}</span>
+                <span class="basis-3/4">{{ doctor()?.specialty }}</span>
               </div>
-              } @if (doctor.degree) {
+              } @if (doctor()?.degree) {
               <div class="flex flex-row border-b-[1px]">
                 <span class="basis-1/4">Degree</span>
-                <span class="basis-3/4">{{ doctor.degree }}</span>
+                <span class="basis-3/4">{{ doctor()?.degree }}</span>
               </div>
-              } @if (doctor.designation) {
+              } @if (doctor()?.designation) {
               <div class="flex flex-row border-b-[1px]">
                 <span class="basis-1/4">Designation</span>
-                <span class="basis-3/4">{{ doctor.designation }}</span>
+                <span class="basis-3/4">{{ doctor()?.designation }}</span>
               </div>
               }
             </div>
@@ -66,49 +70,49 @@
           </div>
         </div>
         <footer class="block">
-          @if (doctor.description) {
+          @if (doctor()?.description) {
           <div>
             <h3 class="widget_title font-bold mt-5">Description</h3>
             <div class="flex flex-row border-b-[1px]">
               <span class="basis-1/4"></span>
-              <span class="basis-3/4">{{ doctor.description }}</span>
+              <span class="basis-3/4">{{ doctor()?.description }}</span>
             </div>
           </div>
-          } @if (doctor.additional) {
+          } @if (doctor()?.additional) {
           <div>
             <h3 class="widget_title font-bold mt-5">Additional Information</h3>
             <div class="flex flex-row border-b-[1px]">
               <span class="basis-1/4"></span>
-              <span class="basis-3/4">{{ doctor.additional }}</span>
+              <span class="basis-3/4">{{ doctor()?.additional }}</span>
             </div>
           </div>
-          } @if (doctor.phone || doctor.room) {
+          } @if (doctor()?.phone || doctor()?.room) {
           <div>
             <h3 class="widget_title font-bold">Room and contact</h3>
-            @if (doctor.room) {
+            @if (doctor()?.room) {
             <div class="flex flex-row border-b-[1px]">
               <span class="basis-1/4">Room No.</span>
-              <span class="basis-3/4">{{ doctor.room }}</span>
+              <span class="basis-3/4">{{ doctor()?.room }}</span>
             </div>
-            } @if (doctor.phone) {
+            } @if (doctor()?.phone) {
             <div class="flex flex-row border-b-[1px]">
               <span class="basis-1/4">Phone</span>
-              <span class="basis-3/4">{{ doctor.phone }}</span>
+              <span class="basis-3/4">{{ doctor()?.phone }}</span>
             </div>
             }
           </div>
-          } @if (doctor.visitTime || doctor.notice) {
+          } @if (doctor()?.visitTime || doctor()?.notice) {
           <div>
             <h3 class="widget_title font-bold">Visit Time and Fee</h3>
-            @if (doctor.visitTime) {
+            @if (doctor()?.visitTime) {
             <div class="flex flex-row border-b-[1px]">
               <span class="basis-1/4">Visit Time</span>
-              <span class="basis-3/4">{{ doctor.visitTime }}</span>
+              <span class="basis-3/4">{{ doctor()?.visitTime }}</span>
             </div>
-            } @if (doctor.notice) {
+            } @if (doctor()?.notice) {
             <div class="flex flex-row border-b-[1px]">
               <span class="basis-1/4">Notice</span>
-              <span class="basis-3/4">{{ doctor.notice }}</span>
+              <span class="basis-3/4">{{ doctor()?.notice }}</span>
             </div>
             }
           </div>

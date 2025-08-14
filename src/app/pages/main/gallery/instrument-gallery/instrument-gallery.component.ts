@@ -1,5 +1,5 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { InstrumentCardComponent } from "../../../../components/main/shared/all-cards/instrument-card/instrument-card.component";
 import { Observable } from 'rxjs';
 import { InstrumentService } from '../../../../services/main/instrument.service';
@@ -11,16 +11,13 @@ import { InstrumentService } from '../../../../services/main/instrument.service'
 })
 export class InstrumentGalleryComponent {
   instrumentService = inject(InstrumentService);
-
-  instruments$?: Observable<any[]>;
-  instruments?: any;
+  instruments = signal<any[]>([]);
 
   constructor() { }
 
   ngOnInit(): void {
-    this.instruments$ = this.instrumentService.getCompanyInstrument();
-    this.instruments$.subscribe(data => {
-      this.instruments = data;
+    this.instrumentService.getCompanyInstrument().subscribe(data => {
+      this.instruments.set(data);
     })
   }
 

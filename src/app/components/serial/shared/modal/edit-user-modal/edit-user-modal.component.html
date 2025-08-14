@@ -73,7 +73,7 @@
             >
               Select Multiple Roles
             </option>
-            @for (role of userRole; track role.id) {
+            @for (role of userRole(); track role.id) {
             <option
               [value]="role.id"
               [selected]="isRoleSelected(role.id)"

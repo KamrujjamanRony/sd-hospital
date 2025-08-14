@@ -67,13 +67,13 @@
                 </div>
                 <div class="ml-6 grow">
                   <p class="mb-2 font-bold">Our Address</p>
-                  @if (contact?.address1) {
+                  @if (contact()?.address1) {
                   <p style="white-space: pre-line" class="text-neutral-800">
-                    {{ contact?.address1 }}
+                    {{ contact()?.address1 }}
                   </p>
-                  } @if (contact?.address2) {
+                  } @if (contact()?.address2) {
                   <p style="white-space: pre-line" class="text-neutral-800">
-                    {{ contact?.address2 }}
+                    {{ contact()?.address2 }}
                   </p>
                   }
                 </div>
@@ -138,27 +138,27 @@
                 </div>
                 <div class="ml-6 grow overflow-hidden">
                   <p class="mb-2 font-bold">Support</p>
-                  @if (contact?.phoneNumber1) {
+                  @if (contact()?.phoneNumber1) {
                   <p class="text-neutral-800">
-                    Mobile: {{ contact?.phoneNumber1 }}
+                    Mobile: {{ contact()?.phoneNumber1 }}
                   </p>
-                  } @if (contact?.phoneNumber2) {
+                  } @if (contact()?.phoneNumber2) {
                   <p class="text-neutral-800">
-                    Mobile: {{ contact?.phoneNumber2 }}
+                    Mobile: {{ contact()?.phoneNumber2 }}
                   </p>
-                  } @if (contact?.phoneNumber3) {
+                  } @if (contact()?.phoneNumber3) {
                   <p class="text-neutral-800">
-                    Mobile: {{ contact?.phoneNumber3 }}
+                    Mobile: {{ contact()?.phoneNumber3 }}
                   </p>
-                  } @if (contact?.email) {
-                  <p class="text-neutral-800">Email: {{ contact?.email }}</p>
-                  } @if (contact?.othersLink1) {
+                  } @if (contact()?.email) {
+                  <p class="text-neutral-800">Email: {{ contact()?.email }}</p>
+                  } @if (contact()?.othersLink1) {
                   <p class="text-neutral-800">
-                    Others Like: {{ contact?.othersLink1 }}
+                    Others Like: {{ contact()?.othersLink1 }}
                   </p>
-                  } @if (contact?.othersLink2) {
+                  } @if (contact()?.othersLink2) {
                   <p class="text-neutral-800">
-                    {{ contact?.othersLink2 }}
+                    {{ contact()?.othersLink2 }}
                   </p>
                   }
                 </div>

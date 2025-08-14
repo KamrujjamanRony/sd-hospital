@@ -1,5 +1,5 @@
 <!-- @if (user) { -->
-@if (user) {
+@if (user()) {
 <main>
   <div class="bg-primary">
     <app-navbar></app-navbar>
@@ -26,7 +26,7 @@
               userForm.get('username')?.invalid &&
               (userForm.get('username')?.dirty ||
                 userForm.get('username')?.touched ||
-                isSubmitted)
+                isSubmitted())
             "
             placeholder="Type here"
             class="input input-bordered w-full input-md outline-none"
@@ -34,7 +34,7 @@
           />
           @if(userForm.get('username')?.hasError('required') &&
           (userForm.get('username')?.dirty || userForm.get('username')?.touched
-          || isSubmitted)){
+          || isSubmitted())){
           <div class="label !py-0">
             <span class="label-text-alt text-rose-600"
               >Username is required</span
@@ -54,7 +54,7 @@
               userForm.get('password')?.invalid &&
               (userForm.get('password')?.dirty ||
                 userForm.get('password')?.touched ||
-                isSubmitted)
+                isSubmitted())
             "
             autocomplete="false"
             placeholder="Type here"
@@ -63,7 +63,7 @@
           />
           @if(userForm.get('password')?.hasError('required') &&
           (userForm.get('password')?.dirty || userForm.get('password')?.touched
-          || isSubmitted)){
+          || isSubmitted())){
           <div class="label !py-0">
             <span class="label-text-alt text-rose-600"
               >Password is required</span

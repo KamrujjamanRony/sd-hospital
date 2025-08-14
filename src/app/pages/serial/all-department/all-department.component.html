@@ -30,7 +30,7 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y">
-            @for (department of departments; track department.id) {
+            @for (department of departments(); track department.id) {
             <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
               <td class="px-4 py-3">
                 <img
@@ -79,14 +79,14 @@
 }
 
 <!-- add modal start -->
-@if(addDepartmentModal) {
+@if(addDepartmentModal()) {
 <app-add-department-modal
   (closeModal)="closeAddDepartmentModal()"
 ></app-add-department-modal>
 }
 <!-- add modal end -->
 <!-- edit modal start -->
-@if(editDepartmentModal) {
+@if(editDepartmentModal()) {
 <app-edit-department-modal
   [id]="selectedId"
   (closeModal)="closeEditDepartmentModal()"

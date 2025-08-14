@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../../../components/serial/shared/navbar/navbar.component';
@@ -21,11 +21,11 @@ export class SerialMainComponent implements OnDestroy {
   private fb = inject(FormBuilder);
 
   private subscriptions: Subscription[] = [];
-  isSubmitted = false;
-  user: any;
+  isSubmitted = signal<boolean>(false);
+  user = signal<any>(null);
 
   constructor() {
-    this.user = this.authService.getUser();
+    this.user.set(this.authService.getUser());
   }
 
   userForm = this.fb.group({
@@ -36,11 +36,11 @@ export class SerialMainComponent implements OnDestroy {
 
   showError(controlName: string): boolean {
     const control = this.userForm.get(controlName);
-    return !!control?.invalid && (control?.dirty || control?.touched || this.isSubmitted);
+    return !!control?.invalid && (control?.dirty || control?.touched || this.isSubmitted());
   }
 
   onSubmit(): void {
-    this.isSubmitted = true;
+    this.isSubmitted.set(true);
 
     if (this.userForm.invalid) {
       return;
@@ -61,7 +61,7 @@ export class SerialMainComponent implements OnDestroy {
             roleIds: response.roleIds
           };
           this.authService.setUser(userModel);
-          this.user = userModel;
+          this.user.set(userModel);
         },
         error: (error) => {
           console.error('Login error:', error);

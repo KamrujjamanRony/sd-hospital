@@ -22,19 +22,19 @@
 </section>
 
 <section class="container mx-auto my-5">
-  @if (loading) {
+  @if (loading()) {
   <div class="flex justify-center items-center py-12">
     <div
       class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
     ></div>
   </div>
-  } @else if (error) {
+  } @else if (error()) {
   <div class="text-center py-12 text-red-500">
-    {{ error }}
+    {{ error() }}
   </div>
   } @else {
   <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-12 pb-12">
-    @for (category of departments; track category.id) {
+    @for (category of departments(); track category.id) {
     <app-category [category]="category"></app-category>
     } @empty {
     <div class="col-span-full text-center py-12 text-gray-500">

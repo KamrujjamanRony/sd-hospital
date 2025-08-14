@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, output } from '@angular/core';
+import { Component, inject, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { format, isBefore } from 'date-fns';
 import { CommonModule } from '@angular/common';
@@ -25,22 +25,22 @@ export class AppointmentFormComponent implements OnInit {
   departmentService = inject(DepartmentService);
   doctorsService = inject(DoctorsService);
   authService = inject(AuthService);
-  doctorList: any = [];
-  departmentList: any = [];
+  doctorList = signal<any>([]);
+  departmentList = signal<any>([]);
   format = format;
-  isSubmitted = false;
-  selected!: any;
-  user: any;
-  blockSerials: any;
-  msg: any;
-  confirm!: any;
-  confirmModal!: boolean;
+  isSubmitted = signal<boolean>(false);
+  selected = signal<any>(null);
+  user = signal<any>(null);
+  blockSerials = signal<any>(null);
+  msg = signal<any>(null);
+  confirm = signal<any>(null);
+  confirmModal = signal<boolean>(false);
   private subscriptions: Subscription[] = [];
 
   readonly closeAppointment = output<void>();
 
   // Add this to your component class
-  originalDoctorList: any[] = [];
+  originalDoctorList = signal<any>([]);
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
@@ -55,9 +55,9 @@ export class AppointmentFormComponent implements OnInit {
       this.departmentService.getDepartments()
     ]).subscribe({
       next: ([doctors, departments]) => {
-        this.originalDoctorList = doctors; // Store the original list
-        this.doctorList = doctors; // Initialize filtered list
-        this.departmentList = departments;
+        this.originalDoctorList.set(doctors); // Store the original list
+        this.doctorList.set(doctors); // Initialize filtered list
+        this.departmentList.set(departments);
       },
       error: (error) => {
         console.error('Error loading initial data:', error);
@@ -70,17 +70,17 @@ export class AppointmentFormComponent implements OnInit {
 
     if (departmentId) {
       // Always filter from the original list
-      this.doctorList = this.originalDoctorList.filter((d: any) => d.departmentId == departmentId);
+      this.doctorList = this.originalDoctorList().filter((d: any) => d.departmentId == departmentId);
 
       // Reset doctor selection when department changes
       this.appointmentForm.patchValue({
         drCode: '',
         fee: ''
       });
-      this.selected = null;
+      this.selected.set(null);
     } else {
       // If no department selected, show all doctors
-      this.doctorList = [...this.originalDoctorList];
+      this.doctorList.set([...this.originalDoctorList()]);
     }
   }
 
@@ -88,37 +88,37 @@ export class AppointmentFormComponent implements OnInit {
     const doctorId = this.appointmentForm.value.drCode;
     if (doctorId) {
       // Find the selected doctor from the already loaded list
-      this.selected = this.doctorList.find((d: any) => d.id === doctorId);
+      this.selected.set(this.doctorList().find((d: any) => d.id === doctorId));
 
-      if (this.selected) {
-        this.blockSerials = this.selected.serialBlock?.split(',');
+      if (this.selected()) {
+        this.blockSerials = this.selected().serialBlock?.split(',');
 
         // Update department and fee
         this.appointmentForm.patchValue({
-          departmentId: this.selected.departmentId,
-          fee: this.selected.fee
+          departmentId: this.selected().departmentId,
+          fee: this.selected().fee
         });
       }
     }
   }
 
   checkRoles(roleId: any) {
-    return this.user?.roleIds?.find((role: any) => role == roleId);
+    return this.user()?.roleIds?.find((role: any) => role == roleId);
   }
 
   updateFormGroup(): void {
     this.appointmentForm.patchValue({
-      confirmed: this.confirm
+      confirmed: this.confirm()
     });
   }
 
   closeModal() {
-    this.confirmModal = false;
-    this.msg = null;
+    this.confirmModal.set(false);
+    this.msg.set(null);
   }
 
   getConfirm() {
-    this.confirm = false;
+    this.confirm.set(false);
   }
 
   appointmentForm = this.fb.group({
@@ -135,20 +135,20 @@ export class AppointmentFormComponent implements OnInit {
     fee: '',
     remarks: '',
     paymentStatus: false,
-    confirmed: this.confirm,
+    confirmed: this.confirm(),
   });
 
   updateFormValues(): void {
-    if (this.selected) {
+    if (this.selected()) {
       this.appointmentForm.patchValue({
-        departmentId: this.selected.departmentId,
-        fee: this.selected.fee,
+        departmentId: this.selected().departmentId,
+        fee: this.selected().fee,
       });
     }
   }
 
   onSubmit(): void {
-    this.isSubmitted = true;
+    this.isSubmitted.set(true);
     const { pName, age, sex, date, type, departmentId, sL, drCode, fee, remarks, paymentStatus, confirmed, mobile } = this.appointmentForm.value;
 
     if (drCode && pName && type && date) {
@@ -164,17 +164,17 @@ export class AppointmentFormComponent implements OnInit {
       formData.append('Sex', sex || '');
       formData.append('Mobile', mobile || '');
       formData.append('Fee', fee != null ? fee.toString() : '');
-      formData.append('Username', this.user.username);
+      formData.append('Username', this.user().username);
       formData.append('Remarks', remarks || '');
       formData.append('PaymentStatus', paymentStatus != null ? paymentStatus.toString() : '');
-      formData.append('Confirmed', confirmed != null ? confirmed.toString() : this.confirm);
+      formData.append('Confirmed', confirmed != null ? confirmed.toString() : this.confirm());
 
       this.subscriptions.push(
         this.appointmentService.addAppointment(formData).subscribe({
           next: () => {
             this.formReset();
-            this.msg = "Appointment is successfully added!";
-            this.confirmModal = true;
+            this.msg.set("Appointment is successfully added!");
+            this.confirmModal.set(true);
           },
           error: (error) => {
             this.handleError(error);
@@ -184,10 +184,10 @@ export class AppointmentFormComponent implements OnInit {
           }
         })
       );
-      this.isSubmitted = false;
+      this.isSubmitted.set(false);
     } else {
-      this.msg = "Please fill all required fields!";
-      this.isSubmitted = false;
+      this.msg.set("Please fill all required fields!");
+      this.isSubmitted.set(false);
     }
   }
 
@@ -218,7 +218,7 @@ export class AppointmentFormComponent implements OnInit {
       fee: '',
       remarks: '',
       paymentStatus: false,
-      confirmed: this.confirm
+      confirmed: this.confirm()
     });
   }
 
@@ -227,7 +227,7 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   private handleError(error: any) {
-    this.msg = error?.error?.message || 'An error occurred';
+    this.msg.set(error?.error?.message || 'An error occurred');
     console.error(error);
   }
 

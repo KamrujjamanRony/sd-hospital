@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AboutService } from '../../../services/main/about.service';
 import { environment } from '../../../../environments/environments';
@@ -10,17 +10,12 @@ import { environment } from '../../../../environments/environments';
 })
 export class AboutComponent implements OnInit {
   aboutService = inject(AboutService);
-
-  allAbout$?: Observable<any[]>;
-  about!: any;
-
-  constructor() { }
+  about = signal<any>(null);
 
   ngOnInit(): void {
-    this.allAbout$ = this.aboutService.getAllAbout();
-    this.allAbout$.subscribe(aboutUs => {
+    this.aboutService.getAllAbout().subscribe(aboutUs => {
       if (aboutUs) {
-        this.about = aboutUs.find(a => a.companyID === environment.hospitalCode);
+        this.about.set(aboutUs.find(a => a.companyID === environment.hospitalCode));
       }
     });
   };

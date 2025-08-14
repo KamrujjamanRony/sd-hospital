@@ -3,7 +3,7 @@
 <div class="container mx-auto flex justify-end gap-2">
   <select class="select select-bordered w-48" [(ngModel)]="selectedDepartment">
     <option value="">All Departments</option>
-    @for (data of departmentWithDoctor; track $index) {
+    @for (data of departmentWithDoctor(); track $index) {
     <option [value]="data.id">{{ data?.departmentName }}</option>
     }
   </select>
@@ -37,7 +37,7 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y">
-          @for (doctor of filterDoctorsByDepartment(sortbySl(doctors)); track
+          @for (doctor of filterDoctorsByDepartment(sortbySl(doctors())); track
           doctor?.id) {
           <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
             <td class="px-4 py-3 text-xs">{{ doctor?.drSerial }}</td>
@@ -85,14 +85,14 @@
   </div>
 </div>
 <!-- add modal start -->
-@if(addDoctorModal) {
+@if(addDoctorModal()) {
 <app-add-doctor-modal
   (closeModal)="closeAddDoctorModal()"
 ></app-add-doctor-modal>
 }
 <!-- add modal end -->
 <!-- edit modal start -->
-@if(editDoctorModal) {
+@if(editDoctorModal()) {
 <app-edit-doctor-modal
   [id]="selectedId"
   (closeModal)="closeEditDoctorModal()"

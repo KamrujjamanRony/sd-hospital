@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { PageHeaderComponent } from '../../../components/serial/shared/page-header/page-header.component';
 import { DepartmentService } from '../../../services/serial/department.service';
 import { CommonModule } from '@angular/common';
@@ -13,12 +13,12 @@ import { SerialCategoryComponent } from '../../../components/serial/serial-categ
 })
 export class DepartmentsComponent implements OnInit {
   departmentService = inject(DepartmentService);
-  departments: any[] = [];
+  departments = signal<any[]>([]);
 
   ngOnInit(): void {
     this.departmentService.getDepartments().subscribe({
       next: (departments) => {
-        this.departments = departments;
+        this.departments.set(departments);
       },
       error: (error) => {
         console.error('Error loading departments:', error);

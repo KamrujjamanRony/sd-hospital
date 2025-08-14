@@ -1,5 +1,5 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GalleryService } from '../../../../services/main/gallery.service';
 import { GalleryCardComponent } from "../../../../components/main/shared/all-cards/gallery-card/gallery-card.component";
@@ -11,16 +11,11 @@ import { GalleryCardComponent } from "../../../../components/main/shared/all-car
 })
 export class HospitalGalleryComponent {
   galleryService = inject(GalleryService);
-
-  gallery$?: Observable<any[]>;
-  gallery?: any;
-
-  constructor() { }
+  gallery = signal<any[]>([]);
 
   ngOnInit(): void {
-    this.gallery$ = this.galleryService.getCompanyGallery();
-    this.gallery$.subscribe(data => {
-      this.gallery = data;
+    this.galleryService.getCompanyGallery().subscribe(data => {
+      this.gallery.set(data);
     })
   }
 

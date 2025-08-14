@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { AddDepartmentModalComponent } from '../../../components/serial/shared/modal/add-department-modal/add-department-modal.component';
@@ -18,17 +18,17 @@ export class AllDepartmentComponent implements OnInit, OnDestroy {
   departmentService = inject(DepartmentService);
   authService = inject(AuthService);
 
-  user: any;
-  emptyImg: any;
-  departments: any[] = [];
-  selectedId: any;
-  showModal: boolean = false;
-  addDepartmentModal: boolean = false;
-  editDepartmentModal: boolean = false;
+  user = signal<any>(null);
+  emptyImg = signal<any>(null);
+  departments = signal<any[]>([]);
+  selectedId = signal<any>(null);
+  showModal = signal<boolean>(false);
+  addDepartmentModal = signal<boolean>(false);
+  editDepartmentModal = signal<boolean>(false);
   private subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
+    this.user.set(this.authService.getUser());
     this.loadDepartments();
   }
 
@@ -36,7 +36,7 @@ export class AllDepartmentComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.departmentService.getDepartments().subscribe({
         next: (departments) => {
-          this.departments = departments;
+          this.departments.set(departments);
         },
         error: (error) => {
           console.error('Error loading departments:', error);
@@ -46,7 +46,7 @@ export class AllDepartmentComponent implements OnInit, OnDestroy {
   }
 
   checkRoles(roleId: any): boolean {
-    return this.user?.roleIds?.includes(roleId);
+    return this.user()?.roleIds?.includes(roleId);
   }
 
   onDelete(id: any): void {
@@ -66,29 +66,29 @@ export class AllDepartmentComponent implements OnInit, OnDestroy {
   }
 
   openDoctorDetails(): void {
-    this.showModal = true;
+    this.showModal.set(true);
   }
 
   openAddDepartmentModal(): void {
-    this.addDepartmentModal = true;
+    this.addDepartmentModal.set(true);
   }
 
   openEditDepartmentModal(id: any): void {
-    this.selectedId = id;
-    this.editDepartmentModal = true;
+    this.selectedId.set(id);
+    this.editDepartmentModal.set(true);
   }
 
   closeDoctorDetails(): void {
-    this.showModal = false;
+    this.showModal.set(false);
   }
 
   closeAddDepartmentModal(): void {
-    this.addDepartmentModal = false;
+    this.addDepartmentModal.set(false);
     this.loadDepartments(); // Refresh the list after adding
   }
 
   closeEditDepartmentModal(): void {
-    this.editDepartmentModal = false;
+    this.editDepartmentModal.set(false);
     this.loadDepartments(); // Refresh the list after editing
   }
 

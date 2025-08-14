@@ -22,7 +22,7 @@
 </section>
 
 <section class="container mx-auto px-4 py-8">
-  @if (loading) {
+  @if (loading()) {
   <div class="flex justify-center items-center h-64">
     <div
       class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
@@ -39,11 +39,13 @@
   </div>
   } @else {
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    @for (doctor of doctorList; track doctor.id) {
+    @for (doctor of doctorList(); track doctor.id) {
     <app-doctor-card
       [doctor]="doctor"
-      [department]="department"
+      [department]="department()"
     ></app-doctor-card>
+    } @empty {
+    <p>No Doctor found!</p>
     }
   </div>
   }

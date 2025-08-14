@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ActiveLinkComponent } from "../active-link/active-link.component";
 import { filter } from 'rxjs';
@@ -15,30 +15,30 @@ export class NavbarComponent {
   dataService = inject(DataService);
   router = inject(Router);
   location = inject(Location);
-  user: any;
-  fullUrl!: string;
-  jsonData: any;
-  isMenuOpen = false;
+  user = signal<any>(null);
+  fullUrl = signal<string>('');
+  jsonData = signal<any>(null);
+  isMenuOpen = signal<boolean>(false);
 
   constructor() { }
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
+    this.user.set(this.authService.getUser());
     this.dataService.getJsonData().subscribe(data => {
-      this.jsonData = data;
+      this.jsonData.set(data);
     });
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd)
       )
       .subscribe(() => {
-        this.fullUrl = this.location.prepareExternalUrl(this.location.path());
+        this.fullUrl.set(this.location.prepareExternalUrl(this.location.path()));
       });
-    this.fullUrl = this.location.prepareExternalUrl(this.location.path());
+    this.fullUrl.set(this.location.prepareExternalUrl(this.location.path()));
   }
 
   checkRoles(roleId: any) {
-    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    const result = this.user()?.roleIds?.find((role: any) => role == roleId)
     return result;
   }
 
@@ -49,11 +49,11 @@ export class NavbarComponent {
   }
 
   toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+    this.isMenuOpen.set(!this.isMenuOpen);
   }
 
   closeMenu() {
-    this.isMenuOpen = false;
+    this.isMenuOpen.set(false);
   }
 
   redirectToHome(): void {

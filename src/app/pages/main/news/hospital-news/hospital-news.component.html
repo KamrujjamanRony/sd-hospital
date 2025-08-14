@@ -28,7 +28,7 @@
     >
       <div class="px-4 mx-auto max-w-screen-2xl">
         <div class="grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
-          @for (data of news; track data.id) {
+          @for (data of news(); track data.id) {
           <app-news-card
             [img]="data.hnUrl"
             [title]="data.title"
@@ -41,7 +41,7 @@
       <div class="px-4 mx-auto max-w-screen-md">
         <h2 class="mb-8 text-2xl font-bold text-gray-900">Latest articles</h2>
         <div class="">
-          @for (data of latestNews; track data.id) {
+          @for (data of latestNews(); track data.id) {
           <app-news-card
             [img]="data.hnUrl"
             [title]="data.title"

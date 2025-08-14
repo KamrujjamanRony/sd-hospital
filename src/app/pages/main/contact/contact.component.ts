@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -15,10 +15,8 @@ export class ContactComponent implements OnInit {
   contactService = inject(ContactService);
   router = inject(Router);
   sanitizer = inject(DomSanitizer);
-
-  allContact$?: Observable<any[]>;
   mapUrl: SafeResourceUrl;
-  contact!: any;
+  contact = signal<any>(null);
 
   constructor() {
     this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${environment.location}&t=&z=13&ie=UTF8&iwloc=&output=embed`);
@@ -26,10 +24,9 @@ export class ContactComponent implements OnInit {
 
   ngOnInit(): void {
     initTE({ Carousel, Dropdown });
-    this.allContact$ = this.contactService.getCompanyAddress();
-    this.allContact$.subscribe(contactUs => {
+    this.contactService.getCompanyAddress().subscribe(contactUs => {
       if (contactUs) {
-        this.contact = contactUs;
+        this.contact.set(contactUs);
       }
     });
   }

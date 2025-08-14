@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DoctorsService } from '../../../../../services/serial/doctors.service';
@@ -26,13 +26,13 @@ export class EditDoctorModalComponent implements OnInit {
   fb = inject(FormBuilder);
 
   private subscriptions: Subscription[] = [];
-  user: any;
-  selected: any;
-  departments: any[] = [];
-  isSubmitted = false;
+  user = signal<any>(null);
+  selected = signal<any>(null);
+  departments = signal<any[]>([]);
+  isSubmitted = signal<boolean>(false);
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
+    this.user.set(this.authService.getUser());
     this.loadDoctor();
     this.loadDepartments();
   }
@@ -40,7 +40,7 @@ export class EditDoctorModalComponent implements OnInit {
   loadDoctor(): void {
     this.subscriptions.push(
       this.doctorsService.getDoctorById(this.id).subscribe(doctor => {
-        this.selected = doctor;
+        this.selected.set(doctor);
         this.updateFormValues();
       })
     );
@@ -49,13 +49,13 @@ export class EditDoctorModalComponent implements OnInit {
   loadDepartments(): void {
     this.subscriptions.push(
       this.departmentService.getDepartments().subscribe(departments => {
-        this.departments = departments;
+        this.departments.set(departments);
       })
     );
   }
 
   checkRoles(roleId: any): boolean {
-    return this.user?.roleIds?.includes(roleId);
+    return this.user()?.roleIds?.includes(roleId);
   }
 
   closeThisModal(): void {
@@ -96,45 +96,45 @@ export class EditDoctorModalComponent implements OnInit {
   });
 
   updateFormValues(): void {
-    if (this.selected) {
+    if (this.selected()) {
       this.doctorForm.patchValue({
-        companyID: this.selected?.companyID,
-        drSerial: this.selected?.drSerial,
-        drName: this.selected?.drName,
-        degree: this.selected?.degree,
-        imageUrl: this.selected?.imageUrl,
-        designation: this.selected?.designation,
-        specialty: this.selected?.specialty,
-        departmentId: this.selected?.departmentId,
-        phone: this.selected?.phone,
-        fee: this.selected?.fee || 0,
-        visitTime: this.selected?.visitTime,
-        room: this.selected?.room,
-        description: this.selected?.description,
-        additional: this.selected?.additional,
-        notice: this.selected?.notice,
-        serialBlock: this.selected?.serialBlock,
-        satNewPatientLimit: this.selected?.satNewPatientLimit,
-        satOldPatientLimit: this.selected?.satOldPatientLimit,
-        sunNewPatientLimit: this.selected?.sunNewPatientLimit,
-        sunOldPatientLimit: this.selected?.sunOldPatientLimit,
-        monNewPatientLimit: this.selected?.monNewPatientLimit,
-        monOldPatientLimit: this.selected?.monOldPatientLimit,
-        tueNewPatientLimit: this.selected?.tueNewPatientLimit,
-        tueOldPatientLimit: this.selected?.tueOldPatientLimit,
-        wedNewPatientLimit: this.selected?.wedNewPatientLimit,
-        wedOldPatientLimit: this.selected?.wedOldPatientLimit,
-        thuNewPatientLimit: this.selected?.thuNewPatientLimit,
-        thuOldPatientLimit: this.selected?.thuOldPatientLimit,
-        friNewPatientLimit: this.selected?.friNewPatientLimit,
-        friOldPatientLimit: this.selected?.friOldPatientLimit
+        companyID: this.selected()?.companyID,
+        drSerial: this.selected()?.drSerial,
+        drName: this.selected()?.drName,
+        degree: this.selected()?.degree,
+        imageUrl: this.selected()?.imageUrl,
+        designation: this.selected()?.designation,
+        specialty: this.selected()?.specialty,
+        departmentId: this.selected()?.departmentId,
+        phone: this.selected()?.phone,
+        fee: this.selected()?.fee || 0,
+        visitTime: this.selected()?.visitTime,
+        room: this.selected()?.room,
+        description: this.selected()?.description,
+        additional: this.selected()?.additional,
+        notice: this.selected()?.notice,
+        serialBlock: this.selected()?.serialBlock,
+        satNewPatientLimit: this.selected()?.satNewPatientLimit,
+        satOldPatientLimit: this.selected()?.satOldPatientLimit,
+        sunNewPatientLimit: this.selected()?.sunNewPatientLimit,
+        sunOldPatientLimit: this.selected()?.sunOldPatientLimit,
+        monNewPatientLimit: this.selected()?.monNewPatientLimit,
+        monOldPatientLimit: this.selected()?.monOldPatientLimit,
+        tueNewPatientLimit: this.selected()?.tueNewPatientLimit,
+        tueOldPatientLimit: this.selected()?.tueOldPatientLimit,
+        wedNewPatientLimit: this.selected()?.wedNewPatientLimit,
+        wedOldPatientLimit: this.selected()?.wedOldPatientLimit,
+        thuNewPatientLimit: this.selected()?.thuNewPatientLimit,
+        thuOldPatientLimit: this.selected()?.thuOldPatientLimit,
+        friNewPatientLimit: this.selected()?.friNewPatientLimit,
+        friOldPatientLimit: this.selected()?.friOldPatientLimit
       });
     }
   }
 
   onSubmit(): void {
     if (this.doctorForm.invalid) {
-      this.isSubmitted = true;
+      this.isSubmitted.set(true);
       return;
     }
 
@@ -149,7 +149,7 @@ export class EditDoctorModalComponent implements OnInit {
     });
 
     this.subscriptions.push(
-      this.doctorsService.updateDoctor(this.selected.id, formData).subscribe({
+      this.doctorsService.updateDoctor(this.selected().id, formData).subscribe({
         next: () => {
           this.closeThisModal();
         },

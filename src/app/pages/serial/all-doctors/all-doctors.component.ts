@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { Subscription, forkJoin } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { EditDoctorModalComponent } from '../../../components/serial/shared/modal/edit-doctor-modal/edit-doctor-modal.component';
@@ -20,13 +20,13 @@ export class SerialAllDoctorsComponent implements OnInit, OnDestroy {
   departmentService = inject(DepartmentService);
 
   emptyImg = '../../../assets/images/doctor.png';
-  selectedId: any;
-  addDoctorModal: boolean = false;
-  editDoctorModal: boolean = false;
+  selectedId = signal<any>(null);
+  addDoctorModal = signal<boolean>(false);
+  editDoctorModal = signal<boolean>(false);
   private subscriptions: Subscription[] = [];
-  selectedDepartment: string = '';
-  departmentWithDoctor: any[] = [];
-  doctors: any[] = [];
+  selectedDepartment = signal<string>('');
+  departmentWithDoctor = signal<any[]>([]);
+  doctors = signal<any[]>([]);
 
   ngOnInit(): void {
     this.loadData();
@@ -39,11 +39,9 @@ export class SerialAllDoctorsComponent implements OnInit, OnDestroy {
         this.departmentService.getDepartments()
       ]).subscribe({
         next: ([doctors, departments]) => {
-          this.doctors = doctors;
+          this.doctors.set(doctors);
           const departmentIds = doctors.map((doctor: any) => doctor.departmentId);
-          this.departmentWithDoctor = departments.filter((dept: any) =>
-            departmentIds.includes(dept.id)
-          );
+          this.departmentWithDoctor.set(departments.filter((dept: any) => departmentIds.includes(dept.id)));
         },
         error: (error) => {
           console.error('Error loading data:', error);
@@ -60,11 +58,11 @@ export class SerialAllDoctorsComponent implements OnInit, OnDestroy {
   }
 
   filterDoctorsByDepartment(doctors: any[]): any[] {
-    if (!this.selectedDepartment) {
+    if (!this.selectedDepartment()) {
       return doctors;
     }
     return doctors.filter(doctor =>
-      doctor && doctor.departmentId == this.selectedDepartment
+      doctor && doctor.departmentId == this.selectedDepartment()
     );
   }
 
@@ -85,21 +83,21 @@ export class SerialAllDoctorsComponent implements OnInit, OnDestroy {
   }
 
   openAddDoctorModal(): void {
-    this.addDoctorModal = true;
+    this.addDoctorModal.set(true);
   }
 
   openEditDoctorModal(id: any): void {
-    this.selectedId = id;
-    this.editDoctorModal = true;
+    this.selectedId.set(id);
+    this.editDoctorModal.set(true);
   }
 
   closeAddDoctorModal(): void {
-    this.addDoctorModal = false;
+    this.addDoctorModal.set(false);
     this.loadData(); // Refresh the list after adding
   }
 
   closeEditDoctorModal(): void {
-    this.editDoctorModal = false;
+    this.editDoctorModal.set(false);
     this.loadData(); // Refresh the list after editing
   }
 

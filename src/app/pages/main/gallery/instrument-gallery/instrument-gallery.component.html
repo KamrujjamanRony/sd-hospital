@@ -23,7 +23,7 @@
 
 <div class="container mx-auto my-24">
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-    @for (instrument of instruments; track instrument.id) {
+    @for (instrument of instruments(); track instrument.id) {
     <app-instrument-card
       [img]="instrument.pUrl"
       [title]="instrument.productName"

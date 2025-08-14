@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UsersService } from '../../../../../services/serial/users.service';
@@ -21,9 +21,9 @@ export class EditUserModalComponent implements OnInit {
   fb = inject(FormBuilder);
 
   private subscriptions: Subscription[] = [];
-  userRole: any[] = [];
-  isSubmitted = false;
-  isLoading = false;
+  userRole = signal<any[]>([]);
+  isSubmitted = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
   errorMessage: string | null = null;
 
   userForm = this.fb.group({
@@ -40,7 +40,7 @@ export class EditUserModalComponent implements OnInit {
     this.subscriptions.push(
       this.dataService.getJsonData().subscribe({
         next: (data) => {
-          this.userRole = data.role || [];
+          this.userRole.set(data.role || []);
         },
         error: (error) => {
           console.error('Error loading roles:', error);
@@ -51,7 +51,7 @@ export class EditUserModalComponent implements OnInit {
   }
 
   updateFormValues(): void {
-    if (this.user) {
+    if (this.user()) {
       this.userForm.patchValue({
         username: this.user.userName,
         role: this.user.roleIds || []
@@ -60,14 +60,14 @@ export class EditUserModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.isSubmitted = true;
+    this.isSubmitted.set(true);
     this.errorMessage = null;
 
     if (this.userForm.invalid || !this.user?.userId) {
       return;
     }
 
-    this.isLoading = true;
+    this.isLoading.set(true);
     const roles = this.userForm.value.role || [];
 
     this.subscriptions.push(
@@ -78,10 +78,10 @@ export class EditUserModalComponent implements OnInit {
         error: (error) => {
           console.error('Error updating user:', error);
           this.errorMessage = 'Failed to update user. Please try again.';
-          this.isLoading = false;
+          this.isLoading.set(false);
         },
         complete: () => {
-          this.isLoading = false;
+          this.isLoading.set(false);
         }
       })
     );
@@ -89,7 +89,7 @@ export class EditUserModalComponent implements OnInit {
 
   showError(controlName: string): boolean {
     const control = this.userForm.get(controlName);
-    return !!control?.invalid && (control?.dirty || control?.touched || this.isSubmitted);
+    return !!control?.invalid && (control?.dirty || control?.touched || this.isSubmitted());
   }
 
   isRoleSelected(roleId: string): boolean {

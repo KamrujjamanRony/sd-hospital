@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorsService } from '../../../services/serial/doctors.service';
@@ -14,19 +14,19 @@ export class DoctorComponent {
   route = inject(ActivatedRoute);
 
   emptyImg: any = '../../../../assets/images/doctor.png';
-  id: any | null = null;
+  id = signal<any>(null);
   paramsSubscription?: Subscription;
-  doctor?: any;
+  doctor = signal<any>(null);
 
   constructor() { };
 
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe(params => {
-      this.id = params.get('id');
-      if (this.id) {
+      this.id.set(params.get('id'));
+      if (this.id()) {
         this.doctorsService.getDoctorById(this.id).subscribe({
           next: (data: any | undefined) => {
-            this.doctor = data;
+            this.doctor.set(data);
           }
         });
       }

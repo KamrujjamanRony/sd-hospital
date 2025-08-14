@@ -23,13 +23,13 @@
 
 <section>
   <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white antialiased">
-    @if (career?.length !== 0) {
+    @if (career().length !== 0) {
     <div
       class="flex flex-col md:flex-row justify-between px-4 mx-auto max-w-screen-2xl"
     >
       <div class="px-4 mx-auto max-w-screen-2xl">
         <div class="grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
-          @for (data of career; track data.id) {
+          @for (data of career(); track data.id) {
           <app-news-card
             [img]="data.imageUrl"
             [title]="data.title"

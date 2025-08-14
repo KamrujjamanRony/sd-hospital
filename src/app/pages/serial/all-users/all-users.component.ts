@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { forkJoin, Subscription } from 'rxjs';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { AddUserModalComponent } from '../../../components/serial/shared/modal/add-user-modal/add-user-modal.component';
@@ -20,16 +20,16 @@ export class AllUsersComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   authService = inject(AuthService);
 
-  user: any;
-  selected: any;
-  addUserModal: boolean = false;
-  editUserModal: boolean = false;
-  userRole: any[] = [];
-  users: any[] = [];
+  user = signal<any>(null);
+  selected = signal<any>(null);
+  addUserModal = signal<boolean>(false);
+  editUserModal = signal<boolean>(false);
+  userRole = signal<any[]>([]);
+  users = signal<any[]>([]);
   private subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
+    this.user.set(this.authService.getUser());
     this.loadData();
   }
 
@@ -40,8 +40,8 @@ export class AllUsersComponent implements OnInit, OnDestroy {
         this.dataService.getJsonData()
       ]).subscribe({
         next: ([users, data]) => {
-          this.users = users;
-          this.userRole = data.role;
+          this.users.set(users);
+          this.userRole.set(data.role);
         },
         error: (error) => {
           console.error('Error loading data:', error);
@@ -51,30 +51,30 @@ export class AllUsersComponent implements OnInit, OnDestroy {
   }
 
   checkRoles(roleId: any): boolean {
-    return this.user?.roleIds?.includes(roleId);
+    return this.user()?.roleIds?.includes(roleId);
   }
 
   getRolesName(roleId: any): string {
-    const role = this.userRole.find(r => r.id == roleId);
+    const role = this.userRole().find(r => r.id == roleId);
     return role?.name || '';
   }
 
   openAddUserModal(): void {
-    this.addUserModal = true;
+    this.addUserModal.set(true);
   }
 
   openEditUserModal(id: any): void {
-    this.selected = id;
-    this.editUserModal = true;
+    this.selected.set(id);
+    this.editUserModal.set(true);
   }
 
   closeAddUserModal(): void {
-    this.addUserModal = false;
+    this.addUserModal.set(false);
     this.loadData(); // Refresh the list after adding
   }
 
   closeEditUserModal(): void {
-    this.editUserModal = false;
+    this.editUserModal.set(false);
     this.loadData(); // Refresh the list after editing
   }
 
