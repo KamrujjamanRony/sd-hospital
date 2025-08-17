@@ -80,7 +80,7 @@
     ></div>
   </div>
 </div>
-} @if (isConfirmOpen) {
+} @if (isConfirmOpen()) {
 <app-delete-confirmation-modal
   (confirmDelete)="confirmDelete()"
   (closeModal)="closeModal()"

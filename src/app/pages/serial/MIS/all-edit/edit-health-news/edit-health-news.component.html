@@ -5,7 +5,7 @@
 ></app-cover>
 
 <div class="w-full max-w-7xl mx-auto">
-  @if (model) {
+  @if (model()) {
   <form
     #form="ngForm"
     (ngSubmit)="onFormSubmit()"
@@ -24,7 +24,7 @@
         name="healthNewsSerial"
         type="number"
         placeholder="Enter Serial here"
-        [(ngModel)]="model.healthNewsSerial"
+        [(ngModel)]="model().healthNewsSerial"
         required
       />
     </div>
@@ -38,7 +38,7 @@
         name="title"
         type="text"
         placeholder="Enter title here"
-        [(ngModel)]="model.title"
+        [(ngModel)]="model().title"
         required
       />
     </div>
@@ -52,7 +52,7 @@
         name="subTitle"
         type="text"
         placeholder="Enter subTitle here"
-        [(ngModel)]="model.subTitle"
+        [(ngModel)]="model().subTitle"
         required
       />
     </div>
@@ -60,8 +60,8 @@
       <label for="imageFile" class="block text-gray-900 text-sm font-bold mb-2"
         >Image</label
       >
-      @if(model.hnUrl){
-      <img [src]="model.hnUrl" alt="Image" class="h-16 md:h-24 rounded" />
+      @if(model().hnUrl){
+      <img [src]="model().hnUrl" alt="Image" class="h-16 md:h-24 rounded" />
       }
       <input
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
@@ -69,7 +69,7 @@
         name="hnUrl"
         type="text"
         placeholder="Type here"
-        [(ngModel)]="model.hnUrl"
+        [(ngModel)]="model().hnUrl"
         required
       />
     </div>
@@ -88,7 +88,7 @@
         cols="30"
         rows="10"
         placeholder="Enter product description here"
-        [(ngModel)]="model.description"
+        [(ngModel)]="model().description"
       ></textarea>
     </div>
     <input
@@ -100,7 +100,7 @@
   }
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Health News is successfully updated!"
   url="/serial/admin/all-mis/healthNews-list"

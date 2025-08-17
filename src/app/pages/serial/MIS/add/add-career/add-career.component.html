@@ -16,7 +16,7 @@
         name="title"
         type="text"
         placeholder="Enter your title here"
-        [(ngModel)]="model.title"
+        [(ngModel)]="model().title"
         required
       />
     </div>
@@ -30,7 +30,7 @@
         name="imageUrl"
         type="text"
         placeholder="Type here"
-        [(ngModel)]="model.imageUrl"
+        [(ngModel)]="model().imageUrl"
         required
       />
     </div>
@@ -49,7 +49,7 @@
         cols="30"
         rows="10"
         placeholder="Enter your description here"
-        [(ngModel)]="model.description"
+        [(ngModel)]="model().description"
       ></textarea>
     </div>
     <input
@@ -60,7 +60,7 @@
   </form>
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Career is successfully added!"
   url="/serial/admin/all-mis/career-list"

@@ -1,7 +1,7 @@
 <section>
   <app-cover title="all career list" sub1="MIS" sub2="Career"></app-cover>
 
-  @if (loading) {
+  @if (loading()) {
   <div
     class="block text-gray-50 mt-10 mb-4 mx-auto h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
     role="status"
@@ -91,7 +91,7 @@
   }
 </section>
 
-@if (isConfirmOpen) {
+@if (isConfirmOpen()) {
 <app-delete-confirmation-modal
   (confirmDelete)="confirmDelete()"
   (closeModal)="closeModal()"

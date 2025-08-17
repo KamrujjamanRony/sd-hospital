@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Observable, Subscription, map } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -8,37 +8,37 @@ import { InstrumentService } from '../../../../../services/main/instrument.servi
 import { DeleteConfirmationModalComponent } from '../../../../../components/main/shared/all-modals/delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
-    selector: 'app-instrument-list',
-    imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
-    templateUrl: './instrument-list.component.html',
-    styleUrl: './instrument-list.component.css'
+  selector: 'app-instrument-list',
+  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
+  templateUrl: './instrument-list.component.html',
+  styleUrl: './instrument-list.component.css'
 })
 export class InstrumentListComponent {
   instrumentService = inject(InstrumentService);
-
   emptyImg: any = environment.emptyImg;
   instruments$?: Observable<any[]>;
   deleteInstrumentSubscription?: Subscription;
-  isConfirmOpen = false;
-  idToDelete: any;
-  
+
+  isConfirmOpen = signal<boolean>(false);
+  idToDelete = signal<any>(null);
+
   constructor() { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     if (!this.instruments$) {
       this.instruments$ = this.instrumentService.getCompanyInstrument().pipe(
         map(doctors => doctors.sort((a, b) => a.productSerial - b.productSerial))
       );
     }
   }
-  
+
   onDelete(id: any): void {
-    this.idToDelete = id;
-    this.isConfirmOpen = true;
+    this.idToDelete.set(id);
+    this.isConfirmOpen.set(true);
   }
 
   confirmDelete(): void {
-    this.deleteInstrumentSubscription = this.instrumentService.deleteInstrument(this.idToDelete).subscribe({
+    this.deleteInstrumentSubscription = this.instrumentService.deleteInstrument(this.idToDelete()).subscribe({
       next: () => {
         this.instruments$ = this.instrumentService.getCompanyInstrument();
         this.closeModal();
@@ -47,7 +47,7 @@ export class InstrumentListComponent {
   }
 
   closeModal(): void {
-    this.isConfirmOpen = false;
+    this.isConfirmOpen.set(false);
   }
 
   ngOnDestroy(): void {

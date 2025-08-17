@@ -39,7 +39,7 @@ export class EditDoctorModalComponent implements OnInit {
 
   loadDoctor(): void {
     this.subscriptions.push(
-      this.doctorsService.getDoctorById(this.id).subscribe(doctor => {
+      this.doctorsService.getDoctorById(this.id()).subscribe(doctor => {
         this.selected.set(doctor);
         this.updateFormValues();
       })

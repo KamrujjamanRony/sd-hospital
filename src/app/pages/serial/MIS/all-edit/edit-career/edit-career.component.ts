@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
 import { FormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from '../../../../../components/main/shared/all-modals/confirm-modal/confirm-modal.component';
@@ -8,24 +8,24 @@ import { Subscription } from 'rxjs';
 import { CareerService } from '../../../../../services/main/career.service';
 
 @Component({
-    selector: 'app-edit-career',
-    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-    templateUrl: './edit-career.component.html',
-    styleUrl: './edit-career.component.css'
+  selector: 'app-edit-career',
+  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+  templateUrl: './edit-career.component.html',
+  styleUrl: './edit-career.component.css'
 })
 export class EditCareerComponent {
   careerService = inject(CareerService);
   route = inject(ActivatedRoute);
   imgbbService = inject(ImgbbService);
-  
-  id: any = null;
-  CareerInfo?: any;
   paramsSubscription?: Subscription;
   editCareerSubscription?: Subscription;
-  confirmModal: boolean = false;
+
+  id = signal<any>(null);
+  CareerInfo = signal<any>(null);
+  confirmModal = signal<boolean>(false);
 
   closeModal() {
-    this.confirmModal = false;
+    this.confirmModal.set(false);
   }
 
   constructor() { }
@@ -33,12 +33,12 @@ export class EditCareerComponent {
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {
-        this.id = params.get('id');
-        if (this.id) {
-          this.careerService.getCareer(this.id)
+        this.id.set(params.get('id'));
+        if (this.id()) {
+          this.careerService.getCareer(this.id())
             .subscribe({
               next: (response) => {
-                this.CareerInfo = response;
+                this.CareerInfo?.set(response);
               }
             });
         }
@@ -50,16 +50,16 @@ export class EditCareerComponent {
 
     const formData = new FormData();
 
-    formData.append('CompanyID', this.CareerInfo?.companyID);
-    formData.append('Title', this.CareerInfo?.title);
-    formData.append('Description', this.CareerInfo?.description);
-    formData.append('ImageUrl', this.CareerInfo?.imageUrl);
+    formData.append('CompanyID', this.CareerInfo().companyID);
+    formData.append('Title', this.CareerInfo().title);
+    formData.append('Description', this.CareerInfo().description);
+    formData.append('ImageUrl', this.CareerInfo().imageUrl);
 
-    if (this.id) {
-      this.editCareerSubscription = this.careerService.updateCareer(this.id, formData)
+    if (this.id()) {
+      this.editCareerSubscription = this.careerService.updateCareer(this.id(), formData)
         .subscribe({
           next: () => {
-            this.confirmModal = true;
+            this.confirmModal.set(true);
           }
         });
     }

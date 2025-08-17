@@ -4,7 +4,7 @@
   sub2="Contact Us"
 ></app-cover>
 
-@if (addressInfo) {
+@if (addressInfo()) {
 <div class="w-full max-w-7xl mx-auto">
   <form
     #form="ngForm"
@@ -21,7 +21,7 @@
         name="address1"
         type="text"
         placeholder="Enter Your Address"
-        [(ngModel)]="addressInfo.address1"
+        [(ngModel)]="addressInfo().address1"
       />
     </div>
     <div class="mb-4">
@@ -34,7 +34,7 @@
         name="address2"
         type="text"
         placeholder="Enter your address"
-        [(ngModel)]="addressInfo.address2"
+        [(ngModel)]="addressInfo().address2"
       />
     </div>
     <div class="mb-4">
@@ -50,7 +50,7 @@
         name="phoneNumber1"
         type="text"
         placeholder="Enter your phone number"
-        [(ngModel)]="addressInfo.phoneNumber1"
+        [(ngModel)]="addressInfo().phoneNumber1"
       />
     </div>
     <div class="mb-4">
@@ -66,7 +66,7 @@
         name="phoneNumber2"
         type="text"
         placeholder="Enter your phone number"
-        [(ngModel)]="addressInfo.phoneNumber2"
+        [(ngModel)]="addressInfo().phoneNumber2"
       />
     </div>
     <div class="mb-4">
@@ -82,7 +82,7 @@
         name="phoneNumber3"
         type="text"
         placeholder="Enter your phone number"
-        [(ngModel)]="addressInfo.phoneNumber3"
+        [(ngModel)]="addressInfo().phoneNumber3"
       />
     </div>
     <div class="mb-4">
@@ -95,7 +95,7 @@
         name="email"
         type="email"
         placeholder="Enter your email"
-        [(ngModel)]="addressInfo.email"
+        [(ngModel)]="addressInfo().email"
       />
     </div>
     <div class="mb-4">
@@ -111,7 +111,7 @@
         name="facebookLink"
         type="text"
         placeholder="Enter your facebook link"
-        [(ngModel)]="addressInfo.facebookLink"
+        [(ngModel)]="addressInfo().facebookLink"
       />
     </div>
     <div class="mb-4">
@@ -127,7 +127,7 @@
         name="othersLink1"
         type="text"
         placeholder="Enter your others link"
-        [(ngModel)]="addressInfo.othersLink1"
+        [(ngModel)]="addressInfo().othersLink1"
       />
     </div>
     <div class="mb-4">
@@ -143,7 +143,7 @@
         name="othersLink2"
         type="text"
         placeholder="Enter your others link"
-        [(ngModel)]="addressInfo.othersLink2"
+        [(ngModel)]="addressInfo().othersLink2"
       />
     </div>
     <input

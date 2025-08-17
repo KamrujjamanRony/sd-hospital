@@ -43,7 +43,7 @@ export class AppointmentFormComponent implements OnInit {
   originalDoctorList = signal<any>([]);
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
+    this.user.set(this.authService.getUser());
     this.getConfirm();
     this.loadInitialData();
     this.updateFormGroup();

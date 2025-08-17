@@ -47,9 +47,7 @@
           } @if (doctor?.departmentId) {
           <p>
             Department of
-            <span class="font-bold">{{
-              departmentService.getDepartmentById(doctor?.departmentId)
-            }}</span>
+            <span class="font-bold">{{ departmentName() }}</span>
           </p>
           }
           <div class="pt-2">

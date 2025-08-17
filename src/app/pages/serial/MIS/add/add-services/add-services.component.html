@@ -16,11 +16,11 @@
         name="title"
         type="text"
         placeholder="Enter here"
-        [(ngModel)]="model.title"
+        [(ngModel)]="model().title"
       />
     </div>
 
-    @if (services?.length !== 0) {
+    @if (services()?.length !== 0) {
     <div class="mb-4">
       <label
         class="block text-gray-900 text-sm font-bold mb-2"
@@ -35,7 +35,7 @@
         cols="30"
         rows="10"
         placeholder="Enter here"
-        [(ngModel)]="model.description"
+        [(ngModel)]="model().description"
       ></textarea>
     </div>
     }
@@ -48,7 +48,7 @@
   </form>
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Service is successfully added!"
   url="/serial/admin/all-mis/service-list"

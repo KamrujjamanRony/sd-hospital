@@ -5,7 +5,7 @@
 ></app-cover>
 
 <div class="w-full max-w-7xl mx-auto">
-  @if (model) {
+  @if (model()) {
   <form
     #form="ngForm"
     (ngSubmit)="onFormSubmit()"
@@ -24,7 +24,7 @@
         name="galerySerial"
         type="number"
         placeholder="Enter Gallery Serial here"
-        [(ngModel)]="model.galerySerial"
+        [(ngModel)]="model().galerySerial"
         required
       />
     </div>
@@ -41,7 +41,7 @@
         name="galeryName"
         type="text"
         placeholder="Enter Gallery Name here"
-        [(ngModel)]="model.galeryName"
+        [(ngModel)]="model().galeryName"
         required
       />
     </div>
@@ -49,9 +49,9 @@
       <label for="imageFile" class="block text-gray-900 text-sm font-bold mb-2"
         >Gallery Image</label
       >
-      @if(model.gPicUrl){
+      @if(model().gPicUrl){
       <img
-        [src]="model.gPicUrl"
+        [src]="model().gPicUrl"
         alt="Product Image"
         class="h-16 md:h-24 rounded"
       />
@@ -62,7 +62,7 @@
         name="gPicUrl"
         type="text"
         placeholder="Type here"
-        [(ngModel)]="model.gPicUrl"
+        [(ngModel)]="model().gPicUrl"
         required
       />
     </div>
@@ -81,7 +81,7 @@
         cols="30"
         rows="10"
         placeholder="Enter Gallery description here"
-        [(ngModel)]="model.description"
+        [(ngModel)]="model().description"
       ></textarea>
     </div>
     <input
@@ -93,7 +93,7 @@
   }
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Gallery is successfully updated!"
   url="/serial/admin/all-mis/gallery-list"

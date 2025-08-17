@@ -35,7 +35,7 @@
                 placeholder="From Date"
                 id="FromDate"
                 name="FromDate"
-                [(ngModel)]="modelAppointment.FromDate"
+                [(ngModel)]="modelAppointment().FromDate"
               />
             </div>
             <!--To input-->
@@ -57,7 +57,7 @@
                 placeholder="To Date"
                 id="ToDate"
                 name="ToDate"
-                [(ngModel)]="modelAppointment.ToDate"
+                [(ngModel)]="modelAppointment().ToDate"
               />
             </div>
           </div>
@@ -103,9 +103,9 @@
           </div>
         </form>
 
-        @if (message) {
+        @if (message()) {
         <div class="text-center mt-5">
-          <p class="text-red-600 text-xs capitalize">{{ message }}</p>
+          <p class="text-red-600 text-xs capitalize">{{ message() }}</p>
         </div>
         }
       </div>
@@ -116,7 +116,7 @@
   </div>
 </section>
 
-@if (show) {
+@if (show()) {
 <div
   class="fixed top-0 left-0 w-screen h-screen z-50 bg-gray-900/60 backdrop-blur-sm"
 >
@@ -168,7 +168,7 @@
           type="password"
           id="password"
           name="password"
-          [(ngModel)]="modelAppointment.password"
+          [(ngModel)]="modelAppointment().password"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-5"
           placeholder="Type Password"
         />

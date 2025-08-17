@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -8,26 +8,26 @@ import { HealthNewsService } from '../../../../../services/main/healthNews.servi
 import { ImgbbService } from '../../../../../services/main/imgbb.service';
 
 @Component({
-    selector: 'app-edit-health-news',
-    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-    templateUrl: './edit-health-news.component.html',
-    styleUrl: './edit-health-news.component.css'
+  selector: 'app-edit-health-news',
+  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+  templateUrl: './edit-health-news.component.html',
+  styleUrl: './edit-health-news.component.css'
 })
 export class EditHealthNewsComponent {
   imgbbService = inject(ImgbbService);
   healthNewsService = inject(HealthNewsService);
   route = inject(ActivatedRoute);
+  paramsSubscription?: Subscription;
+  editHealthNewsSubscription?: Subscription;
   yourTitle: any = 'Update Health News';
   yourSub1: any = 'Dashboard';
   yourSub2: any = 'Edit Health News';
-  id: any = null;
-  model?: any;
-  paramsSubscription?: Subscription;
-  editHealthNewsSubscription?: Subscription;
-  confirmModal: boolean = false;
+  id = signal<any>(null);
+  model = signal<any>(null);
+  confirmModal = signal<boolean>(false);
 
   closeModal() {
-    this.confirmModal = false;
+    this.confirmModal.set(false);
   }
 
   constructor() { }
@@ -35,12 +35,12 @@ export class EditHealthNewsComponent {
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {
-        this.id = params.get('id');
-        if (this.id) {
-          this.healthNewsService.getHealthNews(this.id)
+        this.id.set(params.get('id'));
+        if (this.id()) {
+          this.healthNewsService.getHealthNews(this.id())
             .subscribe({
               next: (response) => {
-                this.model = response;
+                this.model.set(response);
               }
             });
         }
@@ -52,18 +52,18 @@ export class EditHealthNewsComponent {
 
     const formData = new FormData();
 
-    formData.append('CompanyID', this.model.companyID);
-    formData.append('HealthNewsSerial', this.model.healthNewsSerial);
-    formData.append('Title', this.model.title);
-    formData.append('SubTitle', this.model.subTitle);
-    formData.append('Description', this.model.description);
-    formData.append('HNUrl', this.model.hnUrl);
+    formData.append('CompanyID', this.model().companyID);
+    formData.append('HealthNewsSerial', this.model().healthNewsSerial);
+    formData.append('Title', this.model().title);
+    formData.append('SubTitle', this.model().subTitle);
+    formData.append('Description', this.model().description);
+    formData.append('HNUrl', this.model().hnUrl);
 
-    if (this.id) {
-      this.editHealthNewsSubscription = this.healthNewsService.updateHealthNews(this.id, formData)
+    if (this.id()) {
+      this.editHealthNewsSubscription = this.healthNewsService.updateHealthNews(this.id(), formData)
         .subscribe({
           next: (response) => {
-            this.confirmModal = true;
+            this.confirmModal.set(true);
           }
         });
     }

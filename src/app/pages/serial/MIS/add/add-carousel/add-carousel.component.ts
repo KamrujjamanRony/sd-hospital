@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, inject, signal } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
@@ -8,20 +8,20 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 
 @Component({
-    selector: 'app-add-carousel',
-    templateUrl: './add-carousel.component.html',
-    imports: [CoverComponent, FormsModule, ConfirmModalComponent]
+  selector: 'app-add-carousel',
+  templateUrl: './add-carousel.component.html',
+  imports: [CoverComponent, FormsModule, ConfirmModalComponent]
 })
 export class AddCarouselComponent implements OnDestroy {
   carouselService = inject(CarouselService);
   imgbbService = inject(ImgbbService);
-  
+
   model: any;
   private addCarouselSubscription?: Subscription;
-  confirmModal: boolean = false;
+  confirmModal = signal<boolean>(false);
 
   closeModal() {
-    this.confirmModal = false;
+    this.confirmModal.set(false);
   }
 
   constructor() {
@@ -36,15 +36,15 @@ export class AddCarouselComponent implements OnDestroy {
   onFormSubmit(): void {
     const formData = new FormData();
 
-    formData.append('CompanyID', this.model.companyID);
-    formData.append('Title', this.model.title);
-    formData.append('Description', this.model.description);
-    formData.append('ImageUrl', this.model.imageUrl);
+    formData.append('CompanyID', this.model().companyID);
+    formData.append('Title', this.model().title);
+    formData.append('Description', this.model().description);
+    formData.append('ImageUrl', this.model().imageUrl);
 
     this.addCarouselSubscription = this.carouselService.addCarousel(formData)
       .subscribe({
         next: (response) => {
-          this.confirmModal = true;
+          this.confirmModal.set(true);
         },
         error: (error) => {
           console.error('Error adding carousel:', error);

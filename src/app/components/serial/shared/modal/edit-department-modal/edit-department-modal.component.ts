@@ -29,7 +29,7 @@ export class EditDepartmentModalComponent implements OnInit {
 
   loadDepartment(): void {
     this.subscriptions.push(
-      this.departmentService.getDepartmentById(this.id).subscribe(department => {
+      this.departmentService.getDepartmentById(this.id()).subscribe(department => {
         this.selected.set(department);
         this.updateFormValues();
       })

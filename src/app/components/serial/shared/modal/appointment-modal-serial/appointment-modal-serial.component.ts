@@ -56,7 +56,7 @@ export class AppointmentModalSerialComponent implements OnInit {
   ngOnInit(): void {
     this.user.set(this.authService.getUser());
     this.fetchDepartments();
-    if (this.id) {
+    if (this.id()) {
       this.loadAppointment();
     }
     if (this.doctor) {

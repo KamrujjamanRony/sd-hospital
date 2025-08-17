@@ -24,7 +24,7 @@ export class DoctorComponent {
     this.paramsSubscription = this.route.paramMap.subscribe(params => {
       this.id.set(params.get('id'));
       if (this.id()) {
-        this.doctorsService.getDoctorById(this.id).subscribe({
+        this.doctorsService.getDoctorById(this.id()).subscribe({
           next: (data: any | undefined) => {
             this.doctor.set(data);
           }

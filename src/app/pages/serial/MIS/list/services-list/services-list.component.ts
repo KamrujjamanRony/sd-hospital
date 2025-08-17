@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { environment } from '../../../../../../environments/environments';
 import { Observable, Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../services/main/services.service';
@@ -8,20 +8,20 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-services-list',
-    templateUrl: './services-list.component.html',
-    styleUrl: './services-list.component.css',
-    imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent]
+  selector: 'app-services-list',
+  templateUrl: './services-list.component.html',
+  styleUrl: './services-list.component.css',
+  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent]
 })
 export class ServicesListComponent {
   servicesService = inject(ServicesService);
-
   emptyImg: any = environment.emptyImg;
   services$?: Observable<any[]>;
   deleteServicesSubscription?: Subscription;
-  isConfirmOpen = false;
-  idToDelete: any;
-  
+
+  isConfirmOpen = signal<boolean>(false);
+  idToDelete = signal<any>(null);
+
   constructor() { }
 
   ngOnInit(): void {
@@ -30,14 +30,14 @@ export class ServicesListComponent {
     }
 
   }
-  
+
   onDelete(id: any): void {
-    this.idToDelete = id;
-    this.isConfirmOpen = true;
+    this.idToDelete.set(id);
+    this.isConfirmOpen.set(true);
   }
 
   confirmDelete(): void {
-    this.deleteServicesSubscription = this.servicesService.deleteServices(this.idToDelete).subscribe({
+    this.deleteServicesSubscription = this.servicesService.deleteServices(this.idToDelete()).subscribe({
       next: () => {
         this.services$ = this.servicesService.getCompanyServices();
         this.closeModal();
@@ -46,7 +46,7 @@ export class ServicesListComponent {
   }
 
   closeModal(): void {
-    this.isConfirmOpen = false;
+    this.isConfirmOpen.set(false);
   }
 
   ngOnDestroy(): void {

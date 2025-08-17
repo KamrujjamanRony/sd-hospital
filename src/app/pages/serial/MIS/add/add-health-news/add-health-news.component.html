@@ -23,7 +23,7 @@
         name="healthNewsSerial"
         type="number"
         placeholder="Enter Serial here"
-        [(ngModel)]="model.healthNewsSerial"
+        [(ngModel)]="model().healthNewsSerial"
         required
       />
     </div>
@@ -37,7 +37,7 @@
         name="title"
         type="text"
         placeholder="Enter title here"
-        [(ngModel)]="model.title"
+        [(ngModel)]="model().title"
         required
       />
     </div>
@@ -51,7 +51,7 @@
         name="subTitle"
         type="text"
         placeholder="Enter subTitle here"
-        [(ngModel)]="model.subTitle"
+        [(ngModel)]="model().subTitle"
         required
       />
     </div>
@@ -65,7 +65,7 @@
         name="hnUrl"
         type="text"
         placeholder="Type here"
-        [(ngModel)]="model.hnUrl"
+        [(ngModel)]="model().hnUrl"
         required
       />
     </div>
@@ -84,7 +84,7 @@
         cols="30"
         rows="10"
         placeholder="Enter product description here"
-        [(ngModel)]="model.description"
+        [(ngModel)]="model().description"
       ></textarea>
     </div>
     <input
@@ -95,7 +95,7 @@
   </form>
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Health News is successfully added!"
   url="/serial/admin/all-mis/healthNews-list"

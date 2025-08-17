@@ -19,7 +19,7 @@
         name="galerySerial"
         type="number"
         placeholder="Enter Gallery Serial here"
-        [(ngModel)]="model.galerySerial"
+        [(ngModel)]="model().galerySerial"
         required
       />
     </div>
@@ -36,7 +36,7 @@
         name="galeryName"
         type="text"
         placeholder="Enter Gallery Name here"
-        [(ngModel)]="model.galeryName"
+        [(ngModel)]="model().galeryName"
         required
       />
     </div>
@@ -50,7 +50,7 @@
         name="gPicUrl"
         type="text"
         placeholder="Type here"
-        [(ngModel)]="model.gPicUrl"
+        [(ngModel)]="model().gPicUrl"
         required
       />
     </div>
@@ -69,7 +69,7 @@
         cols="30"
         rows="10"
         placeholder="Enter Gallery description here"
-        [(ngModel)]="model.description"
+        [(ngModel)]="model().description"
       ></textarea>
     </div>
     <input
@@ -80,7 +80,7 @@
   </form>
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Gallery is successfully added!"
   url="/serial/admin/all-mis/gallery-list"

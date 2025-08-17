@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import {
@@ -11,19 +11,19 @@ import { AppointmentsService } from '../../../../services/serial/appointments.se
 import { environment } from '../../../../../environments/environments';
 
 @Component({
-    selector: 'app-delete',
-    imports: [FormsModule],
-    templateUrl: './delete.component.html',
-    styleUrl: './delete.component.css'
+  selector: 'app-delete',
+  imports: [FormsModule],
+  templateUrl: './delete.component.html',
+  styleUrl: './delete.component.css'
 })
 export class DeleteComponent {
   appointmentsService = inject(AppointmentsService);
-  modelAppointment: any;
-  show: boolean = false;
-  message: string = '';
   appointmentSubscription?: Subscription;
+  modelAppointment = signal<any>(null);
+  show = signal<boolean>(false);
+  message = signal<string>('');
 
-  constructor() { 
+  constructor() {
     this.resetAppointmentForm();
   }
   ngOnInit(): void {
@@ -34,46 +34,46 @@ export class DeleteComponent {
   }
 
   //============================= Appointment =============================
-  onAppointmentFormSubmit(): void { 
-    if (this.modelAppointment.FromDate) {
+  onAppointmentFormSubmit(): void {
+    if (this.modelAppointment().FromDate) {
       this.onOpen();
     }
   }
 
-  onConfirm(){
-    console.log(this.modelAppointment.password)
-    if (this.modelAppointment.password == environment.authKey) {
-      console.log(this.modelAppointment.FromDate, this.modelAppointment.ToDate);
-      this.appointmentSubscription = this.appointmentsService.deleteAllAppointmentData(this.modelAppointment.FromDate, this.modelAppointment.ToDate).subscribe({
+  onConfirm() {
+    console.log(this.modelAppointment().password)
+    if (this.modelAppointment().password == environment.authKey) {
+      console.log(this.modelAppointment().FromDate, this.modelAppointment().ToDate);
+      this.appointmentSubscription = this.appointmentsService.deleteAllAppointmentData(this.modelAppointment().FromDate, this.modelAppointment().ToDate).subscribe({
         next: (data) => {
-          this.message = data.message;
-          this.show = false;
+          this.message.set(data.message);
+          this.show.set(false);
         },
         error: (error) => {
           console.log(error.error.message);
-          this.message = error.error.message + " " + this.modelAppointment.FromDate + " to " + (this.modelAppointment.ToDate ? this.modelAppointment.ToDate : this.modelAppointment.FromDate);
-          this.show = false;
+          this.message.set(error.error.message + " " + this.modelAppointment().FromDate + " to " + (this.modelAppointment().ToDate ? this.modelAppointment().ToDate : this.modelAppointment().FromDate));
+          this.show.set(false);
         }
       });
     }
   }
 
   resetAppointmentForm(): void {
-    this.modelAppointment = {
+    this.modelAppointment.set({
       FromDate: '',
       ToDate: '',
       password: '',
-    };
-    this.message = '';
+    });
+    this.message.set('');
   }
 
-  onOpen(){
-    this.show = true;
-    this.message = '';
+  onOpen() {
+    this.show.set(true);
+    this.message.set('');
   }
 
-  onClose(){
-    this.show = false;
+  onClose() {
+    this.show.set(false);
     this.resetAppointmentForm();
   }
 

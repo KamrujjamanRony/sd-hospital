@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -8,23 +8,23 @@ import { CarouselService } from '../../../../../services/main/carousel.service';
 import { ImgbbService } from '../../../../../services/main/imgbb.service';
 
 @Component({
-    selector: 'app-edit-carousel',
-    templateUrl: './edit-carousel.component.html',
-    imports: [CoverComponent, FormsModule, ConfirmModalComponent]
+  selector: 'app-edit-carousel',
+  templateUrl: './edit-carousel.component.html',
+  imports: [CoverComponent, FormsModule, ConfirmModalComponent]
 })
 export class EditCarouselComponent implements OnInit, OnDestroy {
   carouselService = inject(CarouselService);
   route = inject(ActivatedRoute);
   imgbbService = inject(ImgbbService);
-  
-  id: any = null;
-  carouselInfo?: any;
   paramsSubscription?: Subscription;
   editCarouselSubscription?: Subscription;
-  confirmModal: boolean = false;
+
+  id = signal<any>(null);
+  carouselInfo = signal<any>(null);
+  confirmModal = signal<boolean>(false);
 
   closeModal() {
-    this.confirmModal = false;
+    this.confirmModal.set(false);
   }
 
   constructor() { }
@@ -32,12 +32,12 @@ export class EditCarouselComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {
-        this.id = params.get('id');
-        if (this.id) {
-          this.carouselService.getCarousel(this.id)
+        this.id.set(params.get('id'));
+        if (this.id()) {
+          this.carouselService.getCarousel(this.id())
             .subscribe({
               next: (response) => {
-                this.carouselInfo = response;
+                this.carouselInfo.set(response);
               }
             });
         }
@@ -49,16 +49,16 @@ export class EditCarouselComponent implements OnInit, OnDestroy {
 
     const formData = new FormData();
 
-    formData.append('CompanyID', this.carouselInfo?.companyID);
-    formData.append('Title', this.carouselInfo?.title);
-    formData.append('Description', this.carouselInfo?.description);
-    formData.append('ImageUrl', this.carouselInfo?.imageUrl);
+    formData.append('CompanyID', this.carouselInfo().companyID);
+    formData.append('Title', this.carouselInfo().title);
+    formData.append('Description', this.carouselInfo().description);
+    formData.append('ImageUrl', this.carouselInfo().imageUrl);
 
-    if (this.id) {
-      this.editCarouselSubscription = this.carouselService.updateCarousel(this.id, formData)
+    if (this.id()) {
+      this.editCarouselSubscription = this.carouselService.updateCarousel(this.id(), formData)
         .subscribe({
           next: () => {
-            this.confirmModal = true;
+            this.confirmModal.set(true);
           }
         });
     }

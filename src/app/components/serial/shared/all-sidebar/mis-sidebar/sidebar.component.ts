@@ -23,10 +23,10 @@ export class SidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
+    this.user.set(this.authService.getUser());
     this.aboutService.getAllAbout().subscribe(aboutUs => {
       if (aboutUs) {
-        this.about = aboutUs.find(a => a.companyID === this.companyID);
+        this.about.set(aboutUs.find(a => a.companyID === this.companyID));
       }
     });
     this.contactService.getCompanyAddress().subscribe(addressUs => {

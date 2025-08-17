@@ -44,10 +44,10 @@ export class NavbarComponent {
         }
       ]
     },
-    {
-      label: 'Pathology Report',
-      link: '/report'
-    },
+    // {
+    //   label: 'Pathology Report',
+    //   link: '/report'
+    // },
     {
       label: 'Portal',
       link: '/serial'

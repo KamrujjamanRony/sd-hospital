@@ -4,7 +4,7 @@
   sub2="Edit Career"
 ></app-cover>
 
-@if (CareerInfo) {
+@if (CareerInfo!()) {
 <div class="w-full max-w-7xl mx-auto">
   <form
     #form="ngForm"
@@ -21,16 +21,16 @@
         name="title"
         type="text"
         placeholder="Enter your title here"
-        [(ngModel)]="CareerInfo.title"
+        [(ngModel)]="CareerInfo().title"
       />
     </div>
     <div class="mb-4">
       <label for="imageFile" class="block text-gray-900 text-sm font-bold mb-2"
         >Career Image</label
       >
-      @if (this.CareerInfo.imageUrl) {
+      @if (this.CareerInfo!().imageUrl) {
       <img
-        [src]="this.CareerInfo.imageUrl"
+        [src]="this.CareerInfo().imageUrl"
         alt="Product Image"
         class="h-16 md:h-24 rounded"
       />
@@ -42,7 +42,7 @@
         name="imageUrl"
         type="text"
         placeholder="Type here"
-        [(ngModel)]="CareerInfo.imageUrl"
+        [(ngModel)]="CareerInfo().imageUrl"
         required
       />
     </div>
@@ -61,7 +61,7 @@
         cols="30"
         rows="10"
         placeholder="Enter your description here"
-        [(ngModel)]="CareerInfo.description"
+        [(ngModel)]="CareerInfo().description"
       ></textarea>
     </div>
     <input
@@ -72,7 +72,7 @@
   </form>
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Career is successfully updated!"
   url="admin/all-mis/career-list"

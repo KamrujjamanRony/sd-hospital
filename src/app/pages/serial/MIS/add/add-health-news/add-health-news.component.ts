@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
@@ -8,21 +8,21 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 
 @Component({
-    selector: 'app-add-health-news',
-    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-    templateUrl: './add-health-news.component.html',
-    styleUrl: './add-health-news.component.css'
+  selector: 'app-add-health-news',
+  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+  templateUrl: './add-health-news.component.html',
+  styleUrl: './add-health-news.component.css'
 })
 export class AddHealthNewsComponent {
   healthNewsService = inject(HealthNewsService);
   imgbbService = inject(ImgbbService);
-  
+
   model: any;
   private addHealthNewsSubscription?: Subscription;
-  confirmModal: boolean = false;
+  confirmModal = signal<boolean>(false);
 
   closeModal() {
-    this.confirmModal = false;
+    this.confirmModal.set(false);
   }
 
   constructor() {
@@ -39,17 +39,17 @@ export class AddHealthNewsComponent {
   onFormSubmit(): void {
     const formData = new FormData();
 
-    formData.append('CompanyID', this.model.companyID);
-    formData.append('HealthNewsSerial', this.model.healthNewsSerial);
-    formData.append('Title', this.model.title);
-    formData.append('SubTitle', this.model.subTitle);
-    formData.append('Description', this.model.description);
-    formData.append('HNUrl', this.model.hnUrl);
+    formData.append('CompanyID', this.model().companyID);
+    formData.append('HealthNewsSerial', this.model().healthNewsSerial);
+    formData.append('Title', this.model().title);
+    formData.append('SubTitle', this.model().subTitle);
+    formData.append('Description', this.model().description);
+    formData.append('HNUrl', this.model().hnUrl);
 
     this.addHealthNewsSubscription = this.healthNewsService.addHealthNews(formData)
       .subscribe({
         next: (response) => {
-          this.confirmModal = true;
+          this.confirmModal.set(true);
         },
         error: (error) => {
           console.error('Error adding HealthNews:', error);

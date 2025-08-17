@@ -5,7 +5,7 @@
 ></app-cover>
 
 <div class="w-full max-w-7xl mx-auto">
-  @if (model) {
+  @if (model()) {
   <form
     #form="ngForm"
     (ngSubmit)="onFormSubmit()"
@@ -24,7 +24,7 @@
         name="newsSerial"
         type="number"
         placeholder="Enter Serial here"
-        [(ngModel)]="model.newsSerial"
+        [(ngModel)]="model().newsSerial"
         required
       />
     </div>
@@ -38,7 +38,7 @@
         name="title"
         type="text"
         placeholder="Enter Title here"
-        [(ngModel)]="model.title"
+        [(ngModel)]="model().title"
         required
       />
     </div>
@@ -52,7 +52,7 @@
         name="subTitle"
         type="text"
         placeholder="Enter SubTitle here"
-        [(ngModel)]="model.subTitle"
+        [(ngModel)]="model().subTitle"
         required
       />
     </div>
@@ -71,7 +71,7 @@
         cols="30"
         rows="10"
         placeholder="Enter product description here"
-        [(ngModel)]="model.description"
+        [(ngModel)]="model().description"
       ></textarea>
     </div>
     <input
@@ -83,7 +83,7 @@
   }
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Hospital News is successfully updated!"
   url="/serial/admin/all-mis/hospitalNews-list"

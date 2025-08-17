@@ -23,7 +23,7 @@
         name="productSerial"
         type="number"
         placeholder="Enter Product Serial here"
-        [(ngModel)]="model.productSerial"
+        [(ngModel)]="model().productSerial"
         required
       />
     </div>
@@ -40,7 +40,7 @@
         name="productName"
         type="text"
         placeholder="Enter Product Name here"
-        [(ngModel)]="model.productName"
+        [(ngModel)]="model().productName"
         required
       />
     </div>
@@ -54,7 +54,7 @@
         name="orgin"
         type="text"
         placeholder="Enter Product Origin here"
-        [(ngModel)]="model.orgin"
+        [(ngModel)]="model().orgin"
         required
       />
     </div>
@@ -68,7 +68,7 @@
         name="pUrl"
         type="text"
         placeholder="Type here"
-        [(ngModel)]="model.pUrl"
+        [(ngModel)]="model().pUrl"
         required
       />
     </div>
@@ -87,7 +87,7 @@
         cols="30"
         rows="10"
         placeholder="Enter product description here"
-        [(ngModel)]="model.description"
+        [(ngModel)]="model().description"
       ></textarea>
     </div>
     <input
@@ -98,7 +98,7 @@
   </form>
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Instrument is successfully added!"
   url="/serial/admin/all-mis/instrument-list"

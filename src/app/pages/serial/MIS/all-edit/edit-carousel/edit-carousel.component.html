@@ -4,7 +4,7 @@
   sub2="Edit Carousel"
 ></app-cover>
 
-@if (carouselInfo) {
+@if (carouselInfo()) {
 <div class="w-full max-w-7xl mx-auto">
   <form
     #form="ngForm"
@@ -21,16 +21,16 @@
         name="title"
         type="text"
         placeholder="Enter your title here"
-        [(ngModel)]="carouselInfo.title"
+        [(ngModel)]="carouselInfo().title"
       />
     </div>
     <div class="mb-4">
       <label for="imageFile" class="block text-gray-900 text-sm font-bold mb-2"
         >Carousel Image</label
       >
-      @if (this.carouselInfo.imageUrl) {
+      @if (this.carouselInfo().imageUrl) {
       <img
-        [src]="this.carouselInfo.imageUrl"
+        [src]="this.carouselInfo().imageUrl"
         alt="Product Image"
         class="h-16 md:h-24 rounded"
       />
@@ -42,7 +42,7 @@
         name="imageUrl"
         type="text"
         placeholder="Type here"
-        [(ngModel)]="carouselInfo.imageUrl"
+        [(ngModel)]="carouselInfo().imageUrl"
         required
       />
     </div>
@@ -61,7 +61,7 @@
         cols="30"
         rows="10"
         placeholder="Enter your description here"
-        [(ngModel)]="carouselInfo.description"
+        [(ngModel)]="carouselInfo().description"
       ></textarea>
     </div>
     <input
@@ -72,7 +72,7 @@
   </form>
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Carousel is successfully updated!"
   url="admin/all-mis/carousel"

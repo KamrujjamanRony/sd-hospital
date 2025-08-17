@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -8,24 +8,24 @@ import { InstrumentService } from '../../../../../services/main/instrument.servi
 import { ImgbbService } from '../../../../../services/main/imgbb.service';
 
 @Component({
-    selector: 'app-edit-instrument',
-    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-    templateUrl: './edit-instrument.component.html',
-    styleUrl: './edit-instrument.component.css'
+  selector: 'app-edit-instrument',
+  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+  templateUrl: './edit-instrument.component.html',
+  styleUrl: './edit-instrument.component.css'
 })
 export class EditInstrumentComponent {
   imgbbService = inject(ImgbbService);
   instrumentService = inject(InstrumentService);
   route = inject(ActivatedRoute);
-  
-  id: any = null;
-  model?: any;
   paramsSubscription?: Subscription;
   editInstrumentSubscription?: Subscription;
-  confirmModal: boolean = false;
+
+  id = signal<any>(null);
+  model = signal<any>(null);
+  confirmModal = signal<boolean>(false);
 
   closeModal() {
-    this.confirmModal = false;
+    this.confirmModal.set(false);
   }
 
   constructor() { }
@@ -33,12 +33,12 @@ export class EditInstrumentComponent {
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap.subscribe({
       next: (params) => {
-        this.id = params.get('id');
-        if (this.id) {
-          this.instrumentService.getInstrument(this.id)
+        this.id.set(params.get('id'));
+        if (this.id()) {
+          this.instrumentService.getInstrument(this.id())
             .subscribe({
               next: (response) => {
-                this.model = response;
+                this.model.set(response);
               }
             });
         }
@@ -50,18 +50,18 @@ export class EditInstrumentComponent {
 
     const formData = new FormData();
 
-    formData.append('CompanyID', this.model.companyID);
-    formData.append('ProductSerial', this.model.productSerial);
-    formData.append('ProductName', this.model.productName);
-    formData.append('Orgin', this.model.orgin);
-    formData.append('Description', this.model.description);
-    formData.append('PUrl', this.model.pUrl);
+    formData.append('CompanyID', this.model().companyID);
+    formData.append('ProductSerial', this.model().productSerial);
+    formData.append('ProductName', this.model().productName);
+    formData.append('Orgin', this.model().orgin);
+    formData.append('Description', this.model().description);
+    formData.append('PUrl', this.model().pUrl);
 
-    if (this.id) {
-      this.editInstrumentSubscription = this.instrumentService.updateInstrument(this.id, formData)
+    if (this.id()) {
+      this.editInstrumentSubscription = this.instrumentService.updateInstrument(this.id(), formData)
         .subscribe({
           next: (response) => {
-            this.confirmModal = true;
+            this.confirmModal.set(true);
           }
         });
     }

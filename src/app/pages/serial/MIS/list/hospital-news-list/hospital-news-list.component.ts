@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Observable, Subscription, map } from 'rxjs';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
@@ -8,20 +8,20 @@ import { HospitalNewsService } from '../../../../../services/main/hospitalNews.s
 import { DeleteConfirmationModalComponent } from '../../../../../components/main/shared/all-modals/delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
-    selector: 'app-hospital-news-list',
-    imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
-    templateUrl: './hospital-news-list.component.html',
-    styleUrl: './hospital-news-list.component.css'
+  selector: 'app-hospital-news-list',
+  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
+  templateUrl: './hospital-news-list.component.html',
+  styleUrl: './hospital-news-list.component.css'
 })
 export class HospitalNewsListComponent {
   hospitalNewsService = inject(HospitalNewsService);
-
-  emptyImg: any = environment.emptyImg;
   hospitalNews$?: Observable<any[]>;
   deleteHospitalNewsSubscription?: Subscription;
-  isConfirmOpen = false;
-  idToDelete: any;
-  
+  emptyImg: any = environment.emptyImg;
+
+  isConfirmOpen = signal<boolean>(false);
+  idToDelete = signal<any>(null);
+
   constructor() { }
 
   ngOnInit(): void {
@@ -31,14 +31,14 @@ export class HospitalNewsListComponent {
       );
     }
   }
-  
+
   onDelete(id: any): void {
-    this.idToDelete = id;
-    this.isConfirmOpen = true;
+    this.idToDelete.set(id);
+    this.isConfirmOpen.set(true);
   }
 
   confirmDelete(): void {
-    this.deleteHospitalNewsSubscription = this.hospitalNewsService.deleteHospitalNews(this.idToDelete).subscribe({
+    this.deleteHospitalNewsSubscription = this.hospitalNewsService.deleteHospitalNews(this.idToDelete()).subscribe({
       next: () => {
         this.hospitalNews$ = this.hospitalNewsService.getCompanyHospitalNews();
         this.closeModal();
@@ -47,7 +47,7 @@ export class HospitalNewsListComponent {
   }
 
   closeModal(): void {
-    this.isConfirmOpen = false;
+    this.isConfirmOpen.set(false);
   }
 
   ngOnDestroy(): void {

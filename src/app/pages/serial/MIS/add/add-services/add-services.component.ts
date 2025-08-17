@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
 import { FormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from '../../../../../components/main/shared/all-modals/confirm-modal/confirm-modal.component';
@@ -7,27 +7,27 @@ import { environment } from '../../../../../../environments/environments';
 import { ServicesService } from '../../../../../services/main/services.service';
 
 @Component({
-    selector: 'app-add-services',
-    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-    templateUrl: './add-services.component.html',
-    styleUrl: './add-services.component.css'
+  selector: 'app-add-services',
+  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+  templateUrl: './add-services.component.html',
+  styleUrl: './add-services.component.css'
 })
 export class AddServicesComponent {
-  servicesService = inject(ServicesService);
-  
-  model: any;
-  services: any;
+  private servicesService = inject(ServicesService);
   private addInstrumentSubscription?: Subscription;
-  confirmModal: boolean = false;
+
+  model: any;
+  services = signal<any>(null);
+  confirmModal = signal<boolean>(false);
 
   closeModal() {
-    this.confirmModal = false;
+    this.confirmModal.set(false);
   }
 
   constructor() {
-    if (!this.services) {
+    if (!this.services()) {
       this.servicesService.getCompanyServices().subscribe(data => {
-        this.services = data;
+        this.services.set(data);
       });
     }
     this.model = {
@@ -41,15 +41,15 @@ export class AddServicesComponent {
   onFormSubmit(): void {
     const formData = new FormData();
 
-    formData.append('CompanyID', this.model.companyID);
-    formData.append('Title', this.model.title);
-    formData.append('Description', this.model.description);
-    formData.append('ImageUrl', this.model.imageUrl);
+    formData.append('CompanyID', this.model().companyID);
+    formData.append('Title', this.model().title);
+    formData.append('Description', this.model().description);
+    formData.append('ImageUrl', this.model().imageUrl);
 
     this.addInstrumentSubscription = this.servicesService.addServices(formData)
       .subscribe({
         next: (response) => {
-          this.confirmModal = true;
+          this.confirmModal.set(true);
         },
         error: (error) => {
           console.error('Error adding Service:', error);

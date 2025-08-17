@@ -5,7 +5,7 @@
 ></app-cover>
 
 <div class="w-full max-w-7xl mx-auto">
-  @if (model) {
+  @if (model()) {
   <form
     #form="ngForm"
     (ngSubmit)="onFormSubmit()"
@@ -24,7 +24,7 @@
         name="productSerial"
         type="number"
         placeholder="Enter Product Serial here"
-        [(ngModel)]="model.productSerial"
+        [(ngModel)]="model().productSerial"
         required
       />
     </div>
@@ -41,7 +41,7 @@
         name="productName"
         type="text"
         placeholder="Enter Product Name here"
-        [(ngModel)]="model.productName"
+        [(ngModel)]="model().productName"
         required
       />
     </div>
@@ -55,7 +55,7 @@
         name="orgin"
         type="text"
         placeholder="Enter Product Origin here"
-        [(ngModel)]="model.orgin"
+        [(ngModel)]="model().orgin"
         required
       />
     </div>
@@ -63,9 +63,9 @@
       <label for="imageFile" class="block text-gray-900 text-sm font-bold mb-2"
         >Instrument Image</label
       >
-      @if(model.pUrl){
+      @if(model().pUrl){
       <img
-        [src]="model.pUrl"
+        [src]="model().pUrl"
         alt="Instrument Image"
         class="h-16 md:h-24 rounded"
       />
@@ -76,7 +76,7 @@
         name="pUrl"
         type="text"
         placeholder="Type here"
-        [(ngModel)]="model.pUrl"
+        [(ngModel)]="model().pUrl"
         required
       />
     </div>
@@ -95,7 +95,7 @@
         cols="30"
         rows="10"
         placeholder="Enter product description here"
-        [(ngModel)]="model.description"
+        [(ngModel)]="model().description"
       ></textarea>
     </div>
     <input
@@ -107,7 +107,7 @@
   }
 </div>
 
-@if(confirmModal){
+@if(confirmModal()){
 <confirm-modal
   title="Instrument is successfully updated!"
   url="/serial/admin/all-mis/instrument-list"

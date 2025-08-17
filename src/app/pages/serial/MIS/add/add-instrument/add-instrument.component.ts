@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
@@ -8,21 +8,21 @@ import { ImgbbService } from '../../../../../services/main/imgbb.service';
 import { environment } from '../../../../../../environments/environments';
 
 @Component({
-    selector: 'app-add-instrument',
-    imports: [CoverComponent, FormsModule, ConfirmModalComponent],
-    templateUrl: './add-instrument.component.html',
-    styleUrl: './add-instrument.component.css'
+  selector: 'app-add-instrument',
+  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+  templateUrl: './add-instrument.component.html',
+  styleUrl: './add-instrument.component.css'
 })
 export class AddInstrumentComponent {
   instrumentService = inject(InstrumentService);
   imgbbService = inject(ImgbbService);
-  
+
   model: any;
   private addInstrumentSubscription?: Subscription;
-  confirmModal: boolean = false;
+  confirmModal = signal<boolean>(false);
 
   closeModal() {
-    this.confirmModal = false;
+    this.confirmModal.set(false);
   }
 
   constructor() {
@@ -39,17 +39,17 @@ export class AddInstrumentComponent {
   onFormSubmit(): void {
     const formData = new FormData();
 
-    formData.append('CompanyID', this.model.companyID);
-    formData.append('ProductSerial', this.model.productSerial);
-    formData.append('ProductName', this.model.productName);
-    formData.append('Orgin', this.model.orgin);
-    formData.append('Description', this.model.description);
-    formData.append('PUrl', this.model.pUrl);
+    formData.append('CompanyID', this.model().companyID);
+    formData.append('ProductSerial', this.model().productSerial);
+    formData.append('ProductName', this.model().productName);
+    formData.append('Orgin', this.model().orgin);
+    formData.append('Description', this.model().description);
+    formData.append('PUrl', this.model().pUrl);
 
     this.addInstrumentSubscription = this.instrumentService.addInstrument(formData)
       .subscribe({
         next: (response) => {
-          this.confirmModal = true;
+          this.confirmModal.set(true);
         },
         error: (error) => {
           console.error('Error adding Instrument:', error);

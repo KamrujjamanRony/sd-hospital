@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../../services/serial/auth.service';
 import { environment } from '../../../../../../environments/environments';
@@ -11,43 +11,43 @@ import { CareerService } from '../../../../../services/main/career.service';
 
 
 @Component({
-    selector: 'app-career-list',
-    imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
-    templateUrl: './career-list.component.html',
-    styleUrl: './career-list.component.css'
+  selector: 'app-career-list',
+  imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
+  templateUrl: './career-list.component.html',
+  styleUrl: './career-list.component.css'
 })
 export class CareerListComponent {
   authService = inject(AuthService);
   careerService = inject(CareerService);
   router = inject(Router);
-  user: any;
-  emptyImg: any = environment.emptyImg;
-  loading: boolean = true;
-  careers$?: Observable<any[]>;
   deleteCareerSubscription?: Subscription;
+  emptyImg: any = environment.emptyImg;
   companyID: any = environment.hospitalCode;
-  isConfirmOpen = false;
-  idToDelete: any;
-  
+  careers$?: Observable<any[]>;
+  user = signal<any>(null);
+  loading = signal<boolean>(true);
+  isConfirmOpen = signal<boolean>(false);
+  idToDelete = signal<any>(null);
+
   constructor() { }
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
-    
+    this.user.set(this.authService.getUser());
+
     if (!this.careers$) {
-      this.loading = false;
+      this.loading.set(false);
       this.careers$ = this.careerService.getCompanyCareer();
     }
   }
 
   checkRoles(roleId: any) {
-    const result = this.user?.roleIds?.find((role: any) => role == roleId)
+    const result = this.user()?.roleIds?.find((role: any) => role == roleId)
     return result;
   }
-  
+
   onDelete(id: any): void {
-    this.idToDelete = id;
-    this.isConfirmOpen = true;
+    this.idToDelete.set(id);
+    this.isConfirmOpen.set(true);
   }
 
   confirmDelete(): void {
@@ -60,7 +60,7 @@ export class CareerListComponent {
   }
 
   closeModal(): void {
-    this.isConfirmOpen = false;
+    this.isConfirmOpen.set(false);
   }
 
   ngOnDestroy(): void {

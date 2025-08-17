@@ -22,10 +22,12 @@ export class DoctorCardComponent {
   }
 
   openDoctorDetails() {
-    this.showAppointment.set(true);
+    console.log("open doctor details");
+    this.showModal.set(true);
   }
 
   openAppointment() {
+    console.log("open Appointment form");
     this.showAppointment.set(true);
   }
 
