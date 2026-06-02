@@ -1,0 +1,102 @@
+<app-cover
+  title="Update Health News"
+  sub1="MIS"
+  sub2="Edit Health News"
+></app-cover>
+
+<div class="w-full max-w-7xl mx-auto">
+  @if (model()) {
+  <form
+    #form="ngForm"
+    (ngSubmit)="onFormSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+    <div class="mb-4">
+      <label
+        class="block text-gray-900 text-sm font-bold mb-2"
+        for="healthNewsSerial"
+      >
+        Serial <span class="text-red-600">*</span>
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="healthNewsSerial"
+        name="healthNewsSerial"
+        type="number"
+        placeholder="Enter Serial here"
+        [(ngModel)]="model().healthNewsSerial"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-900 text-sm font-bold mb-2" for="title">
+        Title
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="title"
+        name="title"
+        type="text"
+        placeholder="Enter title here"
+        [(ngModel)]="model().title"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-900 text-sm font-bold mb-2" for="subTitle">
+        SubTitle
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="subTitle"
+        name="subTitle"
+        type="text"
+        placeholder="Enter subTitle here"
+        [(ngModel)]="model().subTitle"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label for="imageFile" class="block text-gray-900 text-sm font-bold mb-2"
+        >Image</label
+      >
+      @if(model().hnUrl){
+      <img [src]="model().hnUrl" alt="Image" class="h-16 md:h-24 rounded" />
+      }
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="hnUrl"
+        name="hnUrl"
+        type="text"
+        placeholder="Type here"
+        [(ngModel)]="model().hnUrl"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-900 text-sm font-bold mb-2"
+        for="description"
+      >
+        Description
+      </label>
+      <textarea
+        name="description"
+        id="description"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+        cols="30"
+        rows="10"
+        placeholder="Enter product description here"
+        [(ngModel)]="model().description"
+      ></textarea>
+    </div>
+    <input
+      type="submit"
+      [disabled]="store.loading()"
+      class="bg-blue-500 hover:bg-blue-700 text-gray-50 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      [value]="store.loading() ? 'Please Wait' : 'Update'"
+    />
+  </form>
+  }
+</div>

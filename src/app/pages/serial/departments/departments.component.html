@@ -1,0 +1,20 @@
+<section class="container mx-auto">
+  <app-page-header title="Choose Department"></app-page-header>
+  @if (store.loading()) {
+  <div class="flex justify-center items-center h-48">
+    <div
+      class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"
+    ></div>
+  </div>
+  } @else {
+  <div
+    class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-2 lg:gap-12 pb-12"
+  >
+    @for(category of store.departments(); track category.id){
+    <app-serial-category [category]="category"></app-serial-category>
+    } @empty {
+    <li>No Department found</li>
+    }
+  </div>
+  }
+</section>

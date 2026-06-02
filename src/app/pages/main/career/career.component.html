@@ -1,0 +1,28 @@
+<app-home-cover title="Our Career" path="Career"></app-home-cover>
+
+<section>
+  <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white antialiased">
+    @if (career().length !== 0) {
+    <div
+      class="flex flex-col md:flex-row justify-between px-4 mx-auto max-w-screen-2xl"
+    >
+      <div class="px-4 mx-auto max-w-screen-2xl">
+        <div class="grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
+          @for (data of career(); track data.id) {
+          <app-news-card
+            [img]="data.imageUrl"
+            [title]="data.title"
+            [subtitle]="data.subTitle"
+            [description]="data.description"
+          />
+          }
+        </div>
+      </div>
+    </div>
+    } @else {
+    <h1 class="text-center text-2xl font-bold text-rose-600">
+      ‘‘বর্তমানে কোন পদ খালি নাই”
+    </h1>
+    }
+  </main>
+</section>

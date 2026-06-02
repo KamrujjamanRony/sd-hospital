@@ -1,0 +1,14 @@
+<app-home-cover title="Choose Doctor" path="Appointment"></app-home-cover>
+
+<section class="container mx-auto px-4 py-8">
+  <div class="flex justify-between gap-5">
+    @for (doctor of doctorList(); track doctor.id) {
+    <app-doctor-card
+      [doctor]="doctor"
+      [department]="department()"
+    ></app-doctor-card>
+    } @empty {
+    <p>No Doctor found!</p>
+    }
+  </div>
+</section>

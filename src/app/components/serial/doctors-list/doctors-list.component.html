@@ -1,0 +1,29 @@
+<div class="container mx-auto px-4 py-8">
+  <app-page-header title="Choose Doctor"></app-page-header>
+  @if (loading()) {
+  <div class="flex justify-center items-center h-64">
+    <div
+      class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"
+    ></div>
+  </div>
+  } @else if (filteredDoctors().length === 0) {
+  <div class="text-center py-12">
+    <h3 class="text-xl font-semibold text-gray-600">No doctors found</h3>
+    <p class="text-gray-500 mt-2">
+      @if (department()) { No doctors available in this department. } @else { No
+      doctors available. }
+    </p>
+  </div>
+  } @else {
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+  >
+    @for (doctor of filteredDoctors(); track doctor.id) {
+    <app-doctor-card
+      [doctor]="doctor"
+      [department]="!!department()"
+    ></app-doctor-card>
+    }
+  </div>
+  }
+</div>

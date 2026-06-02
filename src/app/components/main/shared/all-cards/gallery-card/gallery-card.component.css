@@ -1,0 +1,33 @@
+.card.image-full-custom {
+    display: grid;
+}
+.card.image-full-custom:before {
+    position: relative;
+    content: "";
+    z-index: 10;
+}
+.card.image-full-custom:before,
+    .card.image-full-custom > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+.card.image-full-custom:before,
+    .card.image-full-custom > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+.card.image-full-custom > figure img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.card.image-full-custom > .card-body {
+    position: relative;
+    z-index: 20;
+    --tw-text-opacity: 1;
+    color: var(--fallback-nc,oklch(var(--nc)/var(--tw-text-opacity)));
+}
+.card.image-full-custom :where(figure) {
+    overflow: hidden;
+    border-radius: inherit;
+}

@@ -1,0 +1,100 @@
+@if (checkRoles("a0336f52-ac10-4705-8c26-633c6b64a8cd")) {
+<section>
+  <app-cover
+    title="All Department List"
+    sub1="Dashboard"
+    sub2="Department"
+  ></app-cover>
+
+  <div class="container mx-auto flex justify-end">
+    <button
+      (click)="openAddDepartmentModal()"
+      class="bg-green-500 hover:bg-green-400 text-gray-50 font-bold py-2 px-2 lg:px-4 border-b-2 lg:border-b-4 border-green-700 hover:border-green-500 rounded uppercase text-xs md:text-xl mr-2"
+    >
+      add department
+    </button>
+  </div>
+
+  <div class="mt-4 mx-4">
+    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+      <div class="w-full overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr
+              class="text-xs font-semibold tracking-wide text-left text-gray-900 uppercase border-b bg-gray-50"
+            >
+              <th class="px-4 py-3">Image</th>
+              <th class="px-4 py-3">Name</th>
+              <th class="px-4 py-3">Description</th>
+              <th class="px-4 py-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y">
+            <!-- FIX: Use store.departments() instead of departments() -->
+            @for (department of store.departments(); track department.id) {
+            <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
+              <td class="px-4 py-3">
+                <img
+                  [src]="
+                    department?.imgUrl !== '' ? department.imgUrl : emptyImg
+                  "
+                  alt="Department Image"
+                  class="w-8 md:w-16 rounded"
+                />
+              </td>
+              <td class="px-4 py-3 text-xs">{{ department.departmentName }}</td>
+              <td class="px-4 py-3 text-sm">
+                {{ department?.description?.slice(0, 100) }}...
+              </td>
+              <td class="px-4 py-3 text-sm">
+                <button
+                  (click)="openEditDepartmentModal(department.id)"
+                  class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded mr-2 inline-block my-2"
+                >
+                  Edit
+                </button>
+                <button
+                  (click)="onDelete(department.id)"
+                  class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded inline-block"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            } @empty {
+            <tr>
+              <td colspan="4" class="px-4 py-3 text-center">
+                No Department found
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div
+        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-900 uppercase border-t bg-gray-50 sm:grid-cols-9"
+      ></div>
+    </div>
+  </div>
+</section>
+} @else {
+<h1 class="text-2xl text-center font-bold text-rose-500">
+  You haven't any permission!
+</h1>
+}
+
+<!-- add modal start -->
+@if(addDepartmentModal()) {
+<app-add-department-modal
+  (closeModal)="closeAddDepartmentModal()"
+></app-add-department-modal>
+}
+<!-- add modal end -->
+<!-- edit modal start -->
+@if(editDepartmentModal()) {
+<app-edit-department-modal
+  [id]="selectedId"
+  (closeModal)="closeEditDepartmentModal()"
+></app-edit-department-modal>
+}
+<!-- edit modal end -->

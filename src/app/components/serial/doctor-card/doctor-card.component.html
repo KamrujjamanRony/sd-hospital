@@ -1,0 +1,73 @@
+<!-- doctor-card.component.html -->
+<div
+  class="min-w-60 max-w-72 bg-white border border-gray-200 rounded-lg shadow-sm h-full mx-auto hover:shadow-md transition-shadow duration-200"
+>
+  <a (click)="openDoctorDetails()" class="cursor-pointer">
+    <img
+      class="rounded-t-lg w-full min-h-60 max-h-72 object-cover"
+      [src]="doctor().imageUrl ? doctor().imageUrl : doctorMale"
+      alt="Doctor Image"
+    />
+  </a>
+  <div class="p-5 text-center">
+    <a (click)="openDoctorDetails()" class="cursor-pointer">
+      <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900">
+        {{ doctor()?.drName }}
+      </h5>
+    </a>
+    <h5 class="mb-2 text-xs font-bold tracking-tight text-gray-900">
+      {{ doctor()?.degree }}
+    </h5>
+    <p class="mb-3 font-xs text-gray-700 line-clamp-3">
+      {{ doctor()?.description?.slice(0, 100)
+      }}{{ doctor()?.description?.length > 100 ? "..." : "" }}
+    </p>
+
+    @if (department()) {
+    <div class="flex gap-2 justify-center">
+      <button
+        (click)="openDoctorDetails()"
+        class="inline-block rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-blue-600 transition duration-150 ease-in-out hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700 focus:border-blue-700 focus:bg-blue-50 focus:text-blue-700 focus:outline-none focus:ring-0 active:border-blue-800 active:text-blue-800"
+      >
+        Details
+      </button>
+      <button
+        (click)="openAppointment()"
+        class="inline-block rounded bg-blue-600 px-3 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-sm transition duration-150 ease-in-out hover:bg-blue-700 hover:shadow-md focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg"
+      >
+        Appointment
+      </button>
+    </div>
+    } @else {
+    <div class="card-actions justify-center gap-2">
+      <button
+        class="rounded bg-sky-600 px-4 py-2 text-white text-xs font-medium transition-all hover:bg-sky-700"
+      >
+        Update
+      </button>
+      <button
+        class="rounded bg-red-600 px-4 py-2 text-white text-xs font-medium transition-all hover:bg-red-700"
+      >
+        Delete
+      </button>
+    </div>
+    }
+  </div>
+</div>
+
+<!-- Doctor Details Modal -->
+@if(showModal()){
+<app-doctor-details
+  [doctor]="doctor()"
+  (closeDoctorDetails)="closeDoctorDetails()"
+  (handleClick)="handleAppointmentClick()"
+></app-doctor-details>
+}
+
+<!-- Appointment Modal -->
+@if(showAppointment()) {
+<app-appointment-modal-serial
+  [doctor]="doctor()"
+  (closeAppointment)="closeAppointment()"
+></app-appointment-modal-serial>
+}

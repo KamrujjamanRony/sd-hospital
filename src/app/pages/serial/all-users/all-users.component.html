@@ -1,0 +1,72 @@
+<!-- all-users.component.html -->
+<app-cover title="All User List" sub1="Dashboard" sub2="User"></app-cover>
+
+<div class="container mx-auto flex justify-end">
+  <button
+    (click)="openAddUserModal()"
+    class="bg-green-500 hover:bg-green-400 text-gray-50 font-bold py-2 px-2 lg:px-4 border-b-2 lg:border-b-4 border-green-700 hover:border-green-500 rounded uppercase text-xs md:text-xl mr-2"
+  >
+    Add User
+  </button>
+</div>
+
+<div class="mt-4 mx-4">
+  <div class="w-full overflow-hidden rounded-lg shadow-xs">
+    <div class="w-full overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr
+            class="text-xs font-semibold tracking-wide text-left text-gray-900 uppercase border-b bg-gray-50"
+          >
+            <th class="px-4 py-3">Username</th>
+            <th class="px-4 py-3">Roles</th>
+            <th class="px-4 py-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y">
+          <!-- FIX: Use store.users() instead of users() -->
+          @for (user of store.users(); track user.userId) {
+          <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
+            <td class="px-4 py-3 text-xs">{{ user.userName }}</td>
+            <td class="px-4 py-3 text-xs">
+              @for (roleId of user.roleIds; track roleId) {
+              <span
+                class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded"
+              >
+                {{ getRolesName(roleId) }}
+              </span>
+              }
+            </td>
+            <td class="px-4 py-3 text-sm">
+              <button
+                (click)="openEditUserModal(user.userId)"
+                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded mr-2 inline-block my-2"
+              >
+                Edit
+              </button>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="3" class="px-4 py-3 text-center">No users found</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- add modal start -->
+@if(addUserModal()) {
+<app-add-user-modal (closeModal)="closeAddUserModal()"></app-add-user-modal>
+}
+<!-- add modal end -->
+<!-- edit modal start -->
+@if(editUserModal()) {
+<app-edit-user-modal
+  [id]="selectedId()"
+  (closeModal)="closeEditUserModal()"
+></app-edit-user-modal>
+}
+<!-- edit modal end -->

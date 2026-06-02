@@ -1,0 +1,8 @@
+.hero {
+  background: url("../../../../../../public/images/blue-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 70vh;
+}

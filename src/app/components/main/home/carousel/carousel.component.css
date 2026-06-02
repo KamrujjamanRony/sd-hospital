@@ -1,0 +1,14 @@
+/* Slide transition */
+.carousel-slide {
+  transition: transform 1s ease-in-out;
+}
+
+/* Hide arrows when not hovering */
+.carousel-arrow {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-container:hover .carousel-arrow {
+  opacity: 1;
+}

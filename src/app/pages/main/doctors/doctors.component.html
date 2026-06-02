@@ -1,0 +1,11 @@
+<app-cover title="all doctors list" sub1="Home" sub2="Doctors"></app-cover>
+
+@if (doctors$ | async) {
+<div class="container mx-auto my-24">
+  <div class="grid lg:grid-cols-3 md:grid-cols-2 justify-items-center gap-10">
+    @for (doctor of doctors$ | async; track $index) {
+    <app-doctor-card [doctor]="doctor"></app-doctor-card>
+    }
+  </div>
+</div>
+}

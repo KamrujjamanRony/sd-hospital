@@ -1,0 +1,228 @@
+<div
+  class="fixed top-0 left-0 w-screen h-screen z-30 bg-black/60 backdrop-blur-sm flex justify-center items-center"
+>
+  <div class="rounded-xl max-w-[840px] w-full max-h-[90vh] overflow-y-auto">
+    <form
+      [formGroup]="appointmentForm"
+      (submit)="onSubmit()"
+      class="bg-[#e3c9f8] p-6 space-y-6 rounded-lg shadow-lg"
+    >
+      <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-bold">
+          {{ isEditMode() ? "UPDATE APPOINTMENT" : "BOOK AN APPOINTMENT" }}
+        </h2>
+        <button
+          type="button"
+          class="rounded bg-red-600 p-2 w-8 h-8 text-center text-gray-50 transition-all hover:opacity-80"
+          (click)="closeAppointmentModal()"
+        >
+          X
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-0">
+        <!-- Patient Information -->
+        <div class="">
+          <label class="w-full">
+            <div class="label">
+              <span class="label-text font-bold">Patient Name*</span>
+            </div>
+            <input
+              type="text"
+              formControlName="pName"
+              [class.input-error]="
+                appointmentForm.get('pName')?.invalid &&
+                appointmentForm.get('pName')?.touched
+              "
+              placeholder="Patient full name"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            />
+            @if(appointmentForm.get('pName')?.invalid &&
+            (appointmentForm.get('pName')?.touched)) {
+            <div class="text-xs text-rose-600 mt-1">
+              Patient name is required
+            </div>
+            }
+          </label>
+
+          <div class="flex gap-2 mb-0">
+            <label class="w-full">
+              <div class="label">
+                <span class="label-text font-bold">Age</span>
+              </div>
+              <input
+                type="text"
+                formControlName="age"
+                placeholder="Age"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              />
+            </label>
+
+            <label class="w-full">
+              <div class="label">
+                <span class="label-text font-bold">Gender</span>
+              </div>
+              <select
+                formControlName="sex"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              >
+                <option value="" disabled selected>Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="w-full mb-0">
+            <div class="label">
+              <span class="label-text font-bold">Mobile Number*</span>
+            </div>
+            <input
+              type="text"
+              formControlName="mobile"
+              maxlength="11"
+              required
+              [class.input-error]="
+                appointmentForm.get('mobile')?.invalid &&
+                appointmentForm.get('mobile')?.touched
+              "
+              placeholder="01XXXXXXXXX"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            />
+            @if(appointmentForm.get('mobile')?.invalid &&
+            (appointmentForm.get('mobile')?.touched)) {
+            <div class="text-xs text-rose-600 mt-1">
+              Valid mobile number is required
+            </div>
+            }
+          </label>
+        </div>
+
+        <!-- Appointment Details -->
+        <div class="">
+          @if (isEditMode()) {
+          <label class="w-full">
+            <div class="label">
+              <span class="label-text font-bold">Department*</span>
+            </div>
+            <select
+              formControlName="departmentId"
+              (change)="onDepartmentChange()"
+              [class.select-error]="
+                appointmentForm.get('departmentId')?.invalid &&
+                appointmentForm.get('departmentId')?.touched
+              "
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            >
+              <option value="" disabled selected>Select department</option>
+              @for (department of departments(); track department.id) {
+              <option [value]="department.id">
+                {{ department.departmentName }}
+              </option>
+              }
+            </select>
+            @if(appointmentForm.get('departmentId')?.invalid &&
+            (appointmentForm.get('departmentId')?.touched)) {
+            <div class="text-xs text-rose-600 mt-1">Department is required</div>
+            }
+          </label>
+          } @if (isEditMode()) {
+          <label class="w-full">
+            <div class="label">
+              <span class="label-text font-bold">Doctor*</span>
+            </div>
+            <select
+              formControlName="drCode"
+              (change)="onDoctorChange()"
+              [class.select-error]="
+                appointmentForm.get('drCode')?.invalid &&
+                appointmentForm.get('drCode')?.touched
+              "
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            >
+              <option value="" disabled selected>Select doctor</option>
+              @for (doctor of doctorList(); track doctor.id) {
+              <option [value]="doctor.id">{{ doctor.drName }}</option>
+              }
+            </select>
+            @if(appointmentForm.get('drCode')?.invalid &&
+            (appointmentForm.get('drCode')?.touched)) {
+            <div class="text-xs text-rose-600 mt-1">Doctor is required</div>
+            }
+          </label>
+          }
+
+          <label class="w-full">
+            <div class="label">
+              <span class="label-text font-bold">Appointment Date*</span>
+            </div>
+            <select
+              formControlName="date"
+              required
+              [class.select-error]="
+                appointmentForm.get('date')?.invalid &&
+                appointmentForm.get('date')?.touched
+              "
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            >
+              <option value="" disabled selected>Select date</option>
+              @for (date of dates; track date) {
+              <option
+                [value]="date | date : 'yyyy-MM-dd'"
+                [disabled]="isPastDate(date)"
+              >
+                {{ date | date : "EEE, MMM d, yyyy" }}
+              </option>
+              }
+            </select>
+            @if(appointmentForm.get('date')?.invalid &&
+            (appointmentForm.get('date')?.touched)) {
+            <div class="text-xs text-rose-600 mt-1">Date is required</div>
+            }
+          </label>
+
+          @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a") &&
+          !isEditMode() && blockSerials.length) {
+          <label class="w-full">
+            <div class="label">
+              <span class="label-text font-bold">Block Serial</span>
+            </div>
+            <select
+              formControlName="sL"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            >
+              <option value="" disabled selected>Select serial</option>
+              @for (serial of blockSerials; track serial) {
+              <option [value]="serial">{{ serial }}</option>
+              }
+            </select>
+          </label>
+          }
+        </div>
+      </div>
+
+      <!-- Remarks -->
+      <label class="w-full">
+        <div class="label !py-0">
+          <span class="label-text font-bold capitalize">Remarks</span>
+        </div>
+        <textarea
+          formControlName="remarks"
+          placeholder="Type here"
+          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+        ></textarea>
+      </label>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2"
+        [disabled]="store.loading()"
+      >
+        {{ isEditMode() ? "UPDATE APPOINTMENT" : "BOOK APPOINTMENT" }}
+      </button>
+    </form>
+  </div>
+</div>

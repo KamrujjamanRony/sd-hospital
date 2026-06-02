@@ -1,0 +1,82 @@
+<app-cover title="add a Gallery" sub1="MIS" sub2="Add Gallery"></app-cover>
+
+<div class="w-full max-w-7xl mx-auto">
+  <form
+    #form="ngForm"
+    (ngSubmit)="onFormSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+    <div class="mb-4">
+      <label
+        class="block text-gray-900 text-sm font-bold mb-2"
+        for="galerySerial"
+      >
+        Gallery Serial <span class="text-red-600">*</span>
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="galerySerial"
+        name="galerySerial"
+        type="number"
+        placeholder="Enter Gallery Serial here"
+        [(ngModel)]="model().galerySerial"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-900 text-sm font-bold mb-2"
+        for="galeryName"
+      >
+        Gallery Name
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="galeryName"
+        name="galeryName"
+        type="text"
+        placeholder="Enter Gallery Name here"
+        [(ngModel)]="model().galeryName"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label for="imageFile" class="block text-gray-900 text-sm font-bold mb-2"
+        >Gallery Image</label
+      >
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="gPicUrl"
+        name="gPicUrl"
+        type="text"
+        placeholder="Type here"
+        [(ngModel)]="model().gPicUrl"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-900 text-sm font-bold mb-2"
+        for="description"
+      >
+        Description
+      </label>
+      <textarea
+        name="description"
+        id="description"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+        cols="30"
+        rows="10"
+        placeholder="Enter Gallery description here"
+        [(ngModel)]="model().description"
+      ></textarea>
+    </div>
+    <input
+      type="submit"
+      [disabled]="loading()"
+      class="bg-blue-500 hover:bg-blue-700 text-gray-50 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      [value]="loading() ? 'Please Wait' : 'Add'"
+    />
+  </form>
+</div>

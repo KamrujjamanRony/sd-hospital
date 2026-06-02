@@ -1,0 +1,104 @@
+@if (!loading() && slides().length > 0) {
+<div class="relative w-full h-[100vh] overflow-hidden group">
+  <!-- Slides Container -->
+  <div
+    class="relative w-full h-full transition-transform duration-1000 ease-in-out"
+    [style.transform]="'translateX(-' + currentIndex * 100 + '%)'"
+  >
+    @for(slide of slides(); track slide.id; let i = $index) {
+    <div
+      class="absolute top-0 left-0 w-full h-full"
+      [style.left]="i * 100 + '%'"
+    >
+      <img
+        [src]="slide.imageUrl"
+        [alt]="slide.title || 'Carousel image'"
+        class="w-full h-full object-cover"
+      />
+
+      @if(slide.title || slide.description) {
+      <div
+        class="absolute inset-0 bg-black/30 flex items-end justify-center p-4"
+      >
+        <div class="max-w-4xl mx-auto text-center text-white">
+          <div class="bg-black/50 backdrop-blur-sm p-6 rounded-xl">
+            @if(slide.title) {
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+              {{ slide.title }}
+            </h1>
+            } @if(slide.description) {
+            <p class="text-sm sm:text-base md:text-lg">
+              {{ slide.description }}
+            </p>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    } @empty {
+    <p>No Slider Available!</p>
+    }
+  </div>
+
+  <!-- Navigation Controls -->
+  <div>
+    <!-- Previous Button -->
+    <button
+      (click)="prevSlide()"
+      (mouseenter)="stopAutoPlay()"
+      (mouseleave)="startAutoPlay()"
+      class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-opacity opacity-0 group-hover:opacity-100"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+    </button>
+
+    <!-- Next Button -->
+    <button
+      (click)="nextSlide()"
+      (mouseenter)="stopAutoPlay()"
+      (mouseleave)="startAutoPlay()"
+      class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-opacity opacity-0 group-hover:opacity-100"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+} @else if (loading()) {
+<div class="flex justify-center items-center h-[80vh] bg-gray-100">
+  <div class="animate-pulse flex flex-col items-center">
+    <div class="w-16 h-16 bg-rose-600 rounded-full mb-4"></div>
+    <p class="text-gray-600">Loading carousel...</p>
+  </div>
+</div>
+} @else {
+<div class="flex justify-center items-center h-[80vh] bg-gray-100">
+  <p class="text-gray-600">No slides available</p>
+</div>
+}

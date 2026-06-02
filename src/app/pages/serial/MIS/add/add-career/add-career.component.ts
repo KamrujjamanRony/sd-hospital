@@ -1,0 +1,60 @@
+import { Component, inject, signal } from '@angular/core';
+import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
+import { FormsModule } from '@angular/forms';
+import { ConfirmModalComponent } from '../../../../../components/main/shared/all-modals/confirm-modal/confirm-modal.component';
+import { Subscription } from 'rxjs';
+import { ImgbbService } from '../../../../../services/main/imgbb.service';
+import { environment } from '../../../../../../environments/environments';
+import { CareerService } from '../../../../../services/main/career.service';
+
+@Component({
+  selector: 'app-add-career',
+  imports: [CoverComponent, FormsModule, ConfirmModalComponent],
+  templateUrl: './add-career.component.html',
+  styleUrl: './add-career.component.css'
+})
+export class AddCareerComponent {
+  careerService = inject(CareerService);
+  imgbbService = inject(ImgbbService);
+
+  model = signal<any>(null);
+  private addCareerSubscription?: Subscription;
+  confirmModal = signal<boolean>(false);
+
+  closeModal() {
+    this.confirmModal.set(false);
+  }
+
+  constructor() {
+    this.model.set({
+      companyID: environment.hospitalCode,
+      title: '',
+      description: '',
+      imageUrl: '',
+    });
+  }
+
+  onFormSubmit(): void {
+    const formData = new FormData();
+
+    formData.append('CompanyID', this.model().companyID);
+    formData.append('Title', this.model().title);
+    formData.append('Description', this.model().description);
+    formData.append('ImageUrl', this.model().imageUrl);
+
+    this.addCareerSubscription = this.careerService.addCareer(formData)
+      .subscribe({
+        next: (response) => {
+          this.confirmModal.set(true);
+        },
+        error: (error) => {
+          console.error('Error adding Career:', error);
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.addCareerSubscription?.unsubscribe();
+  }
+
+}

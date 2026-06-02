@@ -1,0 +1,73 @@
+<app-cover
+  title="Update Carousel information"
+  sub1="MIS"
+  sub2="Edit Carousel"
+></app-cover>
+
+<div class="w-full max-w-7xl mx-auto">
+  <form
+    #form="ngForm"
+    (ngSubmit)="onFormSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+    <div class="mb-4">
+      <label class="block text-gray-900 text-sm font-bold mb-2" for="title">
+        Carousel Title
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="title"
+        name="title"
+        type="text"
+        placeholder="Enter your title here"
+        [(ngModel)]="carouselInfo().title"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="imageFile" class="block text-gray-900 text-sm font-bold mb-2"
+        >Carousel Image</label
+      >
+      @if (this.carouselInfo().imageUrl) {
+      <img
+        [src]="this.carouselInfo().imageUrl"
+        alt="Product Image"
+        class="h-16 md:h-24 rounded"
+      />
+      }
+
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="imageUrl"
+        name="imageUrl"
+        type="text"
+        placeholder="Type here"
+        [(ngModel)]="carouselInfo().imageUrl"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-900 text-sm font-bold mb-2"
+        for="description"
+      >
+        Description
+      </label>
+      <textarea
+        name="description"
+        id="description"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+        cols="30"
+        rows="10"
+        placeholder="Enter your description here"
+        [(ngModel)]="carouselInfo().description"
+      ></textarea>
+    </div>
+    <input
+      type="submit"
+      [disabled]="store.loading()"
+      class="bg-blue-500 hover:bg-blue-700 text-gray-50 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      [value]="store.loading() ? 'Please Wait' : 'Update'"
+    />
+  </form>
+</div>

@@ -1,0 +1,148 @@
+<app-home-cover
+  title="Digital Diagnostic Center News"
+  path="News"
+></app-home-cover>
+
+<section>
+  <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white antialiased">
+    <div
+      class="flex flex-col md:flex-row justify-between px-4 mx-auto max-w-screen-2xl"
+    >
+      <div class="px-4 mx-auto max-w-screen-2xl">
+        <div class="grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
+          @for (data of healthNews; track data.id) {
+          <app-news-card
+            [img]="data.hnUrl"
+            [title]="data.title"
+            [subtitle]="data.subTitle"
+            [description]="data.description"
+          />
+          }
+        </div>
+      </div>
+      <div class="px-4 mx-auto max-w-screen-md">
+        <h2 class="mb-8 text-2xl font-bold text-gray-900">Latest articles</h2>
+        <div class="">
+          @for (data of latestNews(); track data.id) {
+          <app-news-card
+            [img]="data.hnUrl"
+            [title]="data.title"
+            [subtitle]="data.subTitle"
+            [description]="data.description"
+            [isAside]="true"
+          />
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- <aside
+      aria-label="Related articles"
+      class="py-8 lg:py-24 bg-gray-50"
+    >
+      <div class="px-4 mx-auto max-w-screen-2xl">
+        <h2 class="mb-8 text-2xl font-bold text-gray-900">
+          Related articles
+        </h2>
+        <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="max-w-xs">
+            <a href="#">
+              <img
+                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-1.png"
+                class="mb-5 rounded-lg"
+                alt="Image 1"
+              />
+            </a>
+            <h2
+              class="mb-2 text-xl font-bold leading-tight text-gray-900"
+            >
+              <a href="#">Our first office</a>
+            </h2>
+            <p class="mb-4 text-gray-900">
+              Over the past year, Volosoft has undergone many changes! After
+              months of preparation.
+            </p>
+            <a
+              href="#"
+              class="inline-flex items-center font-medium underline underline-offset-4 text-blue-600-600 hover:no-underline"
+            >
+              Read More
+            </a>
+          </article>
+          <article class="max-w-xs">
+            <a href="#">
+              <img
+                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png"
+                class="mb-5 rounded-lg"
+                alt="Image 2"
+              />
+            </a>
+            <h2
+              class="mb-2 text-xl font-bold leading-tight text-gray-900"
+            >
+              <a href="#">Enterprise design tips</a>
+            </h2>
+            <p class="mb-4 text-gray-900">
+              Over the past year, Volosoft has undergone many changes! After
+              months of preparation.
+            </p>
+            <a
+              href="#"
+              class="inline-flex items-center font-medium underline underline-offset-4 text-blue-600-600 hover:no-underline"
+            >
+              Read More
+            </a>
+          </article>
+          <article class="max-w-xs">
+            <a href="#">
+              <img
+                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-3.png"
+                class="mb-5 rounded-lg"
+                alt="Image 3"
+              />
+            </a>
+            <h2
+              class="mb-2 text-xl font-bold leading-tight text-gray-900"
+            >
+              <a href="#">We partnered with Google</a>
+            </h2>
+            <p class="mb-4 text-gray-900">
+              Over the past year, Volosoft has undergone many changes! After
+              months of preparation.
+            </p>
+            <a
+              href="#"
+              class="inline-flex items-center font-medium underline underline-offset-4 text-blue-600-600 hover:no-underline"
+            >
+              Read More
+            </a>
+          </article>
+          <article class="max-w-xs">
+            <a href="#">
+              <img
+                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-4.png"
+                class="mb-5 rounded-lg"
+                alt="Image 4"
+              />
+            </a>
+            <h2
+              class="mb-2 text-xl font-bold leading-tight text-gray-900"
+            >
+              <a href="#">Our first project with React</a>
+            </h2>
+            <p class="mb-4 text-gray-900">
+              Over the past year, Volosoft has undergone many changes! After
+              months of preparation.
+            </p>
+            <a
+              href="#"
+              class="inline-flex items-center font-medium underline underline-offset-4 text-blue-600-600 hover:no-underline"
+            >
+              Read More
+            </a>
+          </article>
+        </div>
+      </div>
+    </aside> -->
+</section>

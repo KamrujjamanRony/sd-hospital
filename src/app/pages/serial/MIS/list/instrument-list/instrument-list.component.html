@@ -1,0 +1,80 @@
+<app-cover
+  title="all Instrument information"
+  sub1="MIS"
+  sub2="Instrument"
+></app-cover>
+
+<div class="container mx-auto flex justify-end">
+  <a
+    routerLink="add"
+    class="bg-green-500 hover:bg-green-400 text-gray-50 font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded uppercase"
+  >
+    add instrument
+  </a>
+</div>
+
+<div class="mt-4 mx-4">
+  <div class="w-full overflow-hidden rounded-lg shadow-xs">
+    <div class="w-full overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr
+            class="text-xs font-semibold tracking-wide text-left text-gray-900 uppercase border-b bg-gray-50"
+          >
+            <th class="px-4 py-3">Serial</th>
+            <th class="px-4 py-3">Image</th>
+            <th class="px-4 py-3">Name</th>
+            <th class="px-4 py-3">Origin</th>
+            <th class="px-4 py-3">Description</th>
+            <th class="px-4 py-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y">
+          @for (instrument of instruments(); track $index) {
+          <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
+            <td class="px-4 py-3 text-xs">{{ instrument.productSerial }}</td>
+            <td class="px-4 py-3">
+              <img
+                [src]="instrument?.pUrl !== '' ? instrument.pUrl : emptyImg"
+                alt="instrument Image"
+                class="w-8 md:w-16 rounded"
+              />
+            </td>
+            <td class="px-4 py-3 text-xs">{{ instrument.productName }}</td>
+            <td class="px-4 py-3 text-xs">{{ instrument.orgin }}</td>
+            <td class="px-4 py-3 text-xs">{{ instrument.description }}</td>
+            <td class="px-4 py-3 text-sm">
+              <a
+                [routerLink]="['edit', instrument.id]"
+                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded mr-2 inline-block my-2"
+              >
+                Edit
+              </a>
+              <button
+                (click)="onDelete(instrument.id)"
+                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded inline-block"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+          } @empty {
+          <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
+            <td colspan="6" class="px-4 py-3 text-center">
+              <img
+                [src]="emptyImg"
+                alt="No Data"
+                class="w-32 md:w-48 mx-auto opacity-50"
+              />
+              <p class="text-gray-500 mt-2">No instrument found.</p>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div
+      class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-900 uppercase border-t bg-gray-50 sm:grid-cols-9"
+    ></div>
+  </div>
+</div>

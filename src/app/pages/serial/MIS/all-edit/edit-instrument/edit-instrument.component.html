@@ -1,0 +1,109 @@
+<app-cover
+  title="Update Instrument information"
+  sub1="MIS"
+  sub2="Edit Instrument"
+></app-cover>
+
+<div class="w-full max-w-7xl mx-auto">
+  @if (model()) {
+  <form
+    #form="ngForm"
+    (ngSubmit)="onFormSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+    <div class="mb-4">
+      <label
+        class="block text-gray-900 text-sm font-bold mb-2"
+        for="productSerial"
+      >
+        Product Serial <span class="text-red-600">*</span>
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="productSerial"
+        name="productSerial"
+        type="number"
+        placeholder="Enter Product Serial here"
+        [(ngModel)]="model().productSerial"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-900 text-sm font-bold mb-2"
+        for="productName"
+      >
+        Product Name
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="productName"
+        name="productName"
+        type="text"
+        placeholder="Enter Product Name here"
+        [(ngModel)]="model().productName"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-900 text-sm font-bold mb-2" for="orgin">
+        Product Origin
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="orgin"
+        name="orgin"
+        type="text"
+        placeholder="Enter Product Origin here"
+        [(ngModel)]="model().orgin"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label for="imageFile" class="block text-gray-900 text-sm font-bold mb-2"
+        >Instrument Image</label
+      >
+      @if(model().pUrl){
+      <img
+        [src]="model().pUrl"
+        alt="Instrument Image"
+        class="h-16 md:h-24 rounded"
+      />
+      }
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+        id="pUrl"
+        name="pUrl"
+        type="text"
+        placeholder="Type here"
+        [(ngModel)]="model().pUrl"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-900 text-sm font-bold mb-2"
+        for="description"
+      >
+        Description
+      </label>
+      <textarea
+        name="description"
+        id="description"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+        cols="30"
+        rows="10"
+        placeholder="Enter product description here"
+        [(ngModel)]="model().description"
+      ></textarea>
+    </div>
+    <input
+      type="submit"
+      [disabled]="store.loading()"
+      class="bg-blue-500 hover:bg-blue-700 text-gray-50 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      [value]="store.loading() ? 'Please Wait' : 'Update'"
+    />
+  </form>
+  }
+</div>
