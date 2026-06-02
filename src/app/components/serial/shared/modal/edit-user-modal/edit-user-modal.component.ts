@@ -1,13 +1,18 @@
-import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed, effect } from '@angular/core';
+import { form, validate, disabled } from '@angular/forms/signals';
 import { AppStore } from '../../../../../store/app.store';
 import { DataService } from '../../../../../services/serial/data.service';
+import { AlertService } from '../../../../../services/alert.service';
+
+interface EditUserModel {
+  username: string;
+  role: string[];
+}
 
 @Component({
   selector: 'app-edit-user-modal',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [],
   templateUrl: './edit-user-modal.component.html',
   styleUrls: ['./edit-user-modal.component.css']
 })
@@ -17,26 +22,49 @@ export class EditUserModalComponent implements OnInit {
 
   store = inject(AppStore);
   dataService = inject(DataService);
-  fb = inject(FormBuilder);
+  alert = inject(AlertService);
 
   userRole = signal<any[]>([]);
   isSubmitted = signal<boolean>(false);
+  isSubmitting = signal<boolean>(false);
   isLoading = signal<boolean>(false);
   errorMessage: string | null = null;
 
   selectedUser = computed(() => {
     const users = this.store.users();
-    return users.find(user => user.userId == this.id);
+    return users.find((user) => user.userId == this.id);
   });
 
-  userForm = this.fb.group({
-    username: new FormControl({ value: '', disabled: true }),
-    role: new FormControl([] as string[], Validators.required)
+  model = signal<EditUserModel>({
+    username: '',
+    role: []
   });
+
+  userForm = form<EditUserModel>(this.model, (p) => {
+    disabled(p.username, () => true);
+    validate(p.role, (ctx) => {
+      const value = ctx.value();
+      if (!value || !Array.isArray(value) || value.length === 0) {
+        return { kind: 'required', message: 'At least one role is required' };
+      }
+      return null;
+    });
+  });
+
+  constructor() {
+    effect(() => {
+      const user = this.selectedUser();
+      if (user) {
+        this.model.set({
+          username: user.userName ?? '',
+          role: user.roleIds ?? []
+        });
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loadRoles();
-    this.updateFormValues();
   }
 
   loadRoles(): void {
@@ -51,46 +79,40 @@ export class EditUserModalComponent implements OnInit {
     });
   }
 
-  updateFormValues(): void {
-    const user = this.selectedUser();
-
-    if (user) {
-      this.userForm.patchValue({
-        username: user.userName,
-        role: user.roleIds || []
-      });
-    } else {
-      console.error('User not found for userId:', this.id);
-      this.errorMessage = 'User not found. Please try again.';
-    }
+  isRoleSelected(roleId: string): boolean {
+    return this.model().role.includes(roleId);
   }
 
-  onSubmit(): void {
+  onRoleChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    const values = Array.from(select.selectedOptions).map((o) => o.value);
+    this.model.update((m) => ({ ...m, role: values }));
+  }
+
+  onSubmit(event: Event): void {
+    event.preventDefault();
     this.isSubmitted.set(true);
     this.errorMessage = null;
 
-    if (this.userForm.invalid || !this.id) {
+    if (!this.userForm().valid() || !this.id) {
+      const msgs = this.userForm.role().errors().map((e) => e.message || e.kind);
+      this.alert.validationWarning(msgs);
       return;
     }
 
+    this.isSubmitting.set(true);
     this.isLoading.set(true);
-    const roles = this.userForm.value.role || [];
-
-    console.log('Updating user with roles:', roles);
-    console.log('User ID:', this.id);
-
-    // Use store to update user - pass the roles array directly
-    this.store.updateUser({ id: this.id, data: roles });
-    this.closeThisModal();
-  }
-
-  showError(controlName: string): boolean {
-    const control = this.userForm.get(controlName);
-    return !!control?.invalid && (control?.dirty || control?.touched || this.isSubmitted());
-  }
-
-  isRoleSelected(roleId: string): boolean {
-    return this.userForm.value.role?.includes(roleId) || false;
+    const roles = this.model().role;
+    try {
+      this.store.updateUser({ id: this.id, data: roles });
+      this.alert.success('User updated', 'Roles have been saved.');
+      this.closeThisModal();
+    } catch (err: any) {
+      this.alert.error('Failed to update user', err?.message || 'Please try again.');
+    } finally {
+      this.isSubmitting.set(false);
+      this.isLoading.set(false);
+    }
   }
 
   closeThisModal(): void {

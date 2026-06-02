@@ -3,11 +3,15 @@
   <div
     class="w-full max-w-sm p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8"
   >
-    <form class="space-y-6" [formGroup]="userForm" (submit)="onSubmit()">
+    <form class="space-y-6" (submit)="onSubmit($event)" novalidate>
       <div class="w-full flex flex-col justify-center items-center">
         <img src="logo.png" alt="logo" class="w-32" />
         <h2 class="font-extrabold text-green-600 uppercase">{{ name() }}</h2>
       </div>
+
+      @let usernameField = loginForm.username(); @let passwordField =
+      loginForm.password();
+
       <!-- username -->
       <div>
         <label
@@ -16,21 +20,21 @@
           >Your username</label
         >
         <input
-          formControlName="username"
-          [class.invalid]="
-            userForm.get('username')?.invalid &&
-            (userForm.get('username')?.dirty ||
-              userForm.get('username')?.touched ||
-              isSubmitted())
-          "
+          [formField]="loginForm.username"
+          [class.border-rose-500]="!usernameField.valid() && (usernameField.touched() || isSubmitted())"
           placeholder="Type here"
           class="bg-gray-50 border border-gray-300 text-gray-950 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           type="text"
           id="username"
           autocomplete="off"
-          required
         />
+        @if ((usernameField.touched() || isSubmitted()) &&
+        !usernameField.valid()) { @for (err of usernameField.errors(); track
+        err.kind) {
+        <p class="mt-1 text-xs text-rose-600">{{ err.message || err.kind }}</p>
+        } }
       </div>
+
       <!-- password -->
       <div>
         <label
@@ -41,27 +45,36 @@
         <input
           id="password"
           type="password"
-          formControlName="password"
-          [class.invalid]="
-            userForm.get('password')?.invalid &&
-            (userForm.get('password')?.dirty ||
-              userForm.get('password')?.touched ||
-              isSubmitted())
-          "
+          [formField]="loginForm.password"
+          [class.border-rose-500]="!passwordField.valid() && (passwordField.touched() || isSubmitted())"
           autocomplete="false"
           placeholder="Type here"
           class="bg-gray-50 border border-gray-300 text-gray-950 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          required
         />
+        @if ((passwordField.touched() || isSubmitted()) &&
+        !passwordField.valid()) { @for (err of passwordField.errors(); track
+        err.kind) {
+        <p class="mt-1 text-xs text-rose-600">{{ err.message || err.kind }}</p>
+        } }
       </div>
+
       @if (error()) {
       <div class="text-red-600 text-sm">{{ error() }}</div>
       }
+
       <button
         type="submit"
-        class="w-full text-gray-50 btn focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        [disabled]="isSubmitting() || (isSubmitted() && !loginForm().valid())"
+        class="w-full text-gray-50 btn focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-60 inline-flex justify-center items-center gap-2"
       >
-        Login to your account
+        @if (isSubmitting()) {
+        <span
+          class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
+        ></span>
+        <span>Signing in...</span>
+        } @else {
+        <span>Login to your account</span>
+        }
       </button>
     </form>
   </div>

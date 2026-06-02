@@ -1,76 +1,101 @@
-import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed, effect } from '@angular/core';
+import { form, required, minLength, FormField } from '@angular/forms/signals';
 import { environment } from '../../../../../../environments/environments';
-
 import { AppStore } from '../../../../../store/app.store';
+import { AlertService } from '../../../../../services/alert.service';
+
+interface EditDepartmentModel {
+    companyID: number | string;
+    departmentName: string;
+    description: string;
+    imgUrl: string;
+}
 
 @Component({
-  selector: 'app-edit-department-modal',
-  standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
-  templateUrl: './edit-department-modal.component.html',
-  styleUrl: './edit-department-modal.component.css'
+    selector: 'app-edit-department-modal',
+    standalone: true,
+    imports: [FormField],
+    templateUrl: './edit-department-modal.component.html',
+    styleUrl: './edit-department-modal.component.css'
 })
 export class EditDepartmentModalComponent implements OnInit {
-  @Input() id!: any;
-  @Output() closeModal = new EventEmitter<void>();
+    @Input() id!: any;
+    @Output() closeModal = new EventEmitter<void>();
 
-  store = inject(AppStore);
-  fb = inject(FormBuilder);
+    store = inject(AppStore);
+    alert = inject(AlertService);
 
-  isSubmitted = signal<boolean>(false);
+    isSubmitted = signal<boolean>(false);
+    isSubmitting = signal<boolean>(false);
 
-  // Get the selected department from store using computed
-  selectedDepartment = computed(() => {
-    const departments = this.store.departments();
-    return departments.find(dept => dept.id === this.id());
-  });
-
-  ngOnInit(): void {
-    this.updateFormValues();
-  }
-
-  closeThisModal(): void {
-    this.closeModal.emit();
-  }
-
-  editDepartmentForm = this.fb.group({
-    companyID: [environment.hospitalCode, Validators.required],
-    departmentName: ["", Validators.required],
-    description: [""],
-    imgUrl: [""],
-  });
-
-  updateFormValues(): void {
-    const department = this.selectedDepartment();
-    if (department) {
-      this.editDepartmentForm.patchValue({
-        companyID: department.companyID,
-        departmentName: department.departmentName,
-        description: department.description,
-        imgUrl: department.imgUrl,
-      });
-    }
-  }
-
-  onSubmit(): void {
-    if (this.editDepartmentForm.invalid) {
-      this.isSubmitted.set(true);
-      return;
-    }
-
-    const formData = new FormData();
-    const formValue = this.editDepartmentForm.value;
-
-    Object.keys(formValue).forEach(key => {
-      const value = formValue[key as keyof typeof formValue];
-      if (value !== null && value !== undefined) {
-        formData.append(key, value.toString());
-      }
+    selectedDepartment = computed(() => {
+        const departments = this.store.departments();
+        const idVal = typeof this.id === 'function' ? this.id() : this.id;
+        return departments.find((dept) => dept.id === idVal);
     });
 
-    // Use store to update department - automatically updates global state
-    this.store.updateDepartment({ id: this.id(), data: formData });
-    this.closeThisModal();
-  }
+    private model = signal<EditDepartmentModel>({
+        companyID: environment.hospitalCode,
+        departmentName: '',
+        description: '',
+        imgUrl: ''
+    });
+
+    editDepartmentForm = form<EditDepartmentModel>(this.model, (p) => {
+        required(p.departmentName, { message: 'Department name is required' });
+        minLength(p.departmentName, 2, { message: 'Department name must be at least 2 characters' });
+    });
+
+    constructor() {
+        effect(() => {
+            const dept = this.selectedDepartment();
+            if (dept) {
+                this.model.set({
+                    companyID: dept.companyID ?? environment.hospitalCode,
+                    departmentName: dept.departmentName ?? '',
+                    description: dept.description ?? '',
+                    imgUrl: dept.imgUrl ?? ''
+                });
+            }
+        });
+    }
+
+    ngOnInit(): void { }
+
+    closeThisModal(): void {
+        this.closeModal.emit();
+    }
+
+    onSubmit(event: Event): void {
+        event.preventDefault();
+        this.isSubmitted.set(true);
+
+        if (!this.editDepartmentForm().valid()) {
+            const msgs = this.editDepartmentForm.departmentName().errors().map((e) => e.message || e.kind);
+            this.alert.validationWarning(msgs);
+            return;
+        }
+
+        this.isSubmitting.set(true);
+        const formValue = this.editDepartmentForm().value();
+        const formData = new FormData();
+
+        Object.keys(formValue).forEach((key) => {
+            const value = (formValue as any)[key];
+            if (value !== null && value !== undefined) {
+                formData.append(key, value.toString());
+            }
+        });
+
+        const idVal = typeof this.id === 'function' ? this.id() : this.id;
+        try {
+            this.store.updateDepartment({ id: idVal, data: formData });
+            this.alert.success('Department updated', `"${formValue.departmentName}" has been updated.`);
+            this.closeThisModal();
+        } catch (err: any) {
+            this.alert.error('Failed to update department', err?.message || 'Please try again.');
+        } finally {
+            this.isSubmitting.set(false);
+        }
+    }
 }

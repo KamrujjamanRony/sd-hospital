@@ -32,35 +32,21 @@ export class AppointmentFormComponent {
 
   readonly closeAppointment = output<void>();
 
-  // Debug effect to see what's happening
-  private debugEffect = effect(() => {
-    console.log('=== APPOINTMENT FORM DEBUG ===');
-    console.log('Selected department ID:', this.selectedDepartmentId());
-    console.log('Selected doctor ID:', this.selectedDoctorId());
-    console.log('All departments:', this.store.departments());
-    console.log('All doctors:', this.store.doctors());
-    console.log('Filtered doctors:', this.filteredDoctors());
-    console.log('=== END DEBUG ===');
-  });
-
   // Computed signals for departments and doctors
   departmentList = computed(() => this.store.departments());
 
   // Filtered doctors based on selected department
   filteredDoctors = computed(() => {
     const departmentId = this.selectedDepartmentId();
-    console.log('Filtering doctors for department:', departmentId);
 
     if (departmentId) {
       const filtered = this.store.doctors().filter(doctor =>
         doctor.departmentId == departmentId
       );
-      console.log('Filtered doctors result:', filtered);
       return filtered;
     }
 
     // If no department selected, return all doctors
-    console.log('No department selected, returning all doctors');
     return this.store.doctors();
   });
 
@@ -79,7 +65,6 @@ export class AppointmentFormComponent {
 
   onDepartmentChange(event: any): void {
     const departmentId = event.target.value;
-    console.log('Department changed to:', departmentId);
 
     this.selectedDepartmentId.set(departmentId);
 
@@ -98,7 +83,6 @@ export class AppointmentFormComponent {
 
   onDoctorChange(event: any): void {
     const doctorId = event.target.value;
-    console.log('Doctor changed to:', doctorId);
 
     this.selectedDoctorId.set(doctorId);
 
@@ -109,7 +93,6 @@ export class AppointmentFormComponent {
 
       if (doctor) {
         this.blockSerials.set(doctor.serialBlock?.split(',') || []);
-        console.log('Block serials:', this.blockSerials());
 
         // Update department and fee in the form
         this.selectedDepartmentId.set(doctor.departmentId);

@@ -3,20 +3,22 @@
 >
   <div class="rounded-xl max-w-[840px] w-full max-h-[90vh] overflow-y-auto">
     <form
-      [formGroup]="addDepartmentForm"
-      (submit)="onSubmit()"
+      (submit)="onSubmit($event)"
+      novalidate
       class="bg-[#e3c9f8] p-6 space-y-6 rounded-lg shadow-lg"
     >
       <div class="flex justify-between">
         <h2 class="text-2xl font-bold text-center w-full">Add A Department</h2>
-
         <button
+          type="button"
           class="rounded bg-red-600 p-2 w-8 h-8 text-center text-gray-50 transition-all hover:opacity-80"
           (click)="closeThisModal()"
         >
           X
         </button>
       </div>
+
+      @let nameField = addDepartmentForm.departmentName();
 
       <div class="grid grid-cols-1 w-full gap-x-5">
         <!-- departmentName Input -->
@@ -26,27 +28,24 @@
           </div>
           <input
             type="text"
-            formControlName="departmentName"
-            [class.invalid]="
-              addDepartmentForm.get('departmentName')?.invalid &&
-              (addDepartmentForm.get('departmentName')?.dirty ||
-                addDepartmentForm.get('departmentName')?.touched ||
-                isSubmitted())
+            [formField]="addDepartmentForm.departmentName"
+            [class.border-rose-500]="
+              !nameField.valid() && (nameField.touched() || isSubmitted())
             "
             placeholder="Type here"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
           />
-          @if(addDepartmentForm.get('departmentName')?.hasError('required') &&
-          (addDepartmentForm.get('departmentName')?.dirty ||
-          addDepartmentForm.get('departmentName')?.touched || isSubmitted())){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Department name is required</span
-            >
-          </div>
+          @if ((nameField.touched() || isSubmitted()) && !nameField.valid()) {
+            @for (err of nameField.errors(); track err.kind) {
+              <div class="label !py-0">
+                <span class="label-text-alt text-rose-600 capitalize">{{
+                  err.message || err.kind
+                }}</span>
+              </div>
+            }
           }
         </label>
+
         <!-- Image Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
@@ -54,34 +53,21 @@
           </div>
           <input
             type="text"
-            formControlName="imgUrl"
-            [class.invalid]="
-              addDepartmentForm.get('imgUrl')?.invalid &&
-              (addDepartmentForm.get('imgUrl')?.dirty ||
-                addDepartmentForm.get('imgUrl')?.touched ||
-                isSubmitted())
-            "
+            [formField]="addDepartmentForm.imgUrl"
             placeholder="Type here"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
           />
         </label>
+
         <!-- description Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
             <span class="label-text font-bold capitalize">Description</span>
           </div>
           <textarea
-            formControlName="description"
-            [class.invalid]="
-              addDepartmentForm.get('description')?.invalid &&
-              (addDepartmentForm.get('description')?.dirty ||
-                addDepartmentForm.get('description')?.touched ||
-                isSubmitted())
-            "
+            [formField]="addDepartmentForm.description"
             placeholder="Type here"
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-            required
             cols="30"
             rows="10"
           ></textarea>
@@ -91,9 +77,19 @@
       <div class="!mt-2">
         <button
           type="submit"
-          class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2"
+          [disabled]="
+            isSubmitting() || (isSubmitted() && !addDepartmentForm().valid())
+          "
+          class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2 disabled:opacity-60 inline-flex justify-center items-center gap-2"
         >
-          Submit Here
+          @if (isSubmitting()) {
+            <span
+              class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
+            ></span>
+            <span>Submitting...</span>
+          } @else {
+            <span>Submit Here</span>
+          }
         </button>
       </div>
     </form>

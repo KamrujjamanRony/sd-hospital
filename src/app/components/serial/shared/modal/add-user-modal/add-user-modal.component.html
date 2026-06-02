@@ -3,20 +3,24 @@
 >
   <div class="rounded-xl max-w-[840px] w-full max-h-[90vh] overflow-y-auto">
     <form
-      [formGroup]="addUsersForm"
-      (submit)="onSubmit()"
+      (submit)="onSubmit($event)"
+      novalidate
       class="bg-[#e3c9f8] p-6 space-y-6 rounded-lg shadow-lg"
     >
       <div class="flex justify-between">
         <h2 class="text-2xl font-bold text-center w-full">Add User</h2>
-
         <button
+          type="button"
           class="rounded bg-red-600 p-2 w-8 h-8 text-center text-gray-50 transition-all hover:opacity-80"
           (click)="closeThisModal()"
         >
           X
         </button>
       </div>
+
+      @let usernameField = addUsersForm.username();
+      @let passwordField = addUsersForm.password();
+      @let roleField = addUsersForm.role();
 
       <div class="grid grid-cols-1 w-full gap-x-5">
         <!-- username Input -->
@@ -26,27 +30,27 @@
           </div>
           <input
             type="text"
-            formControlName="username"
-            [class.invalid]="
-              addUsersForm.get('username')?.invalid &&
-              (addUsersForm.get('username')?.dirty ||
-                addUsersForm.get('username')?.touched ||
-                isSubmitted())
+            [formField]="addUsersForm.username"
+            [class.border-rose-500]="
+              !usernameField.valid() &&
+              (usernameField.touched() || isSubmitted())
             "
             placeholder="Type here"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
           />
-          @if(addUsersForm.get('username')?.hasError('required') &&
-          (addUsersForm.get('username')?.dirty ||
-          addUsersForm.get('username')?.touched || isSubmitted())){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Username is required</span
-            >
-          </div>
+          @if (
+            (usernameField.touched() || isSubmitted()) && !usernameField.valid()
+          ) {
+            @for (err of usernameField.errors(); track err.kind) {
+              <div class="label !py-0">
+                <span class="label-text-alt text-rose-600 capitalize">{{
+                  err.message || err.kind
+                }}</span>
+              </div>
+            }
           }
         </label>
+
         <!-- password Input -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
@@ -54,66 +58,85 @@
           </div>
           <input
             type="text"
-            formControlName="password"
-            [class.invalid]="
-              addUsersForm.get('password')?.invalid &&
-              (addUsersForm.get('password')?.dirty ||
-                addUsersForm.get('password')?.touched ||
-                isSubmitted())
+            [formField]="addUsersForm.password"
+            [class.border-rose-500]="
+              !passwordField.valid() &&
+              (passwordField.touched() || isSubmitted())
             "
             placeholder="Type here"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
           />
-          @if(addUsersForm.get('password')?.hasError('required') &&
-          (addUsersForm.get('password')?.dirty ||
-          addUsersForm.get('password')?.touched || isSubmitted())){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Password is required</span
-            >
-          </div>
+          @if (
+            (passwordField.touched() || isSubmitted()) && !passwordField.valid()
+          ) {
+            @for (err of passwordField.errors(); track err.kind) {
+              <div class="label !py-0">
+                <span class="label-text-alt text-rose-600 capitalize">{{
+                  err.message || err.kind
+                }}</span>
+              </div>
+            }
           }
         </label>
-        <!-- Role Input -->
+
+        <!-- Role Input (multi-select handled manually because signal forms FormField targets single value) -->
         <label class="form-control w-full !mt-0">
           <div class="label !py-0">
             <span class="label-text font-bold capitalize"> Role: </span>
           </div>
           <select
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 select-sm w-full !h-60"
-            formControlName="role"
             multiple
-            [class.invalid]="
-              addUsersForm.get('role')?.invalid &&
-              (addUsersForm.get('role')?.dirty ||
-                addUsersForm.get('role')?.touched ||
-                isSubmitted())
+            (change)="onRoleChange($event)"
+            [class.border-rose-500]="
+              !roleField.valid() && (roleField.touched() || isSubmitted())
             "
           >
             <option
-              class="text-center border-b font-bold text-gray-900"
               disabled
+              class="text-center border-b font-bold text-gray-900"
             >
               Select Multiple Role
             </option>
             @for (role of userRole(); track role?.id) {
-            <option class="p-2 text-center border-b w-full" [value]="role?.id">
-              {{ role?.name }}
-            </option>
+              <option
+                class="p-2 text-center border-b w-full"
+                [value]="role?.id"
+              >
+                {{ role?.name }}
+              </option>
             } @empty {
-            <li>No role found</li>
+              <option disabled>No role found</option>
             }
           </select>
+          @if ((roleField.touched() || isSubmitted()) && !roleField.valid()) {
+            @for (err of roleField.errors(); track err.kind) {
+              <div class="label !py-0">
+                <span class="label-text-alt text-rose-600 capitalize">{{
+                  err.message || err.kind
+                }}</span>
+              </div>
+            }
+          }
         </label>
       </div>
 
       <div class="!mt-2">
         <button
           type="submit"
-          class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2"
+          [disabled]="
+            isSubmitting() || (isSubmitted() && !addUsersForm().valid())
+          "
+          class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2 disabled:opacity-60 inline-flex justify-center items-center gap-2"
         >
-          Submit Here
+          @if (isSubmitting()) {
+            <span
+              class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
+            ></span>
+            <span>Submitting...</span>
+          } @else {
+            <span>Submit Here</span>
+          }
         </button>
       </div>
     </form>

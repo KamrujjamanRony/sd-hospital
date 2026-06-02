@@ -3,8 +3,8 @@
 >
   <div class="rounded-xl max-w-[840px] w-full max-h-[90vh] overflow-y-auto">
     <form
-      [formGroup]="appointmentForm"
-      (submit)="onSubmit()"
+      (submit)="onSubmit($event)"
+      novalidate
       class="bg-[#e3c9f8] p-6 space-y-6 rounded-lg shadow-lg"
     >
       <div class="flex justify-between items-center">
@@ -20,29 +20,36 @@
         </button>
       </div>
 
+      @let pNameField = appointmentForm.pName();
+      @let mobileField = appointmentForm.mobile();
+      @let dateField = appointmentForm.date();
+      @let deptField = appointmentForm.departmentId();
+      @let drField = appointmentForm.drCode();
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-0">
         <!-- Patient Information -->
-        <div class="">
+        <div>
           <label class="w-full">
             <div class="label">
               <span class="label-text font-bold">Patient Name*</span>
             </div>
             <input
               type="text"
-              formControlName="pName"
-              [class.input-error]="
-                appointmentForm.get('pName')?.invalid &&
-                appointmentForm.get('pName')?.touched
+              [formField]="appointmentForm.pName"
+              [class.border-rose-500]="
+                !pNameField.valid() && (pNameField.touched() || isSubmitted())
               "
               placeholder="Patient full name"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              required
             />
-            @if(appointmentForm.get('pName')?.invalid &&
-            (appointmentForm.get('pName')?.touched)) {
-            <div class="text-xs text-rose-600 mt-1">
-              Patient name is required
-            </div>
+            @if (
+              (pNameField.touched() || isSubmitted()) && !pNameField.valid()
+            ) {
+              @for (err of pNameField.errors(); track err.kind) {
+                <div class="text-xs text-rose-600 mt-1">
+                  {{ err.message || err.kind }}
+                </div>
+              }
             }
           </label>
 
@@ -53,7 +60,7 @@
               </div>
               <input
                 type="text"
-                formControlName="age"
+                [formField]="appointmentForm.age"
                 placeholder="Age"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               />
@@ -64,10 +71,10 @@
                 <span class="label-text font-bold">Gender</span>
               </div>
               <select
-                formControlName="sex"
+                [formField]="appointmentForm.sex"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               >
-                <option value="" disabled selected>Select gender</option>
+                <option value="" disabled>Select gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
@@ -81,77 +88,84 @@
             </div>
             <input
               type="text"
-              formControlName="mobile"
-              maxlength="11"
-              required
-              [class.input-error]="
-                appointmentForm.get('mobile')?.invalid &&
-                appointmentForm.get('mobile')?.touched
+              [formField]="appointmentForm.mobile"
+              [class.border-rose-500]="
+                !mobileField.valid() && (mobileField.touched() || isSubmitted())
               "
               placeholder="01XXXXXXXXX"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
-            @if(appointmentForm.get('mobile')?.invalid &&
-            (appointmentForm.get('mobile')?.touched)) {
-            <div class="text-xs text-rose-600 mt-1">
-              Valid mobile number is required
-            </div>
+            @if (
+              (mobileField.touched() || isSubmitted()) && !mobileField.valid()
+            ) {
+              @for (err of mobileField.errors(); track err.kind) {
+                <div class="text-xs text-rose-600 mt-1">
+                  {{ err.message || err.kind }}
+                </div>
+              }
             }
           </label>
         </div>
 
         <!-- Appointment Details -->
-        <div class="">
+        <div>
           @if (isEditMode()) {
-          <label class="w-full">
-            <div class="label">
-              <span class="label-text font-bold">Department*</span>
-            </div>
-            <select
-              formControlName="departmentId"
-              (change)="onDepartmentChange()"
-              [class.select-error]="
-                appointmentForm.get('departmentId')?.invalid &&
-                appointmentForm.get('departmentId')?.touched
-              "
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            >
-              <option value="" disabled selected>Select department</option>
-              @for (department of departments(); track department.id) {
-              <option [value]="department.id">
-                {{ department.departmentName }}
-              </option>
+            <label class="w-full">
+              <div class="label">
+                <span class="label-text font-bold">Department*</span>
+              </div>
+              <select
+                [formField]="appointmentForm.departmentId"
+                (change)="onDepartmentChange()"
+                [class.border-rose-500]="
+                  !deptField.valid() && (deptField.touched() || isSubmitted())
+                "
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              >
+                <option value="" disabled>Select department</option>
+                @for (department of departments(); track department.id) {
+                  <option [value]="department.id">
+                    {{ department.departmentName }}
+                  </option>
+                }
+              </select>
+              @if (
+                (deptField.touched() || isSubmitted()) && !deptField.valid()
+              ) {
+                @for (err of deptField.errors(); track err.kind) {
+                  <div class="text-xs text-rose-600 mt-1">
+                    {{ err.message || err.kind }}
+                  </div>
+                }
               }
-            </select>
-            @if(appointmentForm.get('departmentId')?.invalid &&
-            (appointmentForm.get('departmentId')?.touched)) {
-            <div class="text-xs text-rose-600 mt-1">Department is required</div>
-            }
-          </label>
-          } @if (isEditMode()) {
-          <label class="w-full">
-            <div class="label">
-              <span class="label-text font-bold">Doctor*</span>
-            </div>
-            <select
-              formControlName="drCode"
-              (change)="onDoctorChange()"
-              [class.select-error]="
-                appointmentForm.get('drCode')?.invalid &&
-                appointmentForm.get('drCode')?.touched
-              "
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            >
-              <option value="" disabled selected>Select doctor</option>
-              @for (doctor of doctorList(); track doctor.id) {
-              <option [value]="doctor.id">{{ doctor.drName }}</option>
+            </label>
+          }
+          @if (isEditMode()) {
+            <label class="w-full">
+              <div class="label">
+                <span class="label-text font-bold">Doctor*</span>
+              </div>
+              <select
+                [formField]="appointmentForm.drCode"
+                (change)="onDoctorChange()"
+                [class.border-rose-500]="
+                  !drField.valid() && (drField.touched() || isSubmitted())
+                "
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              >
+                <option value="" disabled>Select doctor</option>
+                @for (doctor of doctorList(); track doctor.id) {
+                  <option [value]="doctor.id">{{ doctor.drName }}</option>
+                }
+              </select>
+              @if ((drField.touched() || isSubmitted()) && !drField.valid()) {
+                @for (err of drField.errors(); track err.kind) {
+                  <div class="text-xs text-rose-600 mt-1">
+                    {{ err.message || err.kind }}
+                  </div>
+                }
               }
-            </select>
-            @if(appointmentForm.get('drCode')?.invalid &&
-            (appointmentForm.get('drCode')?.touched)) {
-            <div class="text-xs text-rose-600 mt-1">Doctor is required</div>
-            }
-          </label>
+            </label>
           }
 
           <label class="w-full">
@@ -159,46 +173,50 @@
               <span class="label-text font-bold">Appointment Date*</span>
             </div>
             <select
-              formControlName="date"
-              required
-              [class.select-error]="
-                appointmentForm.get('date')?.invalid &&
-                appointmentForm.get('date')?.touched
+              [formField]="appointmentForm.date"
+              [class.border-rose-500]="
+                !dateField.valid() && (dateField.touched() || isSubmitted())
               "
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             >
-              <option value="" disabled selected>Select date</option>
+              <option value="" disabled>Select date</option>
               @for (date of dates; track date) {
-              <option
-                [value]="date | date : 'yyyy-MM-dd'"
-                [disabled]="isPastDate(date)"
-              >
-                {{ date | date : "EEE, MMM d, yyyy" }}
-              </option>
+                <option
+                  [value]="date | date: 'yyyy-MM-dd'"
+                  [disabled]="isPastDate(date)"
+                >
+                  {{ date | date: "EEE, MMM d, yyyy" }}
+                </option>
               }
             </select>
-            @if(appointmentForm.get('date')?.invalid &&
-            (appointmentForm.get('date')?.touched)) {
-            <div class="text-xs text-rose-600 mt-1">Date is required</div>
+            @if ((dateField.touched() || isSubmitted()) && !dateField.valid()) {
+              @for (err of dateField.errors(); track err.kind) {
+                <div class="text-xs text-rose-600 mt-1">
+                  {{ err.message || err.kind }}
+                </div>
+              }
             }
           </label>
 
-          @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a") &&
-          !isEditMode() && blockSerials.length) {
-          <label class="w-full">
-            <div class="label">
-              <span class="label-text font-bold">Block Serial</span>
-            </div>
-            <select
-              formControlName="sL"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            >
-              <option value="" disabled selected>Select serial</option>
-              @for (serial of blockSerials; track serial) {
-              <option [value]="serial">{{ serial }}</option>
-              }
-            </select>
-          </label>
+          @if (
+            checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a") &&
+            !isEditMode() &&
+            blockSerials.length
+          ) {
+            <label class="w-full">
+              <div class="label">
+                <span class="label-text font-bold">Block Serial</span>
+              </div>
+              <select
+                [formField]="appointmentForm.sL"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              >
+                <option value="" disabled>Select serial</option>
+                @for (serial of blockSerials; track serial) {
+                  <option [value]="serial">{{ serial }}</option>
+                }
+              </select>
+            </label>
           }
         </div>
       </div>
@@ -209,7 +227,7 @@
           <span class="label-text font-bold capitalize">Remarks</span>
         </div>
         <textarea
-          formControlName="remarks"
+          [formField]="appointmentForm.remarks"
           placeholder="Type here"
           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
         ></textarea>
@@ -218,10 +236,23 @@
       <!-- Submit Button -->
       <button
         type="submit"
-        class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2"
-        [disabled]="store.loading()"
+        class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2 disabled:opacity-60 inline-flex justify-center items-center gap-2"
+        [disabled]="
+          isSubmitting() ||
+          store.loading() ||
+          (isSubmitted() && !appointmentForm().valid())
+        "
       >
-        {{ isEditMode() ? "UPDATE APPOINTMENT" : "BOOK APPOINTMENT" }}
+        @if (isSubmitting()) {
+          <span
+            class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
+          ></span>
+          <span>{{ isEditMode() ? "Updating..." : "Booking..." }}</span>
+        } @else {
+          <span>{{
+            isEditMode() ? "UPDATE APPOINTMENT" : "BOOK APPOINTMENT"
+          }}</span>
+        }
       </button>
     </form>
   </div>

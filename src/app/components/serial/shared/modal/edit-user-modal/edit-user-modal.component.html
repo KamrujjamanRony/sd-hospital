@@ -3,8 +3,8 @@
 >
   <div class="rounded-xl max-w-[840px] w-full max-h-[90vh] overflow-y-auto">
     <form
-      [formGroup]="userForm"
-      (ngSubmit)="onSubmit()"
+      (submit)="onSubmit($event)"
+      novalidate
       class="bg-[#e3c9f8] p-6 space-y-6 rounded-lg shadow-lg"
     >
       <div class="flex justify-between items-center">
@@ -19,23 +19,12 @@
       </div>
 
       @if (errorMessage) {
-      <div class="alert alert-error">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="stroke-current shrink-0 h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <span>{{ errorMessage }}</span>
-      </div>
+        <div class="alert alert-error">
+          <span>{{ errorMessage }}</span>
+        </div>
       }
+
+      @let roleField = userForm.role();
 
       <div class="grid grid-cols-1 w-full gap-x-5">
         <!-- Username Display -->
@@ -45,9 +34,10 @@
           </div>
           <input
             type="text"
-            formControlName="username"
+            [value]="model().username"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             readonly
+            disabled
           />
         </label>
 
@@ -55,17 +45,19 @@
         <label class="form-control w-full">
           <div class="label">
             <span class="label-text font-bold">Roles</span>
-            @if (showError('role')) {
-            <span class="label-text-alt text-rose-600"
-              >At least one role is required</span
-            >
+            @if ((roleField.touched() || isSubmitted()) && !roleField.valid()) {
+              <span class="label-text-alt text-rose-600"
+                >At least one role is required</span
+              >
             }
           </div>
           <select
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 select-sm w-full !h-60"
-            formControlName="role"
             multiple
-            [class.select-error]="showError('role')"
+            (change)="onRoleChange($event)"
+            [class.border-rose-500]="
+              (roleField.touched() || isSubmitted()) && !roleField.valid()
+            "
           >
             <option
               disabled
@@ -74,15 +66,15 @@
               Select Multiple Roles
             </option>
             @for (role of userRole(); track role.id) {
-            <option
-              [value]="role.id"
-              [selected]="isRoleSelected(role.id)"
-              class="p-2 text-center border-b"
-            >
-              {{ role.name }}
-            </option>
+              <option
+                [value]="role.id"
+                [selected]="isRoleSelected(role.id)"
+                class="p-2 text-center border-b"
+              >
+                {{ role.name }}
+              </option>
             } @empty {
-            <option disabled>No roles available</option>
+              <option disabled>No roles available</option>
             }
           </select>
         </label>
@@ -91,11 +83,26 @@
       <div class="!mt-2">
         <button
           type="submit"
-          class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2"
+          [disabled]="
+            isSubmitting() ||
+            (isSubmitted() && !userForm().valid()) ||
+            isLoading()
+          "
+          class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2 disabled:opacity-60 inline-flex justify-center items-center gap-2"
         >
-          Save Changes
+          @if (isSubmitting()) {
+            <span
+              class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
+            ></span>
+            <span>Saving...</span>
+          } @else {
+            <span>Save Changes</span>
+          }
         </button>
       </div>
     </form>
   </div>
 </div>
+
+<!-- expose model getter to template -->
+<ng-container>{{ "" }}</ng-container>

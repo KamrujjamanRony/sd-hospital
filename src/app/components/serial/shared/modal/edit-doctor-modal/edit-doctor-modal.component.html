@@ -3,14 +3,14 @@
 >
   <div class="rounded-xl max-w-[840px] w-full max-h-[90vh] overflow-y-auto">
     <form
-      [formGroup]="doctorForm"
-      (submit)="onSubmit()"
+      (submit)="onSubmit($event)"
+      novalidate
       class="bg-[#e3c9f8] p-6 space-y-6 rounded-lg shadow-lg"
     >
       <div class="flex justify-between">
         <h2 class="text-2xl font-bold text-center w-full">Update Doctor</h2>
-
         <button
+          type="button"
           class="rounded bg-red-600 p-2 w-8 h-8 text-center text-gray-50 transition-all hover:opacity-80"
           (click)="closeThisModal()"
         >
@@ -18,638 +18,240 @@
         </button>
       </div>
 
+      @let drNameF = doctorForm.drName();
+      @let deptF = doctorForm.departmentId();
+      @let phoneF = doctorForm.phone();
+
       <div class="grid grid-cols-1 w-full gap-x-5">
-        <!-- drName Input -->
+        <!-- drName -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Doctor Name</span>
-          </div>
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Doctor Name *</span></div>
           <input
             type="text"
-            formControlName="drName"
-            [class.invalid]="
-              doctorForm.get('drName')?.invalid &&
-              (doctorForm.get('drName')?.dirty ||
-                doctorForm.get('drName')?.touched ||
-                isSubmitted())
-            "
+            [formField]="doctorForm.drName"
+            [class.border-rose-500]="!drNameF.valid() && (drNameF.touched() || isSubmitted())"
             placeholder="Type here"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
           />
-          @if(doctorForm.get('drName')?.hasError('required') &&
-          (doctorForm.get('drName')?.dirty || doctorForm.get('drName')?.touched
-          || isSubmitted())){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Doctor name is required</span
-            >
-          </div>
+          @if ((drNameF.touched() || isSubmitted()) && !drNameF.valid()) {
+            @for (e of drNameF.errors(); track e.kind) {
+              <div class="label !py-0"><span class="label-text-alt text-rose-600 capitalize">{{ e.message || e.kind }}</span></div>
+            }
           }
         </label>
-        <!-- drSerial Input -->
+
+        <!-- drSerial -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Doctor Serial</span>
-          </div>
-          <input
-            type="text"
-            formControlName="drSerial"
-            [class.invalid]="
-              doctorForm.get('drSerial')?.invalid &&
-              (doctorForm.get('drSerial')?.dirty ||
-                doctorForm.get('drSerial')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
-          />
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Doctor Serial</span></div>
+          <input type="text" [formField]="doctorForm.drSerial" placeholder="Type here"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none" />
         </label>
-        <!-- degree Input -->
+
+        <!-- degree -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Doctor Degree</span>
-          </div>
-          <textarea
-            formControlName="degree"
-            [class.invalid]="
-              doctorForm.get('degree')?.invalid &&
-              (doctorForm.get('degree')?.dirty ||
-                doctorForm.get('degree')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
-            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-            required
-          ></textarea>
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Doctor Degree</span></div>
+          <textarea [formField]="doctorForm.degree" placeholder="Type here"
+            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
         </label>
-        <!-- designation Input -->
+
+        <!-- designation -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize"
-              >Doctor Designation</span
-            >
-          </div>
-          <input
-            type="text"
-            formControlName="designation"
-            [class.invalid]="
-              doctorForm.get('designation')?.invalid &&
-              (doctorForm.get('designation')?.dirty ||
-                doctorForm.get('designation')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
-          />
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Doctor Designation</span></div>
+          <input type="text" [formField]="doctorForm.designation" placeholder="Type here"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none" />
         </label>
-        <!-- specialty Input -->
+
+        <!-- specialty -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Specialty</span>
-          </div>
-          <input
-            type="text"
-            formControlName="specialty"
-            [class.invalid]="
-              doctorForm.get('specialty')?.invalid &&
-              (doctorForm.get('specialty')?.dirty ||
-                doctorForm.get('specialty')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
-          />
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Specialty</span></div>
+          <input type="text" [formField]="doctorForm.specialty" placeholder="Type here"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none" />
         </label>
-        <!-- departmentId Input -->
+
+        <!-- departmentId -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Department:</span>
-          </div>
-          <select
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 select-sm w-full"
-            formControlName="departmentId"
-            [class.invalid]="
-              doctorForm.get('departmentId')?.invalid &&
-              (doctorForm.get('departmentId')?.dirty ||
-                doctorForm.get('departmentId')?.touched ||
-                isSubmitted())
-            "
-            required
-          >
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Department *</span></div>
+          <select [formField]="doctorForm.departmentId"
+            [class.border-rose-500]="!deptF.valid() && (deptF.touched() || isSubmitted())"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 select-sm w-full">
             <option value="" disabled>Select Department</option>
-            <!-- FIX: Use store.departments() instead of departments() -->
             @for (department of store.departments(); track department.id) {
-            <option [value]="department?.id">
-              {{ department?.departmentName }}
-            </option>
+              <option [value]="department?.id">{{ department?.departmentName }}</option>
+            } @empty {
+              <option disabled>No Department found</option>
             }
           </select>
-          @if(doctorForm.get('departmentId')?.hasError('required') &&
-          (doctorForm.get('departmentId')?.dirty ||
-          doctorForm.get('departmentId')?.touched || isSubmitted())){
-          <div class="label !py-0">
-            <span class="label-text-alt text-rose-600 capitalize"
-              >Department is required</span
-            >
-          </div>
+          @if ((deptF.touched() || isSubmitted()) && !deptF.valid()) {
+            @for (e of deptF.errors(); track e.kind) {
+              <div class="label !py-0"><span class="label-text-alt text-rose-600 capitalize">{{ e.message || e.kind }}</span></div>
+            }
           }
         </label>
-        <!-- phone Input -->
+
+        <!-- phone -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Phone</span>
-          </div>
-          <input
-            type="text"
-            formControlName="phone"
-            maxlength="14"
-            [class.invalid]="
-              doctorForm.get('phone')?.invalid &&
-              (doctorForm.get('phone')?.dirty ||
-                doctorForm.get('phone')?.touched ||
-                isSubmitted())
-            "
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Phone</span></div>
+          <input type="text" [formField]="doctorForm.phone"
+            [class.border-rose-500]="!phoneF.valid() && (phoneF.touched() || isSubmitted())"
             placeholder="Type here"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
-          />
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none" />
+          @if ((phoneF.touched() || isSubmitted()) && !phoneF.valid()) {
+            @for (e of phoneF.errors(); track e.kind) {
+              <div class="label !py-0"><span class="label-text-alt text-rose-600 capitalize">{{ e.message || e.kind }}</span></div>
+            }
+          }
         </label>
-        <!-- fee Input -->
+
+        <!-- fee -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Doctor Fee</span>
-          </div>
-          <input
-            type="number"
-            formControlName="fee"
-            [class.invalid]="
-              doctorForm.get('fee')?.invalid &&
-              (doctorForm.get('fee')?.dirty ||
-                doctorForm.get('fee')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
-          />
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Doctor Fee</span></div>
+          <input type="number" [formField]="doctorForm.fee" placeholder="Type here"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none" />
         </label>
-        <!-- visitTime Input -->
+
+        <!-- visitTime -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Visit Time</span>
-          </div>
-          <input
-            type="text"
-            formControlName="visitTime"
-            [class.invalid]="
-              doctorForm.get('visitTime')?.invalid &&
-              (doctorForm.get('visitTime')?.dirty ||
-                doctorForm.get('visitTime')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
-          />
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Visit Time</span></div>
+          <input type="text" [formField]="doctorForm.visitTime" placeholder="Type here"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none" />
         </label>
-        <!-- room Input -->
+
+        <!-- room -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Room No</span>
-          </div>
-          <input
-            type="text"
-            formControlName="room"
-            [class.invalid]="
-              doctorForm.get('room')?.invalid &&
-              (doctorForm.get('room')?.dirty ||
-                doctorForm.get('room')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
-          />
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Room No</span></div>
+          <input type="text" [formField]="doctorForm.room" placeholder="Type here"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none" />
         </label>
-        <!-- Image Input -->
+
+        <!-- imageUrl -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Image</span>
-          </div>
-          <input
-            type="text"
-            formControlName="imageUrl"
-            [class.invalid]="
-              doctorForm.get('imageUrl')?.invalid &&
-              (doctorForm.get('imageUrl')?.dirty ||
-                doctorForm.get('imageUrl')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
-          />
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Image URL</span></div>
+          <input type="text" [formField]="doctorForm.imageUrl" placeholder="Type here"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none" />
         </label>
-        <!-- description Input -->
+
+        <!-- description -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Description</span>
-          </div>
-          <textarea
-            formControlName="description"
-            [class.invalid]="
-              doctorForm.get('description')?.invalid &&
-              (doctorForm.get('description')?.dirty ||
-                doctorForm.get('description')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Description</span></div>
+          <textarea [formField]="doctorForm.description" placeholder="Type here"
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-            required
-            cols="30"
-            rows="10"
-          ></textarea>
+            cols="30" rows="6"></textarea>
         </label>
-        <!-- additional Input -->
+
+        <!-- additional -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize"
-              >Additional Info.</span
-            >
-          </div>
-          <textarea
-            formControlName="additional"
-            [class.invalid]="
-              doctorForm.get('additional')?.invalid &&
-              (doctorForm.get('additional')?.dirty ||
-                doctorForm.get('additional')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Additional Info.</span></div>
+          <textarea [formField]="doctorForm.additional" placeholder="Type here"
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-            required
-            cols="30"
-            rows="10"
-          ></textarea>
+            cols="30" rows="4"></textarea>
         </label>
-        <!-- notice Input -->
+
+        <!-- notice -->
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Notice</span>
-          </div>
-          <textarea
-            formControlName="notice"
-            [class.invalid]="
-              doctorForm.get('notice')?.invalid &&
-              (doctorForm.get('notice')?.dirty ||
-                doctorForm.get('notice')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Notice</span></div>
+          <textarea [formField]="doctorForm.notice" placeholder="Type here"
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-            required
-            cols="30"
-            rows="10"
-          ></textarea>
+            cols="30" rows="4"></textarea>
         </label>
-        <!-- serialBlock Input -->
+
+        <!-- serialBlock -->
         @if (checkRoles("c90aed50-ad56-431b-afa4-c36e8cac039a")) {
         <label class="form-control w-full !mt-0">
-          <div class="label !py-0">
-            <span class="label-text font-bold capitalize">Serial Block</span>
-          </div>
-          <input
-            type="text"
-            formControlName="serialBlock"
-            [class.invalid]="
-              doctorForm.get('serialBlock')?.invalid &&
-              (doctorForm.get('serialBlock')?.dirty ||
-                doctorForm.get('serialBlock')?.touched ||
-                isSubmitted())
-            "
-            placeholder="Type here"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-            required
-          />
+          <div class="label !py-0"><span class="label-text font-bold capitalize">Serial Block</span></div>
+          <input type="text" [formField]="doctorForm.serialBlock" placeholder="Type here"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none" />
         </label>
         }
 
+        <!-- Day-wise patient limits -->
         <div class="flex gap-2">
-          <!-- satNewPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Saturday New Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="satNewPatientLimit"
-              [class.invalid]="
-                doctorForm.get('satNewPatientLimit')?.invalid &&
-                (doctorForm.get('satNewPatientLimit')?.dirty ||
-                  doctorForm.get('satNewPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Saturday New Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.satNewPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
-          <!-- satOldPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Saturday Old Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="satOldPatientLimit"
-              [class.invalid]="
-                doctorForm.get('satOldPatientLimit')?.invalid &&
-                (doctorForm.get('satOldPatientLimit')?.dirty ||
-                  doctorForm.get('satOldPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Saturday Old Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.satOldPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
         </div>
 
         <div class="flex gap-2">
-          <!-- sunNewPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Sunday New Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="sunNewPatientLimit"
-              [class.invalid]="
-                doctorForm.get('sunNewPatientLimit')?.invalid &&
-                (doctorForm.get('sunNewPatientLimit')?.dirty ||
-                  doctorForm.get('sunNewPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Sunday New Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.sunNewPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
-          <!-- sunOldPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Sunday Old Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="sunOldPatientLimit"
-              [class.invalid]="
-                doctorForm.get('sunOldPatientLimit')?.invalid &&
-                (doctorForm.get('sunOldPatientLimit')?.dirty ||
-                  doctorForm.get('sunOldPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Sunday Old Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.sunOldPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
         </div>
 
         <div class="flex gap-2">
-          <!-- monNewPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Monday New Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="monNewPatientLimit"
-              [class.invalid]="
-                doctorForm.get('monNewPatientLimit')?.invalid &&
-                (doctorForm.get('monNewPatientLimit')?.dirty ||
-                  doctorForm.get('monNewPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Monday New Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.monNewPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
-          <!-- monOldPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Monday Old Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="monOldPatientLimit"
-              [class.invalid]="
-                doctorForm.get('monOldPatientLimit')?.invalid &&
-                (doctorForm.get('monOldPatientLimit')?.dirty ||
-                  doctorForm.get('monOldPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Monday Old Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.monOldPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
         </div>
 
         <div class="flex gap-2">
-          <!-- tueNewPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Tuesday New Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="tueNewPatientLimit"
-              [class.invalid]="
-                doctorForm.get('tueNewPatientLimit')?.invalid &&
-                (doctorForm.get('tueNewPatientLimit')?.dirty ||
-                  doctorForm.get('tueNewPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Tuesday New Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.tueNewPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
-          <!-- tueOldPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Tuesday Old Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="tueOldPatientLimit"
-              [class.invalid]="
-                doctorForm.get('tueOldPatientLimit')?.invalid &&
-                (doctorForm.get('tueOldPatientLimit')?.dirty ||
-                  doctorForm.get('tueOldPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Tuesday Old Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.tueOldPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
         </div>
 
         <div class="flex gap-2">
-          <!-- wedNewPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Wednesday New Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="wedNewPatientLimit"
-              [class.invalid]="
-                doctorForm.get('wedNewPatientLimit')?.invalid &&
-                (doctorForm.get('wedNewPatientLimit')?.dirty ||
-                  doctorForm.get('wedNewPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Wednesday New Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.wedNewPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
-          <!-- wedOldPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Wednesday Old Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="wedOldPatientLimit"
-              [class.invalid]="
-                doctorForm.get('wedOldPatientLimit')?.invalid &&
-                (doctorForm.get('wedOldPatientLimit')?.dirty ||
-                  doctorForm.get('wedOldPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Wednesday Old Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.wedOldPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
         </div>
 
         <div class="flex gap-2">
-          <!-- thuNewPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Thursday New Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="thuNewPatientLimit"
-              [class.invalid]="
-                doctorForm.get('thuNewPatientLimit')?.invalid &&
-                (doctorForm.get('thuNewPatientLimit')?.dirty ||
-                  doctorForm.get('thuNewPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Thursday New Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.thuNewPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
-          <!-- thuOldPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Thursday Old Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="thuOldPatientLimit"
-              [class.invalid]="
-                doctorForm.get('thuOldPatientLimit')?.invalid &&
-                (doctorForm.get('thuOldPatientLimit')?.dirty ||
-                  doctorForm.get('thuOldPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Thursday Old Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.thuOldPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
         </div>
 
         <div class="flex gap-2">
-          <!-- friNewPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Friday New Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="friNewPatientLimit"
-              [class.invalid]="
-                doctorForm.get('friNewPatientLimit')?.invalid &&
-                (doctorForm.get('friNewPatientLimit')?.dirty ||
-                  doctorForm.get('friNewPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Friday New Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.friNewPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
-          <!-- friOldPatientLimit Input -->
           <label class="form-control w-full !mt-0">
-            <div class="label !py-0">
-              <span class="label-text font-bold capitalize"
-                >Friday Old Patient Limit</span
-              >
-            </div>
-            <input
-              type="text"
-              formControlName="friOldPatientLimit"
-              [class.invalid]="
-                doctorForm.get('friOldPatientLimit')?.invalid &&
-                (doctorForm.get('friOldPatientLimit')?.dirty ||
-                  doctorForm.get('friOldPatientLimit')?.touched ||
-                  isSubmitted())
-              "
-              placeholder="Type here"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 input-sm outline-none"
-              required
-            />
+            <div class="label !py-0"><span class="label-text font-bold capitalize">Friday Old Patient Limit</span></div>
+            <input type="number" [formField]="doctorForm.friOldPatientLimit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 input-sm outline-none" />
           </label>
         </div>
       </div>
@@ -657,9 +259,15 @@
       <div class="!mt-2">
         <button
           type="submit"
-          class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2"
+          [disabled]="isSubmitting() || (isSubmitted() && !doctorForm().valid())"
+          class="rounded bg-blue-600 py-1 text-gray-50 transition-all hover:opacity-80 w-full mt-2 disabled:opacity-60 inline-flex justify-center items-center gap-2"
         >
-          Update Doctor
+          @if (isSubmitting()) {
+            <span class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+            <span>Submitting...</span>
+          } @else {
+            <span>Update Doctor</span>
+          }
         </button>
       </div>
     </form>

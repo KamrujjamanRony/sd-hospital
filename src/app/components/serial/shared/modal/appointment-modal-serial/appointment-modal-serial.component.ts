@@ -1,25 +1,44 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed, effect } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { form, required, pattern, FormField } from '@angular/forms/signals';
 import { isBefore } from 'date-fns';
 import { environment } from '../../../../../../environments/environments';
 import { AppStore } from '../../../../../store/app.store';
 import { ToastService } from '../../../../../services/serial/toast.service';
 import { AuthService } from '../../../../../services/serial/auth.service';
+import { AlertService } from '../../../../../services/alert.service';
+
+interface AppointmentModel {
+  companyID: number | string;
+  pName: string;
+  age: string;
+  mobile: string;
+  sex: string;
+  type: string;
+  date: string;
+  sL: string;
+  departmentId: string;
+  drCode: string;
+  fee: number | string;
+  remarks: string;
+  username: string;
+  paymentStatus: boolean;
+  confirmed: boolean;
+}
 
 @Component({
   selector: 'app-appointment-modal-serial',
   templateUrl: './appointment-modal-serial.component.html',
   styleUrls: ['./appointment-modal-serial.component.css'],
   providers: [DatePipe],
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [FormField, CommonModule]
 })
-export class AppointmentModalSerialComponent {
+export class AppointmentModalSerialComponent implements OnInit {
   datePipe = inject(DatePipe);
-  fb = inject(FormBuilder);
   toastService = inject(ToastService);
   authService = inject(AuthService);
   store = inject(AppStore);
+  alert = inject(AlertService);
 
   @Input() id: any = signal(null);
   @Input() doctor: any = signal(null);
@@ -27,106 +46,118 @@ export class AppointmentModalSerialComponent {
 
   user = signal<any>(null);
   blockSerials: string[] = [];
+  isSubmitted = signal<boolean>(false);
+  isSubmitting = signal<boolean>(false);
 
-  // Computed signal to determine if we're editing or creating
-  isEditMode = computed(() => {
-    return !!this.id() && !!this.selectedAppointment();
-  });
+  isEditMode = computed(() => !!this.id() && !!this.selectedAppointment());
 
-  // Get the selected appointment from store using computed
   selectedAppointment = computed(() => {
     const appointments = this.store.appointments();
-    const appointment = appointments.find(apt => apt.id == this.id());
-    console.log('Looking for appointment with ID:', this.id(), 'Found:', appointment);
-    return appointment;
+    return appointments.find((apt) => apt.id == this.id());
   });
 
-  // Computed signals for departments and doctors
-  departments = computed(() => {
-    const depts = this.store.departments();
-    console.log('Departments available:', depts);
-    return depts;
-  });
+  departments = computed(() => this.store.departments());
 
   doctorList = computed(() => {
-    const departmentId = this.appointmentForm.get('departmentId')?.value;
-    console.log('Current department ID for doctor list:', departmentId);
-
+    const departmentId = this.model().departmentId;
     if (departmentId) {
-      const doctors = this.store.doctors().filter(d => d.departmentId == departmentId);
-      console.log('Filtered doctors for department:', doctors);
-      return doctors;
+      return this.store.doctors().filter((d) => d.departmentId == departmentId);
     }
-    console.log('No department selected, returning empty doctor list');
     return [];
   });
 
-  // Generate dates for the next 15 days
   dates: Date[] = Array.from({ length: 15 }, (_, i) => {
     const date = new Date();
     date.setDate(date.getDate() + i);
     return date;
   });
 
+  model = signal<AppointmentModel>({
+    companyID: environment.hospitalCode,
+    pName: '',
+    age: '',
+    mobile: '',
+    sex: '',
+    type: 'true',
+    date: '',
+    sL: '',
+    departmentId: '',
+    drCode: '',
+    fee: 0,
+    remarks: '',
+    username: '',
+    paymentStatus: false,
+    confirmed: false
+  });
+
+  appointmentForm = form<AppointmentModel>(this.model, (p) => {
+    required(p.pName, { message: 'Patient name is required' });
+    required(p.mobile, { message: 'Mobile number is required' });
+    pattern(p.mobile, /^[0-9]{11,14}$/, { message: 'Mobile must be 11-14 digits' });
+    required(p.date, { message: 'Appointment date is required' });
+    required(p.departmentId, { message: 'Department is required' });
+    required(p.drCode, { message: 'Doctor is required' });
+  });
+
+  constructor() {
+    effect(() => {
+      const appointment = this.selectedAppointment();
+      if (appointment) {
+        const formattedDate = this.datePipe.transform(appointment.date, 'yyyy-MM-dd') || '';
+        this.model.update((m) => ({
+          ...m,
+          pName: appointment.pName || '',
+          age: appointment.age || '',
+          sex: appointment.sex || '',
+          mobile: appointment.mobile || '',
+          type: appointment.type?.toString() || 'true',
+          date: formattedDate,
+          sL: appointment.sl || '',
+          departmentId: appointment.departmentId || '',
+          username: appointment.username || this.user()?.username || '',
+          drCode: appointment.drCode || '',
+          fee: appointment.fee || 0,
+          remarks: appointment.remarks || '',
+          paymentStatus: appointment.paymentStatus || false,
+          confirmed: appointment.confirmed || false
+        }));
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.user.set(this.authService.getUser());
-    this.updateFormValues();
     this.initializeForm();
   }
 
   initializeForm(): void {
-    // If we have a doctor object (from Doctor Card), pre-fill the form for new appointment
     if (this.doctor && !this.isEditMode()) {
-      console.log('Initializing form with doctor data for new appointment:', this.doctor);
-
       this.blockSerials = this.doctor?.serialBlock?.split(',') || [];
-
-      // Pre-fill the form with doctor data
-      this.appointmentForm.patchValue({
+      this.model.update((m) => ({
+        ...m,
         departmentId: this.doctor.departmentId || '',
         drCode: this.doctor.id || '',
         fee: this.doctor.fee || 0,
         username: this.user()?.username || ''
-      });
-
-      console.log('Form after doctor pre-fill:', this.appointmentForm.value);
-    }
-
-    // If we're in edit mode, load the existing appointment data
-    if (this.isEditMode()) {
-      this.updateFormValues();
+      }));
     }
   }
 
   onDepartmentChange(): void {
-    const departmentId = this.appointmentForm.get('departmentId')?.value;
-    console.log('Department changed to:', departmentId);
-
-    if (departmentId) {
-      // Reset doctor selection when department changes
-      this.appointmentForm.patchValue({
-        drCode: '',
-        fee: 0
-      });
-    }
+    this.model.update((m) => ({ ...m, drCode: '', fee: 0 }));
   }
 
   onDoctorChange(): void {
-    const doctorId = this.appointmentForm.get('drCode')?.value;
-    console.log('Doctor changed to:', doctorId);
-
+    const doctorId = this.model().drCode;
     if (doctorId) {
-      const doctor = this.store.doctors().find(d => d.id == doctorId);
-      console.log('Found doctor:', doctor);
-
+      const doctor = this.store.doctors().find((d) => d.id == doctorId);
       if (doctor) {
         this.blockSerials = doctor?.serialBlock?.split(',') || [];
-        console.log('Block serials:', this.blockSerials);
-
-        this.appointmentForm.patchValue({
+        this.model.update((m) => ({
+          ...m,
           departmentId: doctor.departmentId,
-          fee: doctor.fee
-        });
+          fee: doctor.fee ?? 0
+        }));
       }
     }
   }
@@ -139,80 +170,47 @@ export class AppointmentModalSerialComponent {
     this.closeAppointment.emit();
   }
 
-  appointmentForm = this.fb.group({
-    companyID: [environment.hospitalCode],
-    pName: ['', Validators.required],
-    age: [''],
-    mobile: ['', [Validators.required, Validators.pattern(/^[0-9]{11,14}$/)]],
-    sex: [''],
-    type: ['true'],
-    date: ['', Validators.required],
-    sL: [''],
-    departmentId: [this.doctor.departmentId || '', Validators.required],
-    drCode: [this.doctor.departmentId || '', Validators.required],
-    fee: [this.doctor.fee || 0],
-    remarks: [''],
-    username: [this.user()?.username || ''],
-    paymentStatus: [false],
-    confirmed: [false],
-  });
+  onSubmit(event: Event): void {
+    event.preventDefault();
+    this.isSubmitted.set(true);
 
-  updateFormValues(): void {
-    const appointment = this.selectedAppointment();
-    console.log('Updating form values with appointment:', appointment);
-
-    if (appointment) {
-      const formattedDate = this.datePipe.transform(appointment.date, 'yyyy-MM-dd');
-      console.log('Formatted date:', formattedDate);
-
-      this.appointmentForm.patchValue({
-        pName: appointment.pName || '',
-        age: appointment.age || '',
-        sex: appointment.sex || '',
-        mobile: appointment.mobile || '',
-        type: appointment.type?.toString() || 'true',
-        date: formattedDate || '',
-        sL: appointment.sl || '',
-        departmentId: appointment.departmentId || '',
-        username: appointment.username || this.user()?.username || '',
-        drCode: appointment.drCode || '',
-        fee: appointment.fee || 0,
-        remarks: appointment.remarks || '',
-        paymentStatus: appointment.paymentStatus || false,
-        confirmed: appointment.confirmed || false,
-      });
-    } else {
-      console.log('No appointment found for update - this is likely a new appointment');
-    }
-  }
-
-  onSubmit(): void {
-    if (this.appointmentForm.invalid) {
-      console.log('Form is invalid, errors:', this.appointmentForm.errors);
+    if (!this.appointmentForm().valid()) {
+      const msgs: string[] = [];
+      [
+        this.appointmentForm.pName(),
+        this.appointmentForm.mobile(),
+        this.appointmentForm.date(),
+        this.appointmentForm.departmentId(),
+        this.appointmentForm.drCode()
+      ].forEach((f) => f.errors().forEach((e) => msgs.push(e.message || e.kind)));
+      this.alert.validationWarning(msgs);
       return;
     }
 
+    this.isSubmitting.set(true);
     const formData = new FormData();
-    const formValue = this.appointmentForm.value;
+    const formValue = this.appointmentForm().value();
 
-    Object.keys(formValue).forEach(key => {
-      const value = formValue[key as keyof typeof formValue];
+    Object.keys(formValue).forEach((key) => {
+      const value = (formValue as any)[key];
       if (value !== null && value !== undefined) {
         formData.append(key, value.toString());
-        // console.log(`Appended to FormData: ${key} = ${value}`);
       }
     });
 
-    if (this.isEditMode()) {
-      // Use store to update appointment - automatically updates global state
-      this.store.updateAppointment({ id: this.id(), data: formData });
-      this.updateFormValues();
-    } else {
-      // If we have a doctor object (from Doctor Card), pre-fill the form for new appointment
-      if (this.doctor) {
-        // Use store to add appointment - automatically updates global state
+    try {
+      if (this.isEditMode()) {
+        this.store.updateAppointment({ id: this.id(), data: formData });
+        this.alert.success('Appointment updated', `For ${formValue.pName}`);
+      } else if (this.doctor) {
         this.store.addAppointment(formData);
+        this.alert.success('Appointment booked', `For ${formValue.pName} on ${formValue.date}`);
       }
+      this.closeAppointmentModal();
+    } catch (err: any) {
+      this.alert.error('Failed to save appointment', err?.message || 'Please try again.');
+    } finally {
+      this.isSubmitting.set(false);
     }
   }
 
@@ -223,7 +221,7 @@ export class AppointmentModalSerialComponent {
   }
 
   formReset(): void {
-    this.appointmentForm.reset({
+    this.model.set({
       companyID: environment.hospitalCode,
       pName: '',
       age: '',
@@ -232,13 +230,14 @@ export class AppointmentModalSerialComponent {
       type: 'true',
       date: '',
       sL: '',
-      departmentId: this.doctor.departmentId || '',
-      drCode: this.doctor.id || '',
-      fee: this.doctor.fee || 0,
+      departmentId: this.doctor?.departmentId || '',
+      drCode: this.doctor?.id || '',
+      fee: this.doctor?.fee || 0,
       remarks: '',
       username: this.user()?.username || '',
       paymentStatus: false,
-      confirmed: false,
+      confirmed: false
     });
+    this.isSubmitted.set(false);
   }
 }

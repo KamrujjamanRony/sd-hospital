@@ -149,39 +149,39 @@
           <tbody class="bg-white divide-y">
             @for (appointment of filteredAppointments(); track appointment.id) {
             <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm">
+              <td class="px-4 py-1 text-sm">
                 {{ appointment.sl }}
               </td>
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm">
+              <td class="px-4 py-1 text-sm">
                 {{ transform(appointment.date) }}
               </td>
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm">
+              <td class="px-4 py-1 text-sm">
                 {{ appointment.pName }}
               </td>
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm">
+              <td class="px-4 py-1 text-sm">
                 {{ appointment.age }}
               </td>
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm">
+              <td class="px-4 py-1 text-sm">
                 {{ appointment.sex }}
               </td>
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm">
+              <td class="px-4 py-1 text-sm">
                 {{ appointment.mobile }}
               </td>
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm max-w-[150px]">
+              <td class="px-4 py-1 text-sm max-w-[150px]">
                 {{ getDoctorName(appointment.drCode) }}
               </td>
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm max-w-[100px]">
+              <td class="px-4 py-1 text-sm max-w-[100px]">
                 {{ getDepartmentName(appointment.departmentId) }}
               </td>
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm">
+              <td class="px-4 py-1 text-sm">
                 {{ appointment.username }}
               </td>
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm max-w-[180px]">
+              <td class="px-4 py-1 text-sm max-w-[180px]">
                 {{ appointment.remarks }}
               </td>
               @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717") ||
               checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
-              <td class="p-0.5 lg:px-4 lg:py-3 text-sm">
+              <td class="px-4 py-1 text-sm">
                 @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
                 <button
                   (click)="openEditAppointmentModal(appointment.id)"
