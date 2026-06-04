@@ -18,7 +18,7 @@
   <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
   >
-    @for (doctor of filteredDoctors(); track doctor.id) {
+    @for (doctor of filteredDoctors().sort((a, b) => (a.drSerial || 0) - (b.drSerial || 0)); track doctor.id) {
     <app-doctor-card
       [doctor]="doctor"
       [department]="!!department()"

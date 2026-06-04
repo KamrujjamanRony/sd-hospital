@@ -144,7 +144,7 @@ export class AllAppointmentComponent {
   }
 
   redirectToHome(): void {
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/serial');
   }
 
   isPrinting: boolean = false;

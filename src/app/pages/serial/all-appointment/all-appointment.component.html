@@ -152,28 +152,28 @@
           <tr
             class="text-xs font-semibold tracking-wide text-left text-gray-900 uppercase border-b bg-gray-50"
           >
-            <th class="px-4 py-1">Sl</th>
-            <th class="px-4 py-1" [class.hidden-when-printing]="isPrinting">
+            <th class="px-4">Sl</th>
+            <th class="px-4" [class.hidden-when-printing]="isPrinting">
               Doctor Name
             </th>
-            <th class="px-4 py-1" [class.hidden-when-printing]="isPrinting">
+            <th class="px-4" [class.hidden-when-printing]="isPrinting">
               Department
             </th>
-            <th class="px-4 py-1" [class.hidden-when-printing]="isPrinting">
+            <th class="px-4" [class.hidden-when-printing]="isPrinting">
               Date
             </th>
-            <th class="px-4 py-1">Patient Name</th>
-            <th class="px-4 py-1">Age</th>
-            <th class="px-4 py-1">Sex</th>
-            <th class="px-4 py-1">Mobile</th>
-            <th class="px-4 py-1" [class.hidden-when-printing]="isPrinting">
+            <th class="px-4">Patient Name</th>
+            <th class="px-4">Age</th>
+            <th class="px-4">Sex</th>
+            <th class="px-4">Mobile</th>
+            <th class="px-4" [class.hidden-when-printing]="isPrinting">
               Username
             </th>
-            <th class="px-4 py-1">Remarks</th>
+            <th class="px-4">Remarks</th>
             @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717") ||
             checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
             <th
-              class="px-4 py-1 w-32"
+              class="px-4 w-32"
               [class.hidden-when-printing]="isPrinting"
             >
               Actions
@@ -184,55 +184,55 @@
         <tbody class="bg-white divide-y">
           @for (appointment of filteredAppointments(); track appointment.id) {
           <tr class="bg-gray-50 hover:bg-gray-100 text-gray-900">
-            <td class="px-4 py-1 text-sm">{{ appointment.sl }}</td>
+            <td class="px-4 text-sm">{{ appointment.sl }}</td>
             <td
-              class="px-4 py-1 text-sm max-w-[150px]"
+              class="px-4 text-sm max-w-[150px]"
               [class.hidden-when-printing]="isPrinting"
             >
               {{ getDoctorName(appointment.drCode) }}
             </td>
             <td
-              class="px-4 py-1 text-sm max-w-[100px]"
+              class="px-4 text-sm max-w-[100px]"
               [class.hidden-when-printing]="isPrinting"
             >
               {{ getDepartmentName(appointment.departmentId) }}
             </td>
             <td
-              class="px-4 py-1 text-sm"
+              class="px-4 text-sm"
               [class.hidden-when-printing]="isPrinting"
             >
               {{ transform(appointment.date) }}
             </td>
-            <td class="px-4 py-1 text-sm">{{ appointment.pName }}</td>
-            <td class="px-4 py-1 text-sm">{{ appointment.age }}</td>
-            <td class="px-4 py-1 text-sm">{{ appointment.sex }}</td>
-            <td class="px-4 py-1 text-sm">{{ appointment.mobile }}</td>
+            <td class="px-4 text-sm">{{ appointment.pName }}</td>
+            <td class="px-4 text-sm">{{ appointment.age }}</td>
+            <td class="px-4 text-sm">{{ appointment.sex }}</td>
+            <td class="px-4 text-sm">{{ appointment.mobile }}</td>
             <td
-              class="px-4 py-1 text-sm"
+              class="px-4 text-sm"
               [class.hidden-when-printing]="isPrinting"
             >
               {{ appointment.username }}
             </td>
-            <td class="px-4 py-1 text-sm max-w-[180px]">
+            <td class="px-4 text-sm max-w-[180px]">
               {{ appointment.remarks }}
             </td>
             @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717") ||
             checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
             <td
-              class="px-4 py-1 text-sm"
+              class="px-4 text-sm w-36"
               [class.hidden-when-printing]="isPrinting"
             >
               @if (checkRoles("2ecc8fdd-114f-444c-8e0e-5c5706675717")) {
               <button
                 (click)="openEditAppointmentModal(appointment.id)"
-                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded mr-2"
+                class="px-2 font-semibold leading-tight text-green-700 bg-green-100 rounded mr-2"
               >
                 Edit
               </button>
               } @if (checkRoles("6224224f-d3d5-429f-96d2-516df6e69374")) {
               <button
                 (click)="onDelete(appointment.id)"
-                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded"
+                class="px-2 font-semibold leading-tight text-red-700 bg-red-100 rounded"
               >
                 Delete
               </button>

@@ -48,6 +48,7 @@ export class AppointmentModalSerialComponent implements OnInit {
   blockSerials: string[] = [];
   isSubmitted = signal<boolean>(false);
   isSubmitting = signal<boolean>(false);
+  pendingSubmit = signal<boolean>(false);
 
   isEditMode = computed(() => !!this.id() && !!this.selectedAppointment());
 
@@ -121,6 +122,20 @@ export class AppointmentModalSerialComponent implements OnInit {
           paymentStatus: appointment.paymentStatus || false,
           confirmed: appointment.confirmed || false
         }));
+      }
+    });
+
+    effect(() => {
+      const loading = this.store.loading();
+      if (this.pendingSubmit() && !loading) {
+        this.pendingSubmit.set(false);
+        this.isSubmitting.set(false);
+        const error = this.store.error();
+        if (error) {
+          this.alert.error('Failed to save appointment', error);
+        } else {
+          this.closeAppointmentModal();
+        }
       }
     });
   }
@@ -198,20 +213,12 @@ export class AppointmentModalSerialComponent implements OnInit {
       }
     });
 
-    try {
-      if (this.isEditMode()) {
-        this.store.updateAppointment({ id: this.id(), data: formData });
-        this.alert.success('Appointment updated', `For ${formValue.pName}`);
-      } else if (this.doctor) {
-        this.store.addAppointment(formData);
-        this.alert.success('Appointment booked', `For ${formValue.pName} on ${formValue.date}`);
-      }
-      this.closeAppointmentModal();
-    } catch (err: any) {
-      this.alert.error('Failed to save appointment', err?.message || 'Please try again.');
-    } finally {
-      this.isSubmitting.set(false);
+    if (this.isEditMode()) {
+      this.store.updateAppointment({ id: this.id(), data: formData });
+    } else if (this.doctor) {
+      this.store.addAppointment(formData);
     }
+    this.pendingSubmit.set(true);
   }
 
   isPastDate(date: Date): boolean {

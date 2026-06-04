@@ -2,7 +2,7 @@
   class="absolute top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 cover bg-gradient-to-l from-cyan-500 to-blue-500 opacity-90"
 >
   <div
-    class="hidden md:flex justify-between items-center py-2 border-b text-sm"
+    class="hidden md:flex justify-between items-center border-b text-sm"
     style="border-color: rgba(255, 255, 255, 0.25)"
   >
     <div class="text-gray-50">
@@ -116,7 +116,7 @@
     </div>
   </div>
   <div
-    class="flex justify-center items-center py-2 border-b text-sm text-gray-50"
+    class="flex justify-center items-center border-b text-sm text-gray-50"
     style="border-color: rgba(255, 255, 255, 0.25)"
   >
     <a
@@ -129,7 +129,7 @@
   </div>
 
   <div
-    class="flex flex-row-reverse md:flex-row flex-wrap items-center justify-between py-6 mx-auto"
+    class="flex flex-row-reverse md:flex-row flex-wrap items-center justify-between py-1 mx-auto"
   >
     <div class="w-1/2 md:w-auto"></div>
 
@@ -150,9 +150,9 @@
 
     <input class="hidden" type="checkbox" id="menu-toggle" />
 
-    <div class="hidden lg:block max-w-lg md:max-w-3xl lg:max-w-5xl" id="menu">
+    <div class="hidden lg:block w-fit mx-auto" id="menu">
       <nav
-        class="w-full bg-white md:bg-transparent rounded shadow-lg py-4 mt-4 text-center md:p-0 md:mt-0 md:shadow-none"
+        class="w-full bg-white md:bg-transparent rounded shadow-lg py-4 mt-4 text-center md:p-0 md:mt-0 md:shadow-none mx-auto"
       >
         <ul class="lg:flex items-center">
           @for (menuItem of menuItems; track $index) {
