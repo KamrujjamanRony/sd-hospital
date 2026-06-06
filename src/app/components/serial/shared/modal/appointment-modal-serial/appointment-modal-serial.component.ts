@@ -94,7 +94,7 @@ export class AppointmentModalSerialComponent implements OnInit {
   appointmentForm = form<AppointmentModel>(this.model, (p) => {
     required(p.pName, { message: 'Patient name is required' });
     required(p.mobile, { message: 'Mobile number is required' });
-    pattern(p.mobile, /^[0-9]{11,14}$/, { message: 'Mobile must be 11-14 digits' });
+    pattern(p.mobile, /^[0-9]{11,15}$/, { message: 'Mobile must be 11-15 digits' });
     required(p.date, { message: 'Appointment date is required' });
     required(p.departmentId, { message: 'Department is required' });
     required(p.drCode, { message: 'Doctor is required' });
@@ -113,7 +113,7 @@ export class AppointmentModalSerialComponent implements OnInit {
           mobile: appointment.mobile || '',
           type: appointment.type?.toString() || 'true',
           date: formattedDate,
-          sL: appointment.sl || '',
+          ...((appointment.sl && !this.isEditMode()) && { sL: appointment.sl }), // Ensure sL is only set if it exists in the appointment
           departmentId: appointment.departmentId || '',
           username: appointment.username || this.user()?.username || '',
           drCode: appointment.drCode || '',
