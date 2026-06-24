@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, inject, input } from '@angular/core';
+import { Component, Input, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-active-link',
     imports: [RouterLink, CommonModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
     <a [routerLink]="to()" [ngClass]="{'border-b-2': isActive}">
       {{ children() }}

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
 import { environment } from '../../../../../../environments/environments';
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   selector: 'app-add-health-news',
   imports: [CoverComponent, FormsModule],
   templateUrl: './add-health-news.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './add-health-news.component.css'
 })
 export class AddHealthNewsComponent {

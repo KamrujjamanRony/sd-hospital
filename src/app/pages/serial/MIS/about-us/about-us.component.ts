@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CoverComponent } from '../../../../components/main/shared/cover/cover.component';
@@ -8,6 +8,7 @@ import { AppStore } from '../../../../store/app.store';
 @Component({
   selector: 'app-about-us',
   templateUrl: './about-us.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent, FormsModule]
 })
 export class AboutUsComponent {

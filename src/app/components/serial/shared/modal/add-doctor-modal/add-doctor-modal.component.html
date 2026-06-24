@@ -115,7 +115,7 @@
           >
             <option value="" disabled>Select Department</option>
             @for (department of store.departments(); track department.id) {
-              <option [value]="department?.id">
+              <option [value]="$safeNavigationMigration(department?.id)">
                 {{ department?.departmentName }}
               </option>
             } @empty {

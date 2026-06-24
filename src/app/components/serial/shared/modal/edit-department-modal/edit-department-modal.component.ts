@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed, effect } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed, effect, ChangeDetectionStrategy } from '@angular/core';
 import { form, required, minLength, FormField } from '@angular/forms/signals';
 import { environment } from '../../../../../../environments/environments';
 import { AppStore } from '../../../../../store/app.store';
@@ -16,6 +16,7 @@ interface EditDepartmentModel {
     standalone: true,
     imports: [FormField],
     templateUrl: './edit-department-modal.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './edit-department-modal.component.css'
 })
 export class EditDepartmentModalComponent implements OnInit {

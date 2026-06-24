@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { CoverComponent } from "../../../components/main/shared/cover/cover.component";
@@ -10,6 +10,7 @@ import { DoctorsService } from '../../../services/serial/doctors.service';
   standalone: true,
   templateUrl: './doctors.component.html',
   styleUrl: './doctors.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, CoverComponent, DoctorCardComponent]
 })
 export class DoctorsComponent {

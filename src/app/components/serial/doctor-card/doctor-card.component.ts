@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DoctorDetailsComponent } from '../shared/modal/doctor-details/doctor-details.component';
 import { AppointmentModalSerialComponent } from '../shared/modal/appointment-modal-serial/appointment-modal-serial.component';
 
@@ -6,6 +6,7 @@ import { AppointmentModalSerialComponent } from '../shared/modal/appointment-mod
   selector: 'app-doctor-card',
   standalone: true,
   templateUrl: './doctor-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DoctorDetailsComponent, AppointmentModalSerialComponent]
 })
 export class DoctorCardComponent {

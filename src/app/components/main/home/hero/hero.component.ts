@@ -1,10 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { AppointmentModalComponent } from "../../shared/all-modals/appointment-modal/appointment-modal.component";
 
 @Component({
   selector: 'app-hero',
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [AppointmentModalComponent]
 })
 export class HeroComponent {

@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed, effect } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed, effect, ChangeDetectionStrategy } from '@angular/core';
 import { form, validate, disabled } from '@angular/forms/signals';
 import { AppStore } from '../../../../../store/app.store';
 import { DataService } from '../../../../../services/serial/data.service';
@@ -14,6 +14,7 @@ interface EditUserModel {
   standalone: true,
   imports: [],
   templateUrl: './edit-user-modal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-user-modal.component.css']
 })
 export class EditUserModalComponent implements OnInit {

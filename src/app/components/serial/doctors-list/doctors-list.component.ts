@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorCardComponent } from '../doctor-card/doctor-card.component';
 import { AppStore } from '../../../store/app.store';
@@ -8,6 +8,7 @@ import { PageHeaderComponent } from "../shared/page-header/page-header.component
   selector: 'app-doctors-list',
   standalone: true,
   templateUrl: './doctors-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DoctorCardComponent, PageHeaderComponent]
 })
 export class DoctorListComponent implements OnInit {

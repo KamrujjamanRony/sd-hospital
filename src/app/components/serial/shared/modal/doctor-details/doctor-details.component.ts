@@ -1,10 +1,11 @@
-import { Component, Input, inject, output, signal, computed } from '@angular/core';
+import { Component, Input, inject, output, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { AppStore } from '../../../../../store/app.store';
 
 @Component({
   selector: 'app-doctor-details',
   standalone: true,
   imports: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './doctor-details.component.html'
 })
 export class DoctorDetailsComponent {

@@ -1,8 +1,9 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-page-header',
   imports: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
   <div class="flex flex-col justify-center items-center py-8">
     <h1 class="lg:text-5xl text-2xl font-bold uppercase text-purple-800">

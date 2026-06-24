@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../../../environments/environments';
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   selector: 'app-add-services',
   imports: [CoverComponent, FormsModule],
   templateUrl: './add-services.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './add-services.component.css'
 })
 export class AddServicesComponent {

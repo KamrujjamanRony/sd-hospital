@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'toast',
@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
   {{ message }}
   </div>
   `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './toast.component.css'
 })
 export class ToastComponent {

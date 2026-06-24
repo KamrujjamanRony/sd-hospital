@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -9,6 +9,7 @@ import { AppStore } from '../../../../../store/app.store';
   selector: 'app-edit-services',
   imports: [CoverComponent, FormsModule],
   templateUrl: './edit-services.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './edit-services.component.css'
 })
 export class EditServicesComponent {

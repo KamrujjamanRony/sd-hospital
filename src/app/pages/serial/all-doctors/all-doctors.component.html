@@ -47,7 +47,7 @@
             <td class="px-4 py-3 text-xs">{{ doctor?.drSerial }}</td>
             <td class="px-4 py-3">
               <img
-                [src]="doctor?.imageUrl ? doctor?.imageUrl : emptyImg"
+                [src]="doctor?.imageUrl ? $safeNavigationMigration(doctor?.imageUrl) : emptyImg"
                 alt="Doctor Image"
                 class="w-8 md:w-16 rounded"
               />
@@ -64,13 +64,13 @@
             </td>
             <td class="px-4 py-3 text-sm">
               <button
-                (click)="openEditDoctorModal(doctor?.id)"
+                (click)="openEditDoctorModal($safeNavigationMigration(doctor?.id))"
                 class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded mr-2 inline-block my-2"
               >
                 Edit
               </button>
               <button
-                (click)="onDelete(doctor?.id)"
+                (click)="onDelete($safeNavigationMigration(doctor?.id))"
                 class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded inline-block"
               >
                 Delete

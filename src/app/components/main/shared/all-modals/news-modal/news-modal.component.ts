@@ -1,9 +1,10 @@
-import { Component, Input, inject, input, output } from '@angular/core';
+import { Component, Input, inject, input, output, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'news-modal',
     imports: [],
     templateUrl: './news-modal.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './news-modal.component.css'
 })
 export class NewsModalComponent {

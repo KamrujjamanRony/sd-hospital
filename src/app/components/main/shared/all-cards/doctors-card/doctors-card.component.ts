@@ -1,10 +1,11 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DoctorDetailsComponent } from '../../../../serial/shared/modal/doctor-details/doctor-details.component';
 import { AppointmentModalComponent } from '../../all-modals/appointment-modal/appointment-modal.component';
 
 @Component({
   selector: 'app-doctor-card',
   imports: [DoctorDetailsComponent, AppointmentModalComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './doctors-card.component.html'
 })
 export class MainDoctorsCardComponent {

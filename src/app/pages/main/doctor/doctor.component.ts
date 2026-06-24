@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { HomeCover } from "../../../components/main/home/home-cover/home-cover";
@@ -8,6 +8,7 @@ import { AppStore } from '../../../store/app.store';
   selector: 'app-doctor',
   templateUrl: './doctor.component.html',
   styleUrl: './doctor.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [HomeCover]
 })
 export class DoctorComponent {

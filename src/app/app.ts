@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { AppStore } from './store/app.store';
@@ -8,6 +8,7 @@ import { ConfirmModalComponent } from "./components/main/shared/all-modals/confi
   selector: 'app-root',
   imports: [RouterOutlet, ConfirmModalComponent],
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.css'
 })
 export class App {

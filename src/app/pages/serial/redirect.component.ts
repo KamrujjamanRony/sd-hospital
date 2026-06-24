@@ -1,10 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-redirect',
     template: '',
     styleUrls: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class RedirectComponent implements OnInit {

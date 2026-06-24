@@ -23,7 +23,7 @@
           <option value="" disabled selected>Select Department</option>
           @for (department of departmentList(); track department.id) {
           <option
-            [value]="department?.id"
+            [value]="$safeNavigationMigration(department?.id)"
             [selected]="department?.id === selectedDepartmentId()"
           >
             {{ department?.departmentName }}
@@ -47,7 +47,7 @@
           <option value="" disabled selected>Select Doctor</option>
           @for (doctor of filteredDoctors(); track doctor?.id) {
           <option
-            [value]="doctor?.id"
+            [value]="$safeNavigationMigration(doctor?.id)"
             [selected]="doctor?.id === selectedDoctorId()"
           >
             {{ doctor?.drName }} (Fee: {{ doctor?.fee }} Tk)

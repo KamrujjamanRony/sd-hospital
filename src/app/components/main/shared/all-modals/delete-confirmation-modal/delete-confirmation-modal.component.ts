@@ -1,4 +1,4 @@
-import { Component, Input, inject, output, signal } from '@angular/core';
+import { Component, Input, inject, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../../../environments/environments';
 @Component({
@@ -48,6 +48,7 @@ import { environment } from '../../../../../../environments/environments';
       text-align: center;
     }
   `],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule]
 })
 export class DeleteConfirmationModalComponent {

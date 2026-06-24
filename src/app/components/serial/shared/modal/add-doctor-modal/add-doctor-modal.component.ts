@@ -1,4 +1,4 @@
-import { Component, inject, Output, EventEmitter, OnInit, signal } from '@angular/core';
+import { Component, inject, Output, EventEmitter, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { form, required, minLength, pattern, min, FormField } from '@angular/forms/signals';
 import { environment } from '../../../../../../environments/environments';
 import { AppStore } from '../../../../../store/app.store';
@@ -43,6 +43,7 @@ interface AddDoctorModel {
   standalone: true,
   templateUrl: './add-doctor-modal.component.html',
   styleUrl: './add-doctor-modal.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormField]
 })
 export class AddDoctorModalComponent implements OnInit {

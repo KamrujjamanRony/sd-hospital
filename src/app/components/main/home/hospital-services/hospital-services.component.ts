@@ -1,10 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { AppStore } from '../../../../store/app.store';
 
 @Component({
   selector: 'app-hospital-services',
   imports: [],
   templateUrl: './hospital-services.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hospital-services.component.css'
 })
 export class HospitalServicesComponent {

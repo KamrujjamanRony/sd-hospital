@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MainDoctorsCardComponent } from '../../../components/main/shared/all-cards/doctors-card/doctors-card.component';
@@ -9,6 +9,7 @@ import { AppStore } from '../../../store/app.store';
 @Component({
   selector: 'app-doctors-list',
   templateUrl: './doctors-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MainDoctorsCardComponent, HomeCover]
 })
 export class MainDoctorListComponent implements OnInit, OnDestroy {

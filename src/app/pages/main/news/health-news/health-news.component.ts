@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HealthNewsService } from '../../../../services/main/healthNews.service';
 import { NewsCardComponent } from "../../../../components/main/shared/all-cards/news-card/news-card.component";
@@ -9,6 +9,7 @@ import { AppStore } from '../../../../store/app.store';
   selector: 'app-health-news',
   templateUrl: './health-news.component.html',
   styleUrl: './health-news.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NewsCardComponent, HomeCover]
 })
 export class HealthNewsComponent {

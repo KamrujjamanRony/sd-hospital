@@ -101,7 +101,7 @@
             @for (role of userRole(); track role?.id) {
               <option
                 class="p-2 text-center border-b w-full"
-                [value]="role?.id"
+                [value]="$safeNavigationMigration(role?.id)"
               >
                 {{ role?.name }}
               </option>

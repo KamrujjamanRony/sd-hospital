@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../../../../../environments/environments';
 import { AuthService } from '../../../../../services/serial/auth.service';
@@ -6,6 +6,7 @@ import { AuthService } from '../../../../../services/serial/auth.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterLink]
 })
 export class SidebarComponent implements OnInit {

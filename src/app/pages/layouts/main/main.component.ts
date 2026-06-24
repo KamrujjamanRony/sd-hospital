@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from "../../../components/main/shared/navbar/navbar.component";
@@ -9,6 +9,7 @@ import { FooterComponent } from "../../../components/main/shared/footer/footer.c
     selector: 'app-main',
     templateUrl: './main.component.html',
     styleUrl: './main.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterOutlet, FormsModule, NavbarComponent, FooterComponent]
 })
 export class MainComponent {

@@ -1,10 +1,11 @@
-import { Component, Renderer2, inject, input } from '@angular/core';
+import { Component, Renderer2, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-doctor-card',
   imports: [RouterLink],
   templateUrl: './doctor-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './doctor-card.component.css'
 })
 export class DoctorCardComponent {

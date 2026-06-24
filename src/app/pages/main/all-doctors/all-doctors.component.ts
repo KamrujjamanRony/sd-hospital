@@ -1,4 +1,4 @@
-import { Component, Renderer2, inject } from '@angular/core';
+import { Component, Renderer2, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environments';
@@ -10,6 +10,7 @@ import { AppStore } from '../../../store/app.store';
   selector: 'app-all-doctors',
   templateUrl: './all-doctors.component.html',
   styleUrl: './all-doctors.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DoctorCardComponent, HomeCover]
 })
 export class AllDoctorsComponent {

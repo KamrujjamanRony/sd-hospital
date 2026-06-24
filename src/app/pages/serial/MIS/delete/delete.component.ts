@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AppointmentsService } from '../../../../services/serial/appointments.service';
@@ -8,6 +8,7 @@ import { environment } from '../../../../../environments/environments';
   selector: 'app-delete',
   imports: [FormsModule],
   templateUrl: './delete.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './delete.component.css'
 })
 export class DeleteComponent {

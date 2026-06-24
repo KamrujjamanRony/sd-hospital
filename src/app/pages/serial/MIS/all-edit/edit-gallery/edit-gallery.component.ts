@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,6 +9,7 @@ import { AppStore } from '../../../../../store/app.store';
   selector: 'app-edit-gallery',
   imports: [CoverComponent, FormsModule],
   templateUrl: './edit-gallery.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './edit-gallery.component.css'
 })
 export class EditGalleryComponent {

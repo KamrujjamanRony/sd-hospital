@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
@@ -8,6 +8,7 @@ import { DoctorsService } from '../../../services/serial/doctors.service';
   selector: 'app-doctor',
   templateUrl: './doctor.component.html',
   styleUrl: './doctor.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent]
 })
 export class SerialDoctorComponent {

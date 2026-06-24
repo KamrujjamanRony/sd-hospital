@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../../../components/serial/shared/all-sidebar/serial-sidebar/sidebar.component';
@@ -8,6 +8,7 @@ import { SidebarComponent } from '../../../components/serial/shared/all-sidebar/
     selector: 'app-serial-admin',
     imports: [FormsModule, RouterOutlet, SidebarComponent],
     templateUrl: './serial-admin.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './serial-admin.component.css'
 })
 export class SerialAdminComponent {

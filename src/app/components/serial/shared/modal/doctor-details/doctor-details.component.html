@@ -12,9 +12,9 @@
       <div class="hero-content flex-col lg:flex-row">
         @if (doctor?.imageUrl && doctor?.imageUrl !== "undefined") {
         <img
-          [src]="doctor?.imageUrl"
+          [src]="$safeNavigationMigration(doctor?.imageUrl)"
           class="md:max-w-md w-40 rounded-lg shadow-2xl"
-          [alt]="doctor?.drName"
+          [alt]="$safeNavigationMigration(doctor?.drName)"
         />
         }
         <div class="text-sm md:text-md lg:text-lg">

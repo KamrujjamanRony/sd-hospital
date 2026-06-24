@@ -1,4 +1,4 @@
-import { Component, Renderer2, inject } from '@angular/core';
+import { Component, Renderer2, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -11,6 +11,7 @@ import { DoctorsService } from '../../../services/serial/doctors.service';
   standalone: true,
   templateUrl: './doctors.component.html',
   styleUrl: './doctors.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, RouterLink, CoverComponent]
 })
 export class DoctorsComponent {

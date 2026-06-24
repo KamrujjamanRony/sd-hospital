@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,7 @@ import { AppStore } from '../../../../store/app.store';
 @Component({
   selector: 'app-contact-us',
   templateUrl: './contact-us.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent, FormsModule]
 })
 export class ContactUsComponent {

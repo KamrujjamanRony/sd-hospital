@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
 import { ConfirmModalComponent } from '../../../../../components/main/shared/all-modals/confirm-modal/confirm-modal.component';
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-carousel',
   templateUrl: './add-carousel.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent, FormsModule, ConfirmModalComponent]
 })
 export class AddCarouselComponent {

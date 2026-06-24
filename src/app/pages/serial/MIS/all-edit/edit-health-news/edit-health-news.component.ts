@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { AppStore } from '../../../../../store/app.store';
   selector: 'app-edit-health-news',
   imports: [CoverComponent, FormsModule],
   templateUrl: './edit-health-news.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './edit-health-news.component.css'
 })
 export class EditHealthNewsComponent {

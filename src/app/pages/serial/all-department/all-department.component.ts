@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { AddDepartmentModalComponent } from '../../../components/serial/shared/modal/add-department-modal/add-department-modal.component';
 import { EditDepartmentModalComponent } from '../../../components/serial/shared/modal/edit-department-modal/edit-department-modal.component';
@@ -11,6 +11,7 @@ import { AuthService } from '../../../services/serial/auth.service';
   standalone: true,
   templateUrl: './all-department.component.html',
   styleUrl: './all-department.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent, AddDepartmentModalComponent, EditDepartmentModalComponent]
 })
 export class AllDepartmentComponent implements OnInit {

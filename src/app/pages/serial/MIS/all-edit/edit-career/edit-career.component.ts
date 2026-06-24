@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
 import { FormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from '../../../../../components/main/shared/all-modals/confirm-modal/confirm-modal.component';
@@ -11,6 +11,7 @@ import { CareerService } from '../../../../../services/main/career.service';
   selector: 'app-edit-career',
   imports: [CoverComponent, FormsModule, ConfirmModalComponent],
   templateUrl: './edit-career.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './edit-career.component.css'
 })
 export class EditCareerComponent {

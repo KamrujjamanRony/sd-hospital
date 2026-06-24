@@ -1,10 +1,11 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { AppStore } from '../../../../../store/app.store';
 
 @Component({
   selector: 'confirm-modal',
   imports: [],
   templateUrl: './confirm-modal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './confirm-modal.component.css'
 })
 export class ConfirmModalComponent {

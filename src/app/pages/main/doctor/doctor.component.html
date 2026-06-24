@@ -11,7 +11,7 @@
             <img
               class="thumbnail"
               alt="Doctor image"
-              [src]="doctor()?.imageUrl"
+              [src]="$safeNavigationMigration(doctor()?.imageUrl)"
             />
           </figure>
           }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, output, signal, computed, effect } from '@angular/core';
+import { Component, inject, output, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { format, isBefore } from 'date-fns';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,7 @@ import { AuthService } from '../../../services/serial/auth.service';
   standalone: true,
   templateUrl: './appointment-form.component.html',
   styleUrl: './appointment-form.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class AppointmentFormComponent {

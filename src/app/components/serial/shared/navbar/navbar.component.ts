@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from '../../../../services/serial/auth.service';
@@ -7,6 +7,7 @@ import { DataService } from '../../../../services/serial/data.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterLink]
 })
 export class NavbarComponent {

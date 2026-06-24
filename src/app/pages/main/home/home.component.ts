@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CarouselComponent } from "../../../components/main/home/carousel/carousel.component";
 import { HeroComponent } from "../../../components/main/home/hero/hero.component";
 import { OurDoctorsComponent } from "../../../components/main/home/our-doctors/our-doctors.component";
@@ -10,6 +10,7 @@ import { OurHospitalGalleryComponent } from "../../../components/main/home/our-h
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CarouselComponent, HeroComponent, OurDoctorsComponent, OurProductsComponent, HospitalServicesComponent, OurHospitalGalleryComponent]
 })
 export class HomeComponent {

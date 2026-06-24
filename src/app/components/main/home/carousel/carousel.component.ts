@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { AppStore } from '../../../../store/app.store';
 
@@ -7,6 +7,7 @@ import { AppStore } from '../../../../store/app.store';
   standalone: true,
   imports: [],
   templateUrl: './carousel.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./carousel.component.css']
 })
 export class CarouselComponent implements OnInit, OnDestroy {

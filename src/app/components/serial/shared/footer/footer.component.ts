@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
     selector: 'app-footer',
     imports: [FontAwesomeModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './footer.component.html'
 })
 export class FooterComponent {

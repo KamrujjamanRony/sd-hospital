@@ -1,4 +1,4 @@
-import { Component, inject, Output, EventEmitter, OnInit, signal } from '@angular/core';
+import { Component, inject, Output, EventEmitter, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { form, required, minLength, validate, FormField } from '@angular/forms/signals';
 import { environment } from '../../../../../../environments/environments';
 import { AppStore } from '../../../../../store/app.store';
@@ -16,6 +16,7 @@ interface AddUserModel {
   standalone: true,
   templateUrl: './add-user-modal.component.html',
   styleUrl: './add-user-modal.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormField]
 })
 export class AddUserModalComponent implements OnInit {

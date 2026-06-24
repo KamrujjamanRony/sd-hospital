@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed, effect } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnInit, signal, computed, effect, ChangeDetectionStrategy } from '@angular/core';
 import { form, required, pattern, FormField } from '@angular/forms/signals';
 import { isBefore } from 'date-fns';
 import { environment } from '../../../../../../environments/environments';
@@ -31,6 +31,7 @@ interface AppointmentModel {
   templateUrl: './appointment-modal-serial.component.html',
   styleUrls: ['./appointment-modal-serial.component.css'],
   providers: [DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormField, CommonModule]
 })
 export class AppointmentModalSerialComponent implements OnInit {
@@ -94,7 +95,7 @@ export class AppointmentModalSerialComponent implements OnInit {
   appointmentForm = form<AppointmentModel>(this.model, (p) => {
     required(p.pName, { message: 'Patient name is required' });
     required(p.mobile, { message: 'Mobile number is required' });
-    pattern(p.mobile, /^[0-9]{11,15}$/, { message: 'Mobile must be 11-15 digits' });
+    pattern(p.mobile, /^\+?[0-9]{11,15}$/, { message: 'Mobile must be 11-15 digits' });
     required(p.date, { message: 'Appointment date is required' });
     required(p.departmentId, { message: 'Department is required' });
     required(p.drCode, { message: 'Doctor is required' });

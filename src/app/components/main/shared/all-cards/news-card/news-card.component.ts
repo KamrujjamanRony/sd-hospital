@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, input, signal } from '@angular/core';
+import { Component, Input, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { NewsModalComponent } from "../../all-modals/news-modal/news-modal.component";
 
 @Component({
   selector: 'app-news-card',
   templateUrl: './news-card.component.html',
   styleUrl: './news-card.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, NewsModalComponent]
 })
 export class NewsCardComponent {

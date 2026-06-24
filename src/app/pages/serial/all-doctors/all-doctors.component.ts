@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription, forkJoin } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { EditDoctorModalComponent } from '../../../components/serial/shared/modal/edit-doctor-modal/edit-doctor-modal.component';
@@ -12,6 +12,7 @@ import { AppStore } from '../../../store/app.store';
   standalone: true,
   templateUrl: './all-doctors.component.html',
   styleUrl: './all-doctors.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent, AddDoctorModalComponent, EditDoctorModalComponent, FormsModule]
 })
 export class SerialAllDoctorsComponent {

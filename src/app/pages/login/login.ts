@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { form, schema, required, minLength, FormField } from '@angular/forms/signals';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environments';
@@ -18,6 +18,7 @@ interface LoginModel {
   selector: 'app-login',
   imports: [FormField],
   templateUrl: './login.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login.css'
 })
 export class Login {

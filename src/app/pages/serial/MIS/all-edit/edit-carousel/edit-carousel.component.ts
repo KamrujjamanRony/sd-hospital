@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +8,7 @@ import { AppStore } from '../../../../../store/app.store';
 @Component({
   selector: 'app-edit-carousel',
   templateUrl: './edit-carousel.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent, FormsModule]
 })
 export class EditCarouselComponent {

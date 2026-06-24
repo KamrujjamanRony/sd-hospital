@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from '../../../../../../environments/environments';
 import { CoverComponent } from "../../../../../components/main/shared/cover/cover.component";
 import { RouterLink } from '@angular/router';
@@ -8,6 +8,7 @@ import { AppStore } from '../../../../../store/app.store';
   selector: 'app-services-list',
   templateUrl: './services-list.component.html',
   styleUrl: './services-list.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent, RouterLink]
 })
 export class ServicesListComponent {

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CoverComponent } from '../../../../../components/main/shared/cover/cover.component';
 import { environment } from '../../../../../../environments/environments';
@@ -8,6 +8,7 @@ import { AppStore } from '../../../../../store/app.store';
 @Component({
   selector: 'app-carousel-list',
   templateUrl: './carousel-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent, RouterLink]
 })
 export class CarouselListComponent {

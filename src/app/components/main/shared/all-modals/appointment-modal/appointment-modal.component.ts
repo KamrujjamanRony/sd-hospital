@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, input, output, OnInit, signal } from '@angular/core';
+import { Component, inject, input, output, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { format, isBefore } from 'date-fns';
 import { Observable, Subscription } from 'rxjs';
@@ -17,6 +17,7 @@ import { environment } from '../../../../../../environments/environments';
   templateUrl: './appointment-modal.component.html',
   styleUrl: './appointment-modal.component.css',
   providers: [DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ReactiveFormsModule, ConfirmModalComponent]
 })
 export class AppointmentModalComponent implements OnInit {

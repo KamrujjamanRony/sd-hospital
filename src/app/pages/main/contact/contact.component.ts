@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environments';
@@ -8,6 +8,7 @@ import { AppStore } from '../../../store/app.store';
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [HomeCover]
 })
 export class ContactComponent {

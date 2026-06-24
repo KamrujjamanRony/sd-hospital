@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { AppointmentModalSerialComponent } from '../../../components/serial/shared/modal/appointment-modal-serial/appointment-modal-serial.component';
@@ -12,6 +12,7 @@ import { AuthService } from '../../../services/serial/auth.service';
   selector: 'app-my-appointments',
   templateUrl: './my-appointments.component.html',
   styleUrl: './my-appointments.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent, ReactiveFormsModule, FormsModule, AppointmentModalSerialComponent]
 })
 export class MyAppointmentsComponent {

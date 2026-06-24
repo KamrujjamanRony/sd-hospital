@@ -1,4 +1,4 @@
-import { Component, inject, Output, EventEmitter, signal } from '@angular/core';
+import { Component, inject, Output, EventEmitter, signal, ChangeDetectionStrategy } from '@angular/core';
 import { form, required, minLength } from '@angular/forms/signals';
 import { FormField } from '@angular/forms/signals';
 import { environment } from '../../../../../../environments/environments';
@@ -16,6 +16,7 @@ interface DepartmentModel {
   standalone: true,
   imports: [FormField],
   templateUrl: './add-department-modal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './add-department-modal.component.css'
 })
 export class AddDepartmentModalComponent {

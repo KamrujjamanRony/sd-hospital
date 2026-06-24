@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../../services/serial/auth.service';
 import { environment } from '../../../../../../environments/environments';
@@ -14,6 +14,7 @@ import { CareerService } from '../../../../../services/main/career.service';
   selector: 'app-career-list',
   imports: [CommonModule, CoverComponent, RouterLink, DeleteConfirmationModalComponent],
   templateUrl: './career-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './career-list.component.css'
 })
 export class CareerListComponent {

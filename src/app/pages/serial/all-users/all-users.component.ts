@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { CoverComponent } from '../../../components/serial/shared/cover/cover.component';
 import { AddUserModalComponent } from '../../../components/serial/shared/modal/add-user-modal/add-user-modal.component';
 import { EditUserModalComponent } from '../../../components/serial/shared/modal/edit-user-modal/edit-user-modal.component';
@@ -12,6 +12,7 @@ import { AuthService } from '../../../services/serial/auth.service';
   standalone: true,
   templateUrl: './all-users.component.html',
   styleUrl: './all-users.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CoverComponent, AddUserModalComponent, EditUserModalComponent]
 })
 export class AllUsersComponent implements OnInit {
